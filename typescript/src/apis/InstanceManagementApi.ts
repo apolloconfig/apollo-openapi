@@ -85,8 +85,14 @@ export class InstanceManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName'])));
+        urlPath = urlPath.replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName']))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -153,8 +159,15 @@ export class InstanceManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances`;
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName'])));
+        urlPath = urlPath.replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName']))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -221,8 +234,13 @@ export class InstanceManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/envs/{env}/releases/{releaseId}/instances`;
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"releaseId"}}`, encodeURIComponent(String(requestParameters['releaseId'])));
+
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/releases/{releaseId}/instances`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"releaseId"}}`, encodeURIComponent(String(requestParameters['releaseId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

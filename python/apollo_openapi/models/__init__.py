@@ -13,7 +13,54 @@
 """  # noqa: E501
 
 
-# import models into model package
+if __import__("typing").TYPE_CHECKING:
+    # import models into model package
+    from apollo_openapi.models.change import Change
+    from apollo_openapi.models.cluster_dto import ClusterDTO
+    from apollo_openapi.models.entity_pair_kv_entity import EntityPairKVEntity
+    from apollo_openapi.models.env_cluster_info import EnvClusterInfo
+    from apollo_openapi.models.item_change_sets import ItemChangeSets
+    from apollo_openapi.models.item_dto import ItemDTO
+    from apollo_openapi.models.kv_entity import KVEntity
+    from apollo_openapi.models.list_item_diffs import ListItemDiffs
+    from apollo_openapi.models.list_release_bo import ListReleaseBO
+    from apollo_openapi.models.map_string import MapString
+    from apollo_openapi.models.namespace_gray_del_release_dto import NamespaceGrayDelReleaseDTO
+    from apollo_openapi.models.namespace_identifier import NamespaceIdentifier
+    from apollo_openapi.models.namespace_release_dto import NamespaceReleaseDTO
+    from apollo_openapi.models.namespace_sync_model import NamespaceSyncModel
+    from apollo_openapi.models.namespace_text_model import NamespaceTextModel
+    from apollo_openapi.models.open_app_dto import OpenAppDTO
+    from apollo_openapi.models.open_app_namespace_dto import OpenAppNamespaceDTO
+    from apollo_openapi.models.open_cluster_dto import OpenClusterDTO
+    from apollo_openapi.models.open_create_app_dto import OpenCreateAppDTO
+    from apollo_openapi.models.open_env_cluster_dto import OpenEnvClusterDTO
+    from apollo_openapi.models.open_gray_release_rule_dto import OpenGrayReleaseRuleDTO
+    from apollo_openapi.models.open_gray_release_rule_item_dto import OpenGrayReleaseRuleItemDTO
+    from apollo_openapi.models.open_instance_config_dto import OpenInstanceConfigDTO
+    from apollo_openapi.models.open_instance_dto import OpenInstanceDTO
+    from apollo_openapi.models.open_item_dto import OpenItemDTO
+    from apollo_openapi.models.open_namespace_dto import OpenNamespaceDTO
+    from apollo_openapi.models.open_namespace_lock_dto import OpenNamespaceLockDTO
+    from apollo_openapi.models.open_organization_dto import OpenOrganizationDto
+    from apollo_openapi.models.open_page_dto_open_instance_dto import OpenPageDTOOpenInstanceDTO
+    from apollo_openapi.models.open_page_dto_open_item_dto import OpenPageDTOOpenItemDTO
+    from apollo_openapi.models.open_release_dto import OpenReleaseDTO
+    from apollo_openapi.models.openapi_v1_apps_get401_response import OpenapiV1AppsGet401Response
+    from apollo_openapi.models.openapi_v1_apps_post400_response import OpenapiV1AppsPost400Response
+    from apollo_openapi.models.openapi_v1_apps_post_request import OpenapiV1AppsPostRequest
+    from apollo_openapi.models.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_items_validate_post200_response import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost200Response
+    from apollo_openapi.models.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_items_validate_post400_response import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost400Response
+    from apollo_openapi.models.openapi_v1_envs_env_releases_compare_get200_response import OpenapiV1EnvsEnvReleasesCompareGet200Response
+    from apollo_openapi.models.release_dto import ReleaseDTO
+    
+else:
+    from lazy_imports import LazyModule, as_package, load
+
+    load(
+        LazyModule(
+            *as_package(__file__),
+            """# import models into model package
 from apollo_openapi.models.change import Change
 from apollo_openapi.models.cluster_dto import ClusterDTO
 from apollo_openapi.models.entity_pair_kv_entity import EntityPairKVEntity
@@ -52,3 +99,9 @@ from apollo_openapi.models.openapi_v1_envs_env_apps_app_id_clusters_cluster_name
 from apollo_openapi.models.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_items_validate_post400_response import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost400Response
 from apollo_openapi.models.openapi_v1_envs_env_releases_compare_get200_response import OpenapiV1EnvsEnvReleasesCompareGet200Response
 from apollo_openapi.models.release_dto import ReleaseDTO
+
+""",
+            name=__name__,
+            doc=__doc__,
+        )
+    )

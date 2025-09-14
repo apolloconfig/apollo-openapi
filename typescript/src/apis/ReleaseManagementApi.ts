@@ -152,8 +152,15 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/active`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName'])));
+        urlPath = urlPath.replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/active`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName']))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -234,8 +241,15 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName'])));
+        urlPath = urlPath.replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName']))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -294,8 +308,15 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/latest`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName'])));
+        urlPath = urlPath.replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/latest`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName']))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -363,8 +384,15 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName'])));
+        urlPath = urlPath.replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName']))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -425,8 +453,12 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/envs/{env}/releases/compare`;
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/releases/compare`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -471,8 +503,13 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/envs/{env}/releases/{releaseId}`;
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"releaseId"}}`, encodeURIComponent(String(requestParameters['releaseId'])));
+
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/releases/{releaseId}`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"releaseId"}}`, encodeURIComponent(String(requestParameters['releaseId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -528,8 +565,13 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/envs/{env}/releases/{releaseId}/rollback`;
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"releaseId"}}`, encodeURIComponent(String(requestParameters['releaseId'])));
+
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/releases/{releaseId}/rollback`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"releaseId"}}`, encodeURIComponent(String(requestParameters['releaseId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,

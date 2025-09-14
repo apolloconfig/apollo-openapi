@@ -43,8 +43,11 @@ export class OrganizationManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/organizations`;
+
         const response = await this.request({
-            path: `/openapi/v1/organizations`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

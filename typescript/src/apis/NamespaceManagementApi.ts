@@ -112,8 +112,11 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/appnamespaces`;
+
         const response = await this.request({
-            path: `/openapi/v1/appnamespaces`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -151,8 +154,12 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}/appnamespaces`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/appnamespaces`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -197,8 +204,13 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}/appnamespaces/{namespaceName}`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/appnamespaces/{namespaceName}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -245,8 +257,12 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}/appnamespaces`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/appnamespaces`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -299,8 +315,14 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -359,8 +381,15 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName'])));
+        urlPath = urlPath.replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName']))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -427,8 +456,13 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances`;
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"publicNamespaceName"}}`, encodeURIComponent(String(requestParameters['publicNamespaceName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"publicNamespaceName"}}`, encodeURIComponent(String(requestParameters['publicNamespaceName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -491,8 +525,14 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -551,8 +591,15 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName'])));
+        urlPath = urlPath.replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName']))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,

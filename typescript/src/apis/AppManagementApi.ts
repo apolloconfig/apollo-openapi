@@ -123,8 +123,13 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}/appnamespaces/{namespaceName}`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/appnamespaces/{namespaceName}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -162,8 +167,12 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -201,8 +210,12 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}/env-clusters`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/env-clusters`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -261,8 +274,15 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+        urlPath = urlPath.replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName'])));
+        urlPath = urlPath.replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters['clusterName']))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters['namespaceName']))),
+            path: urlPath,
             method: 'DELETE',
             headers: headerParameters,
             query: queryParameters,
@@ -300,8 +320,12 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -339,8 +363,12 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}/miss_envs`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/miss_envs`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -378,8 +406,12 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}/namespaces/releases/status`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/namespaces/releases/status`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -417,8 +449,12 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}/navtree`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/navtree`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))),
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -465,8 +501,12 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/{appId}`;
+        urlPath = urlPath.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters['appId']))),
+            path: urlPath,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
@@ -498,8 +538,11 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/by-self`;
+
         const response = await this.request({
-            path: `/openapi/v1/apps/by-self`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -546,8 +589,12 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps/envs/{env}`;
+        urlPath = urlPath.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env'])));
+
         const response = await this.request({
-            path: `/openapi/v1/apps/envs/{env}`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters['env']))),
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
@@ -583,8 +630,11 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps`;
+
         const response = await this.request({
-            path: `/openapi/v1/apps`,
+            path: urlPath,
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -624,8 +674,11 @@ export class AppManagementApi extends runtime.BaseAPI {
             headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
         }
 
+
+        let urlPath = `/openapi/v1/apps`;
+
         const response = await this.request({
-            path: `/openapi/v1/apps`,
+            path: urlPath,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
