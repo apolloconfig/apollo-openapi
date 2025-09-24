@@ -21,7 +21,7 @@ import javax.annotation.Generated;
  */
 
 @JsonTypeName("_openapi_v1_apps_post_400_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenapiV1AppsPost400Response {
 
   private @Nullable String message;
@@ -37,7 +37,7 @@ public class OpenapiV1AppsPost400Response {
    * Get message
    * @return message
    */
-  
+
   @Schema(name = "message", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("message")
   public @Nullable String getMessage() {
@@ -57,7 +57,7 @@ public class OpenapiV1AppsPost400Response {
    * Get exception
    * @return exception
    */
-  
+
   @Schema(name = "exception", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("exception")
   public @Nullable String getException() {
@@ -107,4 +107,3 @@ public class OpenapiV1AppsPost400Response {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

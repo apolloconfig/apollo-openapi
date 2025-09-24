@@ -20,7 +20,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenClusterDTO", description = "Apollo集群信息数据传输对象，表示应用在特定环境下的集群配置")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenClusterDTO {
 
   private @Nullable String dataChangeCreatedBy;
@@ -44,7 +44,7 @@ public class OpenClusterDTO {
    * 集群创建者用户名，记录是谁创建了这个集群
    * @return dataChangeCreatedBy
    */
-  
+
   @Schema(name = "dataChangeCreatedBy", description = "集群创建者用户名，记录是谁创建了这个集群", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedBy")
   public @Nullable String getDataChangeCreatedBy() {
@@ -64,7 +64,7 @@ public class OpenClusterDTO {
    * 集群最后修改者用户名，记录最后一次修改集群信息的用户
    * @return dataChangeLastModifiedBy
    */
-  
+
   @Schema(name = "dataChangeLastModifiedBy", description = "集群最后修改者用户名，记录最后一次修改集群信息的用户", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedBy")
   public @Nullable String getDataChangeLastModifiedBy() {
@@ -84,7 +84,7 @@ public class OpenClusterDTO {
    * 集群创建时间，ISO 8601格式的时间戳
    * @return dataChangeCreatedTime
    */
-  
+
   @Schema(name = "dataChangeCreatedTime", description = "集群创建时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedTime")
   public @Nullable String getDataChangeCreatedTime() {
@@ -104,7 +104,7 @@ public class OpenClusterDTO {
    * 集群最后修改时间，ISO 8601格式的时间戳
    * @return dataChangeLastModifiedTime
    */
-  
+
   @Schema(name = "dataChangeLastModifiedTime", description = "集群最后修改时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedTime")
   public @Nullable String getDataChangeLastModifiedTime() {
@@ -124,7 +124,7 @@ public class OpenClusterDTO {
    * 集群名称，在同一应用和环境下唯一标识一个集群
    * @return name
    */
-  
+
   @Schema(name = "name", description = "集群名称，在同一应用和环境下唯一标识一个集群", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
   public @Nullable String getName() {
@@ -144,7 +144,7 @@ public class OpenClusterDTO {
    * 所属应用的唯一标识符
    * @return appId
    */
-  
+
   @Schema(name = "appId", description = "所属应用的唯一标识符", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("appId")
   public @Nullable String getAppId() {
@@ -202,4 +202,3 @@ public class OpenClusterDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

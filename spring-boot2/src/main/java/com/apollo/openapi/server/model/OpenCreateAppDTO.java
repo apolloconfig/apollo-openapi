@@ -24,7 +24,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenCreateAppDTO", description = "创建Apollo应用的请求数据传输对象，包含创建应用所需的所有信息")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenCreateAppDTO {
 
   private @Nullable Boolean assignAppRoleToSelf;
@@ -43,7 +43,7 @@ public class OpenCreateAppDTO {
    * 是否将应用角色分配给当前用户。当设置为true时，当前token用户将获得该应用的完全操作权限
    * @return assignAppRoleToSelf
    */
-  
+
   @Schema(name = "assignAppRoleToSelf", description = "是否将应用角色分配给当前用户。当设置为true时，当前token用户将获得该应用的完全操作权限", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("assignAppRoleToSelf")
   public @Nullable Boolean getAssignAppRoleToSelf() {
@@ -71,7 +71,7 @@ public class OpenCreateAppDTO {
    * 应用管理员用户名列表。应用负责人默认具有项目管理员权限。管理员可以创建命名空间、集群并分配用户权限
    * @return admins
    */
-  
+
   @Schema(name = "admins", description = "应用管理员用户名列表。应用负责人默认具有项目管理员权限。管理员可以创建命名空间、集群并分配用户权限", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("admins")
   public List<String> getAdmins() {
@@ -91,7 +91,7 @@ public class OpenCreateAppDTO {
    * Get app
    * @return app
    */
-  @Valid 
+  @Valid
   @Schema(name = "app", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("app")
   public @Nullable OpenAppDTO getApp() {
@@ -143,4 +143,3 @@ public class OpenCreateAppDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

@@ -1,10 +1,9 @@
 package com.apollo.openapi.server.api;
 
-import com.apollo.openapi.server.model.ListReleaseBO;
 import com.apollo.openapi.server.model.NamespaceReleaseDTO;
+import com.apollo.openapi.server.model.OpenReleaseBO;
 import com.apollo.openapi.server.model.OpenReleaseDTO;
 import com.apollo.openapi.server.model.OpenapiV1AppsGet401Response;
-import com.apollo.openapi.server.model.OpenapiV1EnvsEnvReleasesCompareGet200Response;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 @Controller
 @RequestMapping("${openapi.apolloOpen.base-path:}")
 public class ReleaseManagementApiController implements ReleaseManagementApi {

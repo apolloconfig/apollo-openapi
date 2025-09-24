@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  * KVEntity
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class KVEntity {
 
   private @Nullable String key;
@@ -32,11 +32,11 @@ public class KVEntity {
   }
 
   /**
-   * 
+   * 键
    * @return key
    */
-  
-  @Schema(name = "key", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+
+  @Schema(name = "key", description = "键", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("key")
   public @Nullable String getKey() {
     return key;
@@ -52,11 +52,11 @@ public class KVEntity {
   }
 
   /**
-   * 
+   * 值
    * @return value
    */
-  
-  @Schema(name = "value", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+
+  @Schema(name = "value", description = "值", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("value")
   public @Nullable String getValue() {
     return value;
@@ -105,4 +105,3 @@ public class KVEntity {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

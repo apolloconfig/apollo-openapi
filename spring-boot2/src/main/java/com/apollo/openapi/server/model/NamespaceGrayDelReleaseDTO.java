@@ -23,7 +23,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "NamespaceGrayDelReleaseDTO", description = "命名空间灰度删除发布请求数据传输对象，用于创建删除特定配置项的灰度发布")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class NamespaceGrayDelReleaseDTO {
 
   private @Nullable String releaseTitle;
@@ -46,7 +46,7 @@ public class NamespaceGrayDelReleaseDTO {
    * 发布标题，用于标识这次灰度删除发布的名称或版本号
    * @return releaseTitle
    */
-  
+
   @Schema(name = "releaseTitle", description = "发布标题，用于标识这次灰度删除发布的名称或版本号", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("releaseTitle")
   public @Nullable String getReleaseTitle() {
@@ -66,7 +66,7 @@ public class NamespaceGrayDelReleaseDTO {
    * 发布备注，详细描述本次灰度删除发布的目的和删除的配置项
    * @return releaseComment
    */
-  
+
   @Schema(name = "releaseComment", description = "发布备注，详细描述本次灰度删除发布的目的和删除的配置项", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("releaseComment")
   public @Nullable String getReleaseComment() {
@@ -86,7 +86,7 @@ public class NamespaceGrayDelReleaseDTO {
    * 发布操作者用户名，记录是谁执行了这次灰度删除发布操作
    * @return releasedBy
    */
-  
+
   @Schema(name = "releasedBy", description = "发布操作者用户名，记录是谁执行了这次灰度删除发布操作", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("releasedBy")
   public @Nullable String getReleasedBy() {
@@ -106,7 +106,7 @@ public class NamespaceGrayDelReleaseDTO {
    * 是否为紧急发布，紧急发布可能会跳过某些审核流程
    * @return isEmergencyPublish
    */
-  
+
   @Schema(name = "isEmergencyPublish", description = "是否为紧急发布，紧急发布可能会跳过某些审核流程", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("isEmergencyPublish")
   public @Nullable Boolean getIsEmergencyPublish() {
@@ -134,7 +134,7 @@ public class NamespaceGrayDelReleaseDTO {
    * 需要在灰度发布中删除的配置项键名列表
    * @return grayDelKeys
    */
-  
+
   @Schema(name = "grayDelKeys", description = "需要在灰度发布中删除的配置项键名列表", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("grayDelKeys")
   public List<String> getGrayDelKeys() {
@@ -190,4 +190,3 @@ public class NamespaceGrayDelReleaseDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

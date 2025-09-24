@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 @Validated
 @Tag(name = "Cluster Management", description = "集群管理相关接口，包括集群的创建、查询、删除等操作")
 public interface ClusterManagementApi {
@@ -40,93 +40,6 @@ public interface ClusterManagementApi {
     default ClusterManagementApiDelegate getDelegate() {
         return new ClusterManagementApiDelegate() {};
     }
-
-    public static final String PATH_OPENAPI_V1_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_GET = "/openapi/v1/apps/{appId}/clusters/{clusterName}";
-    /**
-     * GET /openapi/v1/apps/{appId}/clusters/{clusterName} : 获取指定集群信息
-     * GET /openapi/v1/apps/{appId}/clusters/{clusterName}
-     *
-     * @param appId  (required)
-     * @param clusterName  (required)
-     * @return 成功获取集群信息 (status code 200)
-     *         or 集群不存在 (status code 404)
-     */
-    @Operation(
-        operationId = "openapiV1AppsAppIdClustersClusterNameGet",
-        summary = "获取指定集群信息",
-        description = "GET /openapi/v1/apps/{appId}/clusters/{clusterName}",
-        tags = { "Cluster Management" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "成功获取集群信息", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenClusterDTO.class))
-            }),
-            @ApiResponse(responseCode = "404", description = "集群不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenapiV1AppsGet401Response.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "ApiKeyAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = ClusterManagementApi.PATH_OPENAPI_V1_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_GET,
-        produces = { "application/json" }
-    )
-    
-    default ResponseEntity<OpenClusterDTO> openapiV1AppsAppIdClustersClusterNameGet(
-        @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
-        @Parameter(name = "clusterName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName
-    ) {
-        return getDelegate().openapiV1AppsAppIdClustersClusterNameGet(appId, clusterName);
-    }
-
-
-    public static final String PATH_OPENAPI_V1_APPS_APP_ID_CLUSTERS_POST = "/openapi/v1/apps/{appId}/clusters";
-    /**
-     * POST /openapi/v1/apps/{appId}/clusters : 创建集群
-     * POST /openapi/v1/apps/{appId}/clusters
-     *
-     * @param appId  (required)
-     * @param openClusterDTO  (required)
-     * @return 集群创建成功 (status code 200)
-     *         or 请求参数错误 (status code 400)
-     *         or 权限不足 (status code 403)
-     */
-    @Operation(
-        operationId = "openapiV1AppsAppIdClustersPost",
-        summary = "创建集群",
-        description = "POST /openapi/v1/apps/{appId}/clusters",
-        tags = { "Cluster Management" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "集群创建成功", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenClusterDTO.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenapiV1AppsGet401Response.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenapiV1AppsGet401Response.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "ApiKeyAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = ClusterManagementApi.PATH_OPENAPI_V1_APPS_APP_ID_CLUSTERS_POST,
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    
-    default ResponseEntity<OpenClusterDTO> openapiV1AppsAppIdClustersPost(
-        @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
-        @Parameter(name = "OpenClusterDTO", description = "", required = true) @Valid @RequestBody OpenClusterDTO openClusterDTO
-    ) {
-        return getDelegate().openapiV1AppsAppIdClustersPost(appId, openClusterDTO);
-    }
-
 
     public static final String PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_DELETE = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}";
     /**
@@ -169,7 +82,7 @@ public interface ClusterManagementApi {
         value = ClusterManagementApi.PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_DELETE,
         produces = { "application/json" }
     )
-    
+
     default ResponseEntity<OpenapiV1AppsGet401Response> openapiV1EnvsEnvAppsAppIdClustersClusterNameDelete(
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
@@ -179,16 +92,59 @@ public interface ClusterManagementApi {
     }
 
 
+    public static final String PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_GET = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}";
+    /**
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} : 获取指定集群信息
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}
+     *
+     * @param appId  (required)
+     * @param clusterName  (required)
+     * @param env  (required)
+     * @return 成功获取集群信息 (status code 200)
+     *         or 集群不存在 (status code 404)
+     */
+    @Operation(
+        operationId = "openapiV1EnvsEnvAppsAppIdClustersClusterNameGet",
+        summary = "获取指定集群信息",
+        description = "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}",
+        tags = { "Cluster Management" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "成功获取集群信息", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenClusterDTO.class))
+            }),
+            @ApiResponse(responseCode = "404", description = "集群不存在", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenapiV1AppsGet401Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "ApiKeyAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = ClusterManagementApi.PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_GET,
+        produces = { "application/json" }
+    )
+
+    default ResponseEntity<OpenClusterDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameGet(
+        @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
+        @Parameter(name = "clusterName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
+        @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env
+    ) {
+        return getDelegate().openapiV1EnvsEnvAppsAppIdClustersClusterNameGet(appId, clusterName, env);
+    }
+
+
     public static final String PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_BRANCHES_GET = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches";
     /**
      * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches : 获取命名空间分支信息
      * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @return  (status code 200)
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @return 成功获取分支信息 (status code 200)
      *         or 分支不存在 (status code 404)
      */
     @Operation(
@@ -197,7 +153,7 @@ public interface ClusterManagementApi {
         description = "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches",
         tags = { "Cluster Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "", content = {
+            @ApiResponse(responseCode = "200", description = "成功获取分支信息", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenNamespaceDTO.class))
             }),
             @ApiResponse(responseCode = "404", description = "分支不存在", content = {
@@ -213,12 +169,12 @@ public interface ClusterManagementApi {
         value = ClusterManagementApi.PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_BRANCHES_GET,
         produces = { "application/json" }
     )
-    
+
     default ResponseEntity<OpenNamespaceDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesGet(
-        @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
-        @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "clusterName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
-        @Parameter(name = "namespaceName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName
+        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
+        @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
+        @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
+        @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName
     ) {
         return getDelegate().openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesGet(appId, env, clusterName, namespaceName);
     }
@@ -255,7 +211,7 @@ public interface ClusterManagementApi {
         value = ClusterManagementApi.PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_GET,
         produces = { "application/json" }
     )
-    
+
     default ResponseEntity<OpenNamespaceDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameGet(
         @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
@@ -264,6 +220,54 @@ public interface ClusterManagementApi {
         @NotNull @Parameter(name = "fillItemDetail", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "fillItemDetail", required = true) Boolean fillItemDetail
     ) {
         return getDelegate().openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameGet(appId, env, clusterName, namespaceName, fillItemDetail);
+    }
+
+
+    public static final String PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_POST = "/openapi/v1/envs/{env}/apps/{appId}/clusters";
+    /**
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters : 创建集群
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters
+     *
+     * @param appId 应用ID (required)
+     * @param env  (required)
+     * @param openClusterDTO  (required)
+     * @return 集群创建成功 (status code 200)
+     *         or 请求参数错误 (status code 400)
+     *         or 权限不足 (status code 403)
+     */
+    @Operation(
+        operationId = "openapiV1EnvsEnvAppsAppIdClustersPost",
+        summary = "创建集群",
+        description = "POST /openapi/v1/envs/{env}/apps/{appId}/clusters",
+        tags = { "Cluster Management" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "集群创建成功", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenClusterDTO.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenapiV1AppsGet401Response.class))
+            }),
+            @ApiResponse(responseCode = "403", description = "权限不足", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenapiV1AppsGet401Response.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "ApiKeyAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = ClusterManagementApi.PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_POST,
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+
+    default ResponseEntity<OpenClusterDTO> openapiV1EnvsEnvAppsAppIdClustersPost(
+        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
+        @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
+        @Parameter(name = "OpenClusterDTO", description = "", required = true) @Valid @RequestBody OpenClusterDTO openClusterDTO
+    ) {
+        return getDelegate().openapiV1EnvsEnvAppsAppIdClustersPost(appId, env, openClusterDTO);
     }
 
 }

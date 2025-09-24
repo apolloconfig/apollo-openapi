@@ -24,7 +24,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenPageDTOOpenItemDTO", description = "分页配置项数据传输对象，用于返回分页查询的配置项列表结果")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenPageDTOOpenItemDTO {
 
   private @Nullable Integer page;
@@ -45,7 +45,7 @@ public class OpenPageDTOOpenItemDTO {
    * 当前页码，从0开始计数
    * @return page
    */
-  
+
   @Schema(name = "page", description = "当前页码，从0开始计数", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("page")
   public @Nullable Integer getPage() {
@@ -65,7 +65,7 @@ public class OpenPageDTOOpenItemDTO {
    * 每页显示的记录数量
    * @return size
    */
-  
+
   @Schema(name = "size", description = "每页显示的记录数量", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("size")
   public @Nullable Integer getSize() {
@@ -85,7 +85,7 @@ public class OpenPageDTOOpenItemDTO {
    * 总记录数，符合查询条件的配置项总数量
    * @return total
    */
-  
+
   @Schema(name = "total", description = "总记录数，符合查询条件的配置项总数量", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("total")
   public @Nullable Long getTotal() {
@@ -113,7 +113,7 @@ public class OpenPageDTOOpenItemDTO {
    * 当前页的配置项列表，包含具体的配置项数据
    * @return content
    */
-  @Valid 
+  @Valid
   @Schema(name = "content", description = "当前页的配置项列表，包含具体的配置项数据", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("content")
   public List<@Valid OpenItemDTO> getContent() {
@@ -167,4 +167,3 @@ public class OpenPageDTOOpenItemDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

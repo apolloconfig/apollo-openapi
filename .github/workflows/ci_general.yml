@@ -1,8 +1,11 @@
 name: General CI Checks
 on:
+  push:
+    branches:
+      - "**"
   pull_request:
     branches:
-      - main
+      - "**"
 
 permissions:
   contents: read

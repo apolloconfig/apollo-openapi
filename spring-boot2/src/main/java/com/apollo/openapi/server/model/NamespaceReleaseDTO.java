@@ -20,7 +20,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "NamespaceReleaseDTO", description = "命名空间发布请求数据传输对象，用于创建新的配置发布")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class NamespaceReleaseDTO {
 
   private @Nullable String releaseTitle;
@@ -40,7 +40,7 @@ public class NamespaceReleaseDTO {
    * 发布标题，用于标识这次发布的名称或版本号
    * @return releaseTitle
    */
-  
+
   @Schema(name = "releaseTitle", description = "发布标题，用于标识这次发布的名称或版本号", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("releaseTitle")
   public @Nullable String getReleaseTitle() {
@@ -60,7 +60,7 @@ public class NamespaceReleaseDTO {
    * 发布备注，详细描述本次发布的变更内容和目的
    * @return releaseComment
    */
-  
+
   @Schema(name = "releaseComment", description = "发布备注，详细描述本次发布的变更内容和目的", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("releaseComment")
   public @Nullable String getReleaseComment() {
@@ -80,7 +80,7 @@ public class NamespaceReleaseDTO {
    * 发布操作者用户名，记录是谁执行了这次发布操作
    * @return releasedBy
    */
-  
+
   @Schema(name = "releasedBy", description = "发布操作者用户名，记录是谁执行了这次发布操作", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("releasedBy")
   public @Nullable String getReleasedBy() {
@@ -100,7 +100,7 @@ public class NamespaceReleaseDTO {
    * 是否为紧急发布，紧急发布可能会跳过某些审核流程
    * @return isEmergencyPublish
    */
-  
+
   @Schema(name = "isEmergencyPublish", description = "是否为紧急发布，紧急发布可能会跳过某些审核流程", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("isEmergencyPublish")
   public @Nullable Boolean getIsEmergencyPublish() {
@@ -154,4 +154,3 @@ public class NamespaceReleaseDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

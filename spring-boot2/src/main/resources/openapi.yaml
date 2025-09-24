@@ -1,34 +1,21 @@
 openapi: 3.0.1
 info:
   description: |
-    Apollo配置中心OpenAPI接口文档
+    <p>Apollo配置中心OpenAPI接口文档</p>
 
-    ## 认证方式
+    <h2>认证方式</h2>
+    <p>所有 API 接口都需要通过 <code>Authorization</code> header 进行身份验证。</p>
 
-    所有API接口都需要通过Authorization header进行身份验证。
+    <h3>获取 Token 的方式：</h3>
+    <ol>
+      <li><b>Portal 管理界面获取</b>：登录 Portal → 管理员工具 → 开放平台授权管理 → 创建第三方应用，获取 Token。</li>
+      <li><b>Token 格式</b>：<code>Authorization: token_value</code></li>
+      <li><b>Token 权限</b>：按应用/环境/命名空间授予，建议不同用途分别创建。</li>
+    </ol>
 
-    ### 获取Token的方式：
-
-    1. **Portal管理界面获取**：
-       - 登录Apollo Portal管理界面
-       - 进入"管理员工具" -> "开放平台授权管理"
-       - 创建第三方应用，获取Token
-
-    2. **Token格式**：
-       ```
-       Authorization: token_value
-       ```
-
-    3. **Token权限**：
-       - Token具有对应应用的读写权限
-       - 不同Token可能有不同的环境和命名空间权限
-       - 建议为不同用途创建不同的Token
-
-    ### 使用示例：
-    ```bash
-    curl -X GET "http://localhost:8070/openapi/v1/apps" \
-         -H "Authorization: your_token_here"
-    ```
+    <h3>使用示例</h3>
+    <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
+    -H "Authorization: your_token_here"</code></pre>
   title: Apollo OpenAPI
   version: 1.0.0
 servers:
@@ -56,7 +43,7 @@ paths:
   /openapi/v1/apps:
     get:
       deprecated: false
-      description: GET /openapi/v1/apps?authorized=true
+      description: GET /openapi/v1/apps/authorized
       parameters:
       - description: 是否只返回授权的应用
         example: "true"
@@ -164,12 +151,12 @@ paths:
       - application/json
       x-tags:
       - tag: App Management
-  /openapi/v1/apps/{appId}/env-clusters:
+  /openapi/v1/apps/{appId}/envclusters:
     get:
       deprecated: false
-      description: "GET /openapi/v1/apps/{appId}/env-clusters"
+      description: "GET /openapi/v1/apps/{appId}/envclusters"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -218,7 +205,7 @@ paths:
       deprecated: false
       description: "DELETE /openapi/v1/apps/{appId}"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -262,7 +249,7 @@ paths:
       deprecated: false
       description: "GET /openapi/v1/apps/{appId}"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -307,7 +294,7 @@ paths:
       deprecated: false
       description: "PUT /openapi/v1/apps/{appId}"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -321,7 +308,7 @@ paths:
             schema:
               allOf:
               - $ref: "#/components/schemas/OpenAppDTO"
-              description: ""
+              description: 更新应用请求体
               required:
               - appId
               - name
@@ -347,7 +334,7 @@ paths:
                 ownerEmail: admin@apollo.com
               schema:
                 $ref: "#/components/schemas/OpenAppDTO"
-          description: ""
+          description: 应用更新成功
         "400":
           content:
             application/json:
@@ -426,7 +413,7 @@ paths:
       deprecated: false
       description: "GET /openapi/v1/apps/{appId}/navtree"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -454,7 +441,7 @@ paths:
                   comment: Default cluster
               schema:
                 items:
-                  $ref: "#/components/schemas/EnvClusterInfo"
+                  $ref: "#/components/schemas/OpenEnvClusterInfo"
                 type: array
           description: 成功获取应用导航树
       summary: 获取应用导航树
@@ -469,7 +456,7 @@ paths:
       deprecated: false
       description: "POST /openapi/v1/apps/envs/{env}"
       parameters:
-      - description: ""
+      - description: 环境标识，例如 DEV、FAT、UAT、PROD
         explode: false
         in: path
         name: env
@@ -483,7 +470,7 @@ paths:
             schema:
               allOf:
               - $ref: "#/components/schemas/OpenAppDTO"
-              description: ""
+              description: 在指定环境创建应用的请求体
               required:
               - appId
               - name
@@ -530,7 +517,7 @@ paths:
       deprecated: false
       description: "GET /openapi/v1/apps/{appId}/miss_envs"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -565,12 +552,12 @@ paths:
       - application/json
       x-tags:
       - tag: App Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}:
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}:
     delete:
       deprecated: false
-      description: "DELETE /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}"
+      description: "DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -578,7 +565,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -586,7 +573,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -594,7 +581,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -602,7 +589,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 配置项键名
         explode: false
         in: path
         name: key
@@ -610,11 +597,11 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 操作人用户名
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -625,7 +612,7 @@ paths:
               schema:
                 properties: {}
                 type: object
-          description: ""
+          description: 配置项删除成功
       summary: 删除配置项
       tags:
       - Item Management
@@ -635,9 +622,9 @@ paths:
       - tag: Item Management
     get:
       deprecated: false
-      description: "GET /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}"
+      description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -645,7 +632,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -653,7 +640,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -661,7 +648,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -669,7 +656,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 配置项键名
         explode: false
         in: path
         name: key
@@ -710,7 +697,7 @@ paths:
       - tag: Item Management
     put:
       deprecated: false
-      description: "PUT /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}"
+      description: "PUT /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}"
       parameters:
       - description: ""
         explode: false
@@ -720,7 +707,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -728,7 +715,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -736,7 +723,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -816,12 +803,12 @@ paths:
       - application/json
       x-tags:
       - tag: Item Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items:
     get:
       deprecated: false
-      description: ""
+      description: 获取指定命名空间的配置项列表，支持分页
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -829,7 +816,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -837,7 +824,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -845,7 +832,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -853,7 +840,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 页码，从0开始
         example: 0
         explode: true
         in: query
@@ -862,7 +849,7 @@ paths:
         schema:
           type: integer
         style: form
-      - description: ""
+      - description: 每页数量
         example: 50
         explode: true
         in: query
@@ -924,9 +911,9 @@ paths:
       - tag: Item Management
     post:
       deprecated: false
-      description: "POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items"
+      description: "POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -934,7 +921,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -942,7 +929,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -950,7 +937,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -964,7 +951,7 @@ paths:
             schema:
               allOf:
               - $ref: "#/components/schemas/OpenItemDTO"
-              description: ""
+              description: 创建配置项请求体
               required:
               - dataChangeCreatedBy
               - key
@@ -1011,7 +998,7 @@ paths:
       - application/json
       x-tags:
       - tag: Item Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}:
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}:
     delete:
       deprecated: false
       description: "DELETE /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}"
@@ -1060,7 +1047,7 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -1081,9 +1068,9 @@ paths:
       - tag: Item Management
     get:
       deprecated: false
-      description: "GET /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items?key={key}&encoded={true|false}"
+      description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -1091,7 +1078,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -1099,7 +1086,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -1107,7 +1094,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -1115,7 +1102,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 配置项键名（需要URL编码）
         explode: false
         in: path
         name: key
@@ -1158,7 +1145,7 @@ paths:
       deprecated: false
       description: "PUT /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -1166,7 +1153,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -1174,7 +1161,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -1182,7 +1169,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -1190,7 +1177,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 配置项键名（需要URL编码）
         explode: false
         in: path
         name: key
@@ -1198,7 +1185,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 若不存在则创建（true/false）
         example: "false"
         explode: true
         in: query
@@ -1213,7 +1200,7 @@ paths:
             schema:
               allOf:
               - $ref: "#/components/schemas/OpenItemDTO"
-              description: ""
+              description: 更新配置项请求体（编码key）
               required:
               - dataChangeLastModifiedBy
               - key
@@ -1262,10 +1249,10 @@ paths:
       - application/json
       x-tags:
       - tag: Item Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:batchUpdate:
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items:batchUpdate:
     put:
       deprecated: false
-      description: "PUT /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:batchUpdate"
+      description: "PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:batchUpdate"
       parameters:
       - description: ""
         explode: false
@@ -1304,12 +1291,11 @@ paths:
           application/json:
             schema:
               allOf:
-              - $ref: "#/components/schemas/NamespaceTextModel"
-              description: ""
+              - $ref: "#/components/schemas/OpenNamespaceTextModel"
+              description: 批量更新配置文本请求体
               required:
               - configText
               - format
-              - operator
               type: object
         required: true
       responses:
@@ -1321,14 +1307,6 @@ paths:
               schema:
                 $ref: "#/components/schemas/_openapi_v1_apps_get_401_response"
           description: 批量更新配置项成功
-        "400":
-          content:
-            application/json:
-              example:
-                message: operator should not be null or empty
-              schema:
-                $ref: "#/components/schemas/_openapi_v1_apps_get_401_response"
-          description: 请求参数错误
         "403":
           content:
             application/json:
@@ -1345,12 +1323,12 @@ paths:
       - application/json
       x-tags:
       - tag: Item Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
     get:
       deprecated: false
-      description: "GET /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items"
+      description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -1358,7 +1336,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -1366,7 +1344,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -1374,7 +1352,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -1382,7 +1360,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 分支名称
         explode: false
         in: path
         name: branchName
@@ -1431,12 +1409,12 @@ paths:
       - application/json
       x-tags:
       - tag: Namespace Branch Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:compare:
+  /openapi/v1/namespaces/items:compare:
     post:
       deprecated: false
-      description: "POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:compare"
+      description: POST /openapi/v1/namespaces/items:compare
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -1444,7 +1422,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -1452,7 +1430,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -1460,7 +1438,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -1473,8 +1451,8 @@ paths:
           application/json:
             schema:
               allOf:
-              - $ref: "#/components/schemas/NamespaceSyncModel"
-              description: ""
+              - $ref: "#/components/schemas/OpenNamespaceSyncModel"
+              description: 对比配置差异请求体
               required:
               - syncItems
               - syncToNamespaces
@@ -1542,7 +1520,7 @@ paths:
                 extInfo: ""
               schema:
                 items:
-                  $ref: "#/components/schemas/ListItemDiffs"
+                  $ref: "#/components/schemas/OpenItemDiffs"
                 type: array
           description: 成功对比命名空间配置差异
       summary: 对比命名空间配置差异
@@ -1553,12 +1531,12 @@ paths:
       - application/json
       x-tags:
       - tag: Item Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:sync:
+  /openapi/v1/apps/{appId}/namespaces/{namespaceName}/items:sync:
     post:
       deprecated: false
-      description: "POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:sync"
+      description: "POST /openapi/v1/apps/{appId}/namespaces/{namespaceName}/items:sync"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -1566,7 +1544,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -1574,15 +1552,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
-        explode: false
-        in: path
-        name: clusterName
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -1595,8 +1565,8 @@ paths:
           application/json:
             schema:
               allOf:
-              - $ref: "#/components/schemas/NamespaceSyncModel"
-              description: ""
+              - $ref: "#/components/schemas/OpenNamespaceSyncModel"
+              description: 同步配置项请求体
               required:
               - syncItems
               - syncToNamespaces
@@ -1635,10 +1605,11 @@ paths:
       - application/json
       x-tags:
       - tag: Item Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:validate:
+  /openapi/apps/{appId}/env/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items:validate:
     post:
       deprecated: false
-      description: "POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:validate"
+      description: "POST /openapi/apps/{appId}/env/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items:validate"
+      operationId: validateItems
       parameters:
       - description: ""
         explode: false
@@ -1677,7 +1648,7 @@ paths:
           application/json:
             schema:
               allOf:
-              - $ref: "#/components/schemas/NamespaceTextModel"
+              - $ref: "#/components/schemas/OpenNamespaceTextModel"
               description: ""
               required:
               - configText
@@ -1689,22 +1660,17 @@ paths:
           content:
             application/json:
               example:
-                valid: true
                 message: Configuration syntax is valid
               schema:
-                $ref: "#/components/schemas/_openapi_v1_envs__env__apps__appId__clusters__clusterName__namespaces__namespaceName__items_validate_post_200_response"
+                $ref: "#/components/schemas/_openapi_v1_apps_get_401_response"
           description: 配置文本语法验证通过
         "400":
           content:
             application/json:
               example:
-                valid: false
                 message: Configuration syntax validation failed
-                errors:
-                - "Line 3: Invalid property format"
-                - "Line 7: Missing value for key \"database.port\""
               schema:
-                $ref: "#/components/schemas/_openapi_v1_envs__env__apps__appId__clusters__clusterName__namespaces__namespaceName__items_validate_post_400_response"
+                $ref: "#/components/schemas/_openapi_v1_apps_get_401_response"
           description: 配置文本语法错误
       summary: 验证配置文本语法
       tags:
@@ -1714,10 +1680,10 @@ paths:
       - application/json
       x-tags:
       - tag: Item Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:revert:
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items:revert:
     post:
       deprecated: false
-      description: "POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:revert"
+      description: "POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items:revert"
       parameters:
       - description: ""
         explode: false
@@ -1783,120 +1749,6 @@ paths:
       - application/json
       x-tags:
       - tag: Item Management
-  /openapi/v1/apps/{appId}/clusters/{clusterName}:
-    get:
-      deprecated: false
-      description: "GET /openapi/v1/apps/{appId}/clusters/{clusterName}"
-      parameters:
-      - description: ""
-        explode: false
-        in: path
-        name: appId
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: ""
-        explode: false
-        in: path
-        name: clusterName
-        required: true
-        schema:
-          type: string
-        style: simple
-      responses:
-        "200":
-          content:
-            application/json:
-              example:
-                dataChangeCreatedBy: apollo
-                dataChangeLastModifiedBy: ops-user
-                dataChangeCreatedTime: 2024-01-15T10:30:00.000Z
-                dataChangeLastModifiedTime: 2024-01-18T09:15:00.000Z
-                name: production
-                appId: sample-app
-              schema:
-                $ref: "#/components/schemas/OpenClusterDTO"
-          description: 成功获取集群信息
-        "404":
-          content:
-            application/json:
-              example:
-                message: Cluster not found
-              schema:
-                $ref: "#/components/schemas/_openapi_v1_apps_get_401_response"
-          description: 集群不存在
-      summary: 获取指定集群信息
-      tags:
-      - Cluster Management
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: Cluster Management
-  /openapi/v1/apps/{appId}/clusters:
-    post:
-      deprecated: false
-      description: "POST /openapi/v1/apps/{appId}/clusters"
-      parameters:
-      - description: ""
-        explode: false
-        in: path
-        name: appId
-        required: true
-        schema:
-          type: string
-        style: simple
-      requestBody:
-        content:
-          application/json:
-            schema:
-              allOf:
-              - $ref: "#/components/schemas/OpenClusterDTO"
-              description: ""
-              required:
-              - appId
-              - dataChangeCreatedBy
-              - name
-              type: object
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              example:
-                dataChangeCreatedBy: apollo
-                dataChangeLastModifiedBy: apollo
-                dataChangeCreatedTime: 2024-01-15T10:30:00.000Z
-                dataChangeLastModifiedTime: 2024-01-15T10:30:00.000Z
-                name: test-cluster
-                appId: sample-app
-              schema:
-                $ref: "#/components/schemas/OpenClusterDTO"
-          description: 集群创建成功
-        "400":
-          content:
-            application/json:
-              example:
-                message: name and dataChangeCreatedBy should not be null or empty
-              schema:
-                $ref: "#/components/schemas/_openapi_v1_apps_get_401_response"
-          description: 请求参数错误
-        "403":
-          content:
-            application/json:
-              example:
-                message: Access is denied
-              schema:
-                $ref: "#/components/schemas/_openapi_v1_apps_get_401_response"
-          description: 权限不足
-      summary: 创建集群
-      tags:
-      - Cluster Management
-      x-content-type: application/json
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: Cluster Management
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}:
     delete:
       deprecated: false
@@ -1966,23 +1818,14 @@ paths:
       - application/json
       x-tags:
       - tag: Cluster Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases:
-    post:
+    get:
       deprecated: false
-      description: ""
+      description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}"
       parameters:
       - description: ""
         explode: false
         in: path
         name: appId
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: ""
-        explode: false
-        in: path
-        name: env
         required: true
         schema:
           type: string
@@ -1998,6 +1841,143 @@ paths:
       - description: ""
         explode: false
         in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                dataChangeCreatedBy: apollo
+                dataChangeLastModifiedBy: ops-user
+                dataChangeCreatedTime: 2024-01-15T10:30:00.000Z
+                dataChangeLastModifiedTime: 2024-01-18T09:15:00.000Z
+                name: production
+                appId: sample-app
+              schema:
+                $ref: "#/components/schemas/OpenClusterDTO"
+          description: 成功获取集群信息
+        "404":
+          content:
+            application/json:
+              example:
+                message: Cluster not found
+              schema:
+                $ref: "#/components/schemas/_openapi_v1_apps_get_401_response"
+          description: 集群不存在
+      summary: 获取指定集群信息
+      tags:
+      - Cluster Management
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Cluster Management
+  /openapi/v1/envs/{env}/apps/{appId}/clusters:
+    post:
+      deprecated: false
+      description: "POST /openapi/v1/envs/{env}/apps/{appId}/clusters"
+      parameters:
+      - description: 应用ID
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: "#/components/schemas/OpenClusterDTO"
+              description: 创建集群请求体
+              required:
+              - appId
+              - dataChangeCreatedBy
+              - name
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                dataChangeCreatedBy: apollo
+                dataChangeLastModifiedBy: apollo
+                dataChangeCreatedTime: 2024-01-15T10:30:00.000Z
+                dataChangeLastModifiedTime: 2024-01-15T10:30:00.000Z
+                name: test-cluster
+                appId: sample-app
+              schema:
+                $ref: "#/components/schemas/OpenClusterDTO"
+          description: 集群创建成功
+        "400":
+          content:
+            application/json:
+              example:
+                message: name and dataChangeCreatedBy should not be null or empty
+              schema:
+                $ref: "#/components/schemas/_openapi_v1_apps_get_401_response"
+          description: 请求参数错误
+        "403":
+          content:
+            application/json:
+              example:
+                message: Access is denied
+              schema:
+                $ref: "#/components/schemas/_openapi_v1_apps_get_401_response"
+          description: 权限不足
+      summary: 创建集群
+      tags:
+      - Cluster Management
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+      x-tags:
+      - tag: Cluster Management
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases:
+    post:
+      deprecated: false
+      description: 创建并发布当前命名空间的配置
+      parameters:
+      - description: 应用ID
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 环境标识
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 集群名称
+        explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 命名空间名称
+        explode: false
+        in: path
         name: namespaceName
         required: true
         schema:
@@ -2009,7 +1989,7 @@ paths:
             schema:
               allOf:
               - $ref: "#/components/schemas/NamespaceReleaseDTO"
-              description: ""
+              description: 创建发布请求体
               required:
               - releaseTitle
               - releasedBy
@@ -2064,9 +2044,9 @@ paths:
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/latest:
     get:
       deprecated: false
-      description: ""
+      description: 查询命名空间最新活跃发布
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -2074,7 +2054,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -2082,7 +2062,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -2090,7 +2070,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -2139,9 +2119,9 @@ paths:
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge:
     post:
       deprecated: false
-      description: ""
+      description: 合并灰度分支并可选择删除分支
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -2149,7 +2129,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -2157,7 +2137,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -2165,7 +2145,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -2173,7 +2153,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 分支名称
         explode: false
         in: path
         name: branchName
@@ -2181,7 +2161,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 合并后是否删除分支（true/false）
         example: "true"
         explode: true
         in: query
@@ -2196,7 +2176,7 @@ paths:
             schema:
               allOf:
               - $ref: "#/components/schemas/NamespaceReleaseDTO"
-              description: ""
+              description: 合并分支并发布的请求体
               required:
               - releaseTitle
               - releasedBy
@@ -2252,9 +2232,9 @@ paths:
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/releases:
     post:
       deprecated: false
-      description: ""
+      description: 在分支上创建灰度发布
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -2262,7 +2242,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -2270,7 +2250,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -2278,7 +2258,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -2286,7 +2266,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 分支名称
         explode: false
         in: path
         name: branchName
@@ -2300,7 +2280,7 @@ paths:
             schema:
               allOf:
               - $ref: "#/components/schemas/NamespaceReleaseDTO"
-              description: ""
+              description: 创建灰度发布请求体
               required:
               - releaseTitle
               - releasedBy
@@ -2326,7 +2306,7 @@ paths:
                 comment: ""
               schema:
                 $ref: "#/components/schemas/OpenReleaseDTO"
-          description: ""
+          description: 灰度发布创建成功
       summary: 创建灰度发布
       tags:
       - Namespace Branch Management
@@ -2425,9 +2405,9 @@ paths:
   /openapi/v1/envs/{env}/releases/{releaseId}/rollback:
     put:
       deprecated: false
-      description: ""
+      description: 回滚到指定的发布版本
       parameters:
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -2435,7 +2415,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 发布ID
         explode: false
         in: path
         name: releaseId
@@ -2443,11 +2423,11 @@ paths:
         schema:
           type: integer
         style: simple
-      - description: ""
+      - description: 操作人用户名
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -2458,7 +2438,7 @@ paths:
               schema:
                 properties: {}
                 type: object
-          description: ""
+          description: 发布回滚成功
       summary: 回滚发布
       tags:
       - Release Management
@@ -2471,7 +2451,7 @@ paths:
       deprecated: false
       description: "GET /openapi/v1/envs/{env}/releases/{releaseId}"
       parameters:
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -2479,7 +2459,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 发布ID
         explode: false
         in: path
         name: releaseId
@@ -2507,7 +2487,7 @@ paths:
                 comment: ""
               schema:
                 $ref: "#/components/schemas/OpenReleaseDTO"
-          description: ""
+          description: 成功获取发布详情
       summary: 获取发布详情
       tags:
       - Release Management
@@ -2520,7 +2500,7 @@ paths:
       deprecated: false
       description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -2528,7 +2508,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -2536,7 +2516,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -2544,7 +2524,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -2552,7 +2532,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 页码，从0开始
         example: 0
         explode: true
         in: query
@@ -2561,7 +2541,7 @@ paths:
         schema:
           type: integer
         style: form
-      - description: ""
+      - description: 每页数量
         example: 5
         explode: true
         in: query
@@ -2596,9 +2576,9 @@ paths:
                   value: ""
               schema:
                 items:
-                  $ref: "#/components/schemas/ListReleaseBO"
+                  $ref: "#/components/schemas/OpenReleaseBO"
                 type: array
-          description: ""
+          description: 成功获取发布列表
       summary: 获取所有发布（分页）
       tags:
       - Release Management
@@ -2611,7 +2591,7 @@ paths:
       deprecated: false
       description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/active"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -2619,7 +2599,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -2627,7 +2607,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -2635,7 +2615,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -2643,7 +2623,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 页码，从0开始
         example: 0
         explode: true
         in: query
@@ -2652,7 +2632,7 @@ paths:
         schema:
           type: integer
         style: form
-      - description: ""
+      - description: 每页数量
         example: 5
         explode: true
         in: query
@@ -2683,7 +2663,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/OpenReleaseDTO"
                 type: array
-          description: ""
+          description: 成功获取活跃发布列表
       summary: 获取活跃发布（分页）
       tags:
       - Release Management
@@ -2691,65 +2671,19 @@ paths:
       - application/json
       x-tags:
       - tag: Release Management
-  /openapi/v1/envs/{env}/releases/compare:
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances:
     get:
       deprecated: false
-      description: "GET /openapi/v1/envs/{env}/releases/compare"
+      description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances"
       parameters:
-      - description: ""
-        explode: false
+      - explode: false
         in: path
         name: env
         required: true
         schema:
           type: string
         style: simple
-      - description: ""
-        explode: true
-        in: query
-        name: baseReleaseId
-        required: true
-        schema:
-          type: integer
-        style: form
-      - description: ""
-        explode: true
-        in: query
-        name: toCompareReleaseId
-        required: true
-        schema:
-          type: integer
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              example:
-                changes:
-                - type: ""
-                  entity:
-                    firstEntity:
-                      key: ""
-                      value: ""
-                    secondEntity:
-                      key: ""
-                      value: ""
-              schema:
-                $ref: "#/components/schemas/_openapi_v1_envs__env__releases_compare_get_200_response"
-          description: ""
-      summary: 对比发布
-      tags:
-      - Release Management
-      x-accepts:
-      - application/json
-      x-tags:
-      - tag: Release Management
-  /openapi/v1/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances:
-    get:
-      deprecated: false
-      description: "GET /openapi/v1/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances"
-      parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -2757,7 +2691,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -2765,7 +2699,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -2779,7 +2713,7 @@ paths:
             application/json:
               schema:
                 type: integer
-          description: ""
+          description: 成功返回实例数量
       summary: 获取命名空间下的实例数量
       tags:
       - Instance Management
@@ -2787,12 +2721,12 @@ paths:
       - application/json
       x-tags:
       - tag: Instance Management
-  /openapi/v1/envs/{env}/releases/{releaseId}/instances:
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_search:
     get:
       deprecated: false
-      description: "GET /openapi/v1/envs/{env}/releases/{releaseId}/instances"
+      description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_search"
       parameters:
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -2800,15 +2734,35 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
-        explode: false
+      - explode: false
         in: path
-        name: releaseId
+        name: appId
         required: true
         schema:
-          type: integer
+          type: string
         style: simple
-      - description: ""
+      - explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: instanceAppId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: 页码，从0开始
         example: 0
         explode: true
         in: query
@@ -2817,7 +2771,7 @@ paths:
         schema:
           type: integer
         style: form
-      - description: ""
+      - description: 每页数量
         example: 20
         explode: true
         in: query
@@ -2860,7 +2814,7 @@ paths:
                   dataChangeCreatedTime: ""
               schema:
                 $ref: "#/components/schemas/OpenPageDTOOpenInstanceDTO"
-          description: ""
+          description: 成功获取实例列表
       summary: 根据发布版本查询实例（支持分页）
       tags:
       - Instance Management
@@ -2868,12 +2822,12 @@ paths:
       - application/json
       x-tags:
       - tag: Instance Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances:
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in:
     get:
       deprecated: false
-      description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases=1,2,3"
+      description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in?excludeReleases=1,2,3"
       parameters:
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -2881,7 +2835,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -2889,7 +2843,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -2897,7 +2851,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -2945,7 +2899,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/OpenInstanceDTO"
                 type: array
-          description: ""
+          description: 成功返回实例列表
       summary: 查询不在指定发布版本中的实例
       tags:
       - Instance Management
@@ -3317,7 +3271,7 @@ paths:
       deprecated: false
       description: "DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -3325,7 +3279,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -3340,7 +3294,7 @@ paths:
               schema:
                 properties: {}
                 type: object
-          description: ""
+          description: AppNamespace删除成功
       summary: 删除AppNamespace
       tags:
       - App Management
@@ -3352,7 +3306,7 @@ paths:
       deprecated: false
       description: "GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -3360,7 +3314,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -3385,7 +3339,7 @@ paths:
                 comment: ""
               schema:
                 $ref: "#/components/schemas/OpenAppNamespaceDTO"
-          description: ""
+          description: 成功获取AppNamespace
       summary: 获取指定的AppNamespace
       tags:
       - Namespace Management
@@ -3398,7 +3352,7 @@ paths:
       deprecated: false
       description: "GET /openapi/v1/apps/{appId}/namespaces/releases/status"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -3420,7 +3374,7 @@ paths:
                     type: boolean
                   type: object
                 type: object
-          description: ""
+          description: 成功获取发布状态映射
       summary: 获取应用下所有Namespace的发布状态
       tags:
       - App Management
@@ -3433,7 +3387,7 @@ paths:
       deprecated: false
       description: "GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances"
       parameters:
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -3441,7 +3395,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 公共命名空间名称
         explode: false
         in: path
         name: publicNamespaceName
@@ -3449,7 +3403,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 页码，从0开始
         example: 0
         explode: true
         in: query
@@ -3458,7 +3412,7 @@ paths:
         schema:
           type: integer
         style: form
-      - description: ""
+      - description: 每页数量
         example: 10
         explode: true
         in: query
@@ -3495,7 +3449,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/OpenNamespaceDTO"
                 type: array
-          description: ""
+          description: 成功获取实例列表
       summary: 获取公共AppNamespace的所有实例
       tags:
       - Namespace Management
@@ -3508,7 +3462,7 @@ paths:
       deprecated: false
       description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -3516,7 +3470,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -3524,7 +3478,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -3532,7 +3486,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -3566,7 +3520,7 @@ paths:
                   comment: ""
               schema:
                 $ref: "#/components/schemas/OpenNamespaceDTO"
-          description: ""
+          description: 成功获取关联的公共Namespace
       summary: 获取关联的公共Namespace
       tags:
       - Namespace Management
@@ -3579,7 +3533,7 @@ paths:
       deprecated: false
       description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -3587,7 +3541,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -3595,7 +3549,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -3613,7 +3567,7 @@ paths:
                 items:
                   type: string
                 type: array
-          description: ""
+          description: 缺失的命名空间名称列表
       summary: 检查缺失的Namespace
       tags:
       - Namespace Management
@@ -3626,7 +3580,7 @@ paths:
       deprecated: false
       description: "DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -3634,7 +3588,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -3642,7 +3596,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -3650,7 +3604,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -3665,7 +3619,7 @@ paths:
               schema:
                 properties: {}
                 type: object
-          description: ""
+          description: 解除关联成功
       summary: 删除关联的Namespace
       tags:
       - App Management
@@ -3714,7 +3668,7 @@ paths:
       deprecated: false
       description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -3722,7 +3676,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -3730,7 +3684,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -3738,7 +3692,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -3780,7 +3734,7 @@ paths:
                   comment: 测试模式配置
               schema:
                 $ref: "#/components/schemas/OpenNamespaceDTO"
-          description: ""
+          description: 成功获取分支信息
         "404":
           content:
             application/json:
@@ -3796,12 +3750,11 @@ paths:
       - application/json
       x-tags:
       - tag: Cluster Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branch:
     post:
       deprecated: false
-      description: "POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branch"
+      description: "POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -3809,7 +3762,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -3817,7 +3770,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -3825,7 +3778,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -3833,11 +3786,11 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 操作人用户名
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -3867,7 +3820,7 @@ paths:
                   comment: ""
               schema:
                 $ref: "#/components/schemas/OpenNamespaceDTO"
-          description: ""
+          description: 命名空间分支创建成功
       summary: 创建命名空间分支
       tags:
       - Namespace Branch Management
@@ -3880,7 +3833,7 @@ paths:
       deprecated: false
       description: "DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}"
       parameters:
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -3888,7 +3841,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -3896,7 +3849,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -3904,7 +3857,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -3912,7 +3865,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 分支名称
         explode: false
         in: path
         name: branchName
@@ -3920,11 +3873,11 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 操作人用户名
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -3935,7 +3888,7 @@ paths:
               schema:
                 properties: {}
                 type: object
-          description: ""
+          description: 分支删除成功
       summary: 删除命名空间分支
       tags:
       - Namespace Branch Management
@@ -3950,7 +3903,7 @@ paths:
 
         使用 PATCH 方法表示部分更新操作（将分支状态从"独立"更新为"合并"）
       parameters:
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -3958,7 +3911,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -3966,7 +3919,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -3974,7 +3927,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -3982,7 +3935,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 分支名称
         explode: false
         in: path
         name: branchName
@@ -3990,7 +3943,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 合并后是否删除分支（true/false）
         example: "true"
         explode: true
         in: query
@@ -3999,21 +3952,13 @@ paths:
         schema:
           type: boolean
         style: form
-      - description: ""
-        explode: false
-        in: header
-        name: X-Apollo-Operator
-        required: true
-        schema:
-          type: string
-        style: simple
       requestBody:
         content:
           application/json:
             schema:
               allOf:
               - $ref: "#/components/schemas/NamespaceReleaseDTO"
-              description: ""
+              description: 合并分支发布请求体
               required:
               - releaseTitle
               - releasedBy
@@ -4039,7 +3984,7 @@ paths:
                 comment: ""
               schema:
                 $ref: "#/components/schemas/OpenReleaseDTO"
-          description: ""
+          description: 分支合并成功
       summary: 合并分支到主分支
       tags:
       - Namespace Branch Management
@@ -4048,12 +3993,12 @@ paths:
       - application/json
       x-tags:
       - tag: Namespace Branch Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-rules:
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules:
     get:
       deprecated: false
-      description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-rules"
+      description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -4061,7 +4006,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -4069,7 +4014,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -4077,7 +4022,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -4085,7 +4030,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 分支名称
         explode: false
         in: path
         name: branchName
@@ -4114,7 +4059,7 @@ paths:
                   - ""
               schema:
                 $ref: "#/components/schemas/OpenGrayReleaseRuleDTO"
-          description: ""
+          description: 成功获取灰度发布规则
       summary: 获取分支灰度发布规则
       tags:
       - Namespace Branch Management
@@ -4124,9 +4069,9 @@ paths:
       - tag: Namespace Branch Management
     put:
       deprecated: false
-      description: "PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-rules"
+      description: "PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules"
       parameters:
-      - description: ""
+      - description: 应用ID
         explode: false
         in: path
         name: appId
@@ -4134,7 +4079,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 环境标识
         explode: false
         in: path
         name: env
@@ -4142,7 +4087,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 集群名称
         explode: false
         in: path
         name: clusterName
@@ -4150,7 +4095,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 命名空间名称
         explode: false
         in: path
         name: namespaceName
@@ -4158,7 +4103,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 分支名称
         explode: false
         in: path
         name: branchName
@@ -4166,21 +4111,21 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
-        explode: false
-        in: header
+      - description: 操作人用户名
+        explode: true
+        in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
-        style: simple
+        style: form
       requestBody:
         content:
           application/json:
             schema:
               allOf:
               - $ref: "#/components/schemas/OpenGrayReleaseRuleDTO"
-              description: ""
+              description: 更新灰度发布规则请求体
               required:
               - ruleItems
               type: object
@@ -4192,7 +4137,7 @@ paths:
               schema:
                 properties: {}
                 type: object
-          description: ""
+          description: 灰度规则更新成功
       summary: 更新分支灰度发布规则
       tags:
       - Namespace Branch Management
@@ -4369,12 +4314,8 @@ components:
           type: string
       type: object
     MapString:
-      description: 字符串映射对象，用于表示键值对的配置数据结构
-      example:
-        key: key
-      properties:
-        key:
-          type: string
+      additionalProperties:
+        type: string
       type: object
     OpenReleaseDTO:
       description: Apollo发布信息数据传输对象，表示一次配置发布的完整信息
@@ -4382,7 +4323,7 @@ components:
         dataChangeCreatedTime: dataChangeCreatedTime
         dataChangeLastModifiedBy: dataChangeLastModifiedBy
         configurations:
-          key: key
+          key: configurations
         appId: appId
         clusterName: clusterName
         dataChangeCreatedBy: dataChangeCreatedBy
@@ -4421,7 +4362,9 @@ components:
           description: 发布名称，用于标识这次发布的版本或描述
           type: string
         configurations:
-          $ref: "#/components/schemas/MapString"
+          additionalProperties:
+            type: string
+          type: object
         comment:
           description: 发布备注，描述本次发布的变更内容和目的
           type: string
@@ -4701,7 +4644,7 @@ components:
               dataChangeCreatedTime: dataChangeCreatedTime
               dataChangeLastModifiedBy: dataChangeLastModifiedBy
               configurations:
-                key: key
+                key: configurations
               appId: appId
               clusterName: clusterName
               dataChangeCreatedBy: dataChangeCreatedBy
@@ -4716,7 +4659,7 @@ components:
               dataChangeCreatedTime: dataChangeCreatedTime
               dataChangeLastModifiedBy: dataChangeLastModifiedBy
               configurations:
-                key: key
+                key: configurations
               appId: appId
               clusterName: clusterName
               dataChangeCreatedBy: dataChangeCreatedBy
@@ -4738,7 +4681,7 @@ components:
               dataChangeCreatedTime: dataChangeCreatedTime
               dataChangeLastModifiedBy: dataChangeLastModifiedBy
               configurations:
-                key: key
+                key: configurations
               appId: appId
               clusterName: clusterName
               dataChangeCreatedBy: dataChangeCreatedBy
@@ -4753,7 +4696,7 @@ components:
               dataChangeCreatedTime: dataChangeCreatedTime
               dataChangeLastModifiedBy: dataChangeLastModifiedBy
               configurations:
-                key: key
+                key: configurations
               appId: appId
               clusterName: clusterName
               dataChangeCreatedBy: dataChangeCreatedBy
@@ -4794,105 +4737,41 @@ components:
         - clusters
       properties:
         env:
-          description: ""
+          description: 环境标识，例如 DEV、FAT、UAT、PROD
           type: string
         clusters:
-          description: ""
+          description: 该环境下的集群名称列表
           items:
             type: string
           type: array
       type: object
-    ClusterDTO:
-      example:
-        dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-        dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
-        dataChangeCreatedTime: dataChangeCreatedTime
-        dataChangeLastModifiedBy: dataChangeLastModifiedBy
-        appId: appId
-        dataChangeCreatedBy: dataChangeCreatedBy
-        name: name
-        parentClusterId: 6
-        comment: comment
-        id: 0
-        dataChangeLastModifiedTime: dataChangeLastModifiedTime
-      properties:
-        dataChangeCreatedBy:
-          description: ""
-          type: string
-        dataChangeLastModifiedBy:
-          description: ""
-          type: string
-        dataChangeCreatedByDisplayName:
-          description: ""
-          type: string
-        dataChangeLastModifiedByDisplayName:
-          description: ""
-          type: string
-        dataChangeCreatedTime:
-          description: ""
-          type: string
-        dataChangeLastModifiedTime:
-          description: ""
-          type: string
-        id:
-          description: ""
-          format: int64
-          type: integer
-        name:
-          description: ""
-          pattern: "[0-9a-zA-Z_-]+[0-9a-zA-Z_.-]*"
-          type: string
-        appId:
-          description: ""
-          type: string
-        parentClusterId:
-          description: ""
-          format: int64
-          type: integer
-        comment:
-          description: ""
-          type: string
-      required:
-      - appId
-      - name
-      type: object
-    EnvClusterInfo:
+    OpenEnvClusterInfo:
       example:
         env: env
         clusters:
-        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
-          dataChangeCreatedTime: dataChangeCreatedTime
+        - dataChangeCreatedTime: dataChangeCreatedTime
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           appId: appId
           dataChangeCreatedBy: dataChangeCreatedBy
           name: name
-          parentClusterId: 6
-          comment: comment
-          id: 0
           dataChangeLastModifiedTime: dataChangeLastModifiedTime
-        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
-          dataChangeCreatedTime: dataChangeCreatedTime
+        - dataChangeCreatedTime: dataChangeCreatedTime
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           appId: appId
           dataChangeCreatedBy: dataChangeCreatedBy
           name: name
-          parentClusterId: 6
-          comment: comment
-          id: 0
           dataChangeLastModifiedTime: dataChangeLastModifiedTime
       properties:
         env:
-          description: ""
+          description: 环境标识
           type: string
         clusters:
-          description: ""
+          description: 集群信息列表
           items:
-            $ref: "#/components/schemas/ClusterDTO"
+            $ref: "#/components/schemas/OpenClusterDTO"
           type: array
       type: object
-    NamespaceTextModel:
+    OpenNamespaceTextModel:
       example:
         configText: configText
         namespaceId: 0
@@ -4904,32 +4783,32 @@ components:
         operator: operator
       properties:
         appId:
-          description: ""
+          description: 应用唯一标识
           type: string
         env:
-          description: ""
+          description: 环境标识
           type: string
         clusterName:
-          description: ""
+          description: 集群名称
           type: string
         namespaceName:
-          description: ""
+          description: 命名空间名称
           type: string
         namespaceId:
-          description: ""
+          description: 命名空间ID
           format: int64
           type: integer
         format:
-          description: ""
+          description: 命名空间格式类型（properties/xml/json/yml等）
           type: string
         configText:
-          description: ""
+          description: 配置内容的原始文本
           type: string
         operator:
-          description: ""
+          description: 操作者用户名
           type: string
       type: object
-    NamespaceIdentifier:
+    OpenNamespaceIdentifier:
       example:
         appId: appId
         clusterName: clusterName
@@ -4937,77 +4816,19 @@ components:
         namespaceName: namespaceName
       properties:
         appId:
-          description: ""
+          description: 应用唯一标识
           type: string
         env:
-          description: ""
+          description: 环境标识
           type: string
         clusterName:
-          description: ""
+          description: 集群名称
           type: string
         namespaceName:
-          description: ""
+          description: 命名空间名称
           type: string
       type: object
-    ItemDTO:
-      example:
-        dataChangeCreatedTime: dataChangeCreatedTime
-        dataChangeCreatedBy: dataChangeCreatedBy
-        type: 1
-        dataChangeLastModifiedTime: dataChangeLastModifiedTime
-        dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-        dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
-        dataChangeLastModifiedBy: dataChangeLastModifiedBy
-        namespaceId: 6
-        lineNum: 5
-        comment: comment
-        id: 0
-        value: value
-        key: key
-      properties:
-        dataChangeCreatedBy:
-          description: ""
-          type: string
-        dataChangeLastModifiedBy:
-          description: ""
-          type: string
-        dataChangeCreatedByDisplayName:
-          description: ""
-          type: string
-        dataChangeLastModifiedByDisplayName:
-          description: ""
-          type: string
-        dataChangeCreatedTime:
-          description: ""
-          type: string
-        dataChangeLastModifiedTime:
-          description: ""
-          type: string
-        id:
-          description: ""
-          format: int64
-          type: integer
-        namespaceId:
-          description: ""
-          format: int64
-          type: integer
-        key:
-          description: ""
-          type: string
-        type:
-          description: ""
-          type: integer
-        value:
-          description: ""
-          type: string
-        comment:
-          description: ""
-          type: string
-        lineNum:
-          description: ""
-          type: integer
-      type: object
-    ItemChangeSets:
+    OpenItemChangeSets:
       example:
         dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
         dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
@@ -5016,125 +4837,95 @@ components:
         dataChangeCreatedBy: dataChangeCreatedBy
         deleteItems:
         - dataChangeCreatedTime: dataChangeCreatedTime
-          dataChangeCreatedBy: dataChangeCreatedBy
-          type: 1
-          dataChangeLastModifiedTime: dataChangeLastModifiedTime
-          dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          namespaceId: 6
-          lineNum: 5
+          dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
-          id: 0
+          type: 0
           value: value
+          dataChangeLastModifiedTime: dataChangeLastModifiedTime
           key: key
         - dataChangeCreatedTime: dataChangeCreatedTime
-          dataChangeCreatedBy: dataChangeCreatedBy
-          type: 1
-          dataChangeLastModifiedTime: dataChangeLastModifiedTime
-          dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          namespaceId: 6
-          lineNum: 5
+          dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
-          id: 0
+          type: 0
           value: value
+          dataChangeLastModifiedTime: dataChangeLastModifiedTime
           key: key
         createItems:
         - dataChangeCreatedTime: dataChangeCreatedTime
-          dataChangeCreatedBy: dataChangeCreatedBy
-          type: 1
-          dataChangeLastModifiedTime: dataChangeLastModifiedTime
-          dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          namespaceId: 6
-          lineNum: 5
+          dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
-          id: 0
+          type: 0
           value: value
+          dataChangeLastModifiedTime: dataChangeLastModifiedTime
           key: key
         - dataChangeCreatedTime: dataChangeCreatedTime
-          dataChangeCreatedBy: dataChangeCreatedBy
-          type: 1
-          dataChangeLastModifiedTime: dataChangeLastModifiedTime
-          dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          namespaceId: 6
-          lineNum: 5
+          dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
-          id: 0
+          type: 0
           value: value
+          dataChangeLastModifiedTime: dataChangeLastModifiedTime
           key: key
         updateItems:
         - dataChangeCreatedTime: dataChangeCreatedTime
-          dataChangeCreatedBy: dataChangeCreatedBy
-          type: 1
-          dataChangeLastModifiedTime: dataChangeLastModifiedTime
-          dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          namespaceId: 6
-          lineNum: 5
+          dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
-          id: 0
+          type: 0
           value: value
+          dataChangeLastModifiedTime: dataChangeLastModifiedTime
           key: key
         - dataChangeCreatedTime: dataChangeCreatedTime
-          dataChangeCreatedBy: dataChangeCreatedBy
-          type: 1
-          dataChangeLastModifiedTime: dataChangeLastModifiedTime
-          dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          namespaceId: 6
-          lineNum: 5
+          dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
-          id: 0
+          type: 0
           value: value
+          dataChangeLastModifiedTime: dataChangeLastModifiedTime
           key: key
         dataChangeLastModifiedTime: dataChangeLastModifiedTime
       properties:
         dataChangeCreatedBy:
-          description: ""
+          description: 变更集合创建者用户名
           type: string
         dataChangeLastModifiedBy:
-          description: ""
+          description: 变更集合最后修改者用户名
           type: string
         dataChangeCreatedByDisplayName:
-          description: ""
+          description: 创建者显示名
           type: string
         dataChangeLastModifiedByDisplayName:
-          description: ""
+          description: 最后修改者显示名
           type: string
         dataChangeCreatedTime:
-          description: ""
+          description: 变更集合创建时间（ISO 8601）
           type: string
         dataChangeLastModifiedTime:
-          description: ""
+          description: 变更集合最后修改时间（ISO 8601）
           type: string
         createItems:
           default: []
-          description: ""
+          description: 待创建的配置项列表
           items:
-            $ref: "#/components/schemas/ItemDTO"
+            $ref: "#/components/schemas/OpenItemDTO"
           type: array
         updateItems:
           default: []
-          description: ""
+          description: 待更新的配置项列表
           items:
-            $ref: "#/components/schemas/ItemDTO"
+            $ref: "#/components/schemas/OpenItemDTO"
           type: array
         deleteItems:
           default: []
-          description: ""
+          description: 待删除的配置项列表
           items:
-            $ref: "#/components/schemas/ItemDTO"
+            $ref: "#/components/schemas/OpenItemDTO"
           type: array
       type: object
-    ListItemDiffs:
+    OpenItemDiffs:
       example:
         namespace:
           appId: appId
@@ -5149,124 +4940,84 @@ components:
           dataChangeCreatedBy: dataChangeCreatedBy
           deleteItems:
           - dataChangeCreatedTime: dataChangeCreatedTime
-            dataChangeCreatedBy: dataChangeCreatedBy
-            type: 1
-            dataChangeLastModifiedTime: dataChangeLastModifiedTime
-            dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-            dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
             dataChangeLastModifiedBy: dataChangeLastModifiedBy
-            namespaceId: 6
-            lineNum: 5
+            dataChangeCreatedBy: dataChangeCreatedBy
             comment: comment
-            id: 0
+            type: 0
             value: value
+            dataChangeLastModifiedTime: dataChangeLastModifiedTime
             key: key
           - dataChangeCreatedTime: dataChangeCreatedTime
-            dataChangeCreatedBy: dataChangeCreatedBy
-            type: 1
-            dataChangeLastModifiedTime: dataChangeLastModifiedTime
-            dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-            dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
             dataChangeLastModifiedBy: dataChangeLastModifiedBy
-            namespaceId: 6
-            lineNum: 5
+            dataChangeCreatedBy: dataChangeCreatedBy
             comment: comment
-            id: 0
+            type: 0
             value: value
+            dataChangeLastModifiedTime: dataChangeLastModifiedTime
             key: key
           createItems:
           - dataChangeCreatedTime: dataChangeCreatedTime
-            dataChangeCreatedBy: dataChangeCreatedBy
-            type: 1
-            dataChangeLastModifiedTime: dataChangeLastModifiedTime
-            dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-            dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
             dataChangeLastModifiedBy: dataChangeLastModifiedBy
-            namespaceId: 6
-            lineNum: 5
+            dataChangeCreatedBy: dataChangeCreatedBy
             comment: comment
-            id: 0
+            type: 0
             value: value
+            dataChangeLastModifiedTime: dataChangeLastModifiedTime
             key: key
           - dataChangeCreatedTime: dataChangeCreatedTime
-            dataChangeCreatedBy: dataChangeCreatedBy
-            type: 1
-            dataChangeLastModifiedTime: dataChangeLastModifiedTime
-            dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-            dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
             dataChangeLastModifiedBy: dataChangeLastModifiedBy
-            namespaceId: 6
-            lineNum: 5
+            dataChangeCreatedBy: dataChangeCreatedBy
             comment: comment
-            id: 0
+            type: 0
             value: value
+            dataChangeLastModifiedTime: dataChangeLastModifiedTime
             key: key
           updateItems:
           - dataChangeCreatedTime: dataChangeCreatedTime
-            dataChangeCreatedBy: dataChangeCreatedBy
-            type: 1
-            dataChangeLastModifiedTime: dataChangeLastModifiedTime
-            dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-            dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
             dataChangeLastModifiedBy: dataChangeLastModifiedBy
-            namespaceId: 6
-            lineNum: 5
+            dataChangeCreatedBy: dataChangeCreatedBy
             comment: comment
-            id: 0
+            type: 0
             value: value
+            dataChangeLastModifiedTime: dataChangeLastModifiedTime
             key: key
           - dataChangeCreatedTime: dataChangeCreatedTime
-            dataChangeCreatedBy: dataChangeCreatedBy
-            type: 1
-            dataChangeLastModifiedTime: dataChangeLastModifiedTime
-            dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-            dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
             dataChangeLastModifiedBy: dataChangeLastModifiedBy
-            namespaceId: 6
-            lineNum: 5
+            dataChangeCreatedBy: dataChangeCreatedBy
             comment: comment
-            id: 0
+            type: 0
             value: value
+            dataChangeLastModifiedTime: dataChangeLastModifiedTime
             key: key
           dataChangeLastModifiedTime: dataChangeLastModifiedTime
         extInfo: extInfo
       properties:
         namespace:
-          $ref: "#/components/schemas/NamespaceIdentifier"
+          $ref: "#/components/schemas/OpenNamespaceIdentifier"
         diffs:
-          $ref: "#/components/schemas/ItemChangeSets"
+          $ref: "#/components/schemas/OpenItemChangeSets"
         extInfo:
-          description: ""
+          description: 扩展信息
           type: string
       type: object
-    NamespaceSyncModel:
+    OpenNamespaceSyncModel:
       example:
         syncItems:
         - dataChangeCreatedTime: dataChangeCreatedTime
-          dataChangeCreatedBy: dataChangeCreatedBy
-          type: 1
-          dataChangeLastModifiedTime: dataChangeLastModifiedTime
-          dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          namespaceId: 6
-          lineNum: 5
+          dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
-          id: 0
+          type: 0
           value: value
+          dataChangeLastModifiedTime: dataChangeLastModifiedTime
           key: key
         - dataChangeCreatedTime: dataChangeCreatedTime
-          dataChangeCreatedBy: dataChangeCreatedBy
-          type: 1
-          dataChangeLastModifiedTime: dataChangeLastModifiedTime
-          dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          namespaceId: 6
-          lineNum: 5
+          dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
-          id: 0
+          type: 0
           value: value
+          dataChangeLastModifiedTime: dataChangeLastModifiedTime
           key: key
         syncToNamespaces:
         - appId: appId
@@ -5279,80 +5030,15 @@ components:
           namespaceName: namespaceName
       properties:
         syncToNamespaces:
-          description: ""
+          description: 目标命名空间标识列表
           items:
-            $ref: "#/components/schemas/NamespaceIdentifier"
+            $ref: "#/components/schemas/OpenNamespaceIdentifier"
           type: array
         syncItems:
-          description: ""
+          description: 需要同步的配置项列表
           items:
-            $ref: "#/components/schemas/ItemDTO"
+            $ref: "#/components/schemas/OpenItemDTO"
           type: array
-      type: object
-    ReleaseDTO:
-      example:
-        dataChangeCreatedTime: dataChangeCreatedTime
-        configurations: configurations
-        dataChangeCreatedBy: dataChangeCreatedBy
-        releaseKey: releaseKey
-        dataChangeLastModifiedTime: dataChangeLastModifiedTime
-        isAbandoned: true
-        dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-        dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
-        dataChangeLastModifiedBy: dataChangeLastModifiedBy
-        appId: appId
-        clusterName: clusterName
-        name: name
-        comment: comment
-        id: 0
-        namespaceName: namespaceName
-      properties:
-        dataChangeCreatedBy:
-          description: ""
-          type: string
-        dataChangeLastModifiedBy:
-          description: ""
-          type: string
-        dataChangeCreatedByDisplayName:
-          description: ""
-          type: string
-        dataChangeLastModifiedByDisplayName:
-          description: ""
-          type: string
-        dataChangeCreatedTime:
-          description: ""
-          type: string
-        dataChangeLastModifiedTime:
-          description: ""
-          type: string
-        id:
-          description: ""
-          format: int64
-          type: integer
-        releaseKey:
-          description: ""
-          type: string
-        name:
-          description: ""
-          type: string
-        appId:
-          description: ""
-          type: string
-        clusterName:
-          description: ""
-          type: string
-        namespaceName:
-          description: ""
-          type: string
-        configurations:
-          description: ""
-          type: string
-        comment:
-          description: ""
-          type: string
-        isAbandoned:
-          description: ""
-          type: boolean
       type: object
     KVEntity:
       example:
@@ -5360,29 +5046,26 @@ components:
         key: key
       properties:
         key:
-          description: ""
+          description: 键
           type: string
         value:
-          description: ""
+          description: 值
           type: string
       type: object
-    ListReleaseBO:
+    OpenReleaseBO:
       example:
         baseInfo:
           dataChangeCreatedTime: dataChangeCreatedTime
-          configurations: configurations
-          dataChangeCreatedBy: dataChangeCreatedBy
-          releaseKey: releaseKey
-          dataChangeLastModifiedTime: dataChangeLastModifiedTime
-          isAbandoned: true
-          dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
+          configurations:
+            key: configurations
           appId: appId
           clusterName: clusterName
+          dataChangeCreatedBy: dataChangeCreatedBy
           name: name
           comment: comment
           id: 0
+          dataChangeLastModifiedTime: dataChangeLastModifiedTime
           namespaceName: namespaceName
         items:
         - value: value
@@ -5391,47 +5074,11 @@ components:
           key: key
       properties:
         baseInfo:
-          $ref: "#/components/schemas/ReleaseDTO"
+          $ref: "#/components/schemas/OpenReleaseDTO"
         items:
-          description: ""
           items:
             $ref: "#/components/schemas/KVEntity"
           type: array
-      type: object
-    EntityPairKVEntity:
-      example:
-        firstEntity:
-          value: value
-          key: key
-        secondEntity:
-          value: value
-          key: key
-      properties:
-        firstEntity:
-          $ref: "#/components/schemas/KVEntity"
-        secondEntity:
-          $ref: "#/components/schemas/KVEntity"
-      type: object
-    Change:
-      example:
-        type: ADDED
-        entity:
-          firstEntity:
-            value: value
-            key: key
-          secondEntity:
-            value: value
-            key: key
-      properties:
-        type:
-          description: ""
-          enum:
-          - ADDED
-          - MODIFIED
-          - DELETED
-          type: string
-        entity:
-          $ref: "#/components/schemas/EntityPairKVEntity"
       type: object
     OpenInstanceConfigDTO:
       example:
@@ -5440,7 +5087,7 @@ components:
           dataChangeCreatedTime: dataChangeCreatedTime
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           configurations:
-            key: key
+            key: configurations
           appId: appId
           clusterName: clusterName
           dataChangeCreatedBy: dataChangeCreatedBy
@@ -5454,10 +5101,10 @@ components:
         release:
           $ref: "#/components/schemas/OpenReleaseDTO"
         releaseDeliveryTime:
-          description: ""
+          description: 配置下发时间（ISO 8601）
           type: string
         dataChangeLastModifiedTime:
-          description: ""
+          description: 最后修改时间（ISO 8601）
           type: string
       type: object
     OpenInstanceDTO:
@@ -5468,7 +5115,7 @@ components:
             dataChangeCreatedTime: dataChangeCreatedTime
             dataChangeLastModifiedBy: dataChangeLastModifiedBy
             configurations:
-              key: key
+              key: configurations
             appId: appId
             clusterName: clusterName
             dataChangeCreatedBy: dataChangeCreatedBy
@@ -5483,7 +5130,7 @@ components:
             dataChangeCreatedTime: dataChangeCreatedTime
             dataChangeLastModifiedBy: dataChangeLastModifiedBy
             configurations:
-              key: key
+              key: configurations
             appId: appId
             clusterName: clusterName
             dataChangeCreatedBy: dataChangeCreatedBy
@@ -5501,28 +5148,28 @@ components:
         id: 5
       properties:
         id:
-          description: ""
+          description: 实例ID
           format: int64
           type: integer
         appId:
-          description: ""
+          description: 实例所属应用ID
           type: string
         clusterName:
-          description: ""
+          description: 实例所属集群名称
           type: string
         dataCenter:
-          description: ""
+          description: 数据中心/机房标识
           type: string
         ip:
-          description: ""
+          description: 实例IP地址
           type: string
         configs:
-          description: ""
+          description: 实例当前生效的配置列表
           items:
             $ref: "#/components/schemas/OpenInstanceConfigDTO"
           type: array
         dataChangeCreatedTime:
-          description: ""
+          description: 数据创建时间（ISO 8601）
           type: string
       type: object
     OpenOrganizationDto:
@@ -5531,10 +5178,10 @@ components:
         orgId: orgId
       properties:
         orgId:
-          description: ""
+          description: 组织ID
           type: string
         orgName:
-          description: ""
+          description: 组织名称
           type: string
       type: object
     _openapi_v1_apps_get_401_response:
@@ -5547,7 +5194,7 @@ components:
     _openapi_v1_apps_post_request:
       allOf:
       - $ref: "#/components/schemas/OpenCreateAppDTO"
-      description: ""
+      description: 创建应用请求体，包含应用基本信息与管理员设置
       properties:
         app:
           allOf:
@@ -5572,58 +5219,6 @@ components:
           type: string
         exception:
           type: string
-      type: object
-    _openapi_v1_envs__env__apps__appId__clusters__clusterName__namespaces__namespaceName__items_validate_post_200_response:
-      example:
-        valid: true
-        message: message
-      properties:
-        valid:
-          type: boolean
-        message:
-          type: string
-      type: object
-    _openapi_v1_envs__env__apps__appId__clusters__clusterName__namespaces__namespaceName__items_validate_post_400_response:
-      example:
-        valid: true
-        message: message
-        errors:
-        - errors
-        - errors
-      properties:
-        valid:
-          type: boolean
-        message:
-          type: string
-        errors:
-          items:
-            type: string
-          type: array
-      type: object
-    _openapi_v1_envs__env__releases_compare_get_200_response:
-      example:
-        changes:
-        - type: ADDED
-          entity:
-            firstEntity:
-              value: value
-              key: key
-            secondEntity:
-              value: value
-              key: key
-        - type: ADDED
-          entity:
-            firstEntity:
-              value: value
-              key: key
-            secondEntity:
-              value: value
-              key: key
-      properties:
-        changes:
-          items:
-            $ref: "#/components/schemas/Change"
-          type: array
       type: object
   securitySchemes:
     ApiKeyAuth:

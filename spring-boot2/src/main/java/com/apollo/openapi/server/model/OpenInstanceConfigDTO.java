@@ -20,7 +20,7 @@ import javax.annotation.Generated;
  * OpenInstanceConfigDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenInstanceConfigDTO {
 
   private @Nullable OpenReleaseDTO release;
@@ -38,7 +38,7 @@ public class OpenInstanceConfigDTO {
    * Get release
    * @return release
    */
-  @Valid 
+  @Valid
   @Schema(name = "release", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("release")
   public @Nullable OpenReleaseDTO getRelease() {
@@ -55,11 +55,11 @@ public class OpenInstanceConfigDTO {
   }
 
   /**
-   * 
+   * 配置下发时间（ISO 8601）
    * @return releaseDeliveryTime
    */
-  
-  @Schema(name = "releaseDeliveryTime", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+
+  @Schema(name = "releaseDeliveryTime", description = "配置下发时间（ISO 8601）", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("releaseDeliveryTime")
   public @Nullable String getReleaseDeliveryTime() {
     return releaseDeliveryTime;
@@ -75,11 +75,11 @@ public class OpenInstanceConfigDTO {
   }
 
   /**
-   * 
+   * 最后修改时间（ISO 8601）
    * @return dataChangeLastModifiedTime
    */
-  
-  @Schema(name = "dataChangeLastModifiedTime", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+
+  @Schema(name = "dataChangeLastModifiedTime", description = "最后修改时间（ISO 8601）", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedTime")
   public @Nullable String getDataChangeLastModifiedTime() {
     return dataChangeLastModifiedTime;
@@ -130,4 +130,3 @@ public class OpenInstanceConfigDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

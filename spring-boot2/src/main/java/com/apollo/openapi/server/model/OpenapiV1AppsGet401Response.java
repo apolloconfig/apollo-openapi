@@ -21,7 +21,7 @@ import javax.annotation.Generated;
  */
 
 @JsonTypeName("_openapi_v1_apps_get_401_response")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenapiV1AppsGet401Response {
 
   private @Nullable String message;
@@ -35,7 +35,7 @@ public class OpenapiV1AppsGet401Response {
    * Get message
    * @return message
    */
-  
+
   @Schema(name = "message", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("message")
   public @Nullable String getMessage() {
@@ -83,4 +83,3 @@ public class OpenapiV1AppsGet401Response {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

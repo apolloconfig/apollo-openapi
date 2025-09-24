@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 @Validated
 @Tag(name = "Organization Management", description = "组织管理相关接口，包括组织信息查询等功能")
 public interface OrganizationManagementApi {
@@ -70,9 +70,9 @@ public interface OrganizationManagementApi {
         value = OrganizationManagementApi.PATH_OPENAPI_V1_ORGANIZATIONS_GET,
         produces = { "application/json" }
     )
-    
+
     default ResponseEntity<List<OpenOrganizationDto>> openapiV1OrganizationsGet(
-        
+
     ) {
         return getDelegate().openapiV1OrganizationsGet();
     }

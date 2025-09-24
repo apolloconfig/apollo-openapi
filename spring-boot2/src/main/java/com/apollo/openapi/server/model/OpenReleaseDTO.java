@@ -2,9 +2,10 @@ package com.apollo.openapi.server.model;
 
 import java.net.URI;
 import java.util.Objects;
-import com.apollo.openapi.server.model.MapString;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
@@ -21,7 +22,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenReleaseDTO", description = "Apollo发布信息数据传输对象，表示一次配置发布的完整信息")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenReleaseDTO {
 
   private @Nullable String dataChangeCreatedBy;
@@ -42,7 +43,8 @@ public class OpenReleaseDTO {
 
   private @Nullable String name;
 
-  private @Nullable MapString configurations;
+  @Valid
+  private Map<String, String> configurations = new HashMap<>();
 
   private @Nullable String comment;
 
@@ -55,7 +57,7 @@ public class OpenReleaseDTO {
    * 发布创建者用户名，记录是谁创建了这次发布
    * @return dataChangeCreatedBy
    */
-  
+
   @Schema(name = "dataChangeCreatedBy", description = "发布创建者用户名，记录是谁创建了这次发布", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedBy")
   public @Nullable String getDataChangeCreatedBy() {
@@ -75,7 +77,7 @@ public class OpenReleaseDTO {
    * 发布最后修改者用户名，记录最后一次修改发布信息的用户
    * @return dataChangeLastModifiedBy
    */
-  
+
   @Schema(name = "dataChangeLastModifiedBy", description = "发布最后修改者用户名，记录最后一次修改发布信息的用户", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedBy")
   public @Nullable String getDataChangeLastModifiedBy() {
@@ -95,7 +97,7 @@ public class OpenReleaseDTO {
    * 发布创建时间，ISO 8601格式的时间戳
    * @return dataChangeCreatedTime
    */
-  
+
   @Schema(name = "dataChangeCreatedTime", description = "发布创建时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedTime")
   public @Nullable String getDataChangeCreatedTime() {
@@ -115,7 +117,7 @@ public class OpenReleaseDTO {
    * 发布最后修改时间，ISO 8601格式的时间戳
    * @return dataChangeLastModifiedTime
    */
-  
+
   @Schema(name = "dataChangeLastModifiedTime", description = "发布最后修改时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedTime")
   public @Nullable String getDataChangeLastModifiedTime() {
@@ -135,7 +137,7 @@ public class OpenReleaseDTO {
    * 发布记录的唯一标识符，系统自动生成
    * @return id
    */
-  
+
   @Schema(name = "id", description = "发布记录的唯一标识符，系统自动生成", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("id")
   public @Nullable Long getId() {
@@ -155,7 +157,7 @@ public class OpenReleaseDTO {
    * 所属应用的唯一标识符
    * @return appId
    */
-  
+
   @Schema(name = "appId", description = "所属应用的唯一标识符", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("appId")
   public @Nullable String getAppId() {
@@ -175,7 +177,7 @@ public class OpenReleaseDTO {
    * 所属集群的名称
    * @return clusterName
    */
-  
+
   @Schema(name = "clusterName", description = "所属集群的名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clusterName")
   public @Nullable String getClusterName() {
@@ -195,7 +197,7 @@ public class OpenReleaseDTO {
    * 所属命名空间的名称
    * @return namespaceName
    */
-  
+
   @Schema(name = "namespaceName", description = "所属命名空间的名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("namespaceName")
   public @Nullable String getNamespaceName() {
@@ -215,7 +217,7 @@ public class OpenReleaseDTO {
    * 发布名称，用于标识这次发布的版本或描述
    * @return name
    */
-  
+
   @Schema(name = "name", description = "发布名称，用于标识这次发布的版本或描述", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
   public @Nullable String getName() {
@@ -226,8 +228,16 @@ public class OpenReleaseDTO {
     this.name = name;
   }
 
-  public OpenReleaseDTO configurations(@Nullable MapString configurations) {
+  public OpenReleaseDTO configurations(Map<String, String> configurations) {
     this.configurations = configurations;
+    return this;
+  }
+
+  public OpenReleaseDTO putConfigurationsItem(String key, String configurationsItem) {
+    if (this.configurations == null) {
+      this.configurations = new HashMap<>();
+    }
+    this.configurations.put(key, configurationsItem);
     return this;
   }
 
@@ -235,14 +245,14 @@ public class OpenReleaseDTO {
    * Get configurations
    * @return configurations
    */
-  @Valid 
+
   @Schema(name = "configurations", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("configurations")
-  public @Nullable MapString getConfigurations() {
+  public Map<String, String> getConfigurations() {
     return configurations;
   }
 
-  public void setConfigurations(@Nullable MapString configurations) {
+  public void setConfigurations(Map<String, String> configurations) {
     this.configurations = configurations;
   }
 
@@ -255,7 +265,7 @@ public class OpenReleaseDTO {
    * 发布备注，描述本次发布的变更内容和目的
    * @return comment
    */
-  
+
   @Schema(name = "comment", description = "发布备注，描述本次发布的变更内容和目的", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("comment")
   public @Nullable String getComment() {
@@ -323,4 +333,3 @@ public class OpenReleaseDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

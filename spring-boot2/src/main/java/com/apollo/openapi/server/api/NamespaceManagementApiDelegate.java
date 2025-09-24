@@ -22,7 +22,7 @@ import javax.annotation.Generated;
  * A delegate to be called by the {@link NamespaceManagementApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public interface NamespaceManagementApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -77,9 +77,9 @@ public interface NamespaceManagementApiDelegate {
      * GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName} : 获取指定的AppNamespace
      * GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
      *
-     * @param appId  (required)
-     * @param namespaceName  (required)
-     * @return  (status code 200)
+     * @param appId 应用ID (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @return 成功获取AppNamespace (status code 200)
      * @see NamespaceManagementApi#openapiV1AppsAppIdAppnamespacesNamespaceNameGet
      */
     default ResponseEntity<OpenAppNamespaceDTO> openapiV1AppsAppIdAppnamespacesNamespaceNameGet(String appId,
@@ -137,10 +137,10 @@ public interface NamespaceManagementApiDelegate {
      * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check : 检查缺失的Namespace
      * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @return  (status code 200)
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @return 缺失的命名空间名称列表 (status code 200)
      * @see NamespaceManagementApi#openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesIntegrityCheckGet
      */
     default ResponseEntity<List<String>> openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesIntegrityCheckGet(String appId,
@@ -163,11 +163,11 @@ public interface NamespaceManagementApiDelegate {
      * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association : 获取关联的公共Namespace
      * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @return  (status code 200)
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @return 成功获取关联的公共Namespace (status code 200)
      * @see NamespaceManagementApi#openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNamePublicAssociationGet
      */
     default ResponseEntity<OpenNamespaceDTO> openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNamePublicAssociationGet(String appId,
@@ -191,11 +191,11 @@ public interface NamespaceManagementApiDelegate {
      * GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances : 获取公共AppNamespace的所有实例
      * GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
      *
-     * @param env  (required)
-     * @param publicNamespaceName  (required)
-     * @param page  (required)
-     * @param size  (required)
-     * @return  (status code 200)
+     * @param env 环境标识 (required)
+     * @param publicNamespaceName 公共命名空间名称 (required)
+     * @param page 页码，从0开始 (required)
+     * @param size 每页数量 (required)
+     * @return 成功获取实例列表 (status code 200)
      * @see NamespaceManagementApi#openapiV1EnvsEnvAppnamespacesPublicNamespaceNameInstancesGet
      */
     default ResponseEntity<List<OpenNamespaceDTO>> openapiV1EnvsEnvAppnamespacesPublicNamespaceNameInstancesGet(String env,

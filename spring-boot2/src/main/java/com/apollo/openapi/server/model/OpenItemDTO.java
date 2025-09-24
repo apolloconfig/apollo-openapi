@@ -20,7 +20,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenItemDTO", description = "Apollo配置项数据传输对象，表示一个具体的配置键值对及其元数据")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenItemDTO {
 
   private @Nullable String dataChangeCreatedBy;
@@ -48,7 +48,7 @@ public class OpenItemDTO {
    * 配置项创建者用户名，记录是谁创建了这个配置项
    * @return dataChangeCreatedBy
    */
-  
+
   @Schema(name = "dataChangeCreatedBy", description = "配置项创建者用户名，记录是谁创建了这个配置项", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedBy")
   public @Nullable String getDataChangeCreatedBy() {
@@ -68,7 +68,7 @@ public class OpenItemDTO {
    * 配置项最后修改者用户名，记录最后一次修改配置的用户
    * @return dataChangeLastModifiedBy
    */
-  
+
   @Schema(name = "dataChangeLastModifiedBy", description = "配置项最后修改者用户名，记录最后一次修改配置的用户", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedBy")
   public @Nullable String getDataChangeLastModifiedBy() {
@@ -88,7 +88,7 @@ public class OpenItemDTO {
    * 配置项创建时间，ISO 8601格式的时间戳
    * @return dataChangeCreatedTime
    */
-  
+
   @Schema(name = "dataChangeCreatedTime", description = "配置项创建时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedTime")
   public @Nullable String getDataChangeCreatedTime() {
@@ -108,7 +108,7 @@ public class OpenItemDTO {
    * 配置项最后修改时间，ISO 8601格式的时间戳
    * @return dataChangeLastModifiedTime
    */
-  
+
   @Schema(name = "dataChangeLastModifiedTime", description = "配置项最后修改时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedTime")
   public @Nullable String getDataChangeLastModifiedTime() {
@@ -128,7 +128,7 @@ public class OpenItemDTO {
    * 配置项的键名，在同一命名空间内唯一标识一个配置项
    * @return key
    */
-  
+
   @Schema(name = "key", description = "配置项的键名，在同一命名空间内唯一标识一个配置项", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("key")
   public @Nullable String getKey() {
@@ -148,7 +148,7 @@ public class OpenItemDTO {
    * 配置项类型，0表示普通配置项，1表示文件类型配置项
    * @return type
    */
-  
+
   @Schema(name = "type", description = "配置项类型，0表示普通配置项，1表示文件类型配置项", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("type")
   public @Nullable Integer getType() {
@@ -168,7 +168,7 @@ public class OpenItemDTO {
    * 配置项的值，可以是字符串、数字、JSON等格式
    * @return value
    */
-  
+
   @Schema(name = "value", description = "配置项的值，可以是字符串、数字、JSON等格式", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("value")
   public @Nullable String getValue() {
@@ -188,7 +188,7 @@ public class OpenItemDTO {
    * 配置项的注释说明，用于描述配置项的用途和含义
    * @return comment
    */
-  
+
   @Schema(name = "comment", description = "配置项的注释说明，用于描述配置项的用途和含义", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("comment")
   public @Nullable String getComment() {
@@ -250,4 +250,3 @@ public class OpenItemDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

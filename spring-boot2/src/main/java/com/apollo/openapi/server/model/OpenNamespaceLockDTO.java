@@ -20,7 +20,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenNamespaceLockDTO", description = "Apollo命名空间锁状态数据传输对象")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenNamespaceLockDTO {
 
   private @Nullable String namespaceName;
@@ -38,7 +38,7 @@ public class OpenNamespaceLockDTO {
    * 命名空间名称
    * @return namespaceName
    */
-  
+
   @Schema(name = "namespaceName", description = "命名空间名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("namespaceName")
   public @Nullable String getNamespaceName() {
@@ -58,7 +58,7 @@ public class OpenNamespaceLockDTO {
    * 是否被锁定
    * @return isLocked
    */
-  
+
   @Schema(name = "isLocked", description = "是否被锁定", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("isLocked")
   public @Nullable Boolean getIsLocked() {
@@ -78,7 +78,7 @@ public class OpenNamespaceLockDTO {
    * 锁定者用户名
    * @return lockedBy
    */
-  
+
   @Schema(name = "lockedBy", description = "锁定者用户名", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("lockedBy")
   public @Nullable String getLockedBy() {
@@ -130,4 +130,3 @@ public class OpenNamespaceLockDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

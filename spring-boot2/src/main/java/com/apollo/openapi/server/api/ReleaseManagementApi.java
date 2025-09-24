@@ -5,11 +5,10 @@
  */
 package com.apollo.openapi.server.api;
 
-import com.apollo.openapi.server.model.ListReleaseBO;
 import com.apollo.openapi.server.model.NamespaceReleaseDTO;
+import com.apollo.openapi.server.model.OpenReleaseBO;
 import com.apollo.openapi.server.model.OpenReleaseDTO;
 import com.apollo.openapi.server.model.OpenapiV1AppsGet401Response;
-import com.apollo.openapi.server.model.OpenapiV1EnvsEnvReleasesCompareGet200Response;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -34,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 @Validated
 @Tag(name = "Release Management", description = "发布管理相关接口，包括配置发布、发布历史、灰度发布等功能")
 public interface ReleaseManagementApi {
@@ -48,13 +47,13 @@ public interface ReleaseManagementApi {
      * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/active : 获取活跃发布（分页）
      * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/active
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param page  (required)
-     * @param size  (required)
-     * @return  (status code 200)
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param page 页码，从0开始 (required)
+     * @param size 每页数量 (required)
+     * @return 成功获取活跃发布列表 (status code 200)
      */
     @Operation(
         operationId = "openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesActiveGet",
@@ -62,7 +61,7 @@ public interface ReleaseManagementApi {
         description = "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/active",
         tags = { "Release Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "", content = {
+            @ApiResponse(responseCode = "200", description = "成功获取活跃发布列表", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenReleaseDTO.class)))
             })
         },
@@ -75,14 +74,14 @@ public interface ReleaseManagementApi {
         value = ReleaseManagementApi.PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_RELEASES_ACTIVE_GET,
         produces = { "application/json" }
     )
-    
+
     default ResponseEntity<List<OpenReleaseDTO>> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesActiveGet(
-        @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
-        @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "clusterName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
-        @Parameter(name = "namespaceName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
-        @NotNull @Parameter(name = "page", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = true) Integer page,
-        @NotNull @Parameter(name = "size", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "size", required = true) Integer size
+        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
+        @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
+        @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
+        @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
+        @NotNull @Parameter(name = "page", description = "页码，从0开始", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = true) Integer page,
+        @NotNull @Parameter(name = "size", description = "每页数量", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "size", required = true) Integer size
     ) {
         return getDelegate().openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesActiveGet(appId, env, clusterName, namespaceName, page, size);
     }
@@ -93,13 +92,13 @@ public interface ReleaseManagementApi {
      * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all : 获取所有发布（分页）
      * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param page  (required)
-     * @param size  (required)
-     * @return  (status code 200)
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param page 页码，从0开始 (required)
+     * @param size 每页数量 (required)
+     * @return 成功获取发布列表 (status code 200)
      */
     @Operation(
         operationId = "openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesAllGet",
@@ -107,8 +106,8 @@ public interface ReleaseManagementApi {
         description = "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all",
         tags = { "Release Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = ListReleaseBO.class)))
+            @ApiResponse(responseCode = "200", description = "成功获取发布列表", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenReleaseBO.class)))
             })
         },
         security = {
@@ -120,14 +119,14 @@ public interface ReleaseManagementApi {
         value = ReleaseManagementApi.PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_RELEASES_ALL_GET,
         produces = { "application/json" }
     )
-    
-    default ResponseEntity<List<ListReleaseBO>> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesAllGet(
-        @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
-        @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "clusterName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
-        @Parameter(name = "namespaceName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
-        @NotNull @Parameter(name = "page", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = true) Integer page,
-        @NotNull @Parameter(name = "size", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "size", required = true) Integer size
+
+    default ResponseEntity<List<OpenReleaseBO>> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesAllGet(
+        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
+        @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
+        @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
+        @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
+        @NotNull @Parameter(name = "page", description = "页码，从0开始", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = true) Integer page,
+        @NotNull @Parameter(name = "size", description = "每页数量", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "size", required = true) Integer size
     ) {
         return getDelegate().openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesAllGet(appId, env, clusterName, namespaceName, page, size);
     }
@@ -136,19 +135,19 @@ public interface ReleaseManagementApi {
     public static final String PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_RELEASES_LATEST_GET = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/latest";
     /**
      * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/latest : 获取最新活跃发布
-     * 
+     * 查询命名空间最新活跃发布
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
      * @return 成功获取最新活跃发布 (status code 200)
      *         or 未找到活跃发布 (status code 404)
      */
     @Operation(
         operationId = "openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesLatestGet",
         summary = "获取最新活跃发布",
-        description = "",
+        description = "查询命名空间最新活跃发布",
         tags = { "Release Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "成功获取最新活跃发布", content = {
@@ -167,12 +166,12 @@ public interface ReleaseManagementApi {
         value = ReleaseManagementApi.PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_RELEASES_LATEST_GET,
         produces = { "application/json" }
     )
-    
+
     default ResponseEntity<OpenReleaseDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesLatestGet(
-        @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
-        @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "clusterName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
-        @Parameter(name = "namespaceName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName
+        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
+        @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
+        @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
+        @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName
     ) {
         return getDelegate().openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesLatestGet(appId, env, clusterName, namespaceName);
     }
@@ -181,12 +180,12 @@ public interface ReleaseManagementApi {
     public static final String PATH_OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_RELEASES_POST = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases";
     /**
      * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases : 创建发布
-     * 
+     * 创建并发布当前命名空间的配置
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
      * @param namespaceReleaseDTO  (required)
      * @return 发布创建成功 (status code 200)
      *         or 发布参数错误 (status code 400)
@@ -195,7 +194,7 @@ public interface ReleaseManagementApi {
     @Operation(
         operationId = "openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesPost",
         summary = "创建发布",
-        description = "",
+        description = "创建并发布当前命名空间的配置",
         tags = { "Release Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "发布创建成功", content = {
@@ -218,54 +217,15 @@ public interface ReleaseManagementApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    
+
     default ResponseEntity<OpenReleaseDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesPost(
-        @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
-        @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "clusterName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
-        @Parameter(name = "namespaceName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
+        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
+        @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
+        @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
+        @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
         @Parameter(name = "NamespaceReleaseDTO", description = "", required = true) @Valid @RequestBody NamespaceReleaseDTO namespaceReleaseDTO
     ) {
         return getDelegate().openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesPost(appId, env, clusterName, namespaceName, namespaceReleaseDTO);
-    }
-
-
-    public static final String PATH_OPENAPI_V1_ENVS_ENV_RELEASES_COMPARE_GET = "/openapi/v1/envs/{env}/releases/compare";
-    /**
-     * GET /openapi/v1/envs/{env}/releases/compare : 对比发布
-     * GET /openapi/v1/envs/{env}/releases/compare
-     *
-     * @param env  (required)
-     * @param baseReleaseId  (required)
-     * @param toCompareReleaseId  (required)
-     * @return  (status code 200)
-     */
-    @Operation(
-        operationId = "openapiV1EnvsEnvReleasesCompareGet",
-        summary = "对比发布",
-        description = "GET /openapi/v1/envs/{env}/releases/compare",
-        tags = { "Release Management" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenapiV1EnvsEnvReleasesCompareGet200Response.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "ApiKeyAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = ReleaseManagementApi.PATH_OPENAPI_V1_ENVS_ENV_RELEASES_COMPARE_GET,
-        produces = { "application/json" }
-    )
-    
-    default ResponseEntity<OpenapiV1EnvsEnvReleasesCompareGet200Response> openapiV1EnvsEnvReleasesCompareGet(
-        @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @NotNull @Parameter(name = "baseReleaseId", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "baseReleaseId", required = true) Integer baseReleaseId,
-        @NotNull @Parameter(name = "toCompareReleaseId", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "toCompareReleaseId", required = true) Integer toCompareReleaseId
-    ) {
-        return getDelegate().openapiV1EnvsEnvReleasesCompareGet(env, baseReleaseId, toCompareReleaseId);
     }
 
 
@@ -274,9 +234,9 @@ public interface ReleaseManagementApi {
      * GET /openapi/v1/envs/{env}/releases/{releaseId} : 获取发布详情
      * GET /openapi/v1/envs/{env}/releases/{releaseId}
      *
-     * @param env  (required)
-     * @param releaseId  (required)
-     * @return  (status code 200)
+     * @param env 环境标识 (required)
+     * @param releaseId 发布ID (required)
+     * @return 成功获取发布详情 (status code 200)
      */
     @Operation(
         operationId = "openapiV1EnvsEnvReleasesReleaseIdGet",
@@ -284,7 +244,7 @@ public interface ReleaseManagementApi {
         description = "GET /openapi/v1/envs/{env}/releases/{releaseId}",
         tags = { "Release Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "", content = {
+            @ApiResponse(responseCode = "200", description = "成功获取发布详情", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenReleaseDTO.class))
             })
         },
@@ -297,10 +257,10 @@ public interface ReleaseManagementApi {
         value = ReleaseManagementApi.PATH_OPENAPI_V1_ENVS_ENV_RELEASES_RELEASE_ID_GET,
         produces = { "application/json" }
     )
-    
+
     default ResponseEntity<OpenReleaseDTO> openapiV1EnvsEnvReleasesReleaseIdGet(
-        @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "releaseId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("releaseId") Integer releaseId
+        @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
+        @Parameter(name = "releaseId", description = "发布ID", required = true, in = ParameterIn.PATH) @PathVariable("releaseId") Integer releaseId
     ) {
         return getDelegate().openapiV1EnvsEnvReleasesReleaseIdGet(env, releaseId);
     }
@@ -309,20 +269,20 @@ public interface ReleaseManagementApi {
     public static final String PATH_OPENAPI_V1_ENVS_ENV_RELEASES_RELEASE_ID_ROLLBACK_PUT = "/openapi/v1/envs/{env}/releases/{releaseId}/rollback";
     /**
      * PUT /openapi/v1/envs/{env}/releases/{releaseId}/rollback : 回滚发布
-     * 
+     * 回滚到指定的发布版本
      *
-     * @param env  (required)
-     * @param releaseId  (required)
-     * @param operator  (required)
-     * @return  (status code 200)
+     * @param env 环境标识 (required)
+     * @param releaseId 发布ID (required)
+     * @param operator 操作人用户名 (optional)
+     * @return 发布回滚成功 (status code 200)
      */
     @Operation(
         operationId = "openapiV1EnvsEnvReleasesReleaseIdRollbackPut",
         summary = "回滚发布",
-        description = "",
+        description = "回滚到指定的发布版本",
         tags = { "Release Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "", content = {
+            @ApiResponse(responseCode = "200", description = "发布回滚成功", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             })
         },
@@ -335,11 +295,11 @@ public interface ReleaseManagementApi {
         value = ReleaseManagementApi.PATH_OPENAPI_V1_ENVS_ENV_RELEASES_RELEASE_ID_ROLLBACK_PUT,
         produces = { "application/json" }
     )
-    
+
     default ResponseEntity<Object> openapiV1EnvsEnvReleasesReleaseIdRollbackPut(
-        @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "releaseId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("releaseId") Integer releaseId,
-        @NotNull @Parameter(name = "operator", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = true) String operator
+        @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
+        @Parameter(name = "releaseId", description = "发布ID", required = true, in = ParameterIn.PATH) @PathVariable("releaseId") Integer releaseId,
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) @Nullable String operator
     ) {
         return getDelegate().openapiV1EnvsEnvReleasesReleaseIdRollbackPut(env, releaseId, operator);
     }

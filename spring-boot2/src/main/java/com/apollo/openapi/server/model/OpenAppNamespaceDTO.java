@@ -20,7 +20,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenAppNamespaceDTO", description = "Apollo应用命名空间数据传输对象，表示应用级别的命名空间配置信息")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenAppNamespaceDTO {
 
   private @Nullable String dataChangeCreatedBy;
@@ -52,7 +52,7 @@ public class OpenAppNamespaceDTO {
    * 命名空间创建者用户名，记录是谁创建了这个应用命名空间
    * @return dataChangeCreatedBy
    */
-  
+
   @Schema(name = "dataChangeCreatedBy", description = "命名空间创建者用户名，记录是谁创建了这个应用命名空间", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedBy")
   public @Nullable String getDataChangeCreatedBy() {
@@ -72,7 +72,7 @@ public class OpenAppNamespaceDTO {
    * 命名空间最后修改者用户名，记录最后一次修改命名空间信息的用户
    * @return dataChangeLastModifiedBy
    */
-  
+
   @Schema(name = "dataChangeLastModifiedBy", description = "命名空间最后修改者用户名，记录最后一次修改命名空间信息的用户", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedBy")
   public @Nullable String getDataChangeLastModifiedBy() {
@@ -92,7 +92,7 @@ public class OpenAppNamespaceDTO {
    * 命名空间创建时间，ISO 8601格式的时间戳
    * @return dataChangeCreatedTime
    */
-  
+
   @Schema(name = "dataChangeCreatedTime", description = "命名空间创建时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedTime")
   public @Nullable String getDataChangeCreatedTime() {
@@ -112,7 +112,7 @@ public class OpenAppNamespaceDTO {
    * 命名空间最后修改时间，ISO 8601格式的时间戳
    * @return dataChangeLastModifiedTime
    */
-  
+
   @Schema(name = "dataChangeLastModifiedTime", description = "命名空间最后修改时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedTime")
   public @Nullable String getDataChangeLastModifiedTime() {
@@ -132,7 +132,7 @@ public class OpenAppNamespaceDTO {
    * 命名空间名称，在同一应用内唯一标识一个命名空间
    * @return name
    */
-  
+
   @Schema(name = "name", description = "命名空间名称，在同一应用内唯一标识一个命名空间", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
   public @Nullable String getName() {
@@ -152,7 +152,7 @@ public class OpenAppNamespaceDTO {
    * 所属应用的唯一标识符
    * @return appId
    */
-  
+
   @Schema(name = "appId", description = "所属应用的唯一标识符", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("appId")
   public @Nullable String getAppId() {
@@ -172,7 +172,7 @@ public class OpenAppNamespaceDTO {
    * 命名空间格式类型，如properties、xml、json、yml等
    * @return format
    */
-  
+
   @Schema(name = "format", description = "命名空间格式类型，如properties、xml、json、yml等", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("format")
   public @Nullable String getFormat() {
@@ -192,7 +192,7 @@ public class OpenAppNamespaceDTO {
    * 是否为公共命名空间，公共命名空间可以被其他应用关联使用
    * @return isPublic
    */
-  
+
   @Schema(name = "isPublic", description = "是否为公共命名空间，公共命名空间可以被其他应用关联使用", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("isPublic")
   public @Nullable Boolean getIsPublic() {
@@ -212,7 +212,7 @@ public class OpenAppNamespaceDTO {
    * 对于公共命名空间，是否在命名空间名称前添加前缀
    * @return appendNamespacePrefix
    */
-  
+
   @Schema(name = "appendNamespacePrefix", description = "对于公共命名空间，是否在命名空间名称前添加前缀", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("appendNamespacePrefix")
   public Boolean getAppendNamespacePrefix() {
@@ -232,7 +232,7 @@ public class OpenAppNamespaceDTO {
    * 命名空间备注说明，描述命名空间的用途和包含的配置类型
    * @return comment
    */
-  
+
   @Schema(name = "comment", description = "命名空间备注说明，描述命名空间的用途和包含的配置类型", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("comment")
   public @Nullable String getComment() {
@@ -298,4 +298,3 @@ public class OpenAppNamespaceDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

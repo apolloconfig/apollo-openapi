@@ -21,12 +21,12 @@ import java.util.*;
 import javax.annotation.Generated;
 
 /**
- * 
+ * 创建应用请求体，包含应用基本信息与管理员设置
  */
 
-@Schema(name = "_openapi_v1_apps_post_request", description = "")
+@Schema(name = "_openapi_v1_apps_post_request", description = "创建应用请求体，包含应用基本信息与管理员设置")
 @JsonTypeName("_openapi_v1_apps_post_request")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenapiV1AppsPostRequest {
 
   private OpenAppDTO app;
@@ -58,7 +58,7 @@ public class OpenapiV1AppsPostRequest {
    * Get app
    * @return app
    */
-  @NotNull @Valid 
+  @NotNull @Valid
   @Schema(name = "app", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("app")
   public OpenAppDTO getApp() {
@@ -78,7 +78,7 @@ public class OpenapiV1AppsPostRequest {
    * 是否将应用角色分配给当前用户。当设置为true时，当前token用户将获得该应用的完全操作权限
    * @return assignAppRoleToSelf
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "assignAppRoleToSelf", description = "是否将应用角色分配给当前用户。当设置为true时，当前token用户将获得该应用的完全操作权限", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("assignAppRoleToSelf")
   public Boolean getAssignAppRoleToSelf() {
@@ -106,7 +106,7 @@ public class OpenapiV1AppsPostRequest {
    * 应用管理员用户名列表。应用负责人默认具有项目管理员权限。管理员可以创建命名空间、集群并分配用户权限
    * @return admins
    */
-  @NotNull 
+  @NotNull
   @Schema(name = "admins", description = "应用管理员用户名列表。应用负责人默认具有项目管理员权限。管理员可以创建命名空间、集群并分配用户权限", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("admins")
   public List<String> getAdmins() {
@@ -158,4 +158,3 @@ public class OpenapiV1AppsPostRequest {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

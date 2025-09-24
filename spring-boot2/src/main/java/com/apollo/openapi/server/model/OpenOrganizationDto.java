@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  * OpenOrganizationDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenOrganizationDto {
 
   private @Nullable String orgId;
@@ -32,11 +32,11 @@ public class OpenOrganizationDto {
   }
 
   /**
-   * 
+   * 组织ID
    * @return orgId
    */
-  
-  @Schema(name = "orgId", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+
+  @Schema(name = "orgId", description = "组织ID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("orgId")
   public @Nullable String getOrgId() {
     return orgId;
@@ -52,11 +52,11 @@ public class OpenOrganizationDto {
   }
 
   /**
-   * 
+   * 组织名称
    * @return orgName
    */
-  
-  @Schema(name = "orgName", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+
+  @Schema(name = "orgName", description = "组织名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("orgName")
   public @Nullable String getOrgName() {
     return orgName;
@@ -105,4 +105,3 @@ public class OpenOrganizationDto {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

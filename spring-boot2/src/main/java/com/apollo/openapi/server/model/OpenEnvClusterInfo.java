@@ -2,6 +2,7 @@ package com.apollo.openapi.server.model;
 
 import java.net.URI;
 import java.util.Objects;
+import com.apollo.openapi.server.model.OpenClusterDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.ArrayList;
@@ -19,28 +20,28 @@ import java.util.*;
 import javax.annotation.Generated;
 
 /**
- * OpenEnvClusterDTO
+ * OpenEnvClusterInfo
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
-public class OpenEnvClusterDTO {
+public class OpenEnvClusterInfo {
 
   private @Nullable String env;
 
   @Valid
-  private List<String> clusters = new ArrayList<>();
+  private List<@Valid OpenClusterDTO> clusters = new ArrayList<>();
 
-  public OpenEnvClusterDTO env(@Nullable String env) {
+  public OpenEnvClusterInfo env(@Nullable String env) {
     this.env = env;
     return this;
   }
 
   /**
-   * 环境标识，例如 DEV、FAT、UAT、PROD
+   * 环境标识
    * @return env
    */
 
-  @Schema(name = "env", description = "环境标识，例如 DEV、FAT、UAT、PROD", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "env", description = "环境标识", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("env")
   public @Nullable String getEnv() {
     return env;
@@ -50,12 +51,12 @@ public class OpenEnvClusterDTO {
     this.env = env;
   }
 
-  public OpenEnvClusterDTO clusters(List<String> clusters) {
+  public OpenEnvClusterInfo clusters(List<@Valid OpenClusterDTO> clusters) {
     this.clusters = clusters;
     return this;
   }
 
-  public OpenEnvClusterDTO addClustersItem(String clustersItem) {
+  public OpenEnvClusterInfo addClustersItem(OpenClusterDTO clustersItem) {
     if (this.clusters == null) {
       this.clusters = new ArrayList<>();
     }
@@ -64,17 +65,17 @@ public class OpenEnvClusterDTO {
   }
 
   /**
-   * 该环境下的集群名称列表
+   * 集群信息列表
    * @return clusters
    */
-
-  @Schema(name = "clusters", description = "该环境下的集群名称列表", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Valid
+  @Schema(name = "clusters", description = "集群信息列表", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clusters")
-  public List<String> getClusters() {
+  public List<@Valid OpenClusterDTO> getClusters() {
     return clusters;
   }
 
-  public void setClusters(List<String> clusters) {
+  public void setClusters(List<@Valid OpenClusterDTO> clusters) {
     this.clusters = clusters;
   }
 
@@ -86,9 +87,9 @@ public class OpenEnvClusterDTO {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OpenEnvClusterDTO openEnvClusterDTO = (OpenEnvClusterDTO) o;
-    return Objects.equals(this.env, openEnvClusterDTO.env) &&
-        Objects.equals(this.clusters, openEnvClusterDTO.clusters);
+    OpenEnvClusterInfo openEnvClusterInfo = (OpenEnvClusterInfo) o;
+    return Objects.equals(this.env, openEnvClusterInfo.env) &&
+        Objects.equals(this.clusters, openEnvClusterInfo.clusters);
   }
 
   @Override
@@ -99,7 +100,7 @@ public class OpenEnvClusterDTO {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OpenEnvClusterDTO {\n");
+    sb.append("class OpenEnvClusterInfo {\n");
     sb.append("    env: ").append(toIndentedString(env)).append("\n");
     sb.append("    clusters: ").append(toIndentedString(clusters)).append("\n");
     sb.append("}");

@@ -20,7 +20,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenAppDTO", description = "Apollo应用信息数据传输对象，包含应用的基本信息和元数据")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-25T00:40:29.983824+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
 public class OpenAppDTO {
 
   private @Nullable String dataChangeCreatedBy;
@@ -52,7 +52,7 @@ public class OpenAppDTO {
    * 数据创建者用户名，记录是谁创建了这个应用
    * @return dataChangeCreatedBy
    */
-  
+
   @Schema(name = "dataChangeCreatedBy", description = "数据创建者用户名，记录是谁创建了这个应用", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedBy")
   public @Nullable String getDataChangeCreatedBy() {
@@ -72,7 +72,7 @@ public class OpenAppDTO {
    * 数据最后修改者用户名，记录最后一次修改应用信息的用户
    * @return dataChangeLastModifiedBy
    */
-  
+
   @Schema(name = "dataChangeLastModifiedBy", description = "数据最后修改者用户名，记录最后一次修改应用信息的用户", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedBy")
   public @Nullable String getDataChangeLastModifiedBy() {
@@ -92,7 +92,7 @@ public class OpenAppDTO {
    * 数据创建时间，ISO 8601格式的时间戳
    * @return dataChangeCreatedTime
    */
-  
+
   @Schema(name = "dataChangeCreatedTime", description = "数据创建时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedTime")
   public @Nullable String getDataChangeCreatedTime() {
@@ -112,7 +112,7 @@ public class OpenAppDTO {
    * 数据最后修改时间，ISO 8601格式的时间戳
    * @return dataChangeLastModifiedTime
    */
-  
+
   @Schema(name = "dataChangeLastModifiedTime", description = "数据最后修改时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedTime")
   public @Nullable String getDataChangeLastModifiedTime() {
@@ -132,7 +132,7 @@ public class OpenAppDTO {
    * 应用名称，用于显示的友好名称
    * @return name
    */
-  
+
   @Schema(name = "name", description = "应用名称，用于显示的友好名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("name")
   public @Nullable String getName() {
@@ -152,7 +152,7 @@ public class OpenAppDTO {
    * 应用唯一标识符，全局唯一的应用ID
    * @return appId
    */
-  
+
   @Schema(name = "appId", description = "应用唯一标识符，全局唯一的应用ID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("appId")
   public @Nullable String getAppId() {
@@ -172,7 +172,7 @@ public class OpenAppDTO {
    * 组织ID，应用所属组织的唯一标识
    * @return orgId
    */
-  
+
   @Schema(name = "orgId", description = "组织ID，应用所属组织的唯一标识", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("orgId")
   public @Nullable String getOrgId() {
@@ -192,7 +192,7 @@ public class OpenAppDTO {
    * 组织名称，应用所属组织的显示名称
    * @return orgName
    */
-  
+
   @Schema(name = "orgName", description = "组织名称，应用所属组织的显示名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("orgName")
   public @Nullable String getOrgName() {
@@ -212,7 +212,7 @@ public class OpenAppDTO {
    * 应用负责人姓名，应用的主要负责人
    * @return ownerName
    */
-  
+
   @Schema(name = "ownerName", description = "应用负责人姓名，应用的主要负责人", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("ownerName")
   public @Nullable String getOwnerName() {
@@ -232,7 +232,7 @@ public class OpenAppDTO {
    * 应用负责人邮箱地址，用于接收应用相关通知
    * @return ownerEmail
    */
-  
+
   @Schema(name = "ownerEmail", description = "应用负责人邮箱地址，用于接收应用相关通知", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("ownerEmail")
   public @Nullable String getOwnerEmail() {
@@ -298,4 +298,3 @@ public class OpenAppDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
