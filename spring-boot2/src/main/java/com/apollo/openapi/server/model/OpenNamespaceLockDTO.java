@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -20,16 +19,16 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenNamespaceLockDTO", description = "Apollo命名空间锁状态数据传输对象")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public class OpenNamespaceLockDTO {
 
-  private @Nullable String namespaceName;
+  private String namespaceName;
 
-  private @Nullable Boolean isLocked;
+  private Boolean isLocked;
 
-  private @Nullable String lockedBy;
+  private String lockedBy;
 
-  public OpenNamespaceLockDTO namespaceName(@Nullable String namespaceName) {
+  public OpenNamespaceLockDTO namespaceName(String namespaceName) {
     this.namespaceName = namespaceName;
     return this;
   }
@@ -37,19 +36,19 @@ public class OpenNamespaceLockDTO {
   /**
    * 命名空间名称
    * @return namespaceName
-   */
-  
+  */
+
   @Schema(name = "namespaceName", description = "命名空间名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("namespaceName")
-  public @Nullable String getNamespaceName() {
+  public String getNamespaceName() {
     return namespaceName;
   }
 
-  public void setNamespaceName(@Nullable String namespaceName) {
+  public void setNamespaceName(String namespaceName) {
     this.namespaceName = namespaceName;
   }
 
-  public OpenNamespaceLockDTO isLocked(@Nullable Boolean isLocked) {
+  public OpenNamespaceLockDTO isLocked(Boolean isLocked) {
     this.isLocked = isLocked;
     return this;
   }
@@ -57,19 +56,19 @@ public class OpenNamespaceLockDTO {
   /**
    * 是否被锁定
    * @return isLocked
-   */
-  
+  */
+
   @Schema(name = "isLocked", description = "是否被锁定", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("isLocked")
-  public @Nullable Boolean getIsLocked() {
+  public Boolean getIsLocked() {
     return isLocked;
   }
 
-  public void setIsLocked(@Nullable Boolean isLocked) {
+  public void setIsLocked(Boolean isLocked) {
     this.isLocked = isLocked;
   }
 
-  public OpenNamespaceLockDTO lockedBy(@Nullable String lockedBy) {
+  public OpenNamespaceLockDTO lockedBy(String lockedBy) {
     this.lockedBy = lockedBy;
     return this;
   }
@@ -77,15 +76,15 @@ public class OpenNamespaceLockDTO {
   /**
    * 锁定者用户名
    * @return lockedBy
-   */
-  
+  */
+
   @Schema(name = "lockedBy", description = "锁定者用户名", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("lockedBy")
-  public @Nullable String getLockedBy() {
+  public String getLockedBy() {
     return lockedBy;
   }
 
-  public void setLockedBy(@Nullable String lockedBy) {
+  public void setLockedBy(String lockedBy) {
     this.lockedBy = lockedBy;
   }
 
@@ -130,4 +129,3 @@ public class OpenNamespaceLockDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

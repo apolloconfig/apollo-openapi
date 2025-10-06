@@ -4,20 +4,18 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**openapiV1AppsAppIdClustersClusterNameGet**](ClusterManagementApi.md#openapiV1AppsAppIdClustersClusterNameGet) | **GET** /openapi/v1/apps/{appId}/clusters/{clusterName} | 获取指定集群信息 |
-| [**openapiV1AppsAppIdClustersPost**](ClusterManagementApi.md#openapiV1AppsAppIdClustersPost) | **POST** /openapi/v1/apps/{appId}/clusters | 创建集群 |
-| [**openapiV1EnvsEnvAppsAppIdClustersClusterNameDelete**](ClusterManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameDelete) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 删除集群 |
-| [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesGet**](ClusterManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches | 获取命名空间分支信息 |
-| [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameGet**](ClusterManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName} | 获取指定的Namespace |
+| [**createCluster**](ClusterManagementApi.md#createCluster) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters | 创建集群 (original openapi) |
+| [**deleteCluster**](ClusterManagementApi.md#deleteCluster) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 删除集群 (new added) |
+| [**getCluster**](ClusterManagementApi.md#getCluster) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 获取指定集群信息 (original openapi) |
 
 
-<a id="openapiV1AppsAppIdClustersClusterNameGet"></a>
-# **openapiV1AppsAppIdClustersClusterNameGet**
-> OpenClusterDTO openapiV1AppsAppIdClustersClusterNameGet(appId, clusterName)
+<a id="createCluster"></a>
+# **createCluster**
+> OpenClusterDTO createCluster(appId, env, openClusterDTO)
 
-获取指定集群信息
+创建集群 (original openapi)
 
-GET /openapi/v1/apps/{appId}/clusters/{clusterName}
+POST /openapi/v1/envs/{env}/apps/{appId}/clusters
 
 ### Example
 ```java
@@ -33,7 +31,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -41,13 +39,14 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     ClusterManagementApi apiInstance = new ClusterManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
-    String clusterName = "clusterName_example"; // String | 
+    String appId = "appId_example"; // String | 应用ID
+    String env = "env_example"; // String |
+    OpenClusterDTO openClusterDTO = new OpenClusterDTO(); // OpenClusterDTO |
     try {
-      OpenClusterDTO result = apiInstance.openapiV1AppsAppIdClustersClusterNameGet(appId, clusterName);
+      OpenClusterDTO result = apiInstance.createCluster(appId, env, openClusterDTO);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling ClusterManagementApi#openapiV1AppsAppIdClustersClusterNameGet");
+      System.err.println("Exception when calling ClusterManagementApi#createCluster");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -61,79 +60,8 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **appId** | **String**|  | |
-| **clusterName** | **String**|  | |
-
-### Return type
-
-[**OpenClusterDTO**](OpenClusterDTO.md)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | 成功获取集群信息 |  -  |
-| **404** | 集群不存在 |  -  |
-
-<a id="openapiV1AppsAppIdClustersPost"></a>
-# **openapiV1AppsAppIdClustersPost**
-> OpenClusterDTO openapiV1AppsAppIdClustersPost(appId, openClusterDTO)
-
-创建集群
-
-POST /openapi/v1/apps/{appId}/clusters
-
-### Example
-```java
-// Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.ClusterManagementApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    ClusterManagementApi apiInstance = new ClusterManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
-    OpenClusterDTO openClusterDTO = new OpenClusterDTO(); // OpenClusterDTO | 
-    try {
-      OpenClusterDTO result = apiInstance.openapiV1AppsAppIdClustersPost(appId, openClusterDTO);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ClusterManagementApi#openapiV1AppsAppIdClustersPost");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **appId** | **String**|  | |
+| **appId** | **String**| 应用ID | |
+| **env** | **String**|  | |
 | **openClusterDTO** | [**OpenClusterDTO**](OpenClusterDTO.md)|  | |
 
 ### Return type
@@ -156,11 +84,11 @@ public class Example {
 | **400** | 请求参数错误 |  -  |
 | **403** | 权限不足 |  -  |
 
-<a id="openapiV1EnvsEnvAppsAppIdClustersClusterNameDelete"></a>
-# **openapiV1EnvsEnvAppsAppIdClustersClusterNameDelete**
-> OpenapiV1AppsGet401Response openapiV1EnvsEnvAppsAppIdClustersClusterNameDelete(env, appId, clusterName)
+<a id="deleteCluster"></a>
+# **deleteCluster**
+> Object deleteCluster(env, appId, clusterName, operator)
 
-删除集群
+删除集群 (new added)
 
 DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}
 
@@ -178,7 +106,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -186,14 +114,15 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     ClusterManagementApi apiInstance = new ClusterManagementApi(defaultClient);
-    String env = "env_example"; // String | 
-    String appId = "appId_example"; // String | 
-    String clusterName = "clusterName_example"; // String | 
+    String env = "env_example"; // String |
+    String appId = "appId_example"; // String |
+    String clusterName = "clusterName_example"; // String |
+    String operator = "operator_example"; // String | 操作人用户名
     try {
-      OpenapiV1AppsGet401Response result = apiInstance.openapiV1EnvsEnvAppsAppIdClustersClusterNameDelete(env, appId, clusterName);
+      Object result = apiInstance.deleteCluster(env, appId, clusterName, operator);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling ClusterManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameDelete");
+      System.err.println("Exception when calling ClusterManagementApi#deleteCluster");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -210,10 +139,11 @@ public class Example {
 | **env** | **String**|  | |
 | **appId** | **String**|  | |
 | **clusterName** | **String**|  | |
+| **operator** | **String**| 操作人用户名 | |
 
 ### Return type
 
-[**OpenapiV1AppsGet401Response**](OpenapiV1AppsGet401Response.md)
+**Object**
 
 ### Authorization
 
@@ -232,89 +162,13 @@ public class Example {
 | **403** | 权限不足 |  -  |
 | **404** | 集群不存在 |  -  |
 
-<a id="openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesGet"></a>
-# **openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesGet**
-> OpenNamespaceDTO openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesGet(appId, env, clusterName, namespaceName)
+<a id="getCluster"></a>
+# **getCluster**
+> OpenClusterDTO getCluster(appId, clusterName, env)
 
-获取命名空间分支信息
+获取指定集群信息 (original openapi)
 
-GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches
-
-### Example
-```java
-// Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.ClusterManagementApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    ClusterManagementApi apiInstance = new ClusterManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
-    String env = "env_example"; // String | 
-    String clusterName = "clusterName_example"; // String | 
-    String namespaceName = "namespaceName_example"; // String | 
-    try {
-      OpenNamespaceDTO result = apiInstance.openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesGet(appId, env, clusterName, namespaceName);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ClusterManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesGet");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **appId** | **String**|  | |
-| **env** | **String**|  | |
-| **clusterName** | **String**|  | |
-| **namespaceName** | **String**|  | |
-
-### Return type
-
-[**OpenNamespaceDTO**](OpenNamespaceDTO.md)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** |  |  -  |
-| **404** | 分支不存在 |  -  |
-
-<a id="openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameGet"></a>
-# **openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameGet**
-> OpenNamespaceDTO openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameGet(appId, env, clusterName, namespaceName, fillItemDetail)
-
-获取指定的Namespace
-
-GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
+GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}
 
 ### Example
 ```java
@@ -330,7 +184,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -338,16 +192,14 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     ClusterManagementApi apiInstance = new ClusterManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
-    String env = "env_example"; // String | 
-    String clusterName = "clusterName_example"; // String | 
-    String namespaceName = "namespaceName_example"; // String | 
-    Boolean fillItemDetail = true; // Boolean | 
+    String appId = "appId_example"; // String |
+    String clusterName = "clusterName_example"; // String |
+    String env = "env_example"; // String |
     try {
-      OpenNamespaceDTO result = apiInstance.openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameGet(appId, env, clusterName, namespaceName, fillItemDetail);
+      OpenClusterDTO result = apiInstance.getCluster(appId, clusterName, env);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling ClusterManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameGet");
+      System.err.println("Exception when calling ClusterManagementApi#getCluster");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -362,14 +214,12 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **appId** | **String**|  | |
-| **env** | **String**|  | |
 | **clusterName** | **String**|  | |
-| **namespaceName** | **String**|  | |
-| **fillItemDetail** | **Boolean**|  | |
+| **env** | **String**|  | |
 
 ### Return type
 
-[**OpenNamespaceDTO**](OpenNamespaceDTO.md)
+[**OpenClusterDTO**](OpenClusterDTO.md)
 
 ### Authorization
 
@@ -383,5 +233,5 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** |  |  -  |
-
+| **200** | 成功获取集群信息 |  -  |
+| **404** | 集群不存在 |  -  |

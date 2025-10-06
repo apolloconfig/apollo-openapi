@@ -4,14 +4,14 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**openapiV1OrganizationsGet**](OrganizationManagementApi.md#openapiV1OrganizationsGet) | **GET** /openapi/v1/organizations | 获取所有组织信息 |
+| [**getOrganization**](OrganizationManagementApi.md#getOrganization) | **GET** /openapi/v1/organizations | 获取所有组织信息 (original openapi) |
 
 
-<a id="openapiV1OrganizationsGet"></a>
-# **openapiV1OrganizationsGet**
-> List&lt;OpenOrganizationDto&gt; openapiV1OrganizationsGet()
+<a id="getOrganization"></a>
+# **getOrganization**
+> List&lt;OpenOrganizationDto&gt; getOrganization()
 
-获取所有组织信息
+获取所有组织信息 (original openapi)
 
 GET /openapi/v1/organizations
 
@@ -29,7 +29,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -38,10 +38,10 @@ public class Example {
 
     OrganizationManagementApi apiInstance = new OrganizationManagementApi(defaultClient);
     try {
-      List<OpenOrganizationDto> result = apiInstance.openapiV1OrganizationsGet();
+      List<OpenOrganizationDto> result = apiInstance.getOrganization();
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling OrganizationManagementApi#openapiV1OrganizationsGet");
+      System.err.println("Exception when calling OrganizationManagementApi#getOrganization");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -72,4 +72,3 @@ This endpoint does not need any parameter.
 |-------------|-------------|------------------|
 | **200** | 成功获取组织列表 |  -  |
 | **401** | 未授权访问 |  -  |
-

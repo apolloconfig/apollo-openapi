@@ -16,5 +16,3 @@ Name | Type | Description | Notes
 **comment** | Option<**String**> | 命名空间备注说明，描述命名空间的用途和包含的配置类型 | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
-

@@ -17,8 +17,5 @@ Apollo发布信息数据传输对象，表示一次配置发布的完整信息
 |**clusterName** | **String** | 所属集群的名称 |  [optional] |
 |**namespaceName** | **String** | 所属命名空间的名称 |  [optional] |
 |**name** | **String** | 发布名称，用于标识这次发布的版本或描述 |  [optional] |
-|**configurations** | [**MapString**](MapString.md) |  |  [optional] |
+|**configurations** | **Map&lt;String, String&gt;** |  |  [optional] |
 |**comment** | **String** | 发布备注，描述本次发布的变更内容和目的 |  [optional] |
-
-
-

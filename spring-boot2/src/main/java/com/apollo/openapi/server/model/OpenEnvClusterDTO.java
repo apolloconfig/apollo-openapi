@@ -5,9 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -22,31 +20,31 @@ import javax.annotation.Generated;
  * OpenEnvClusterDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public class OpenEnvClusterDTO {
 
-  private @Nullable String env;
+  private String env;
 
   @Valid
-  private List<String> clusters = new ArrayList<>();
+  private List<String> clusters;
 
-  public OpenEnvClusterDTO env(@Nullable String env) {
+  public OpenEnvClusterDTO env(String env) {
     this.env = env;
     return this;
   }
 
   /**
-   * 
+   * 环境标识，例如 DEV、FAT、UAT、PROD
    * @return env
-   */
-  
-  @Schema(name = "env", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "env", description = "环境标识，例如 DEV、FAT、UAT、PROD", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("env")
-  public @Nullable String getEnv() {
+  public String getEnv() {
     return env;
   }
 
-  public void setEnv(@Nullable String env) {
+  public void setEnv(String env) {
     this.env = env;
   }
 
@@ -64,11 +62,11 @@ public class OpenEnvClusterDTO {
   }
 
   /**
-   * 
+   * 该环境下的集群名称列表
    * @return clusters
-   */
-  
-  @Schema(name = "clusters", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "clusters", description = "该环境下的集群名称列表", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clusters")
   public List<String> getClusters() {
     return clusters;
@@ -117,4 +115,3 @@ public class OpenEnvClusterDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

@@ -2,37 +2,23 @@
 
 Apollo OpenAPI
 - API version: 1.0.0
-  - Build date: 2025-09-14T17:08:15.997407+08:00[Asia/Shanghai]
-  - Generator version: 7.15.0
+  - Build date: 2025-10-07T09:56:26.447+08:00[Asia/Shanghai]
 
-Apollo配置中心OpenAPI接口文档
+<p>Apollo配置中心OpenAPI接口文档</p>
 
-## 认证方式
+<h2>认证方式</h2>
+<p>所有 API 接口都需要通过 <code>Authorization</code> header 进行身份验证。</p>
 
-所有API接口都需要通过Authorization header进行身份验证。
+<h3>获取 Token 的方式：</h3>
+<ol>
+  <li><b>Portal 管理界面获取</b>：登录 Portal → 管理员工具 → 开放平台授权管理 → 创建第三方应用，获取 Token。</li>
+  <li><b>Token 格式</b>：<code>Authorization: token_value</code></li>
+  <li><b>Token 权限</b>：按应用/环境/命名空间授予，建议不同用途分别创建。</li>
+</ol>
 
-### 获取Token的方式：
-
-1. **Portal管理界面获取**：
-   - 登录Apollo Portal管理界面
-   - 进入\"管理员工具\" -> \"开放平台授权管理\"
-   - 创建第三方应用，获取Token
-
-2. **Token格式**：
-   ```
-   Authorization: token_value
-   ```
-
-3. **Token权限**：
-   - Token具有对应应用的读写权限
-   - 不同Token可能有不同的环境和命名空间权限
-   - 建议为不同用途创建不同的Token
-
-### 使用示例：
-```bash
-curl -X GET \"http://localhost:8070/openapi/v1/apps\" \\
-     -H \"Authorization: your_token_here\"
-```
+<h3>使用示例</h3>
+<pre><code class=\"language-bash\">curl -X GET \"http://localhost:8070/openapi/v1/apps\" \\
+-H \"Authorization: your_token_here\"</code></pre>
 
 
 
@@ -113,14 +99,14 @@ import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.Configuration;
 import org.openapitools.client.auth.*;
-import org.openapitools.client.model.*;
+import org.openapitools.client.models.*;
 import org.openapitools.client.api.AppManagementApi;
 
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -128,13 +114,12 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     AppManagementApi apiInstance = new AppManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
-    String namespaceName = "namespaceName_example"; // String | 
+    OpenCreateAppDTO openCreateAppDTO = new OpenCreateAppDTO(); // OpenCreateAppDTO |
     try {
-      Object result = apiInstance.openapiV1AppsAppIdAppnamespacesNamespaceNameDelete(appId, namespaceName);
+      Object result = apiInstance.createApp(openCreateAppDTO);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling AppManagementApi#openapiV1AppsAppIdAppnamespacesNamespaceNameDelete");
+      System.err.println("Exception when calling AppManagementApi#createApp");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -151,108 +136,98 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AppManagementApi* | [**openapiV1AppsAppIdAppnamespacesNamespaceNameDelete**](docs/AppManagementApi.md#openapiV1AppsAppIdAppnamespacesNamespaceNameDelete) | **DELETE** /openapi/v1/apps/{appId}/appnamespaces/{namespaceName} | 删除AppNamespace
-*AppManagementApi* | [**openapiV1AppsAppIdDelete**](docs/AppManagementApi.md#openapiV1AppsAppIdDelete) | **DELETE** /openapi/v1/apps/{appId} | 删除应用
-*AppManagementApi* | [**openapiV1AppsAppIdEnvClustersGet**](docs/AppManagementApi.md#openapiV1AppsAppIdEnvClustersGet) | **GET** /openapi/v1/apps/{appId}/env-clusters | 获取应用的环境集群信息
-*AppManagementApi* | [**openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameLinksDelete**](docs/AppManagementApi.md#openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameLinksDelete) | **DELETE** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links | 删除关联的Namespace
-*AppManagementApi* | [**openapiV1AppsAppIdGet**](docs/AppManagementApi.md#openapiV1AppsAppIdGet) | **GET** /openapi/v1/apps/{appId} | 获取单个应用信息
-*AppManagementApi* | [**openapiV1AppsAppIdMissEnvsGet**](docs/AppManagementApi.md#openapiV1AppsAppIdMissEnvsGet) | **GET** /openapi/v1/apps/{appId}/miss_envs | 查找缺失的环境
-*AppManagementApi* | [**openapiV1AppsAppIdNamespacesReleasesStatusGet**](docs/AppManagementApi.md#openapiV1AppsAppIdNamespacesReleasesStatusGet) | **GET** /openapi/v1/apps/{appId}/namespaces/releases/status | 获取应用下所有Namespace的发布状态
-*AppManagementApi* | [**openapiV1AppsAppIdNavtreeGet**](docs/AppManagementApi.md#openapiV1AppsAppIdNavtreeGet) | **GET** /openapi/v1/apps/{appId}/navtree | 获取应用导航树
-*AppManagementApi* | [**openapiV1AppsAppIdPut**](docs/AppManagementApi.md#openapiV1AppsAppIdPut) | **PUT** /openapi/v1/apps/{appId} | 更新应用
-*AppManagementApi* | [**openapiV1AppsBySelfGet**](docs/AppManagementApi.md#openapiV1AppsBySelfGet) | **GET** /openapi/v1/apps/by-self | 获取当前Consumer的应用列表（分页）
-*AppManagementApi* | [**openapiV1AppsEnvsEnvPost**](docs/AppManagementApi.md#openapiV1AppsEnvsEnvPost) | **POST** /openapi/v1/apps/envs/{env} | 在指定环境创建应用
-*AppManagementApi* | [**openapiV1AppsGet**](docs/AppManagementApi.md#openapiV1AppsGet) | **GET** /openapi/v1/apps | 获取当前Consumer授权的应用列表
-*AppManagementApi* | [**openapiV1AppsPost**](docs/AppManagementApi.md#openapiV1AppsPost) | **POST** /openapi/v1/apps | 创建应用
-*ClusterManagementApi* | [**openapiV1AppsAppIdClustersClusterNameGet**](docs/ClusterManagementApi.md#openapiV1AppsAppIdClustersClusterNameGet) | **GET** /openapi/v1/apps/{appId}/clusters/{clusterName} | 获取指定集群信息
-*ClusterManagementApi* | [**openapiV1AppsAppIdClustersPost**](docs/ClusterManagementApi.md#openapiV1AppsAppIdClustersPost) | **POST** /openapi/v1/apps/{appId}/clusters | 创建集群
-*ClusterManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameDelete**](docs/ClusterManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameDelete) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 删除集群
-*ClusterManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesGet**](docs/ClusterManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches | 获取命名空间分支信息
-*ClusterManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameGet**](docs/ClusterManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName} | 获取指定的Namespace
-*InstanceManagementApi* | [**openapiV1AppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet**](docs/InstanceManagementApi.md#openapiV1AppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet) | **GET** /openapi/v1/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances | 获取命名空间下的实例数量
-*InstanceManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet**](docs/InstanceManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances | 查询不在指定发布版本中的实例
-*InstanceManagementApi* | [**openapiV1EnvsEnvReleasesReleaseIdInstancesGet**](docs/InstanceManagementApi.md#openapiV1EnvsEnvReleasesReleaseIdInstancesGet) | **GET** /openapi/v1/envs/{env}/releases/{releaseId}/instances | 根据发布版本查询实例（支持分页）
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKeyDelete**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKeyDelete) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key} | 通过编码的key删除配置项
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKeyGet**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKeyGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key} | 通过查询参数获取配置项（支持编码的key）
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKeyPut**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKeyPut) | **PUT** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key} | 通过编码的key更新配置项
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsBatchUpdatePut**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsBatchUpdatePut) | **PUT** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:batchUpdate | 通过文本批量修改配置项
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsComparePost**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsComparePost) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:compare | 对比命名空间配置差异
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsGet**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items | 获取命名空间下的配置项列表
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKeyDelete**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKeyDelete) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key} | 删除配置项
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKeyGet**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKeyGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key} | 获取单个配置项
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKeyPut**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKeyPut) | **PUT** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key} | 更新配置项
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsPost**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsPost) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items | 创建新的配置项
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsRevertPost**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsRevertPost) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:revert | 撤销配置项更改
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsSyncPost**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsSyncPost) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:sync | 同步配置项到多个命名空间
-*ItemManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost**](docs/ItemManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:validate | 验证配置文本语法
-*NamespaceBranchManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchPost**](docs/NamespaceBranchManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchPost) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branch | 创建命名空间分支
-*NamespaceBranchManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameDelete**](docs/NamespaceBranchManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameDelete) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} | 删除命名空间分支
-*NamespaceBranchManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameGrayDelReleasesPost**](docs/NamespaceBranchManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameGrayDelReleasesPost) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-del-releases | 创建灰度删除发布
-*NamespaceBranchManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameGrayRulesGet**](docs/NamespaceBranchManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameGrayRulesGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-rules | 获取分支灰度发布规则
-*NamespaceBranchManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameGrayRulesPut**](docs/NamespaceBranchManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameGrayRulesPut) | **PUT** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-rules | 更新分支灰度发布规则
-*NamespaceBranchManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameItemsGet**](docs/NamespaceBranchManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameItemsGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items | 获取分支下的配置项
-*NamespaceBranchManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameMergePost**](docs/NamespaceBranchManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameMergePost) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge | 合并分支
-*NamespaceBranchManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNamePatch**](docs/NamespaceBranchManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNamePatch) | **PATCH** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} | 合并分支到主分支
-*NamespaceBranchManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameReleasesPost**](docs/NamespaceBranchManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameReleasesPost) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/releases | 创建灰度发布
-*NamespaceManagementApi* | [**openapiV1AppnamespacesGet**](docs/NamespaceManagementApi.md#openapiV1AppnamespacesGet) | **GET** /openapi/v1/appnamespaces | 获取所有公共AppNamespace
-*NamespaceManagementApi* | [**openapiV1AppsAppIdAppnamespacesGet**](docs/NamespaceManagementApi.md#openapiV1AppsAppIdAppnamespacesGet) | **GET** /openapi/v1/apps/{appId}/appnamespaces | 获取指定应用的AppNamespace
-*NamespaceManagementApi* | [**openapiV1AppsAppIdAppnamespacesNamespaceNameGet**](docs/NamespaceManagementApi.md#openapiV1AppsAppIdAppnamespacesNamespaceNameGet) | **GET** /openapi/v1/apps/{appId}/appnamespaces/{namespaceName} | 获取指定的AppNamespace
-*NamespaceManagementApi* | [**openapiV1AppsAppIdAppnamespacesPost**](docs/NamespaceManagementApi.md#openapiV1AppsAppIdAppnamespacesPost) | **POST** /openapi/v1/apps/{appId}/appnamespaces | 创建AppNamespace
-*NamespaceManagementApi* | [**openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesIntegrityCheckGet**](docs/NamespaceManagementApi.md#openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesIntegrityCheckGet) | **GET** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check | 检查缺失的Namespace
-*NamespaceManagementApi* | [**openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNamePublicAssociationGet**](docs/NamespaceManagementApi.md#openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNamePublicAssociationGet) | **GET** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association | 获取关联的公共Namespace
-*NamespaceManagementApi* | [**openapiV1EnvsEnvAppnamespacesPublicNamespaceNameInstancesGet**](docs/NamespaceManagementApi.md#openapiV1EnvsEnvAppnamespacesPublicNamespaceNameInstancesGet) | **GET** /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances | 获取公共AppNamespace的所有实例
-*NamespaceManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesGet**](docs/NamespaceManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces | 获取指定集群下的所有Namespace
-*NamespaceManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameLockGet**](docs/NamespaceManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameLockGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock | 获取Namespace的锁状态
-*OrganizationManagementApi* | [**openapiV1OrganizationsGet**](docs/OrganizationManagementApi.md#openapiV1OrganizationsGet) | **GET** /openapi/v1/organizations | 获取所有组织信息
-*ReleaseManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesActiveGet**](docs/ReleaseManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesActiveGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/active | 获取活跃发布（分页）
-*ReleaseManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesAllGet**](docs/ReleaseManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesAllGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all | 获取所有发布（分页）
-*ReleaseManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesLatestGet**](docs/ReleaseManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesLatestGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/latest | 获取最新活跃发布
-*ReleaseManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesPost**](docs/ReleaseManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesPost) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases | 创建发布
-*ReleaseManagementApi* | [**openapiV1EnvsEnvReleasesCompareGet**](docs/ReleaseManagementApi.md#openapiV1EnvsEnvReleasesCompareGet) | **GET** /openapi/v1/envs/{env}/releases/compare | 对比发布
-*ReleaseManagementApi* | [**openapiV1EnvsEnvReleasesReleaseIdGet**](docs/ReleaseManagementApi.md#openapiV1EnvsEnvReleasesReleaseIdGet) | **GET** /openapi/v1/envs/{env}/releases/{releaseId} | 获取发布详情
-*ReleaseManagementApi* | [**openapiV1EnvsEnvReleasesReleaseIdRollbackPut**](docs/ReleaseManagementApi.md#openapiV1EnvsEnvReleasesReleaseIdRollbackPut) | **PUT** /openapi/v1/envs/{env}/releases/{releaseId}/rollback | 回滚发布
+*AppManagementApi* | [**createApp**](docs/AppManagementApi.md#createApp) | **POST** /openapi/v1/apps | 创建应用 (original openapi)
+*AppManagementApi* | [**createAppInEnv**](docs/AppManagementApi.md#createAppInEnv) | **POST** /openapi/v1/apps/envs/{env} | 在指定环境创建应用(new added)
+*AppManagementApi* | [**deleteApp**](docs/AppManagementApi.md#deleteApp) | **DELETE** /openapi/v1/apps/{appId} | 删除应用(new added)
+*AppManagementApi* | [**findApps**](docs/AppManagementApi.md#findApps) | **GET** /openapi/v1/apps | 查找应用 (original openapi)
+*AppManagementApi* | [**findAppsAuthorized**](docs/AppManagementApi.md#findAppsAuthorized) | **GET** /openapi/v1/apps/authorized | 获取当前Consumer授权的应用列表 (original openapi)
+*AppManagementApi* | [**findMissEnvs**](docs/AppManagementApi.md#findMissEnvs) | **GET** /openapi/v1/apps/{appId}/miss_envs | 查找缺失的环境(new added)
+*AppManagementApi* | [**getApp**](docs/AppManagementApi.md#getApp) | **GET** /openapi/v1/apps/{appId} | 获取单个应用信息(new added)
+*AppManagementApi* | [**getAppNavTree**](docs/AppManagementApi.md#getAppNavTree) | **GET** /openapi/v1/apps/{appId}/navtree | 获取应用导航树(new added)
+*AppManagementApi* | [**getAppsBySelf**](docs/AppManagementApi.md#getAppsBySelf) | **GET** /openapi/v1/apps/by-self | 获取当前Consumer的应用列表（分页）(new added)
+*AppManagementApi* | [**getEnvClusterInfo**](docs/AppManagementApi.md#getEnvClusterInfo) | **GET** /openapi/v1/apps/{appId}/envclusters | 获取应用的环境集群信息 (original openapi)
+*AppManagementApi* | [**updateApp**](docs/AppManagementApi.md#updateApp) | **PUT** /openapi/v1/apps/{appId} | 更新应用(new added)
+*ClusterManagementApi* | [**createCluster**](docs/ClusterManagementApi.md#createCluster) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters | 创建集群 (original openapi)
+*ClusterManagementApi* | [**deleteCluster**](docs/ClusterManagementApi.md#deleteCluster) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 删除集群 (new added)
+*ClusterManagementApi* | [**getCluster**](docs/ClusterManagementApi.md#getCluster) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 获取指定集群信息 (original openapi)
+*InstanceManagementApi* | [**getInstanceCountByNamespace**](docs/InstanceManagementApi.md#getInstanceCountByNamespace) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances | 获取命名空间下的实例数量 (original openapi)
+*InstanceManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet**](docs/InstanceManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_int | 查询不在指定发布版本中的实例 (new added)
+*InstanceManagementApi* | [**openapiV1EnvsEnvReleasesReleaseIdInstancesGet**](docs/InstanceManagementApi.md#openapiV1EnvsEnvReleasesReleaseIdInstancesGet) | **GET** /openapi/v1/envs/{env}/releases/{releaseId}/instances | 根据发布版本查询实例（支持分页） (new added)
+*ItemManagementApi* | [**batchUpdateItemsByText**](docs/ItemManagementApi.md#batchUpdateItemsByText) | **PUT** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate | 通过文本批量修改配置项 (new added)
+*ItemManagementApi* | [**compareItems**](docs/ItemManagementApi.md#compareItems) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare | 对比命名空间配置差异 (new added)
+*ItemManagementApi* | [**createItem**](docs/ItemManagementApi.md#createItem) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items | 创建新的配置项 (original openapi)
+*ItemManagementApi* | [**deleteItem**](docs/ItemManagementApi.md#deleteItem) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key} | 删除配置项 (original openapi)
+*ItemManagementApi* | [**deleteItemByEncodedKey**](docs/ItemManagementApi.md#deleteItemByEncodedKey) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key} | 通过编码的key删除配置项 (original openapi)
+*ItemManagementApi* | [**findItemsByNamespace**](docs/ItemManagementApi.md#findItemsByNamespace) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items | 获取命名空间下的配置项列表 (original openapi)
+*ItemManagementApi* | [**getBranchItems**](docs/ItemManagementApi.md#getBranchItems) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items | 获取分支下的配置项 (new added)
+*ItemManagementApi* | [**getItem**](docs/ItemManagementApi.md#getItem) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key} | 获取单个配置项 (original openapi)
+*ItemManagementApi* | [**getItemByEncodedKey**](docs/ItemManagementApi.md#getItemByEncodedKey) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key} | 通过查询参数获取配置项（支持编码的key） (original openapi)
+*ItemManagementApi* | [**revertItems**](docs/ItemManagementApi.md#revertItems) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert | 撤销配置项更改 (new added)
+*ItemManagementApi* | [**syncItems**](docs/ItemManagementApi.md#syncItems) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync | 同步配置项到多个命名空间 (new added)
+*ItemManagementApi* | [**updateItem**](docs/ItemManagementApi.md#updateItem) | **PUT** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key} | 更新配置项 (original openapi)
+*ItemManagementApi* | [**updateItemByEncodedKey**](docs/ItemManagementApi.md#updateItemByEncodedKey) | **PUT** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key} | 通过编码的key更新配置项 (original openapi)
+*ItemManagementApi* | [**validateItems**](docs/ItemManagementApi.md#validateItems) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate | 验证配置文本语法 (new added)
+*NamespaceBranchManagementApi* | [**createBranch**](docs/NamespaceBranchManagementApi.md#createBranch) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches | 创建命名空间分支 (original openapi)
+*NamespaceBranchManagementApi* | [**deleteBranch**](docs/NamespaceBranchManagementApi.md#deleteBranch) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} | 删除命名空间分支 (original openapi)
+*NamespaceBranchManagementApi* | [**findBranch**](docs/NamespaceBranchManagementApi.md#findBranch) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches | 获取命名空间分支信息 (original openapi)
+*NamespaceBranchManagementApi* | [**getBranchGrayRules**](docs/NamespaceBranchManagementApi.md#getBranchGrayRules) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules | 获取分支灰度发布规则 (original openapi)
+*NamespaceBranchManagementApi* | [**mergeBranch**](docs/NamespaceBranchManagementApi.md#mergeBranch) | **PATCH** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} | 合并分支到主分支 (new added)
+*NamespaceBranchManagementApi* | [**updateBranchRules**](docs/NamespaceBranchManagementApi.md#updateBranchRules) | **PUT** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules | 更新分支灰度发布规则 (original openapi)
+*NamespaceManagementApi* | [**checkNamespaceIntegrity**](docs/NamespaceManagementApi.md#checkNamespaceIntegrity) | **GET** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check | 检查缺失的Namespace (new added)
+*NamespaceManagementApi* | [**createNamespace**](docs/NamespaceManagementApi.md#createNamespace) | **POST** /openapi/v1/apps/{appId}/appnamespaces | 创建AppNamespace (original openapi)
+*NamespaceManagementApi* | [**deleteAppNamespace**](docs/NamespaceManagementApi.md#deleteAppNamespace) | **DELETE** /openapi/v1/apps/{appId}/appnamespaces/{namespaceName} | 删除AppNamespace (new added)
+*NamespaceManagementApi* | [**deleteNamespaceLinks**](docs/NamespaceManagementApi.md#deleteNamespaceLinks) | **DELETE** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links | 删除关联的Namespace (new added)
+*NamespaceManagementApi* | [**findNamespaces**](docs/NamespaceManagementApi.md#findNamespaces) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces | 获取指定集群下的所有Namespace (original openapi)
+*NamespaceManagementApi* | [**getAppNamespace**](docs/NamespaceManagementApi.md#getAppNamespace) | **GET** /openapi/v1/apps/{appId}/appnamespaces/{namespaceName} | 获取指定的AppNamespace (new added)
+*NamespaceManagementApi* | [**getAppNamespaces**](docs/NamespaceManagementApi.md#getAppNamespaces) | **GET** /openapi/v1/appnamespaces | 获取所有公共AppNamespace (new added)
+*NamespaceManagementApi* | [**getAppNamespacesByApp**](docs/NamespaceManagementApi.md#getAppNamespacesByApp) | **GET** /openapi/v1/apps/{appId}/appnamespaces | 获取指定应用的AppNamespace (new added)
+*NamespaceManagementApi* | [**getNamespaceLock**](docs/NamespaceManagementApi.md#getNamespaceLock) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock | 获取Namespace的锁状态 (original openapi)
+*NamespaceManagementApi* | [**getNamespacesReleaseStatus**](docs/NamespaceManagementApi.md#getNamespacesReleaseStatus) | **GET** /openapi/v1/apps/{appId}/namespaces/releases/status | 获取应用下所有Namespace的发布状态 (new added)
+*NamespaceManagementApi* | [**getPublicAppNamespaceInstances**](docs/NamespaceManagementApi.md#getPublicAppNamespaceInstances) | **GET** /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances | 获取公共AppNamespace的所有实例 (new added)
+*NamespaceManagementApi* | [**getPublicNamespaceAssociation**](docs/NamespaceManagementApi.md#getPublicNamespaceAssociation) | **GET** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association | 获取关联的公共Namespace (new added)
+*NamespaceManagementApi* | [**loadNamespace**](docs/NamespaceManagementApi.md#loadNamespace) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName} | 获取指定的Namespace (original openapi)
+*OrganizationManagementApi* | [**getOrganization**](docs/OrganizationManagementApi.md#getOrganization) | **GET** /openapi/v1/organizations | 获取所有组织信息 (original openapi)
+*ReleaseManagementApi* | [**createGrayDelRelease**](docs/ReleaseManagementApi.md#createGrayDelRelease) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-del-releases | 创建灰度删除发布 (original openapi)
+*ReleaseManagementApi* | [**createGrayRelease**](docs/ReleaseManagementApi.md#createGrayRelease) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/releases | 创建灰度发布 (original openapi)
+*ReleaseManagementApi* | [**createRelease**](docs/ReleaseManagementApi.md#createRelease) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases | 创建发布 (original openapi)
+*ReleaseManagementApi* | [**findActiveReleases**](docs/ReleaseManagementApi.md#findActiveReleases) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/active | 获取活跃发布（分页） (new added)
+*ReleaseManagementApi* | [**findAllReleases**](docs/ReleaseManagementApi.md#findAllReleases) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all | 获取所有发布（分页） (new added)
+*ReleaseManagementApi* | [**getReleaseById**](docs/ReleaseManagementApi.md#getReleaseById) | **GET** /openapi/v1/envs/{env}/releases/{releaseId} | 获取发布详情 (new added)
+*ReleaseManagementApi* | [**loadLatestActiveRelease**](docs/ReleaseManagementApi.md#loadLatestActiveRelease) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/latest | 获取最新活跃发布 (original openapi)
+*ReleaseManagementApi* | [**merge**](docs/ReleaseManagementApi.md#merge) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge | 合并分支 (original openapi)
+*ReleaseManagementApi* | [**rollback**](docs/ReleaseManagementApi.md#rollback) | **PUT** /openapi/v1/envs/{env}/releases/{releaseId}/rollback | 回滚发布 (original openapi)
 
 
 ## Documentation for Models
 
- - [Change](docs/Change.md)
- - [ClusterDTO](docs/ClusterDTO.md)
- - [EntityPairKVEntity](docs/EntityPairKVEntity.md)
- - [EnvClusterInfo](docs/EnvClusterInfo.md)
- - [ItemChangeSets](docs/ItemChangeSets.md)
- - [ItemDTO](docs/ItemDTO.md)
  - [KVEntity](docs/KVEntity.md)
- - [ListItemDiffs](docs/ListItemDiffs.md)
- - [ListReleaseBO](docs/ListReleaseBO.md)
- - [MapString](docs/MapString.md)
+ - [MultiResponseEntity](docs/MultiResponseEntity.md)
  - [NamespaceGrayDelReleaseDTO](docs/NamespaceGrayDelReleaseDTO.md)
- - [NamespaceIdentifier](docs/NamespaceIdentifier.md)
  - [NamespaceReleaseDTO](docs/NamespaceReleaseDTO.md)
- - [NamespaceSyncModel](docs/NamespaceSyncModel.md)
- - [NamespaceTextModel](docs/NamespaceTextModel.md)
  - [OpenAppDTO](docs/OpenAppDTO.md)
  - [OpenAppNamespaceDTO](docs/OpenAppNamespaceDTO.md)
  - [OpenClusterDTO](docs/OpenClusterDTO.md)
  - [OpenCreateAppDTO](docs/OpenCreateAppDTO.md)
  - [OpenEnvClusterDTO](docs/OpenEnvClusterDTO.md)
+ - [OpenEnvClusterInfo](docs/OpenEnvClusterInfo.md)
  - [OpenGrayReleaseRuleDTO](docs/OpenGrayReleaseRuleDTO.md)
  - [OpenGrayReleaseRuleItemDTO](docs/OpenGrayReleaseRuleItemDTO.md)
  - [OpenInstanceConfigDTO](docs/OpenInstanceConfigDTO.md)
  - [OpenInstanceDTO](docs/OpenInstanceDTO.md)
+ - [OpenItemChangeSets](docs/OpenItemChangeSets.md)
  - [OpenItemDTO](docs/OpenItemDTO.md)
+ - [OpenItemDiffs](docs/OpenItemDiffs.md)
  - [OpenNamespaceDTO](docs/OpenNamespaceDTO.md)
+ - [OpenNamespaceIdentifier](docs/OpenNamespaceIdentifier.md)
  - [OpenNamespaceLockDTO](docs/OpenNamespaceLockDTO.md)
+ - [OpenNamespaceSyncModel](docs/OpenNamespaceSyncModel.md)
+ - [OpenNamespaceTextModel](docs/OpenNamespaceTextModel.md)
  - [OpenOrganizationDto](docs/OpenOrganizationDto.md)
  - [OpenPageDTOOpenInstanceDTO](docs/OpenPageDTOOpenInstanceDTO.md)
  - [OpenPageDTOOpenItemDTO](docs/OpenPageDTOOpenItemDTO.md)
+ - [OpenReleaseBO](docs/OpenReleaseBO.md)
  - [OpenReleaseDTO](docs/OpenReleaseDTO.md)
- - [OpenapiV1AppsGet401Response](docs/OpenapiV1AppsGet401Response.md)
- - [OpenapiV1AppsPost400Response](docs/OpenapiV1AppsPost400Response.md)
- - [OpenapiV1AppsPostRequest](docs/OpenapiV1AppsPostRequest.md)
- - [OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost200Response](docs/OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost200Response.md)
- - [OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost400Response](docs/OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost400Response.md)
- - [OpenapiV1EnvsEnvReleasesCompareGet200Response](docs/OpenapiV1EnvsEnvReleasesCompareGet200Response.md)
- - [ReleaseDTO](docs/ReleaseDTO.md)
+ - [RichResponseEntity](docs/RichResponseEntity.md)
 
 
 <a id="documentation-for-authorization"></a>
@@ -273,6 +248,3 @@ Authentication schemes defined for the API:
 It's recommended to create an instance of `ApiClient` per thread in a multithreaded environment to avoid any potential issues.
 
 ## Author
-
-
-

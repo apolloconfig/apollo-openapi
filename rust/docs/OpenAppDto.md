@@ -16,5 +16,3 @@ Name | Type | Description | Notes
 **owner_email** | Option<**String**> | 应用负责人邮箱地址，用于接收应用相关通知 | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
-

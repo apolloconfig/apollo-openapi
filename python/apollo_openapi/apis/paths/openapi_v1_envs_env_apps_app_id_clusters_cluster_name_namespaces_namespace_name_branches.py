@@ -1,0 +1,9 @@
+from apollo_openapi.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_branches.get import ApiForget
+from apollo_openapi.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_branches.post import ApiForpost
+
+
+class OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranches(
+    ApiForget,
+    ApiForpost,
+):
+    pass

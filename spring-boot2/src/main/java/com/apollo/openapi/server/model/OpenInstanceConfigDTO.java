@@ -5,7 +5,6 @@ import java.util.Objects;
 import com.apollo.openapi.server.model.OpenReleaseDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -20,16 +19,16 @@ import javax.annotation.Generated;
  * OpenInstanceConfigDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public class OpenInstanceConfigDTO {
 
-  private @Nullable OpenReleaseDTO release;
+  private OpenReleaseDTO release;
 
-  private @Nullable String releaseDeliveryTime;
+  private String releaseDeliveryTime;
 
-  private @Nullable String dataChangeLastModifiedTime;
+  private String dataChangeLastModifiedTime;
 
-  public OpenInstanceConfigDTO release(@Nullable OpenReleaseDTO release) {
+  public OpenInstanceConfigDTO release(OpenReleaseDTO release) {
     this.release = release;
     return this;
   }
@@ -37,55 +36,55 @@ public class OpenInstanceConfigDTO {
   /**
    * Get release
    * @return release
-   */
-  @Valid 
+  */
+  @Valid
   @Schema(name = "release", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("release")
-  public @Nullable OpenReleaseDTO getRelease() {
+  public OpenReleaseDTO getRelease() {
     return release;
   }
 
-  public void setRelease(@Nullable OpenReleaseDTO release) {
+  public void setRelease(OpenReleaseDTO release) {
     this.release = release;
   }
 
-  public OpenInstanceConfigDTO releaseDeliveryTime(@Nullable String releaseDeliveryTime) {
+  public OpenInstanceConfigDTO releaseDeliveryTime(String releaseDeliveryTime) {
     this.releaseDeliveryTime = releaseDeliveryTime;
     return this;
   }
 
   /**
-   * 
+   * 配置下发时间（ISO 8601）
    * @return releaseDeliveryTime
-   */
-  
-  @Schema(name = "releaseDeliveryTime", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "releaseDeliveryTime", example = "2025-09-29T12:34:56Z", description = "配置下发时间（ISO 8601）", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("releaseDeliveryTime")
-  public @Nullable String getReleaseDeliveryTime() {
+  public String getReleaseDeliveryTime() {
     return releaseDeliveryTime;
   }
 
-  public void setReleaseDeliveryTime(@Nullable String releaseDeliveryTime) {
+  public void setReleaseDeliveryTime(String releaseDeliveryTime) {
     this.releaseDeliveryTime = releaseDeliveryTime;
   }
 
-  public OpenInstanceConfigDTO dataChangeLastModifiedTime(@Nullable String dataChangeLastModifiedTime) {
+  public OpenInstanceConfigDTO dataChangeLastModifiedTime(String dataChangeLastModifiedTime) {
     this.dataChangeLastModifiedTime = dataChangeLastModifiedTime;
     return this;
   }
 
   /**
-   * 
+   * 最后修改时间（ISO 8601）
    * @return dataChangeLastModifiedTime
-   */
-  
-  @Schema(name = "dataChangeLastModifiedTime", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "dataChangeLastModifiedTime", example = "2025-09-29T12:34:56Z", description = "最后修改时间（ISO 8601）", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedTime")
-  public @Nullable String getDataChangeLastModifiedTime() {
+  public String getDataChangeLastModifiedTime() {
     return dataChangeLastModifiedTime;
   }
 
-  public void setDataChangeLastModifiedTime(@Nullable String dataChangeLastModifiedTime) {
+  public void setDataChangeLastModifiedTime(String dataChangeLastModifiedTime) {
     this.dataChangeLastModifiedTime = dataChangeLastModifiedTime;
   }
 
@@ -130,4 +129,3 @@ public class OpenInstanceConfigDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

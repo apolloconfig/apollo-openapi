@@ -1,22 +1,17 @@
 package com.apollo.openapi.server.api;
 
-import com.apollo.openapi.server.model.ListItemDiffs;
-import com.apollo.openapi.server.model.NamespaceSyncModel;
-import com.apollo.openapi.server.model.NamespaceTextModel;
+import java.util.Map;
 import com.apollo.openapi.server.model.OpenItemDTO;
+import com.apollo.openapi.server.model.OpenItemDiffs;
+import com.apollo.openapi.server.model.OpenNamespaceSyncModel;
+import com.apollo.openapi.server.model.OpenNamespaceTextModel;
 import com.apollo.openapi.server.model.OpenPageDTOOpenItemDTO;
-import com.apollo.openapi.server.model.OpenapiV1AppsGet401Response;
-import com.apollo.openapi.server.model.OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost200Response;
-import com.apollo.openapi.server.model.OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost400Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,7 +21,7 @@ import javax.annotation.Generated;
  * A delegate to be called by the {@link ItemManagementApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public interface ItemManagementApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -34,19 +29,107 @@ public interface ItemManagementApiDelegate {
     }
 
     /**
-     * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key} : 通过编码的key删除配置项
-     * DELETE /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate : 通过文本批量修改配置项 (new added)
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate:
      *
      * @param appId  (required)
      * @param env  (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param key  (required)
-     * @param operator  (required)
-     * @return  (status code 200)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKeyDelete
+     * @param operator 操作人用户名 (required)
+     * @param openNamespaceTextModel  (required)
+     * @return 批量更新配置项成功 (status code 200)
+     *         or 权限不足 (status code 403)
+     * @see ItemManagementApi#batchUpdateItemsByText
      */
-    default ResponseEntity<Object> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKeyDelete(String appId,
+    default ResponseEntity<Object> batchUpdateItemsByText(String appId,
+        String env,
+        String clusterName,
+        String namespaceName,
+        String operator,
+        OpenNamespaceTextModel openNamespaceTextModel) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare : 对比命名空间配置差异 (new added)
+     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare
+     *
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param openNamespaceSyncModel  (required)
+     * @return 成功对比命名空间配置差异 (status code 200)
+     * @see ItemManagementApi#compareItems
+     */
+    default ResponseEntity<List<OpenItemDiffs>> compareItems(String appId,
+        String env,
+        String clusterName,
+        String namespaceName,
+        OpenNamespaceSyncModel openNamespaceSyncModel) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "[ { \"namespace\" : { \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"env\" : \"env\", \"namespaceName\" : \"namespaceName\" }, \"diffs\" : { \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"deleteItems\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"createItems\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"updateItems\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, \"extInfo\" : \"extInfo\" }, { \"namespace\" : { \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"env\" : \"env\", \"namespaceName\" : \"namespaceName\" }, \"diffs\" : { \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"deleteItems\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"createItems\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"updateItems\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, \"extInfo\" : \"extInfo\" } ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items : 创建新的配置项 (original openapi)
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items
+     *
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param operator 操作人用户名 (required)
+     * @param openItemDTO  (required)
+     * @return 配置项创建成功 (status code 200)
+     *         or 请求参数错误 (status code 400)
+     *         or 权限不足 (status code 403)
+     * @see ItemManagementApi#createItem
+     */
+    default ResponseEntity<OpenItemDTO> createItem(String appId,
+        String env,
+        String clusterName,
+        String namespaceName,
+        String operator,
+        OpenItemDTO openItemDTO) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key} : 删除配置项 (original openapi)
+     * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}
+     *
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param key 配置项键名 (required)
+     * @param operator 操作人用户名 (required)
+     * @return 配置项删除成功 (status code 200)
+     * @see ItemManagementApi#deleteItem
+     */
+    default ResponseEntity<Object> deleteItem(String appId,
         String env,
         String clusterName,
         String namespaceName,
@@ -57,180 +140,43 @@ public interface ItemManagementApiDelegate {
     }
 
     /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key} : 通过查询参数获取配置项（支持编码的key）
-     * GET /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items?key&#x3D;{key}&amp;encoded&#x3D;{true|false}
+     * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key} : 通过编码的key删除配置项 (original openapi)
+     * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}
      *
      * @param appId  (required)
      * @param env  (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
      * @param key  (required)
-     * @return 成功获取配置项（支持编码key） (status code 200)
-     *         or 配置项不存在 (status code 404)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKeyGet
+     * @param operator  (required)
+     * @return  (status code 200)
+     * @see ItemManagementApi#deleteItemByEncodedKey
      */
-    default ResponseEntity<OpenItemDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKeyGet(String appId,
-        String env,
-        String clusterName,
-        String namespaceName,
-        String key) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"key\" : \"key\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key} : 通过编码的key更新配置项
-     * PUT /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}
-     *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param key  (required)
-     * @param createIfNotExists  (required)
-     * @param openItemDTO  (required)
-     * @return 配置项更新成功（编码key） (status code 200)
-     *         or 请求参数错误 (status code 400)
-     *         or 权限不足 (status code 403)
-     *         or 配置项不存在 (status code 404)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKeyPut
-     */
-    default ResponseEntity<OpenapiV1AppsGet401Response> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKeyPut(String appId,
+    default ResponseEntity<Object> deleteItemByEncodedKey(String appId,
         String env,
         String clusterName,
         String namespaceName,
         String key,
-        Boolean createIfNotExists,
-        OpenItemDTO openItemDTO) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
+        String operator) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
 
     /**
-     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:batchUpdate : 通过文本批量修改配置项
-     * PUT /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:batchUpdate
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items : 获取命名空间下的配置项列表 (original openapi)
+     * 获取指定命名空间的配置项列表，支持分页
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param namespaceTextModel  (required)
-     * @return 批量更新配置项成功 (status code 200)
-     *         or 请求参数错误 (status code 400)
-     *         or 权限不足 (status code 403)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsBatchUpdatePut
-     */
-    default ResponseEntity<OpenapiV1AppsGet401Response> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsBatchUpdatePut(String appId,
-        String env,
-        String clusterName,
-        String namespaceName,
-        NamespaceTextModel namespaceTextModel) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:compare : 对比命名空间配置差异
-     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:compare
-     *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param namespaceSyncModel  (required)
-     * @return 成功对比命名空间配置差异 (status code 200)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsComparePost
-     */
-    default ResponseEntity<List<ListItemDiffs>> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsComparePost(String appId,
-        String env,
-        String clusterName,
-        String namespaceName,
-        NamespaceSyncModel namespaceSyncModel) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"namespace\" : { \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"env\" : \"env\", \"namespaceName\" : \"namespaceName\" }, \"diffs\" : { \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"deleteItems\" : [ { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"type\" : 1, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"namespaceId\" : 6, \"lineNum\" : 5, \"comment\" : \"comment\", \"id\" : 0, \"value\" : \"value\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"type\" : 1, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"namespaceId\" : 6, \"lineNum\" : 5, \"comment\" : \"comment\", \"id\" : 0, \"value\" : \"value\", \"key\" : \"key\" } ], \"createItems\" : [ { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"type\" : 1, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"namespaceId\" : 6, \"lineNum\" : 5, \"comment\" : \"comment\", \"id\" : 0, \"value\" : \"value\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"type\" : 1, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"namespaceId\" : 6, \"lineNum\" : 5, \"comment\" : \"comment\", \"id\" : 0, \"value\" : \"value\", \"key\" : \"key\" } ], \"updateItems\" : [ { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"type\" : 1, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"namespaceId\" : 6, \"lineNum\" : 5, \"comment\" : \"comment\", \"id\" : 0, \"value\" : \"value\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"type\" : 1, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"namespaceId\" : 6, \"lineNum\" : 5, \"comment\" : \"comment\", \"id\" : 0, \"value\" : \"value\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\" }, \"extInfo\" : \"extInfo\" }, { \"namespace\" : { \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"env\" : \"env\", \"namespaceName\" : \"namespaceName\" }, \"diffs\" : { \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"deleteItems\" : [ { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"type\" : 1, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"namespaceId\" : 6, \"lineNum\" : 5, \"comment\" : \"comment\", \"id\" : 0, \"value\" : \"value\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"type\" : 1, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"namespaceId\" : 6, \"lineNum\" : 5, \"comment\" : \"comment\", \"id\" : 0, \"value\" : \"value\", \"key\" : \"key\" } ], \"createItems\" : [ { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"type\" : 1, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"namespaceId\" : 6, \"lineNum\" : 5, \"comment\" : \"comment\", \"id\" : 0, \"value\" : \"value\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"type\" : 1, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"namespaceId\" : 6, \"lineNum\" : 5, \"comment\" : \"comment\", \"id\" : 0, \"value\" : \"value\", \"key\" : \"key\" } ], \"updateItems\" : [ { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"type\" : 1, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"namespaceId\" : 6, \"lineNum\" : 5, \"comment\" : \"comment\", \"id\" : 0, \"value\" : \"value\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"type\" : 1, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"dataChangeLastModifiedByDisplayName\" : \"dataChangeLastModifiedByDisplayName\", \"dataChangeCreatedByDisplayName\" : \"dataChangeCreatedByDisplayName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"namespaceId\" : 6, \"lineNum\" : 5, \"comment\" : \"comment\", \"id\" : 0, \"value\" : \"value\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\" }, \"extInfo\" : \"extInfo\" } ]";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items : 获取命名空间下的配置项列表
-     * 
-     *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param page  (required)
-     * @param size  (required)
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param page 页码，从0开始 (required)
+     * @param size 每页数量 (required)
      * @return 成功获取配置项列表 (status code 200)
      *         or 命名空间不存在 (status code 404)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsGet
+     * @see ItemManagementApi#findItemsByNamespace
      */
-    default ResponseEntity<OpenPageDTOOpenItemDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsGet(String appId,
+    default ResponseEntity<OpenPageDTOOpenItemDTO> findItemsByNamespace(String appId,
         String env,
         String clusterName,
         String namespaceName,
@@ -239,12 +185,7 @@ public interface ItemManagementApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"total\" : 1, \"size\" : 6, \"page\" : 0, \"content\" : [ { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"key\" : \"key\" } ] }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
+                    String exampleString = "{ \"total\" : 1, \"size\" : 6, \"page\" : 0, \"content\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ] }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -255,42 +196,50 @@ public interface ItemManagementApiDelegate {
     }
 
     /**
-     * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key} : 删除配置项
-     * DELETE /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items : 获取分支下的配置项 (new added)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param key  (required)
-     * @param operator  (required)
-     * @return  (status code 200)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKeyDelete
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @return 成功获取分支下的配置项列表 (status code 200)
+     *         or 分支不存在 (status code 404)
+     * @see ItemManagementApi#getBranchItems
      */
-    default ResponseEntity<Object> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKeyDelete(String appId,
+    default ResponseEntity<List<OpenItemDTO>> getBranchItems(String appId,
         String env,
         String clusterName,
         String namespaceName,
-        String key,
-        String operator) {
+        String branchName) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "[ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
 
     /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key} : 获取单个配置项
-     * GET /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key} : 获取单个配置项 (original openapi)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param key  (required)
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param key 配置项键名 (required)
      * @return 成功获取配置项 (status code 200)
      *         or 配置项不存在 (status code 404)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKeyGet
+     * @see ItemManagementApi#getItem
      */
-    default ResponseEntity<OpenItemDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKeyGet(String appId,
+    default ResponseEntity<OpenItemDTO> getItem(String appId,
         String env,
         String clusterName,
         String namespaceName,
@@ -298,12 +247,7 @@ public interface ItemManagementApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"key\" : \"key\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -314,13 +258,92 @@ public interface ItemManagementApiDelegate {
     }
 
     /**
-     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key} : 更新配置项
-     * PUT /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key} : 通过查询参数获取配置项（支持编码的key） (original openapi)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}
+     *
+     * @param appId  (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param key 配置项键名（需要URL编码） (required)
+     * @return 成功获取配置项（支持编码key） (status code 200)
+     *         or 配置项不存在 (status code 404)
+     * @see ItemManagementApi#getItemByEncodedKey
+     */
+    default ResponseEntity<OpenItemDTO> getItemByEncodedKey(String appId,
+        String env,
+        String clusterName,
+        String namespaceName,
+        String key) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert : 撤销配置项更改 (new added)
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert
      *
      * @param appId  (required)
      * @param env  (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
+     * @param operator 操作人用户名 (required)
+     * @return 配置项更改撤销成功 (status code 200)
+     *         or 请求参数错误 (status code 400)
+     *         or 权限不足 (status code 403)
+     * @see ItemManagementApi#revertItems
+     */
+    default ResponseEntity<Object> revertItems(String appId,
+        String env,
+        String clusterName,
+        String namespaceName,
+        String operator) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync : 同步配置项到多个命名空间 (new added)
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync:
+     *
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName  (required)
+     * @param namespaceName  (required)
+     * @param operator 操作人用户名 (required)
+     * @param openNamespaceSyncModel  (required)
+     * @return 配置项同步成功 (status code 200)
+     *         or 请求参数错误 (status code 400)
+     *         or 权限不足 (status code 403)
+     * @see ItemManagementApi#syncItems
+     */
+    default ResponseEntity<Object> syncItems(String appId,
+        String env,
+        String clusterName,
+        String namespaceName,
+        String operator,
+        OpenNamespaceSyncModel openNamespaceSyncModel) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key} : 更新配置项 (original openapi)
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}
+     *
+     * @param appId  (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
      * @param key  (required)
      * @param createIfNotExists  (required)
      * @param openItemDTO  (required)
@@ -328,199 +351,65 @@ public interface ItemManagementApiDelegate {
      *         or 请求参数错误 (status code 400)
      *         or 权限不足 (status code 403)
      *         or 配置项不存在 (status code 404)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKeyPut
+     * @see ItemManagementApi#updateItem
      */
-    default ResponseEntity<OpenapiV1AppsGet401Response> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKeyPut(String appId,
+    default ResponseEntity<Object> updateItem(String appId,
         String env,
         String clusterName,
         String namespaceName,
         String key,
         Boolean createIfNotExists,
         OpenItemDTO openItemDTO) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
 
     /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items : 创建新的配置项
-     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key} : 通过编码的key更新配置项 (original openapi)
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param key 配置项键名（需要URL编码） (required)
+     * @param createIfNotExists 若不存在则创建（true/false） (required)
      * @param openItemDTO  (required)
-     * @return 配置项创建成功 (status code 200)
+     * @return 配置项更新成功（编码key） (status code 200)
      *         or 请求参数错误 (status code 400)
      *         or 权限不足 (status code 403)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsPost
+     *         or 配置项不存在 (status code 404)
+     * @see ItemManagementApi#updateItemByEncodedKey
      */
-    default ResponseEntity<OpenItemDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsPost(String appId,
+    default ResponseEntity<Object> updateItemByEncodedKey(String appId,
         String env,
         String clusterName,
         String namespaceName,
+        String key,
+        Boolean createIfNotExists,
         OpenItemDTO openItemDTO) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"key\" : \"key\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
 
     /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:revert : 撤销配置项更改
-     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:revert
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate : 验证配置文本语法 (new added)
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate
      *
      * @param appId  (required)
      * @param env  (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @return 配置项更改撤销成功 (status code 200)
-     *         or 请求参数错误 (status code 400)
-     *         or 权限不足 (status code 403)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsRevertPost
-     */
-    default ResponseEntity<OpenapiV1AppsGet401Response> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsRevertPost(String appId,
-        String env,
-        String clusterName,
-        String namespaceName) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:sync : 同步配置项到多个命名空间
-     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:sync
-     *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param namespaceSyncModel  (required)
-     * @return 配置项同步成功 (status code 200)
-     *         or 请求参数错误 (status code 400)
-     *         or 权限不足 (status code 403)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsSyncPost
-     */
-    default ResponseEntity<OpenapiV1AppsGet401Response> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsSyncPost(String appId,
-        String env,
-        String clusterName,
-        String namespaceName,
-        NamespaceSyncModel namespaceSyncModel) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:validate : 验证配置文本语法
-     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:validate
-     *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param namespaceTextModel  (required)
+     * @param openNamespaceTextModel  (required)
      * @return 配置文本语法验证通过 (status code 200)
      *         or 配置文本语法错误 (status code 400)
-     * @see ItemManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost
+     * @see ItemManagementApi#validateItems
      */
-    default ResponseEntity<OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost200Response> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsValidatePost(String appId,
+    default ResponseEntity<Object> validateItems(String appId,
         String env,
         String clusterName,
         String namespaceName,
-        NamespaceTextModel namespaceTextModel) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"valid\" : true, \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"valid\" : true, \"message\" : \"message\", \"errors\" : [ \"errors\", \"errors\" ] }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
+        OpenNamespaceTextModel openNamespaceTextModel) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

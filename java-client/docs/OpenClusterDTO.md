@@ -14,6 +14,3 @@ Apollo集群信息数据传输对象，表示应用在特定环境下的集群�
 |**dataChangeLastModifiedTime** | **String** | 集群最后修改时间，ISO 8601格式的时间戳 |  [optional] |
 |**name** | **String** | 集群名称，在同一应用和环境下唯一标识一个集群 |  [optional] |
 |**appId** | **String** | 所属应用的唯一标识符 |  [optional] |
-
-
-

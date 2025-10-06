@@ -59,18 +59,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OpenAppDTO'
-              example:
-                dataChangeCreatedBy: 'apollo'
-                dataChangeLastModifiedBy: 'apollo'
-                dataChangeCreatedTime: '2024-01-15T10:30:00.000Z'
-                dataChangeLastModifiedTime: '2024-01-15T10:30:00.000Z'
-                name: 'Sample Application'
-                appId: 'sample-app'
-                orgId: 'default'
-                orgName: 'Default Organization'
-                ownerName: 'Apollo Admin'
-                ownerEmail: 'admin@apollo.com'
+                $ref: '#/components/schemas/SuccessEmptyResponse'
           headers: {}
         '400':
           description: '请求参数错误'
@@ -290,6 +279,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -342,6 +337,12 @@ paths:
         - name: appId
           in: path
           description: '应用ID'
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
           required: true
           schema:
             type: string
@@ -454,9 +455,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/OpenEnvClusterInfo'
+                $ref: '#/components/schemas/MultiResponseEntity'
               example:
                 - env: 'DEV'
                   clusters:
@@ -484,6 +483,12 @@ paths:
         - name: env
           in: path
           description: 环境标识，例如 DEV、FAT、UAT、PROD
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
           required: true
           schema:
             type: string
@@ -540,9 +545,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: string
+                $ref: '#/components/schemas/MultiResponseEntity'
           headers: {}
         '404':
           description: '应用不存在'
@@ -743,7 +746,7 @@ paths:
         - name: operator
           in: query
           description: '操作人用户名'
-          required: false
+          required: true
           schema:
             type: string
       responses:
@@ -879,6 +882,12 @@ paths:
         - name: namespaceName
           in: path
           description: '命名空间名称'
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
           required: true
           schema:
             type: string
@@ -1112,7 +1121,7 @@ paths:
         - name: operator
           in: query
           description: ''
-          required: false
+          required: true
           schema:
             type: string
       responses:
@@ -1157,6 +1166,12 @@ paths:
         - name: namespaceName
           in: path
           description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
           required: true
           schema:
             type: string
@@ -1402,6 +1417,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1528,6 +1549,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: '配置项更改撤销成功'
@@ -1627,6 +1654,12 @@ paths:
         - name: clusterName
           in: path
           description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
           required: true
           schema:
             type: string
@@ -2113,7 +2146,7 @@ paths:
         - name: operator
           in: query
           description: '操作人用户名'
-          required: false
+          required: true
           schema:
             type: string
       responses:
@@ -2868,6 +2901,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: 'AppNamespace删除成功'
@@ -3105,6 +3144,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: '解除关联成功'
@@ -3261,7 +3306,7 @@ paths:
         - name: operator
           in: query
           description: '操作人用户名'
-          required: false
+          required: true
           schema:
             type: string
       responses:
@@ -3334,7 +3379,7 @@ paths:
         - name: operator
           in: query
           description: 操作人用户名
-          required: false
+          required: true
           schema:
             type: string
       responses:
@@ -3397,6 +3442,12 @@ paths:
           example: 'true'
           schema:
             type: boolean
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -3527,7 +3578,7 @@ paths:
         - name: operator
           in: query
           description: 操作人用户名
-          required: false
+          required: true
           schema:
             type: string
       requestBody:
@@ -4160,5 +4211,40 @@ components:
         projectB:
           darkMode: true
 
+    MultiResponseEntity:
+      type: object
+      description: A response container holding multiple RichResponseEntity objects
+      properties:
+        code:
+          type: integer
+          description: Overall HTTP status code
+          example: 200
+        entities:
+          type: array
+          description: List of rich response entities
+          items:
+            $ref: '#/components/schemas/RichResponseEntity'
+      required:
+        - code
+        - entities
+
+    RichResponseEntity:
+      type: object
+      description: A wrapper for a single response entity with code, message, and body
+      properties:
+        code:
+          type: integer
+          description: HTTP status code
+          example: 200
+        message:
+          type: object
+          description: Response message (can be string or object)
+          example: "OK"
+        body:
+          type: object
+          description: Response payload (generic type T)
+      required:
+        - code
+        - message
 
 servers: []

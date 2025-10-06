@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -19,50 +18,50 @@ import javax.annotation.Generated;
  * OpenOrganizationDto
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public class OpenOrganizationDto {
 
-  private @Nullable String orgId;
+  private String orgId;
 
-  private @Nullable String orgName;
+  private String orgName;
 
-  public OpenOrganizationDto orgId(@Nullable String orgId) {
+  public OpenOrganizationDto orgId(String orgId) {
     this.orgId = orgId;
     return this;
   }
 
   /**
-   * 
+   * 组织ID
    * @return orgId
-   */
-  
-  @Schema(name = "orgId", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "orgId", description = "组织ID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("orgId")
-  public @Nullable String getOrgId() {
+  public String getOrgId() {
     return orgId;
   }
 
-  public void setOrgId(@Nullable String orgId) {
+  public void setOrgId(String orgId) {
     this.orgId = orgId;
   }
 
-  public OpenOrganizationDto orgName(@Nullable String orgName) {
+  public OpenOrganizationDto orgName(String orgName) {
     this.orgName = orgName;
     return this;
   }
 
   /**
-   * 
+   * 组织名称
    * @return orgName
-   */
-  
-  @Schema(name = "orgName", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "orgName", description = "组织名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("orgName")
-  public @Nullable String getOrgName() {
+  public String getOrgName() {
     return orgName;
   }
 
-  public void setOrgName(@Nullable String orgName) {
+  public void setOrgName(String orgName) {
     this.orgName = orgName;
   }
 
@@ -105,4 +104,3 @@ public class OpenOrganizationDto {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

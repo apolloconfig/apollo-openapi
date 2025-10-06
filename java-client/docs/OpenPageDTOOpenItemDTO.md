@@ -12,6 +12,3 @@
 |**size** | **Integer** | 每页显示的记录数量 |  [optional] |
 |**total** | **Long** | 总记录数，符合查询条件的配置项总数量 |  [optional] |
 |**content** | [**List&lt;OpenItemDTO&gt;**](OpenItemDTO.md) | 当前页的配置项列表，包含具体的配置项数据 |  [optional] |
-
-
-

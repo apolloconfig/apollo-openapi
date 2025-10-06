@@ -5,9 +5,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -23,18 +21,18 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenGrayReleaseRuleItemDTO", description = "Apollo灰度发布规则项数据传输对象，表示灰度发布的具体规则条件")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public class OpenGrayReleaseRuleItemDTO {
 
-  private @Nullable String clientAppId;
+  private String clientAppId;
 
   @Valid
-  private List<String> clientIpList = new ArrayList<>();
+  private List<String> clientIpList;
 
   @Valid
-  private List<String> clientLabelList = new ArrayList<>();
+  private List<String> clientLabelList;
 
-  public OpenGrayReleaseRuleItemDTO clientAppId(@Nullable String clientAppId) {
+  public OpenGrayReleaseRuleItemDTO clientAppId(String clientAppId) {
     this.clientAppId = clientAppId;
     return this;
   }
@@ -42,15 +40,15 @@ public class OpenGrayReleaseRuleItemDTO {
   /**
    * 客户端应用ID，指定哪个应用可以获取灰度配置
    * @return clientAppId
-   */
-  
+  */
+
   @Schema(name = "clientAppId", description = "客户端应用ID，指定哪个应用可以获取灰度配置", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clientAppId")
-  public @Nullable String getClientAppId() {
+  public String getClientAppId() {
     return clientAppId;
   }
 
-  public void setClientAppId(@Nullable String clientAppId) {
+  public void setClientAppId(String clientAppId) {
     this.clientAppId = clientAppId;
   }
 
@@ -70,8 +68,8 @@ public class OpenGrayReleaseRuleItemDTO {
   /**
    * 客户端IP地址列表，指定哪些IP地址可以获取灰度配置
    * @return clientIpList
-   */
-  
+  */
+
   @Schema(name = "clientIpList", description = "客户端IP地址列表，指定哪些IP地址可以获取灰度配置", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clientIpList")
   public List<String> getClientIpList() {
@@ -98,8 +96,8 @@ public class OpenGrayReleaseRuleItemDTO {
   /**
    * 客户端标签列表，通过标签来识别可以获取灰度配置的客户端
    * @return clientLabelList
-   */
-  
+  */
+
   @Schema(name = "clientLabelList", description = "客户端标签列表，通过标签来识别可以获取灰度配置的客户端", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clientLabelList")
   public List<String> getClientLabelList() {
@@ -151,4 +149,3 @@ public class OpenGrayReleaseRuleItemDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -20,26 +19,26 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenItemDTO", description = "Apollo配置项数据传输对象，表示一个具体的配置键值对及其元数据")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public class OpenItemDTO {
 
-  private @Nullable String dataChangeCreatedBy;
+  private String dataChangeCreatedBy;
 
-  private @Nullable String dataChangeLastModifiedBy;
+  private String dataChangeLastModifiedBy;
 
-  private @Nullable String dataChangeCreatedTime;
+  private String dataChangeCreatedTime;
 
-  private @Nullable String dataChangeLastModifiedTime;
+  private String dataChangeLastModifiedTime;
 
-  private @Nullable String key;
+  private String key;
 
-  private @Nullable Integer type;
+  private Integer type;
 
-  private @Nullable String value;
+  private String value;
 
-  private @Nullable String comment;
+  private String comment;
 
-  public OpenItemDTO dataChangeCreatedBy(@Nullable String dataChangeCreatedBy) {
+  public OpenItemDTO dataChangeCreatedBy(String dataChangeCreatedBy) {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
     return this;
   }
@@ -47,19 +46,19 @@ public class OpenItemDTO {
   /**
    * 配置项创建者用户名，记录是谁创建了这个配置项
    * @return dataChangeCreatedBy
-   */
-  
+  */
+
   @Schema(name = "dataChangeCreatedBy", description = "配置项创建者用户名，记录是谁创建了这个配置项", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedBy")
-  public @Nullable String getDataChangeCreatedBy() {
+  public String getDataChangeCreatedBy() {
     return dataChangeCreatedBy;
   }
 
-  public void setDataChangeCreatedBy(@Nullable String dataChangeCreatedBy) {
+  public void setDataChangeCreatedBy(String dataChangeCreatedBy) {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
   }
 
-  public OpenItemDTO dataChangeLastModifiedBy(@Nullable String dataChangeLastModifiedBy) {
+  public OpenItemDTO dataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
     return this;
   }
@@ -67,19 +66,19 @@ public class OpenItemDTO {
   /**
    * 配置项最后修改者用户名，记录最后一次修改配置的用户
    * @return dataChangeLastModifiedBy
-   */
-  
+  */
+
   @Schema(name = "dataChangeLastModifiedBy", description = "配置项最后修改者用户名，记录最后一次修改配置的用户", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedBy")
-  public @Nullable String getDataChangeLastModifiedBy() {
+  public String getDataChangeLastModifiedBy() {
     return dataChangeLastModifiedBy;
   }
 
-  public void setDataChangeLastModifiedBy(@Nullable String dataChangeLastModifiedBy) {
+  public void setDataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
   }
 
-  public OpenItemDTO dataChangeCreatedTime(@Nullable String dataChangeCreatedTime) {
+  public OpenItemDTO dataChangeCreatedTime(String dataChangeCreatedTime) {
     this.dataChangeCreatedTime = dataChangeCreatedTime;
     return this;
   }
@@ -87,19 +86,19 @@ public class OpenItemDTO {
   /**
    * 配置项创建时间，ISO 8601格式的时间戳
    * @return dataChangeCreatedTime
-   */
-  
-  @Schema(name = "dataChangeCreatedTime", description = "配置项创建时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "dataChangeCreatedTime", example = "2025-09-29T12:34:56Z", description = "配置项创建时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedTime")
-  public @Nullable String getDataChangeCreatedTime() {
+  public String getDataChangeCreatedTime() {
     return dataChangeCreatedTime;
   }
 
-  public void setDataChangeCreatedTime(@Nullable String dataChangeCreatedTime) {
+  public void setDataChangeCreatedTime(String dataChangeCreatedTime) {
     this.dataChangeCreatedTime = dataChangeCreatedTime;
   }
 
-  public OpenItemDTO dataChangeLastModifiedTime(@Nullable String dataChangeLastModifiedTime) {
+  public OpenItemDTO dataChangeLastModifiedTime(String dataChangeLastModifiedTime) {
     this.dataChangeLastModifiedTime = dataChangeLastModifiedTime;
     return this;
   }
@@ -107,19 +106,19 @@ public class OpenItemDTO {
   /**
    * 配置项最后修改时间，ISO 8601格式的时间戳
    * @return dataChangeLastModifiedTime
-   */
-  
-  @Schema(name = "dataChangeLastModifiedTime", description = "配置项最后修改时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "dataChangeLastModifiedTime", example = "2025-09-29T12:34:56Z", description = "配置项最后修改时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedTime")
-  public @Nullable String getDataChangeLastModifiedTime() {
+  public String getDataChangeLastModifiedTime() {
     return dataChangeLastModifiedTime;
   }
 
-  public void setDataChangeLastModifiedTime(@Nullable String dataChangeLastModifiedTime) {
+  public void setDataChangeLastModifiedTime(String dataChangeLastModifiedTime) {
     this.dataChangeLastModifiedTime = dataChangeLastModifiedTime;
   }
 
-  public OpenItemDTO key(@Nullable String key) {
+  public OpenItemDTO key(String key) {
     this.key = key;
     return this;
   }
@@ -127,19 +126,19 @@ public class OpenItemDTO {
   /**
    * 配置项的键名，在同一命名空间内唯一标识一个配置项
    * @return key
-   */
-  
+  */
+
   @Schema(name = "key", description = "配置项的键名，在同一命名空间内唯一标识一个配置项", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("key")
-  public @Nullable String getKey() {
+  public String getKey() {
     return key;
   }
 
-  public void setKey(@Nullable String key) {
+  public void setKey(String key) {
     this.key = key;
   }
 
-  public OpenItemDTO type(@Nullable Integer type) {
+  public OpenItemDTO type(Integer type) {
     this.type = type;
     return this;
   }
@@ -147,19 +146,19 @@ public class OpenItemDTO {
   /**
    * 配置项类型，0表示普通配置项，1表示文件类型配置项
    * @return type
-   */
-  
+  */
+
   @Schema(name = "type", description = "配置项类型，0表示普通配置项，1表示文件类型配置项", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("type")
-  public @Nullable Integer getType() {
+  public Integer getType() {
     return type;
   }
 
-  public void setType(@Nullable Integer type) {
+  public void setType(Integer type) {
     this.type = type;
   }
 
-  public OpenItemDTO value(@Nullable String value) {
+  public OpenItemDTO value(String value) {
     this.value = value;
     return this;
   }
@@ -167,19 +166,19 @@ public class OpenItemDTO {
   /**
    * 配置项的值，可以是字符串、数字、JSON等格式
    * @return value
-   */
-  
+  */
+
   @Schema(name = "value", description = "配置项的值，可以是字符串、数字、JSON等格式", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("value")
-  public @Nullable String getValue() {
+  public String getValue() {
     return value;
   }
 
-  public void setValue(@Nullable String value) {
+  public void setValue(String value) {
     this.value = value;
   }
 
-  public OpenItemDTO comment(@Nullable String comment) {
+  public OpenItemDTO comment(String comment) {
     this.comment = comment;
     return this;
   }
@@ -187,15 +186,15 @@ public class OpenItemDTO {
   /**
    * 配置项的注释说明，用于描述配置项的用途和含义
    * @return comment
-   */
-  
+  */
+
   @Schema(name = "comment", description = "配置项的注释说明，用于描述配置项的用途和含义", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("comment")
-  public @Nullable String getComment() {
+  public String getComment() {
     return comment;
   }
 
-  public void setComment(@Nullable String comment) {
+  public void setComment(String comment) {
     this.comment = comment;
   }
 
@@ -250,4 +249,3 @@ public class OpenItemDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

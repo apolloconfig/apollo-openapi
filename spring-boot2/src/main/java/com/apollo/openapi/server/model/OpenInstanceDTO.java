@@ -6,9 +6,7 @@ import com.apollo.openapi.server.model.OpenInstanceConfigDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -23,121 +21,121 @@ import javax.annotation.Generated;
  * OpenInstanceDTO
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public class OpenInstanceDTO {
 
-  private @Nullable Long id;
+  private Long id;
 
-  private @Nullable String appId;
+  private String appId;
 
-  private @Nullable String clusterName;
+  private String clusterName;
 
-  private @Nullable String dataCenter;
+  private String dataCenter;
 
-  private @Nullable String ip;
+  private String ip;
 
   @Valid
-  private List<@Valid OpenInstanceConfigDTO> configs = new ArrayList<>();
+  private List<@Valid OpenInstanceConfigDTO> configs;
 
-  private @Nullable String dataChangeCreatedTime;
+  private String dataChangeCreatedTime;
 
-  public OpenInstanceDTO id(@Nullable Long id) {
+  public OpenInstanceDTO id(Long id) {
     this.id = id;
     return this;
   }
 
   /**
-   * 
+   * 实例ID
    * @return id
-   */
-  
-  @Schema(name = "id", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "id", description = "实例ID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("id")
-  public @Nullable Long getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(@Nullable Long id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
-  public OpenInstanceDTO appId(@Nullable String appId) {
+  public OpenInstanceDTO appId(String appId) {
     this.appId = appId;
     return this;
   }
 
   /**
-   * 
+   * 实例所属应用ID
    * @return appId
-   */
-  
-  @Schema(name = "appId", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "appId", description = "实例所属应用ID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("appId")
-  public @Nullable String getAppId() {
+  public String getAppId() {
     return appId;
   }
 
-  public void setAppId(@Nullable String appId) {
+  public void setAppId(String appId) {
     this.appId = appId;
   }
 
-  public OpenInstanceDTO clusterName(@Nullable String clusterName) {
+  public OpenInstanceDTO clusterName(String clusterName) {
     this.clusterName = clusterName;
     return this;
   }
 
   /**
-   * 
+   * 实例所属集群名称
    * @return clusterName
-   */
-  
-  @Schema(name = "clusterName", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "clusterName", description = "实例所属集群名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clusterName")
-  public @Nullable String getClusterName() {
+  public String getClusterName() {
     return clusterName;
   }
 
-  public void setClusterName(@Nullable String clusterName) {
+  public void setClusterName(String clusterName) {
     this.clusterName = clusterName;
   }
 
-  public OpenInstanceDTO dataCenter(@Nullable String dataCenter) {
+  public OpenInstanceDTO dataCenter(String dataCenter) {
     this.dataCenter = dataCenter;
     return this;
   }
 
   /**
-   * 
+   * 数据中心/机房标识
    * @return dataCenter
-   */
-  
-  @Schema(name = "dataCenter", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "dataCenter", description = "数据中心/机房标识", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataCenter")
-  public @Nullable String getDataCenter() {
+  public String getDataCenter() {
     return dataCenter;
   }
 
-  public void setDataCenter(@Nullable String dataCenter) {
+  public void setDataCenter(String dataCenter) {
     this.dataCenter = dataCenter;
   }
 
-  public OpenInstanceDTO ip(@Nullable String ip) {
+  public OpenInstanceDTO ip(String ip) {
     this.ip = ip;
     return this;
   }
 
   /**
-   * 
+   * 实例IP地址
    * @return ip
-   */
-  
-  @Schema(name = "ip", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "ip", description = "实例IP地址", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("ip")
-  public @Nullable String getIp() {
+  public String getIp() {
     return ip;
   }
 
-  public void setIp(@Nullable String ip) {
+  public void setIp(String ip) {
     this.ip = ip;
   }
 
@@ -155,11 +153,11 @@ public class OpenInstanceDTO {
   }
 
   /**
-   * 
+   * 实例当前生效的配置列表
    * @return configs
-   */
-  @Valid 
-  @Schema(name = "configs", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+  @Valid
+  @Schema(name = "configs", description = "实例当前生效的配置列表", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("configs")
   public List<@Valid OpenInstanceConfigDTO> getConfigs() {
     return configs;
@@ -169,23 +167,23 @@ public class OpenInstanceDTO {
     this.configs = configs;
   }
 
-  public OpenInstanceDTO dataChangeCreatedTime(@Nullable String dataChangeCreatedTime) {
+  public OpenInstanceDTO dataChangeCreatedTime(String dataChangeCreatedTime) {
     this.dataChangeCreatedTime = dataChangeCreatedTime;
     return this;
   }
 
   /**
-   * 
+   * 数据创建时间（ISO 8601）
    * @return dataChangeCreatedTime
-   */
-  
-  @Schema(name = "dataChangeCreatedTime", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "dataChangeCreatedTime", example = "2025-09-29T12:34:56Z", description = "数据创建时间（ISO 8601）", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedTime")
-  public @Nullable String getDataChangeCreatedTime() {
+  public String getDataChangeCreatedTime() {
     return dataChangeCreatedTime;
   }
 
-  public void setDataChangeCreatedTime(@Nullable String dataChangeCreatedTime) {
+  public void setDataChangeCreatedTime(String dataChangeCreatedTime) {
     this.dataChangeCreatedTime = dataChangeCreatedTime;
   }
 
@@ -238,4 +236,3 @@ public class OpenInstanceDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

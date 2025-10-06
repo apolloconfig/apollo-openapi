@@ -14,5 +14,3 @@ Name | Type | Description | Notes
 **comment** | Option<**String**> | 配置项的注释说明，用于描述配置项的用途和含义 | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
-

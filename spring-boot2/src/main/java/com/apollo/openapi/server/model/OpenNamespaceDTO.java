@@ -6,9 +6,7 @@ import com.apollo.openapi.server.model.OpenItemDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -24,33 +22,33 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenNamespaceDTO", description = "Apollo命名空间数据传输对象，表示一个完整的命名空间及其配置项")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public class OpenNamespaceDTO {
 
-  private @Nullable String dataChangeCreatedBy;
+  private String dataChangeCreatedBy;
 
-  private @Nullable String dataChangeLastModifiedBy;
+  private String dataChangeLastModifiedBy;
 
-  private @Nullable String dataChangeCreatedTime;
+  private String dataChangeCreatedTime;
 
-  private @Nullable String dataChangeLastModifiedTime;
+  private String dataChangeLastModifiedTime;
 
-  private @Nullable String appId;
+  private String appId;
 
-  private @Nullable String clusterName;
+  private String clusterName;
 
-  private @Nullable String namespaceName;
+  private String namespaceName;
 
-  private @Nullable String comment;
+  private String comment;
 
-  private @Nullable String format;
+  private String format;
 
-  private @Nullable Boolean isPublic;
+  private Boolean isPublic;
 
   @Valid
-  private List<@Valid OpenItemDTO> items = new ArrayList<>();
+  private List<@Valid OpenItemDTO> items;
 
-  public OpenNamespaceDTO dataChangeCreatedBy(@Nullable String dataChangeCreatedBy) {
+  public OpenNamespaceDTO dataChangeCreatedBy(String dataChangeCreatedBy) {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
     return this;
   }
@@ -58,19 +56,19 @@ public class OpenNamespaceDTO {
   /**
    * 命名空间创建者用户名，记录是谁创建了这个命名空间
    * @return dataChangeCreatedBy
-   */
-  
+  */
+
   @Schema(name = "dataChangeCreatedBy", description = "命名空间创建者用户名，记录是谁创建了这个命名空间", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedBy")
-  public @Nullable String getDataChangeCreatedBy() {
+  public String getDataChangeCreatedBy() {
     return dataChangeCreatedBy;
   }
 
-  public void setDataChangeCreatedBy(@Nullable String dataChangeCreatedBy) {
+  public void setDataChangeCreatedBy(String dataChangeCreatedBy) {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
   }
 
-  public OpenNamespaceDTO dataChangeLastModifiedBy(@Nullable String dataChangeLastModifiedBy) {
+  public OpenNamespaceDTO dataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
     return this;
   }
@@ -78,19 +76,19 @@ public class OpenNamespaceDTO {
   /**
    * 命名空间最后修改者用户名，记录最后一次修改命名空间信息的用户
    * @return dataChangeLastModifiedBy
-   */
-  
+  */
+
   @Schema(name = "dataChangeLastModifiedBy", description = "命名空间最后修改者用户名，记录最后一次修改命名空间信息的用户", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedBy")
-  public @Nullable String getDataChangeLastModifiedBy() {
+  public String getDataChangeLastModifiedBy() {
     return dataChangeLastModifiedBy;
   }
 
-  public void setDataChangeLastModifiedBy(@Nullable String dataChangeLastModifiedBy) {
+  public void setDataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
   }
 
-  public OpenNamespaceDTO dataChangeCreatedTime(@Nullable String dataChangeCreatedTime) {
+  public OpenNamespaceDTO dataChangeCreatedTime(String dataChangeCreatedTime) {
     this.dataChangeCreatedTime = dataChangeCreatedTime;
     return this;
   }
@@ -98,19 +96,19 @@ public class OpenNamespaceDTO {
   /**
    * 命名空间创建时间，ISO 8601格式的时间戳
    * @return dataChangeCreatedTime
-   */
-  
-  @Schema(name = "dataChangeCreatedTime", description = "命名空间创建时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "dataChangeCreatedTime", example = "2025-09-29T12:34:56Z", description = "命名空间创建时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedTime")
-  public @Nullable String getDataChangeCreatedTime() {
+  public String getDataChangeCreatedTime() {
     return dataChangeCreatedTime;
   }
 
-  public void setDataChangeCreatedTime(@Nullable String dataChangeCreatedTime) {
+  public void setDataChangeCreatedTime(String dataChangeCreatedTime) {
     this.dataChangeCreatedTime = dataChangeCreatedTime;
   }
 
-  public OpenNamespaceDTO dataChangeLastModifiedTime(@Nullable String dataChangeLastModifiedTime) {
+  public OpenNamespaceDTO dataChangeLastModifiedTime(String dataChangeLastModifiedTime) {
     this.dataChangeLastModifiedTime = dataChangeLastModifiedTime;
     return this;
   }
@@ -118,19 +116,19 @@ public class OpenNamespaceDTO {
   /**
    * 命名空间最后修改时间，ISO 8601格式的时间戳
    * @return dataChangeLastModifiedTime
-   */
-  
-  @Schema(name = "dataChangeLastModifiedTime", description = "命名空间最后修改时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "dataChangeLastModifiedTime", example = "2025-09-29T12:34:56Z", description = "命名空间最后修改时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedTime")
-  public @Nullable String getDataChangeLastModifiedTime() {
+  public String getDataChangeLastModifiedTime() {
     return dataChangeLastModifiedTime;
   }
 
-  public void setDataChangeLastModifiedTime(@Nullable String dataChangeLastModifiedTime) {
+  public void setDataChangeLastModifiedTime(String dataChangeLastModifiedTime) {
     this.dataChangeLastModifiedTime = dataChangeLastModifiedTime;
   }
 
-  public OpenNamespaceDTO appId(@Nullable String appId) {
+  public OpenNamespaceDTO appId(String appId) {
     this.appId = appId;
     return this;
   }
@@ -138,19 +136,19 @@ public class OpenNamespaceDTO {
   /**
    * 所属应用的唯一标识符
    * @return appId
-   */
-  
+  */
+
   @Schema(name = "appId", description = "所属应用的唯一标识符", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("appId")
-  public @Nullable String getAppId() {
+  public String getAppId() {
     return appId;
   }
 
-  public void setAppId(@Nullable String appId) {
+  public void setAppId(String appId) {
     this.appId = appId;
   }
 
-  public OpenNamespaceDTO clusterName(@Nullable String clusterName) {
+  public OpenNamespaceDTO clusterName(String clusterName) {
     this.clusterName = clusterName;
     return this;
   }
@@ -158,19 +156,19 @@ public class OpenNamespaceDTO {
   /**
    * 所属集群的名称
    * @return clusterName
-   */
-  
+  */
+
   @Schema(name = "clusterName", description = "所属集群的名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clusterName")
-  public @Nullable String getClusterName() {
+  public String getClusterName() {
     return clusterName;
   }
 
-  public void setClusterName(@Nullable String clusterName) {
+  public void setClusterName(String clusterName) {
     this.clusterName = clusterName;
   }
 
-  public OpenNamespaceDTO namespaceName(@Nullable String namespaceName) {
+  public OpenNamespaceDTO namespaceName(String namespaceName) {
     this.namespaceName = namespaceName;
     return this;
   }
@@ -178,19 +176,19 @@ public class OpenNamespaceDTO {
   /**
    * 命名空间名称，在同一应用和集群下唯一标识一个命名空间
    * @return namespaceName
-   */
-  
+  */
+
   @Schema(name = "namespaceName", description = "命名空间名称，在同一应用和集群下唯一标识一个命名空间", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("namespaceName")
-  public @Nullable String getNamespaceName() {
+  public String getNamespaceName() {
     return namespaceName;
   }
 
-  public void setNamespaceName(@Nullable String namespaceName) {
+  public void setNamespaceName(String namespaceName) {
     this.namespaceName = namespaceName;
   }
 
-  public OpenNamespaceDTO comment(@Nullable String comment) {
+  public OpenNamespaceDTO comment(String comment) {
     this.comment = comment;
     return this;
   }
@@ -198,19 +196,19 @@ public class OpenNamespaceDTO {
   /**
    * 命名空间备注说明，描述命名空间的用途
    * @return comment
-   */
-  
+  */
+
   @Schema(name = "comment", description = "命名空间备注说明，描述命名空间的用途", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("comment")
-  public @Nullable String getComment() {
+  public String getComment() {
     return comment;
   }
 
-  public void setComment(@Nullable String comment) {
+  public void setComment(String comment) {
     this.comment = comment;
   }
 
-  public OpenNamespaceDTO format(@Nullable String format) {
+  public OpenNamespaceDTO format(String format) {
     this.format = format;
     return this;
   }
@@ -218,19 +216,19 @@ public class OpenNamespaceDTO {
   /**
    * 命名空间格式类型，如properties、xml、json、yml等
    * @return format
-   */
-  
+  */
+
   @Schema(name = "format", description = "命名空间格式类型，如properties、xml、json、yml等", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("format")
-  public @Nullable String getFormat() {
+  public String getFormat() {
     return format;
   }
 
-  public void setFormat(@Nullable String format) {
+  public void setFormat(String format) {
     this.format = format;
   }
 
-  public OpenNamespaceDTO isPublic(@Nullable Boolean isPublic) {
+  public OpenNamespaceDTO isPublic(Boolean isPublic) {
     this.isPublic = isPublic;
     return this;
   }
@@ -238,15 +236,15 @@ public class OpenNamespaceDTO {
   /**
    * 是否为公共命名空间，公共命名空间可以被其他应用关联使用
    * @return isPublic
-   */
-  
+  */
+
   @Schema(name = "isPublic", description = "是否为公共命名空间，公共命名空间可以被其他应用关联使用", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("isPublic")
-  public @Nullable Boolean getIsPublic() {
+  public Boolean getIsPublic() {
     return isPublic;
   }
 
-  public void setIsPublic(@Nullable Boolean isPublic) {
+  public void setIsPublic(Boolean isPublic) {
     this.isPublic = isPublic;
   }
 
@@ -266,8 +264,8 @@ public class OpenNamespaceDTO {
   /**
    * 命名空间包含的配置项列表
    * @return items
-   */
-  @Valid 
+  */
+  @Valid
   @Schema(name = "items", description = "命名空间包含的配置项列表", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("items")
   public List<@Valid OpenItemDTO> getItems() {
@@ -335,4 +333,3 @@ public class OpenNamespaceDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

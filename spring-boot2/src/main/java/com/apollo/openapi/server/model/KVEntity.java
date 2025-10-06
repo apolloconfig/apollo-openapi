@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -19,50 +18,50 @@ import javax.annotation.Generated;
  * KVEntity
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public class KVEntity {
 
-  private @Nullable String key;
+  private String key;
 
-  private @Nullable String value;
+  private String value;
 
-  public KVEntity key(@Nullable String key) {
+  public KVEntity key(String key) {
     this.key = key;
     return this;
   }
 
   /**
-   * 
+   * 键
    * @return key
-   */
-  
-  @Schema(name = "key", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "key", description = "键", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("key")
-  public @Nullable String getKey() {
+  public String getKey() {
     return key;
   }
 
-  public void setKey(@Nullable String key) {
+  public void setKey(String key) {
     this.key = key;
   }
 
-  public KVEntity value(@Nullable String value) {
+  public KVEntity value(String value) {
     this.value = value;
     return this;
   }
 
   /**
-   * 
+   * 值
    * @return value
-   */
-  
-  @Schema(name = "value", description = "", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "value", description = "值", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("value")
-  public @Nullable String getValue() {
+  public String getValue() {
     return value;
   }
 
-  public void setValue(@Nullable String value) {
+  public void setValue(String value) {
     this.value = value;
   }
 
@@ -105,4 +104,3 @@ public class KVEntity {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

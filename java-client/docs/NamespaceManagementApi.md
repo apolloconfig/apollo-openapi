@@ -4,93 +4,28 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**openapiV1AppnamespacesGet**](NamespaceManagementApi.md#openapiV1AppnamespacesGet) | **GET** /openapi/v1/appnamespaces | 获取所有公共AppNamespace |
-| [**openapiV1AppsAppIdAppnamespacesGet**](NamespaceManagementApi.md#openapiV1AppsAppIdAppnamespacesGet) | **GET** /openapi/v1/apps/{appId}/appnamespaces | 获取指定应用的AppNamespace |
-| [**openapiV1AppsAppIdAppnamespacesNamespaceNameGet**](NamespaceManagementApi.md#openapiV1AppsAppIdAppnamespacesNamespaceNameGet) | **GET** /openapi/v1/apps/{appId}/appnamespaces/{namespaceName} | 获取指定的AppNamespace |
-| [**openapiV1AppsAppIdAppnamespacesPost**](NamespaceManagementApi.md#openapiV1AppsAppIdAppnamespacesPost) | **POST** /openapi/v1/apps/{appId}/appnamespaces | 创建AppNamespace |
-| [**openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesIntegrityCheckGet**](NamespaceManagementApi.md#openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesIntegrityCheckGet) | **GET** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check | 检查缺失的Namespace |
-| [**openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNamePublicAssociationGet**](NamespaceManagementApi.md#openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNamePublicAssociationGet) | **GET** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association | 获取关联的公共Namespace |
-| [**openapiV1EnvsEnvAppnamespacesPublicNamespaceNameInstancesGet**](NamespaceManagementApi.md#openapiV1EnvsEnvAppnamespacesPublicNamespaceNameInstancesGet) | **GET** /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances | 获取公共AppNamespace的所有实例 |
-| [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesGet**](NamespaceManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces | 获取指定集群下的所有Namespace |
-| [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameLockGet**](NamespaceManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameLockGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock | 获取Namespace的锁状态 |
+| [**checkNamespaceIntegrity**](NamespaceManagementApi.md#checkNamespaceIntegrity) | **GET** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check | 检查缺失的Namespace (new added) |
+| [**createNamespace**](NamespaceManagementApi.md#createNamespace) | **POST** /openapi/v1/apps/{appId}/appnamespaces | 创建AppNamespace (original openapi) |
+| [**deleteAppNamespace**](NamespaceManagementApi.md#deleteAppNamespace) | **DELETE** /openapi/v1/apps/{appId}/appnamespaces/{namespaceName} | 删除AppNamespace (new added) |
+| [**deleteNamespaceLinks**](NamespaceManagementApi.md#deleteNamespaceLinks) | **DELETE** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links | 删除关联的Namespace (new added) |
+| [**findNamespaces**](NamespaceManagementApi.md#findNamespaces) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces | 获取指定集群下的所有Namespace (original openapi) |
+| [**getAppNamespace**](NamespaceManagementApi.md#getAppNamespace) | **GET** /openapi/v1/apps/{appId}/appnamespaces/{namespaceName} | 获取指定的AppNamespace (new added) |
+| [**getAppNamespaces**](NamespaceManagementApi.md#getAppNamespaces) | **GET** /openapi/v1/appnamespaces | 获取所有公共AppNamespace (new added) |
+| [**getAppNamespacesByApp**](NamespaceManagementApi.md#getAppNamespacesByApp) | **GET** /openapi/v1/apps/{appId}/appnamespaces | 获取指定应用的AppNamespace (new added) |
+| [**getNamespaceLock**](NamespaceManagementApi.md#getNamespaceLock) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock | 获取Namespace的锁状态 (original openapi) |
+| [**getNamespacesReleaseStatus**](NamespaceManagementApi.md#getNamespacesReleaseStatus) | **GET** /openapi/v1/apps/{appId}/namespaces/releases/status | 获取应用下所有Namespace的发布状态 (new added) |
+| [**getPublicAppNamespaceInstances**](NamespaceManagementApi.md#getPublicAppNamespaceInstances) | **GET** /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances | 获取公共AppNamespace的所有实例 (new added) |
+| [**getPublicNamespaceAssociation**](NamespaceManagementApi.md#getPublicNamespaceAssociation) | **GET** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association | 获取关联的公共Namespace (new added) |
+| [**loadNamespace**](NamespaceManagementApi.md#loadNamespace) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName} | 获取指定的Namespace (original openapi) |
 
 
-<a id="openapiV1AppnamespacesGet"></a>
-# **openapiV1AppnamespacesGet**
-> List&lt;OpenAppNamespaceDTO&gt; openapiV1AppnamespacesGet(publicOnly)
+<a id="checkNamespaceIntegrity"></a>
+# **checkNamespaceIntegrity**
+> List&lt;String&gt; checkNamespaceIntegrity(appId, env, clusterName)
 
-获取所有公共AppNamespace
+检查缺失的Namespace (new added)
 
-GET /openapi/v1/appnamespaces?public&#x3D;true
-
-### Example
-```java
-// Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.NamespaceManagementApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
-    Boolean publicOnly = false; // Boolean | 
-    try {
-      List<OpenAppNamespaceDTO> result = apiInstance.openapiV1AppnamespacesGet(publicOnly);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling NamespaceManagementApi#openapiV1AppnamespacesGet");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **publicOnly** | **Boolean**|  | |
-
-### Return type
-
-[**List&lt;OpenAppNamespaceDTO&gt;**](OpenAppNamespaceDTO.md)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** |  |  -  |
-
-<a id="openapiV1AppsAppIdAppnamespacesGet"></a>
-# **openapiV1AppsAppIdAppnamespacesGet**
-> List&lt;OpenAppNamespaceDTO&gt; openapiV1AppsAppIdAppnamespacesGet(appId)
-
-获取指定应用的AppNamespace
-
-GET /openapi/v1/apps/{appId}/appnamespaces
+GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check
 
 ### Example
 ```java
@@ -106,7 +41,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -114,12 +49,14 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
+    String appId = "appId_example"; // String | 应用ID
+    String env = "env_example"; // String | 环境标识
+    String clusterName = "clusterName_example"; // String | 集群名称
     try {
-      List<OpenAppNamespaceDTO> result = apiInstance.openapiV1AppsAppIdAppnamespacesGet(appId);
+      List<String> result = apiInstance.checkNamespaceIntegrity(appId, env, clusterName);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling NamespaceManagementApi#openapiV1AppsAppIdAppnamespacesGet");
+      System.err.println("Exception when calling NamespaceManagementApi#checkNamespaceIntegrity");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -133,11 +70,13 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **appId** | **String**|  | |
+| **appId** | **String**| 应用ID | |
+| **env** | **String**| 环境标识 | |
+| **clusterName** | **String**| 集群名称 | |
 
 ### Return type
 
-[**List&lt;OpenAppNamespaceDTO&gt;**](OpenAppNamespaceDTO.md)
+**List&lt;String&gt;**
 
 ### Authorization
 
@@ -151,84 +90,13 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** |  |  -  |
+| **200** | 缺失的命名空间名称列表 |  -  |
 
-<a id="openapiV1AppsAppIdAppnamespacesNamespaceNameGet"></a>
-# **openapiV1AppsAppIdAppnamespacesNamespaceNameGet**
-> OpenAppNamespaceDTO openapiV1AppsAppIdAppnamespacesNamespaceNameGet(appId, namespaceName)
+<a id="createNamespace"></a>
+# **createNamespace**
+> OpenAppNamespaceDTO createNamespace(appId, openAppNamespaceDTO)
 
-获取指定的AppNamespace
-
-GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-
-### Example
-```java
-// Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.NamespaceManagementApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
-    String namespaceName = "namespaceName_example"; // String | 
-    try {
-      OpenAppNamespaceDTO result = apiInstance.openapiV1AppsAppIdAppnamespacesNamespaceNameGet(appId, namespaceName);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling NamespaceManagementApi#openapiV1AppsAppIdAppnamespacesNamespaceNameGet");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **appId** | **String**|  | |
-| **namespaceName** | **String**|  | |
-
-### Return type
-
-[**OpenAppNamespaceDTO**](OpenAppNamespaceDTO.md)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** |  |  -  |
-
-<a id="openapiV1AppsAppIdAppnamespacesPost"></a>
-# **openapiV1AppsAppIdAppnamespacesPost**
-> OpenAppNamespaceDTO openapiV1AppsAppIdAppnamespacesPost(appId, openAppNamespaceDTO)
-
-创建AppNamespace
+创建AppNamespace (original openapi)
 
 POST /openapi/v1/apps/{appId}/appnamespaces
 
@@ -246,7 +114,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -254,13 +122,13 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
-    OpenAppNamespaceDTO openAppNamespaceDTO = new OpenAppNamespaceDTO(); // OpenAppNamespaceDTO | 
+    String appId = "appId_example"; // String |
+    OpenAppNamespaceDTO openAppNamespaceDTO = new OpenAppNamespaceDTO(); // OpenAppNamespaceDTO |
     try {
-      OpenAppNamespaceDTO result = apiInstance.openapiV1AppsAppIdAppnamespacesPost(appId, openAppNamespaceDTO);
+      OpenAppNamespaceDTO result = apiInstance.createNamespace(appId, openAppNamespaceDTO);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling NamespaceManagementApi#openapiV1AppsAppIdAppnamespacesPost");
+      System.err.println("Exception when calling NamespaceManagementApi#createNamespace");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -297,86 +165,13 @@ public class Example {
 | **400** | 请求参数错误 |  -  |
 | **403** | 权限不足 |  -  |
 
-<a id="openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesIntegrityCheckGet"></a>
-# **openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesIntegrityCheckGet**
-> List&lt;String&gt; openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesIntegrityCheckGet(appId, env, clusterName)
+<a id="deleteAppNamespace"></a>
+# **deleteAppNamespace**
+> Object deleteAppNamespace(appId, namespaceName, operator)
 
-检查缺失的Namespace
+删除AppNamespace (new added)
 
-GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check
-
-### Example
-```java
-// Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.NamespaceManagementApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
-    String env = "env_example"; // String | 
-    String clusterName = "clusterName_example"; // String | 
-    try {
-      List<String> result = apiInstance.openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesIntegrityCheckGet(appId, env, clusterName);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling NamespaceManagementApi#openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesIntegrityCheckGet");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **appId** | **String**|  | |
-| **env** | **String**|  | |
-| **clusterName** | **String**|  | |
-
-### Return type
-
-**List&lt;String&gt;**
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** |  |  -  |
-
-<a id="openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNamePublicAssociationGet"></a>
-# **openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNamePublicAssociationGet**
-> OpenNamespaceDTO openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNamePublicAssociationGet(appId, env, clusterName, namespaceName)
-
-获取关联的公共Namespace
-
-GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association
+DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
 
 ### Example
 ```java
@@ -392,7 +187,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -400,15 +195,14 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
-    String env = "env_example"; // String | 
-    String clusterName = "clusterName_example"; // String | 
-    String namespaceName = "namespaceName_example"; // String | 
+    String appId = "appId_example"; // String | 应用ID
+    String namespaceName = "namespaceName_example"; // String | 命名空间名称
+    String operator = "operator_example"; // String | 操作人用户名
     try {
-      OpenNamespaceDTO result = apiInstance.openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNamePublicAssociationGet(appId, env, clusterName, namespaceName);
+      Object result = apiInstance.deleteAppNamespace(appId, namespaceName, operator);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling NamespaceManagementApi#openapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNamePublicAssociationGet");
+      System.err.println("Exception when calling NamespaceManagementApi#deleteAppNamespace");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -422,14 +216,13 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **appId** | **String**|  | |
-| **env** | **String**|  | |
-| **clusterName** | **String**|  | |
-| **namespaceName** | **String**|  | |
+| **appId** | **String**| 应用ID | |
+| **namespaceName** | **String**| 命名空间名称 | |
+| **operator** | **String**| 操作人用户名 | |
 
 ### Return type
 
-[**OpenNamespaceDTO**](OpenNamespaceDTO.md)
+**Object**
 
 ### Authorization
 
@@ -443,15 +236,15 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** |  |  -  |
+| **200** | AppNamespace删除成功 |  -  |
 
-<a id="openapiV1EnvsEnvAppnamespacesPublicNamespaceNameInstancesGet"></a>
-# **openapiV1EnvsEnvAppnamespacesPublicNamespaceNameInstancesGet**
-> List&lt;OpenNamespaceDTO&gt; openapiV1EnvsEnvAppnamespacesPublicNamespaceNameInstancesGet(env, publicNamespaceName, page, size)
+<a id="deleteNamespaceLinks"></a>
+# **deleteNamespaceLinks**
+> Object deleteNamespaceLinks(appId, env, clusterName, namespaceName, operator)
 
-获取公共AppNamespace的所有实例
+删除关联的Namespace (new added)
 
-GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
+DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links
 
 ### Example
 ```java
@@ -467,7 +260,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -475,15 +268,16 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
-    String env = "env_example"; // String | 
-    String publicNamespaceName = "publicNamespaceName_example"; // String | 
-    Integer page = 0; // Integer | 
-    Integer size = 10; // Integer | 
+    String appId = "appId_example"; // String | 应用ID
+    String env = "env_example"; // String | 环境标识
+    String clusterName = "clusterName_example"; // String | 集群名称
+    String namespaceName = "namespaceName_example"; // String | 命名空间名称
+    String operator = "operator_example"; // String | 操作人用户名
     try {
-      List<OpenNamespaceDTO> result = apiInstance.openapiV1EnvsEnvAppnamespacesPublicNamespaceNameInstancesGet(env, publicNamespaceName, page, size);
+      Object result = apiInstance.deleteNamespaceLinks(appId, env, clusterName, namespaceName, operator);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling NamespaceManagementApi#openapiV1EnvsEnvAppnamespacesPublicNamespaceNameInstancesGet");
+      System.err.println("Exception when calling NamespaceManagementApi#deleteNamespaceLinks");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -497,14 +291,15 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **env** | **String**|  | |
-| **publicNamespaceName** | **String**|  | |
-| **page** | **Integer**|  | |
-| **size** | **Integer**|  | |
+| **appId** | **String**| 应用ID | |
+| **env** | **String**| 环境标识 | |
+| **clusterName** | **String**| 集群名称 | |
+| **namespaceName** | **String**| 命名空间名称 | |
+| **operator** | **String**| 操作人用户名 | |
 
 ### Return type
 
-[**List&lt;OpenNamespaceDTO&gt;**](OpenNamespaceDTO.md)
+**Object**
 
 ### Authorization
 
@@ -518,13 +313,13 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** |  |  -  |
+| **200** | 解除关联成功 |  -  |
 
-<a id="openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesGet"></a>
-# **openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesGet**
-> List&lt;OpenNamespaceDTO&gt; openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesGet(appId, env, clusterName, fillItemDetail)
+<a id="findNamespaces"></a>
+# **findNamespaces**
+> List&lt;OpenNamespaceDTO&gt; findNamespaces(appId, env, clusterName, fillItemDetail)
 
-获取指定集群下的所有Namespace
+获取指定集群下的所有Namespace (original openapi)
 
 GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces
 
@@ -542,7 +337,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -550,15 +345,15 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
-    String env = "env_example"; // String | 
-    String clusterName = "clusterName_example"; // String | 
-    Boolean fillItemDetail = true; // Boolean | 
+    String appId = "appId_example"; // String |
+    String env = "env_example"; // String |
+    String clusterName = "clusterName_example"; // String |
+    Boolean fillItemDetail = true; // Boolean |
     try {
-      List<OpenNamespaceDTO> result = apiInstance.openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesGet(appId, env, clusterName, fillItemDetail);
+      List<OpenNamespaceDTO> result = apiInstance.findNamespaces(appId, env, clusterName, fillItemDetail);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling NamespaceManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesGet");
+      System.err.println("Exception when calling NamespaceManagementApi#findNamespaces");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -575,7 +370,7 @@ public class Example {
 | **appId** | **String**|  | |
 | **env** | **String**|  | |
 | **clusterName** | **String**|  | |
-| **fillItemDetail** | **Boolean**|  | |
+| **fillItemDetail** | **Boolean**|  | [default to true] |
 
 ### Return type
 
@@ -595,11 +390,220 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** |  |  -  |
 
-<a id="openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameLockGet"></a>
-# **openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameLockGet**
-> OpenNamespaceLockDTO openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameLockGet(appId, env, clusterName, namespaceName)
+<a id="getAppNamespace"></a>
+# **getAppNamespace**
+> OpenAppNamespaceDTO getAppNamespace(appId, namespaceName)
 
-获取Namespace的锁状态
+获取指定的AppNamespace (new added)
+
+GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.NamespaceManagementApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
+    String appId = "appId_example"; // String | 应用ID
+    String namespaceName = "namespaceName_example"; // String | 命名空间名称
+    try {
+      OpenAppNamespaceDTO result = apiInstance.getAppNamespace(appId, namespaceName);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling NamespaceManagementApi#getAppNamespace");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **appId** | **String**| 应用ID | |
+| **namespaceName** | **String**| 命名空间名称 | |
+
+### Return type
+
+[**OpenAppNamespaceDTO**](OpenAppNamespaceDTO.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | 成功获取AppNamespace |  -  |
+
+<a id="getAppNamespaces"></a>
+# **getAppNamespaces**
+> List&lt;OpenAppNamespaceDTO&gt; getAppNamespaces(publicOnly)
+
+获取所有公共AppNamespace (new added)
+
+GET /openapi/v1/appnamespaces?public&#x3D;true
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.NamespaceManagementApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
+    Boolean publicOnly = false; // Boolean |
+    try {
+      List<OpenAppNamespaceDTO> result = apiInstance.getAppNamespaces(publicOnly);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling NamespaceManagementApi#getAppNamespaces");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **publicOnly** | **Boolean**|  | |
+
+### Return type
+
+[**List&lt;OpenAppNamespaceDTO&gt;**](OpenAppNamespaceDTO.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+<a id="getAppNamespacesByApp"></a>
+# **getAppNamespacesByApp**
+> List&lt;OpenAppNamespaceDTO&gt; getAppNamespacesByApp(appId)
+
+获取指定应用的AppNamespace (new added)
+
+GET /openapi/v1/apps/{appId}/appnamespaces
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.NamespaceManagementApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
+    String appId = "appId_example"; // String |
+    try {
+      List<OpenAppNamespaceDTO> result = apiInstance.getAppNamespacesByApp(appId);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling NamespaceManagementApi#getAppNamespacesByApp");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **appId** | **String**|  | |
+
+### Return type
+
+[**List&lt;OpenAppNamespaceDTO&gt;**](OpenAppNamespaceDTO.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |
+
+<a id="getNamespaceLock"></a>
+# **getNamespaceLock**
+> OpenNamespaceLockDTO getNamespaceLock(appId, env, clusterName, namespaceName)
+
+获取Namespace的锁状态 (original openapi)
 
 GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock
 
@@ -617,7 +621,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -625,15 +629,15 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
-    String env = "env_example"; // String | 
-    String clusterName = "clusterName_example"; // String | 
-    String namespaceName = "namespaceName_example"; // String | 
+    String appId = "appId_example"; // String |
+    String env = "env_example"; // String |
+    String clusterName = "clusterName_example"; // String |
+    String namespaceName = "namespaceName_example"; // String |
     try {
-      OpenNamespaceLockDTO result = apiInstance.openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameLockGet(appId, env, clusterName, namespaceName);
+      OpenNamespaceLockDTO result = apiInstance.getNamespaceLock(appId, env, clusterName, namespaceName);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling NamespaceManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameLockGet");
+      System.err.println("Exception when calling NamespaceManagementApi#getNamespaceLock");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -670,3 +674,298 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** |  |  -  |
 
+<a id="getNamespacesReleaseStatus"></a>
+# **getNamespacesReleaseStatus**
+> Map&lt;String, Map&lt;String, Boolean&gt;&gt; getNamespacesReleaseStatus(appId)
+
+获取应用下所有Namespace的发布状态 (new added)
+
+GET /openapi/v1/apps/{appId}/namespaces/releases/status
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.NamespaceManagementApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
+    String appId = "appId_example"; // String | 应用ID
+    try {
+      Map<String, Map<String, Boolean>> result = apiInstance.getNamespacesReleaseStatus(appId);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling NamespaceManagementApi#getNamespacesReleaseStatus");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **appId** | **String**| 应用ID | |
+
+### Return type
+
+[**Map&lt;String, Map&lt;String, Boolean&gt;&gt;**](Map.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | 成功获取发布状态映射 |  -  |
+
+<a id="getPublicAppNamespaceInstances"></a>
+# **getPublicAppNamespaceInstances**
+> List&lt;OpenNamespaceDTO&gt; getPublicAppNamespaceInstances(env, publicNamespaceName, page, size)
+
+获取公共AppNamespace的所有实例 (new added)
+
+GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.NamespaceManagementApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
+    String env = "env_example"; // String | 环境标识
+    String publicNamespaceName = "publicNamespaceName_example"; // String | 公共命名空间名称
+    Integer page = 0; // Integer | 页码，从0开始
+    Integer size = 10; // Integer | 每页数量
+    try {
+      List<OpenNamespaceDTO> result = apiInstance.getPublicAppNamespaceInstances(env, publicNamespaceName, page, size);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling NamespaceManagementApi#getPublicAppNamespaceInstances");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **env** | **String**| 环境标识 | |
+| **publicNamespaceName** | **String**| 公共命名空间名称 | |
+| **page** | **Integer**| 页码，从0开始 | |
+| **size** | **Integer**| 每页数量 | |
+
+### Return type
+
+[**List&lt;OpenNamespaceDTO&gt;**](OpenNamespaceDTO.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | 成功获取实例列表 |  -  |
+
+<a id="getPublicNamespaceAssociation"></a>
+# **getPublicNamespaceAssociation**
+> OpenNamespaceDTO getPublicNamespaceAssociation(appId, env, clusterName, namespaceName)
+
+获取关联的公共Namespace (new added)
+
+GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.NamespaceManagementApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
+    String appId = "appId_example"; // String | 应用ID
+    String env = "env_example"; // String | 环境标识
+    String clusterName = "clusterName_example"; // String | 集群名称
+    String namespaceName = "namespaceName_example"; // String | 命名空间名称
+    try {
+      OpenNamespaceDTO result = apiInstance.getPublicNamespaceAssociation(appId, env, clusterName, namespaceName);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling NamespaceManagementApi#getPublicNamespaceAssociation");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **appId** | **String**| 应用ID | |
+| **env** | **String**| 环境标识 | |
+| **clusterName** | **String**| 集群名称 | |
+| **namespaceName** | **String**| 命名空间名称 | |
+
+### Return type
+
+[**OpenNamespaceDTO**](OpenNamespaceDTO.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | 成功获取关联的公共Namespace |  -  |
+
+<a id="loadNamespace"></a>
+# **loadNamespace**
+> OpenNamespaceDTO loadNamespace(appId, env, clusterName, namespaceName, fillItemDetail)
+
+获取指定的Namespace (original openapi)
+
+GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.NamespaceManagementApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    NamespaceManagementApi apiInstance = new NamespaceManagementApi(defaultClient);
+    String appId = "appId_example"; // String |
+    String env = "env_example"; // String |
+    String clusterName = "clusterName_example"; // String |
+    String namespaceName = "namespaceName_example"; // String |
+    Boolean fillItemDetail = true; // Boolean |
+    try {
+      OpenNamespaceDTO result = apiInstance.loadNamespace(appId, env, clusterName, namespaceName, fillItemDetail);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling NamespaceManagementApi#loadNamespace");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **appId** | **String**|  | |
+| **env** | **String**|  | |
+| **clusterName** | **String**|  | |
+| **namespaceName** | **String**|  | |
+| **fillItemDetail** | **Boolean**|  | [default to true] |
+
+### Return type
+
+[**OpenNamespaceDTO**](OpenNamespaceDTO.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** |  |  -  |

@@ -12,8 +12,6 @@ Name | Type | Description | Notes
 **cluster_name** | Option<**String**> | 所属集群的名称 | [optional]
 **namespace_name** | Option<**String**> | 所属命名空间的名称 | [optional]
 **branch_name** | Option<**String**> | 灰度分支名称，标识灰度发布的分支 | [optional]
-**rule_items** | Option<[**Vec<models::OpenGrayReleaseRuleItemDto>**](OpenGrayReleaseRuleItemDTO.md)> | 灰度发布规则项列表，包含具体的灰度规则条件 | [optional]
+**rule_items** | Option<[**Vec<crate::models::OpenGrayReleaseRuleItemDto>**](OpenGrayReleaseRuleItemDTO.md)> | 灰度发布规则项列表，包含具体的灰度规则条件 | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
-

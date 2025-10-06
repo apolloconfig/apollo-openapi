@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**openapiV1AppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet**](InstanceManagementApi.md#openapiV1AppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet) | **GET** /openapi/v1/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances | 获取命名空间下的实例数量 |
-| [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet**](InstanceManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances | 查询不在指定发布版本中的实例 |
-| [**openapiV1EnvsEnvReleasesReleaseIdInstancesGet**](InstanceManagementApi.md#openapiV1EnvsEnvReleasesReleaseIdInstancesGet) | **GET** /openapi/v1/envs/{env}/releases/{releaseId}/instances | 根据发布版本查询实例（支持分页） |
+| [**getInstanceCountByNamespace**](InstanceManagementApi.md#getInstanceCountByNamespace) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances | 获取命名空间下的实例数量 (original openapi) |
+| [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet**](InstanceManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_int | 查询不在指定发布版本中的实例 (new added) |
+| [**openapiV1EnvsEnvReleasesReleaseIdInstancesGet**](InstanceManagementApi.md#openapiV1EnvsEnvReleasesReleaseIdInstancesGet) | **GET** /openapi/v1/envs/{env}/releases/{releaseId}/instances | 根据发布版本查询实例（支持分页） (new added) |
 
 
-<a id="openapiV1AppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet"></a>
-# **openapiV1AppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet**
-> Integer openapiV1AppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet(appId, clusterName, namespaceName)
+<a id="getInstanceCountByNamespace"></a>
+# **getInstanceCountByNamespace**
+> Integer getInstanceCountByNamespace(env, appId, clusterName, namespaceName)
 
-获取命名空间下的实例数量
+获取命名空间下的实例数量 (original openapi)
 
-GET /openapi/v1/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances
+GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances
 
 ### Example
 ```java
@@ -31,7 +31,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -39,14 +39,15 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     InstanceManagementApi apiInstance = new InstanceManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 
-    String clusterName = "clusterName_example"; // String | 
-    String namespaceName = "namespaceName_example"; // String | 
+    String env = "env_example"; // String |
+    String appId = "appId_example"; // String | 应用ID
+    String clusterName = "clusterName_example"; // String | 集群名称
+    String namespaceName = "namespaceName_example"; // String | 命名空间名称
     try {
-      Integer result = apiInstance.openapiV1AppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet(appId, clusterName, namespaceName);
+      Integer result = apiInstance.getInstanceCountByNamespace(env, appId, clusterName, namespaceName);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling InstanceManagementApi#openapiV1AppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet");
+      System.err.println("Exception when calling InstanceManagementApi#getInstanceCountByNamespace");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -60,9 +61,10 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **appId** | **String**|  | |
-| **clusterName** | **String**|  | |
-| **namespaceName** | **String**|  | |
+| **env** | **String**|  | |
+| **appId** | **String**| 应用ID | |
+| **clusterName** | **String**| 集群名称 | |
+| **namespaceName** | **String**| 命名空间名称 | |
 
 ### Return type
 
@@ -80,13 +82,13 @@ public class Example {
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **200** |  |  -  |
+| **200** | 成功返回实例数量 |  -  |
 
-<a id="openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet"></a>
-# **openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet**
-> List&lt;OpenInstanceDTO&gt; openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet(env, appId, clusterName, namespaceName, excludeReleases)
+<a id="openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet"></a>
+# **openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet**
+> List&lt;OpenInstanceDTO&gt; openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet(env, appId, clusterName, namespaceName, excludeReleases)
 
-查询不在指定发布版本中的实例
+查询不在指定发布版本中的实例 (new added)
 
 GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
 
@@ -104,7 +106,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -112,16 +114,16 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     InstanceManagementApi apiInstance = new InstanceManagementApi(defaultClient);
-    String env = "env_example"; // String | 
-    String appId = "appId_example"; // String | 
-    String clusterName = "clusterName_example"; // String | 
-    String namespaceName = "namespaceName_example"; // String | 
+    String env = "env_example"; // String | 环境标识
+    String appId = "appId_example"; // String | 应用ID
+    String clusterName = "clusterName_example"; // String | 集群名称
+    String namespaceName = "namespaceName_example"; // String | 命名空间名称
     String excludeReleases = "excludeReleases_example"; // String | 排除的发布ID列表，用逗号分隔
     try {
-      List<OpenInstanceDTO> result = apiInstance.openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet(env, appId, clusterName, namespaceName, excludeReleases);
+      List<OpenInstanceDTO> result = apiInstance.openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet(env, appId, clusterName, namespaceName, excludeReleases);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling InstanceManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesGet");
+      System.err.println("Exception when calling InstanceManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -135,10 +137,10 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **env** | **String**|  | |
-| **appId** | **String**|  | |
-| **clusterName** | **String**|  | |
-| **namespaceName** | **String**|  | |
+| **env** | **String**| 环境标识 | |
+| **appId** | **String**| 应用ID | |
+| **clusterName** | **String**| 集群名称 | |
+| **namespaceName** | **String**| 命名空间名称 | |
 | **excludeReleases** | **String**| 排除的发布ID列表，用逗号分隔 | [optional] |
 
 ### Return type
@@ -163,7 +165,7 @@ public class Example {
 # **openapiV1EnvsEnvReleasesReleaseIdInstancesGet**
 > OpenPageDTOOpenInstanceDTO openapiV1EnvsEnvReleasesReleaseIdInstancesGet(env, releaseId, page, size)
 
-根据发布版本查询实例（支持分页）
+根据发布版本查询实例（支持分页） (new added)
 
 GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
 
@@ -181,7 +183,7 @@ public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("http://localhost");
-    
+
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
     ApiKeyAuth.setApiKey("YOUR API KEY");
@@ -189,10 +191,10 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     InstanceManagementApi apiInstance = new InstanceManagementApi(defaultClient);
-    String env = "env_example"; // String | 
-    Integer releaseId = 56; // Integer | 
-    Integer page = 0; // Integer | 
-    Integer size = 20; // Integer | 
+    String env = "env_example"; // String |
+    Integer releaseId = 56; // Integer |
+    Integer page = 0; // Integer |
+    Integer size = 20; // Integer |
     try {
       OpenPageDTOOpenInstanceDTO result = apiInstance.openapiV1EnvsEnvReleasesReleaseIdInstancesGet(env, releaseId, page, size);
       System.out.println(result);
@@ -233,4 +235,3 @@ public class Example {
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** |  |  -  |
-

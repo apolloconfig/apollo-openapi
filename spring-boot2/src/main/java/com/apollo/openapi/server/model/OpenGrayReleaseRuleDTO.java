@@ -6,9 +6,7 @@ import com.apollo.openapi.server.model.OpenGrayReleaseRuleItemDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -24,29 +22,29 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenGrayReleaseRuleDTO", description = "Apollo灰度发布规则数据传输对象，表示完整的灰度发布规则配置")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public class OpenGrayReleaseRuleDTO {
 
-  private @Nullable String dataChangeCreatedBy;
+  private String dataChangeCreatedBy;
 
-  private @Nullable String dataChangeLastModifiedBy;
+  private String dataChangeLastModifiedBy;
 
-  private @Nullable String dataChangeCreatedTime;
+  private String dataChangeCreatedTime;
 
-  private @Nullable String dataChangeLastModifiedTime;
+  private String dataChangeLastModifiedTime;
 
-  private @Nullable String appId;
+  private String appId;
 
-  private @Nullable String clusterName;
+  private String clusterName;
 
-  private @Nullable String namespaceName;
+  private String namespaceName;
 
-  private @Nullable String branchName;
+  private String branchName;
 
   @Valid
-  private List<@Valid OpenGrayReleaseRuleItemDTO> ruleItems = new ArrayList<>();
+  private List<@Valid OpenGrayReleaseRuleItemDTO> ruleItems;
 
-  public OpenGrayReleaseRuleDTO dataChangeCreatedBy(@Nullable String dataChangeCreatedBy) {
+  public OpenGrayReleaseRuleDTO dataChangeCreatedBy(String dataChangeCreatedBy) {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
     return this;
   }
@@ -54,19 +52,19 @@ public class OpenGrayReleaseRuleDTO {
   /**
    * 灰度规则创建者用户名，记录是谁创建了这个灰度发布规则
    * @return dataChangeCreatedBy
-   */
-  
+  */
+
   @Schema(name = "dataChangeCreatedBy", description = "灰度规则创建者用户名，记录是谁创建了这个灰度发布规则", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedBy")
-  public @Nullable String getDataChangeCreatedBy() {
+  public String getDataChangeCreatedBy() {
     return dataChangeCreatedBy;
   }
 
-  public void setDataChangeCreatedBy(@Nullable String dataChangeCreatedBy) {
+  public void setDataChangeCreatedBy(String dataChangeCreatedBy) {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
   }
 
-  public OpenGrayReleaseRuleDTO dataChangeLastModifiedBy(@Nullable String dataChangeLastModifiedBy) {
+  public OpenGrayReleaseRuleDTO dataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
     return this;
   }
@@ -74,19 +72,19 @@ public class OpenGrayReleaseRuleDTO {
   /**
    * 灰度规则最后修改者用户名，记录最后一次修改规则的用户
    * @return dataChangeLastModifiedBy
-   */
-  
+  */
+
   @Schema(name = "dataChangeLastModifiedBy", description = "灰度规则最后修改者用户名，记录最后一次修改规则的用户", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedBy")
-  public @Nullable String getDataChangeLastModifiedBy() {
+  public String getDataChangeLastModifiedBy() {
     return dataChangeLastModifiedBy;
   }
 
-  public void setDataChangeLastModifiedBy(@Nullable String dataChangeLastModifiedBy) {
+  public void setDataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
   }
 
-  public OpenGrayReleaseRuleDTO dataChangeCreatedTime(@Nullable String dataChangeCreatedTime) {
+  public OpenGrayReleaseRuleDTO dataChangeCreatedTime(String dataChangeCreatedTime) {
     this.dataChangeCreatedTime = dataChangeCreatedTime;
     return this;
   }
@@ -94,19 +92,19 @@ public class OpenGrayReleaseRuleDTO {
   /**
    * 灰度规则创建时间，ISO 8601格式的时间戳
    * @return dataChangeCreatedTime
-   */
-  
-  @Schema(name = "dataChangeCreatedTime", description = "灰度规则创建时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "dataChangeCreatedTime", example = "2025-09-29T12:34:56Z", description = "灰度规则创建时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeCreatedTime")
-  public @Nullable String getDataChangeCreatedTime() {
+  public String getDataChangeCreatedTime() {
     return dataChangeCreatedTime;
   }
 
-  public void setDataChangeCreatedTime(@Nullable String dataChangeCreatedTime) {
+  public void setDataChangeCreatedTime(String dataChangeCreatedTime) {
     this.dataChangeCreatedTime = dataChangeCreatedTime;
   }
 
-  public OpenGrayReleaseRuleDTO dataChangeLastModifiedTime(@Nullable String dataChangeLastModifiedTime) {
+  public OpenGrayReleaseRuleDTO dataChangeLastModifiedTime(String dataChangeLastModifiedTime) {
     this.dataChangeLastModifiedTime = dataChangeLastModifiedTime;
     return this;
   }
@@ -114,19 +112,19 @@ public class OpenGrayReleaseRuleDTO {
   /**
    * 灰度规则最后修改时间，ISO 8601格式的时间戳
    * @return dataChangeLastModifiedTime
-   */
-  
-  @Schema(name = "dataChangeLastModifiedTime", description = "灰度规则最后修改时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  */
+
+  @Schema(name = "dataChangeLastModifiedTime", example = "2025-09-29T12:34:56Z", description = "灰度规则最后修改时间，ISO 8601格式的时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("dataChangeLastModifiedTime")
-  public @Nullable String getDataChangeLastModifiedTime() {
+  public String getDataChangeLastModifiedTime() {
     return dataChangeLastModifiedTime;
   }
 
-  public void setDataChangeLastModifiedTime(@Nullable String dataChangeLastModifiedTime) {
+  public void setDataChangeLastModifiedTime(String dataChangeLastModifiedTime) {
     this.dataChangeLastModifiedTime = dataChangeLastModifiedTime;
   }
 
-  public OpenGrayReleaseRuleDTO appId(@Nullable String appId) {
+  public OpenGrayReleaseRuleDTO appId(String appId) {
     this.appId = appId;
     return this;
   }
@@ -134,19 +132,19 @@ public class OpenGrayReleaseRuleDTO {
   /**
    * 所属应用的唯一标识符
    * @return appId
-   */
-  
+  */
+
   @Schema(name = "appId", description = "所属应用的唯一标识符", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("appId")
-  public @Nullable String getAppId() {
+  public String getAppId() {
     return appId;
   }
 
-  public void setAppId(@Nullable String appId) {
+  public void setAppId(String appId) {
     this.appId = appId;
   }
 
-  public OpenGrayReleaseRuleDTO clusterName(@Nullable String clusterName) {
+  public OpenGrayReleaseRuleDTO clusterName(String clusterName) {
     this.clusterName = clusterName;
     return this;
   }
@@ -154,19 +152,19 @@ public class OpenGrayReleaseRuleDTO {
   /**
    * 所属集群的名称
    * @return clusterName
-   */
-  
+  */
+
   @Schema(name = "clusterName", description = "所属集群的名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clusterName")
-  public @Nullable String getClusterName() {
+  public String getClusterName() {
     return clusterName;
   }
 
-  public void setClusterName(@Nullable String clusterName) {
+  public void setClusterName(String clusterName) {
     this.clusterName = clusterName;
   }
 
-  public OpenGrayReleaseRuleDTO namespaceName(@Nullable String namespaceName) {
+  public OpenGrayReleaseRuleDTO namespaceName(String namespaceName) {
     this.namespaceName = namespaceName;
     return this;
   }
@@ -174,19 +172,19 @@ public class OpenGrayReleaseRuleDTO {
   /**
    * 所属命名空间的名称
    * @return namespaceName
-   */
-  
+  */
+
   @Schema(name = "namespaceName", description = "所属命名空间的名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("namespaceName")
-  public @Nullable String getNamespaceName() {
+  public String getNamespaceName() {
     return namespaceName;
   }
 
-  public void setNamespaceName(@Nullable String namespaceName) {
+  public void setNamespaceName(String namespaceName) {
     this.namespaceName = namespaceName;
   }
 
-  public OpenGrayReleaseRuleDTO branchName(@Nullable String branchName) {
+  public OpenGrayReleaseRuleDTO branchName(String branchName) {
     this.branchName = branchName;
     return this;
   }
@@ -194,15 +192,15 @@ public class OpenGrayReleaseRuleDTO {
   /**
    * 灰度分支名称，标识灰度发布的分支
    * @return branchName
-   */
-  
+  */
+
   @Schema(name = "branchName", description = "灰度分支名称，标识灰度发布的分支", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("branchName")
-  public @Nullable String getBranchName() {
+  public String getBranchName() {
     return branchName;
   }
 
-  public void setBranchName(@Nullable String branchName) {
+  public void setBranchName(String branchName) {
     this.branchName = branchName;
   }
 
@@ -222,8 +220,8 @@ public class OpenGrayReleaseRuleDTO {
   /**
    * 灰度发布规则项列表，包含具体的灰度规则条件
    * @return ruleItems
-   */
-  @Valid 
+  */
+  @Valid
   @Schema(name = "ruleItems", description = "灰度发布规则项列表，包含具体的灰度规则条件", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("ruleItems")
   public List<@Valid OpenGrayReleaseRuleItemDTO> getRuleItems() {
@@ -287,4 +285,3 @@ public class OpenGrayReleaseRuleDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

@@ -7,8 +7,5 @@
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-|**key** | **String** |  |  [optional] |
-|**value** | **String** |  |  [optional] |
-
-
-
+|**key** | **String** | 键 |  [optional] |
+|**value** | **String** | 值 |  [optional] |

@@ -11,5 +11,3 @@ Name | Type | Description | Notes
 **gray_del_keys** | Option<**Vec<String>**> | 需要在灰度发布中删除的配置项键名列表 | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
-

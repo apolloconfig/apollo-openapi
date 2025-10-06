@@ -10,5 +10,3 @@ Name | Type | Description | Notes
 **is_emergency_publish** | Option<**bool**> | 是否为紧急发布，紧急发布可能会跳过某些审核流程 | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
-

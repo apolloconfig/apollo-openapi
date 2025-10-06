@@ -13,6 +13,3 @@
 |**releasedBy** | **String** | 发布操作者用户名，记录是谁执行了这次灰度删除发布操作 |  [optional] |
 |**isEmergencyPublish** | **Boolean** | 是否为紧急发布，紧急发布可能会跳过某些审核流程 |  [optional] |
 |**grayDelKeys** | **List&lt;String&gt;** | 需要在灰度发布中删除的配置项键名列表 |  [optional] |
-
-
-

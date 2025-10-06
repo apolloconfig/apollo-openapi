@@ -1,0 +1,11 @@
+from apollo_openapi.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_encoded_items_key.get import ApiForget
+from apollo_openapi.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_encoded_items_key.put import ApiForput
+from apollo_openapi.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_encoded_items_key.delete import ApiFordelete
+
+
+class OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKey(
+    ApiForget,
+    ApiForput,
+    ApiFordelete,
+):
+    pass

@@ -4,7 +4,6 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -20,18 +19,18 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "NamespaceReleaseDTO", description = "命名空间发布请求数据传输对象，用于创建新的配置发布")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public class NamespaceReleaseDTO {
 
-  private @Nullable String releaseTitle;
+  private String releaseTitle;
 
-  private @Nullable String releaseComment;
+  private String releaseComment;
 
-  private @Nullable String releasedBy;
+  private String releasedBy;
 
-  private @Nullable Boolean isEmergencyPublish;
+  private Boolean isEmergencyPublish;
 
-  public NamespaceReleaseDTO releaseTitle(@Nullable String releaseTitle) {
+  public NamespaceReleaseDTO releaseTitle(String releaseTitle) {
     this.releaseTitle = releaseTitle;
     return this;
   }
@@ -39,19 +38,19 @@ public class NamespaceReleaseDTO {
   /**
    * 发布标题，用于标识这次发布的名称或版本号
    * @return releaseTitle
-   */
-  
+  */
+
   @Schema(name = "releaseTitle", description = "发布标题，用于标识这次发布的名称或版本号", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("releaseTitle")
-  public @Nullable String getReleaseTitle() {
+  public String getReleaseTitle() {
     return releaseTitle;
   }
 
-  public void setReleaseTitle(@Nullable String releaseTitle) {
+  public void setReleaseTitle(String releaseTitle) {
     this.releaseTitle = releaseTitle;
   }
 
-  public NamespaceReleaseDTO releaseComment(@Nullable String releaseComment) {
+  public NamespaceReleaseDTO releaseComment(String releaseComment) {
     this.releaseComment = releaseComment;
     return this;
   }
@@ -59,19 +58,19 @@ public class NamespaceReleaseDTO {
   /**
    * 发布备注，详细描述本次发布的变更内容和目的
    * @return releaseComment
-   */
-  
+  */
+
   @Schema(name = "releaseComment", description = "发布备注，详细描述本次发布的变更内容和目的", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("releaseComment")
-  public @Nullable String getReleaseComment() {
+  public String getReleaseComment() {
     return releaseComment;
   }
 
-  public void setReleaseComment(@Nullable String releaseComment) {
+  public void setReleaseComment(String releaseComment) {
     this.releaseComment = releaseComment;
   }
 
-  public NamespaceReleaseDTO releasedBy(@Nullable String releasedBy) {
+  public NamespaceReleaseDTO releasedBy(String releasedBy) {
     this.releasedBy = releasedBy;
     return this;
   }
@@ -79,19 +78,19 @@ public class NamespaceReleaseDTO {
   /**
    * 发布操作者用户名，记录是谁执行了这次发布操作
    * @return releasedBy
-   */
-  
+  */
+
   @Schema(name = "releasedBy", description = "发布操作者用户名，记录是谁执行了这次发布操作", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("releasedBy")
-  public @Nullable String getReleasedBy() {
+  public String getReleasedBy() {
     return releasedBy;
   }
 
-  public void setReleasedBy(@Nullable String releasedBy) {
+  public void setReleasedBy(String releasedBy) {
     this.releasedBy = releasedBy;
   }
 
-  public NamespaceReleaseDTO isEmergencyPublish(@Nullable Boolean isEmergencyPublish) {
+  public NamespaceReleaseDTO isEmergencyPublish(Boolean isEmergencyPublish) {
     this.isEmergencyPublish = isEmergencyPublish;
     return this;
   }
@@ -99,15 +98,15 @@ public class NamespaceReleaseDTO {
   /**
    * 是否为紧急发布，紧急发布可能会跳过某些审核流程
    * @return isEmergencyPublish
-   */
-  
+  */
+
   @Schema(name = "isEmergencyPublish", description = "是否为紧急发布，紧急发布可能会跳过某些审核流程", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("isEmergencyPublish")
-  public @Nullable Boolean getIsEmergencyPublish() {
+  public Boolean getIsEmergencyPublish() {
     return isEmergencyPublish;
   }
 
-  public void setIsEmergencyPublish(@Nullable Boolean isEmergencyPublish) {
+  public void setIsEmergencyPublish(Boolean isEmergencyPublish) {
     this.isEmergencyPublish = isEmergencyPublish;
   }
 
@@ -154,4 +153,3 @@ public class NamespaceReleaseDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-

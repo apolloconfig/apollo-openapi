@@ -13,9 +13,7 @@ Name | Type | Description | Notes
 **cluster_name** | Option<**String**> | 所属集群的名称 | [optional]
 **namespace_name** | Option<**String**> | 所属命名空间的名称 | [optional]
 **name** | Option<**String**> | 发布名称，用于标识这次发布的版本或描述 | [optional]
-**configurations** | Option<[**models::MapString**](MapString.md)> |  | [optional]
+**configurations** | Option<**::std::collections::HashMap<String, String>**> |  | [optional]
 **comment** | Option<**String**> | 发布备注，描述本次发布的变更内容和目的 | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
-

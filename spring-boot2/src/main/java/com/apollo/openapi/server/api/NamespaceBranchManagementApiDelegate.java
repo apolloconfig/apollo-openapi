@@ -1,21 +1,16 @@
 package com.apollo.openapi.server.api;
 
-import com.apollo.openapi.server.model.NamespaceGrayDelReleaseDTO;
+import java.util.Map;
 import com.apollo.openapi.server.model.NamespaceReleaseDTO;
 import com.apollo.openapi.server.model.OpenGrayReleaseRuleDTO;
-import com.apollo.openapi.server.model.OpenItemDTO;
 import com.apollo.openapi.server.model.OpenNamespaceDTO;
 import com.apollo.openapi.server.model.OpenReleaseDTO;
-import com.apollo.openapi.server.model.OpenapiV1AppsGet401Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.*;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -25,7 +20,7 @@ import javax.annotation.Generated;
  * A delegate to be called by the {@link NamespaceBranchManagementApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public interface NamespaceBranchManagementApiDelegate {
 
     default Optional<NativeWebRequest> getRequest() {
@@ -33,18 +28,18 @@ public interface NamespaceBranchManagementApiDelegate {
     }
 
     /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branch : 创建命名空间分支
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branch
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches : 创建命名空间分支 (original openapi)
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param operator  (required)
-     * @return  (status code 200)
-     * @see NamespaceBranchManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchPost
+     * @param appId app标识 (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param operator 操作人用户名 (required)
+     * @return 命名空间分支创建成功 (status code 200)
+     * @see NamespaceBranchManagementApi#createBranch
      */
-    default ResponseEntity<OpenNamespaceDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchPost(String appId,
+    default ResponseEntity<OpenNamespaceDTO> createBranch(String appId,
         String env,
         String clusterName,
         String namespaceName,
@@ -52,7 +47,7 @@ public interface NamespaceBranchManagementApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"items\" : [ { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"namespaceName\" : \"namespaceName\" }";
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -63,19 +58,19 @@ public interface NamespaceBranchManagementApiDelegate {
     }
 
     /**
-     * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} : 删除命名空间分支
+     * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} : 删除命名空间分支 (original openapi)
      * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
      *
-     * @param env  (required)
-     * @param appId  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param branchName  (required)
-     * @param operator  (required)
-     * @return  (status code 200)
-     * @see NamespaceBranchManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameDelete
+     * @param env 环境标识 (required)
+     * @param appId 应用ID (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @param operator 操作人用户名 (required)
+     * @return 分支删除成功 (status code 200)
+     * @see NamespaceBranchManagementApi#deleteBranch
      */
-    default ResponseEntity<Object> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameDelete(String env,
+    default ResponseEntity<Object> deleteBranch(String env,
         String appId,
         String clusterName,
         String namespaceName,
@@ -86,28 +81,25 @@ public interface NamespaceBranchManagementApiDelegate {
     }
 
     /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-del-releases : 创建灰度删除发布
-     * 
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches : 获取命名空间分支信息 (original openapi)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param branchName  (required)
-     * @param namespaceGrayDelReleaseDTO  (required)
-     * @return  (status code 200)
-     * @see NamespaceBranchManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameGrayDelReleasesPost
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @return 成功获取分支信息 (status code 200)
+     *         or 分支不存在 (status code 404)
+     * @see NamespaceBranchManagementApi#findBranch
      */
-    default ResponseEntity<OpenReleaseDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameGrayDelReleasesPost(String appId,
+    default ResponseEntity<OpenNamespaceDTO> findBranch(String appId,
         String env,
         String clusterName,
-        String namespaceName,
-        String branchName,
-        NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO) {
+        String namespaceName) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"key\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"namespaceName\" : \"namespaceName\" }";
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -118,18 +110,18 @@ public interface NamespaceBranchManagementApiDelegate {
     }
 
     /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-rules : 获取分支灰度发布规则
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-rules
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules : 获取分支灰度发布规则 (original openapi)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param branchName  (required)
-     * @return  (status code 200)
-     * @see NamespaceBranchManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameGrayRulesGet
+     * @param appId app标识 (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @return 成功获取灰度发布规则 (status code 200)
+     * @see NamespaceBranchManagementApi#getBranchGrayRules
      */
-    default ResponseEntity<OpenGrayReleaseRuleDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameGrayRulesGet(String appId,
+    default ResponseEntity<OpenGrayReleaseRuleDTO> getBranchGrayRules(String appId,
         String env,
         String clusterName,
         String namespaceName,
@@ -137,7 +129,7 @@ public interface NamespaceBranchManagementApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"branchName\" : \"branchName\", \"ruleItems\" : [ { \"clientIpList\" : [ \"clientIpList\", \"clientIpList\" ], \"clientLabelList\" : [ \"clientLabelList\", \"clientLabelList\" ], \"clientAppId\" : \"clientAppId\" }, { \"clientIpList\" : [ \"clientIpList\", \"clientIpList\" ], \"clientLabelList\" : [ \"clientLabelList\", \"clientLabelList\" ], \"clientAppId\" : \"clientAppId\" } ], \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"namespaceName\" : \"namespaceName\" }";
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"branchName\" : \"branchName\", \"ruleItems\" : [ { \"clientIpList\" : [ \"clientIpList\", \"clientIpList\" ], \"clientLabelList\" : [ \"clientLabelList\", \"clientLabelList\" ], \"clientAppId\" : \"clientAppId\" }, { \"clientIpList\" : [ \"clientIpList\", \"clientIpList\" ], \"clientLabelList\" : [ \"clientLabelList\", \"clientLabelList\" ], \"clientAppId\" : \"clientAppId\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -148,176 +140,62 @@ public interface NamespaceBranchManagementApiDelegate {
     }
 
     /**
-     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-rules : 更新分支灰度发布规则
-     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-rules
+     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} : 合并分支到主分支 (new added)
+     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}  使用 PATCH 方法表示部分更新操作（将分支状态从\&quot;独立\&quot;更新为\&quot;合并\&quot;）
      *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param branchName  (required)
-     * @param operator  (required)
-     * @param openGrayReleaseRuleDTO  (required)
-     * @return  (status code 200)
-     * @see NamespaceBranchManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameGrayRulesPut
+     * @param env 环境标识 (required)
+     * @param appId 应用ID (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @param deleteBranch 合并后是否删除分支（true/false） (required)
+     * @param operator 操作人用户名 (required)
+     * @param namespaceReleaseDTO  (required)
+     * @return 分支合并成功 (status code 200)
+     * @see NamespaceBranchManagementApi#mergeBranch
      */
-    default ResponseEntity<Object> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameGrayRulesPut(String appId,
+    default ResponseEntity<OpenReleaseDTO> mergeBranch(String env,
+        String appId,
+        String clusterName,
+        String namespaceName,
+        String branchName,
+        Boolean deleteBranch,
+        String operator,
+        NamespaceReleaseDTO namespaceReleaseDTO) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules : 更新分支灰度发布规则 (original openapi)
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules
+     *
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @param operator 操作人用户名 (required)
+     * @param openGrayReleaseRuleDTO  (required)
+     * @return 灰度规则更新成功 (status code 200)
+     * @see NamespaceBranchManagementApi#updateBranchRules
+     */
+    default ResponseEntity<Object> updateBranchRules(String appId,
         String env,
         String clusterName,
         String namespaceName,
         String branchName,
         String operator,
         OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items : 获取分支下的配置项
-     * GET /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items
-     *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param branchName  (required)
-     * @return 成功获取分支下的配置项列表 (status code 200)
-     *         or 分支不存在 (status code 404)
-     * @see NamespaceBranchManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameItemsGet
-     */
-    default ResponseEntity<List<OpenItemDTO>> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameItemsGet(String appId,
-        String env,
-        String clusterName,
-        String namespaceName,
-        String branchName) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"key\" : \"key\" } ]";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge : 合并分支
-     * 
-     *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param branchName  (required)
-     * @param deleteBranch  (required)
-     * @param namespaceReleaseDTO  (required)
-     * @return 分支合并成功 (status code 200)
-     *         or 合并参数错误 (status code 400)
-     *         or 权限不足 (status code 403)
-     * @see NamespaceBranchManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameMergePost
-     */
-    default ResponseEntity<OpenReleaseDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameMergePost(String appId,
-        String env,
-        String clusterName,
-        String namespaceName,
-        String branchName,
-        Boolean deleteBranch,
-        NamespaceReleaseDTO namespaceReleaseDTO) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"key\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"namespaceName\" : \"namespaceName\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"message\" : \"message\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} : 合并分支到主分支
-     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}  使用 PATCH 方法表示部分更新操作（将分支状态从\&quot;独立\&quot;更新为\&quot;合并\&quot;）
-     *
-     * @param env  (required)
-     * @param appId  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param branchName  (required)
-     * @param deleteBranch  (required)
-     * @param xApolloOperator  (required)
-     * @param namespaceReleaseDTO  (required)
-     * @return  (status code 200)
-     * @see NamespaceBranchManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNamePatch
-     */
-    default ResponseEntity<OpenReleaseDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNamePatch(String env,
-        String appId,
-        String clusterName,
-        String namespaceName,
-        String branchName,
-        Boolean deleteBranch,
-        String xApolloOperator,
-        NamespaceReleaseDTO namespaceReleaseDTO) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"key\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"namespaceName\" : \"namespaceName\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/releases : 创建灰度发布
-     * 
-     *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param branchName  (required)
-     * @param namespaceReleaseDTO  (required)
-     * @return  (status code 200)
-     * @see NamespaceBranchManagementApi#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameReleasesPost
-     */
-    default ResponseEntity<OpenReleaseDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameReleasesPost(String appId,
-        String env,
-        String clusterName,
-        String namespaceName,
-        String branchName,
-        NamespaceReleaseDTO namespaceReleaseDTO) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"dataChangeCreatedTime\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"key\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"dataChangeLastModifiedTime\", \"namespaceName\" : \"namespaceName\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

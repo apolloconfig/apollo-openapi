@@ -9,5 +9,3 @@ Name | Type | Description | Notes
 **client_label_list** | Option<**Vec<String>**> | 客户端标签列表，通过标签来识别可以获取灰度配置的客户端 | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
-
-

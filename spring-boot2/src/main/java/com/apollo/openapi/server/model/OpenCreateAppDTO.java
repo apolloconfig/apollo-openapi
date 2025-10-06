@@ -6,9 +6,7 @@ import com.apollo.openapi.server.model.OpenAppDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import org.springframework.lang.Nullable;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -24,17 +22,17 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenCreateAppDTO", description = "创建Apollo应用的请求数据传输对象，包含创建应用所需的所有信息")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-09-14T17:08:21.606545+08:00[Asia/Shanghai]", comments = "Generator version: 7.15.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
 public class OpenCreateAppDTO {
 
-  private @Nullable Boolean assignAppRoleToSelf;
+  private Boolean assignAppRoleToSelf;
 
   @Valid
-  private List<String> admins = new ArrayList<>();
+  private List<String> admins;
 
-  private @Nullable OpenAppDTO app;
+  private OpenAppDTO app;
 
-  public OpenCreateAppDTO assignAppRoleToSelf(@Nullable Boolean assignAppRoleToSelf) {
+  public OpenCreateAppDTO assignAppRoleToSelf(Boolean assignAppRoleToSelf) {
     this.assignAppRoleToSelf = assignAppRoleToSelf;
     return this;
   }
@@ -42,15 +40,15 @@ public class OpenCreateAppDTO {
   /**
    * 是否将应用角色分配给当前用户。当设置为true时，当前token用户将获得该应用的完全操作权限
    * @return assignAppRoleToSelf
-   */
-  
+  */
+
   @Schema(name = "assignAppRoleToSelf", description = "是否将应用角色分配给当前用户。当设置为true时，当前token用户将获得该应用的完全操作权限", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("assignAppRoleToSelf")
-  public @Nullable Boolean getAssignAppRoleToSelf() {
+  public Boolean getAssignAppRoleToSelf() {
     return assignAppRoleToSelf;
   }
 
-  public void setAssignAppRoleToSelf(@Nullable Boolean assignAppRoleToSelf) {
+  public void setAssignAppRoleToSelf(Boolean assignAppRoleToSelf) {
     this.assignAppRoleToSelf = assignAppRoleToSelf;
   }
 
@@ -70,8 +68,8 @@ public class OpenCreateAppDTO {
   /**
    * 应用管理员用户名列表。应用负责人默认具有项目管理员权限。管理员可以创建命名空间、集群并分配用户权限
    * @return admins
-   */
-  
+  */
+
   @Schema(name = "admins", description = "应用管理员用户名列表。应用负责人默认具有项目管理员权限。管理员可以创建命名空间、集群并分配用户权限", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("admins")
   public List<String> getAdmins() {
@@ -82,7 +80,7 @@ public class OpenCreateAppDTO {
     this.admins = admins;
   }
 
-  public OpenCreateAppDTO app(@Nullable OpenAppDTO app) {
+  public OpenCreateAppDTO app(OpenAppDTO app) {
     this.app = app;
     return this;
   }
@@ -90,15 +88,15 @@ public class OpenCreateAppDTO {
   /**
    * Get app
    * @return app
-   */
-  @Valid 
+  */
+  @Valid
   @Schema(name = "app", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("app")
-  public @Nullable OpenAppDTO getApp() {
+  public OpenAppDTO getApp() {
     return app;
   }
 
-  public void setApp(@Nullable OpenAppDTO app) {
+  public void setApp(OpenAppDTO app) {
     this.app = app;
   }
 
@@ -143,4 +141,3 @@ public class OpenCreateAppDTO {
     return o.toString().replace("\n", "\n    ");
   }
 }
-
