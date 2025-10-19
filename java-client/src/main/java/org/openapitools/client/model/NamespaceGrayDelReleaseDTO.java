@@ -52,7 +52,7 @@ import org.openapitools.client.JSON;
 /**
  * 命名空间灰度删除发布请求数据传输对象，用于创建删除特定配置项的灰度发布
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-10-07T09:56:26.447+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-10-19T21:51:04.875+08:00[Asia/Shanghai]")
 public class NamespaceGrayDelReleaseDTO {
   public static final String SERIALIZED_NAME_RELEASE_TITLE = "releaseTitle";
   @SerializedName(SERIALIZED_NAME_RELEASE_TITLE)

@@ -22,7 +22,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenNamespaceDTO", description = "Apollo命名空间数据传输对象，表示一个完整的命名空间及其配置项")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-19T21:51:06.429+08:00[Asia/Shanghai]")
 public class OpenNamespaceDTO {
 
   private String dataChangeCreatedBy;

@@ -53,7 +53,7 @@ import org.openapitools.client.JSON;
 /**
  * A response container holding multiple RichResponseEntity objects
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-10-07T09:56:26.447+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-10-19T21:51:04.875+08:00[Asia/Shanghai]")
 public class MultiResponseEntity {
   public static final String SERIALIZED_NAME_CODE = "code";
   @SerializedName(SERIALIZED_NAME_CODE)

@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenAppDTO", description = "Apollo应用信息数据传输对象，包含应用的基本信息和元数据")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-19T21:51:06.429+08:00[Asia/Shanghai]")
 public class OpenAppDTO {
 
   private String dataChangeCreatedBy;

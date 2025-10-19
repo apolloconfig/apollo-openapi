@@ -19,7 +19,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenClusterDTO", description = "Apollo集群信息数据传输对象，表示应用在特定环境下的集群配置")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-19T21:51:06.429+08:00[Asia/Shanghai]")
 public class OpenClusterDTO {
 
   private String dataChangeCreatedBy;

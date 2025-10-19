@@ -22,7 +22,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "MultiResponseEntity", description = "A response container holding multiple RichResponseEntity objects")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-19T21:51:06.429+08:00[Asia/Shanghai]")
 public class MultiResponseEntity {
 
   private Integer code;

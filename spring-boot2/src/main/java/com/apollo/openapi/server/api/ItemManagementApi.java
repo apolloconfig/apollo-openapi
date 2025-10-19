@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-19T21:51:06.429+08:00[Asia/Shanghai]")
 @Validated
 @Tag(name = "Item Management", description = "配置项管理相关接口，包括配置的增删改查、批量操作、同步等功能")
 public interface ItemManagementApi {

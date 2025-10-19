@@ -50,7 +50,7 @@ import org.openapitools.client.JSON;
 /**
  * Apollo集群信息数据传输对象，表示应用在特定环境下的集群配置
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-10-07T09:56:26.447+08:00[Asia/Shanghai]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-10-19T21:51:04.875+08:00[Asia/Shanghai]")
 public class OpenClusterDTO {
   public static final String SERIALIZED_NAME_DATA_CHANGE_CREATED_BY = "dataChangeCreatedBy";
   @SerializedName(SERIALIZED_NAME_DATA_CHANGE_CREATED_BY)

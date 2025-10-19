@@ -21,7 +21,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "NamespaceGrayDelReleaseDTO", description = "命名空间灰度删除发布请求数据传输对象，用于创建删除特定配置项的灰度发布")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-19T21:51:06.429+08:00[Asia/Shanghai]")
 public class NamespaceGrayDelReleaseDTO {
 
   private String releaseTitle;

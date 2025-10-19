@@ -2,7 +2,7 @@
 
 Apollo OpenAPI
 - API version: 1.0.0
-  - Build date: 2025-10-07T09:56:26.447+08:00[Asia/Shanghai]
+  - Build date: 2025-10-19T21:51:04.875+08:00[Asia/Shanghai]
 
 <p>Apollo配置中心OpenAPI接口文档</p>
 
@@ -150,9 +150,9 @@ Class | Method | HTTP request | Description
 *ClusterManagementApi* | [**createCluster**](docs/ClusterManagementApi.md#createCluster) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters | 创建集群 (original openapi)
 *ClusterManagementApi* | [**deleteCluster**](docs/ClusterManagementApi.md#deleteCluster) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 删除集群 (new added)
 *ClusterManagementApi* | [**getCluster**](docs/ClusterManagementApi.md#getCluster) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 获取指定集群信息 (original openapi)
+*InstanceManagementApi* | [**getByRelease**](docs/InstanceManagementApi.md#getByRelease) | **GET** /openapi/v1/envs/{env}/releases/{releaseId}/instances | 根据发布版本查询实例（支持分页） (new added)
+*InstanceManagementApi* | [**getByReleasesNotIn**](docs/InstanceManagementApi.md#getByReleasesNotIn) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in | 查询不在指定发布版本中的实例 (new added)
 *InstanceManagementApi* | [**getInstanceCountByNamespace**](docs/InstanceManagementApi.md#getInstanceCountByNamespace) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances | 获取命名空间下的实例数量 (original openapi)
-*InstanceManagementApi* | [**openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet**](docs/InstanceManagementApi.md#openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_int | 查询不在指定发布版本中的实例 (new added)
-*InstanceManagementApi* | [**openapiV1EnvsEnvReleasesReleaseIdInstancesGet**](docs/InstanceManagementApi.md#openapiV1EnvsEnvReleasesReleaseIdInstancesGet) | **GET** /openapi/v1/envs/{env}/releases/{releaseId}/instances | 根据发布版本查询实例（支持分页） (new added)
 *ItemManagementApi* | [**batchUpdateItemsByText**](docs/ItemManagementApi.md#batchUpdateItemsByText) | **PUT** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate | 通过文本批量修改配置项 (new added)
 *ItemManagementApi* | [**compareItems**](docs/ItemManagementApi.md#compareItems) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare | 对比命名空间配置差异 (new added)
 *ItemManagementApi* | [**createItem**](docs/ItemManagementApi.md#createItem) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items | 创建新的配置项 (original openapi)

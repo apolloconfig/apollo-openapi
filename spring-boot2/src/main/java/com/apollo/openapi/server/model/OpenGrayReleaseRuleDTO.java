@@ -22,7 +22,7 @@ import javax.annotation.Generated;
  */
 
 @Schema(name = "OpenGrayReleaseRuleDTO", description = "Apollo灰度发布规则数据传输对象，表示完整的灰度发布规则配置")
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-07T09:56:27.881+08:00[Asia/Shanghai]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-10-19T21:51:06.429+08:00[Asia/Shanghai]")
 public class OpenGrayReleaseRuleDTO {
 
   private String dataChangeCreatedBy;

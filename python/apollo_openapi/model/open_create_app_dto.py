@@ -47,6 +47,7 @@ class OpenCreateAppDTO(
 
 
                 class MetaOapg:
+                    unique_items = True
                     items = schemas.StrSchema
 
                 def __new__(
