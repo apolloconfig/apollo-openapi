@@ -1,7 +1,0 @@
-from apollo_openapi.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_int.get import ApiForget
-
-
-class OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotInt(
-    ApiForget,
-):
-    pass

@@ -39,6 +39,86 @@ public interface InstanceManagementApi {
     }
 
     /**
+     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances : 根据发布版本查询实例（支持分页） (new added)
+     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
+     *
+     * @param env  (required)
+     * @param releaseId  (required)
+     * @param page  (required)
+     * @param size  (required)
+     * @return  (status code 200)
+     */
+    @Operation(
+        operationId = "getByRelease",
+        summary = "根据发布版本查询实例（支持分页） (new added)",
+        description = "GET /openapi/v1/envs/{env}/releases/{releaseId}/instances",
+        tags = { "Instance Management" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenPageDTOOpenInstanceDTO.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "ApiKeyAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/openapi/v1/envs/{env}/releases/{releaseId}/instances",
+        produces = { "application/json" }
+    )
+    default ResponseEntity<OpenPageDTOOpenInstanceDTO> getByRelease(
+        @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
+        @Parameter(name = "releaseId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("releaseId") Integer releaseId,
+        @NotNull @Parameter(name = "page", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = true) Integer page,
+        @NotNull @Parameter(name = "size", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "size", required = true) Integer size
+    ) {
+        return getDelegate().getByRelease(env, releaseId, page, size);
+    }
+
+
+    /**
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in : 查询不在指定发布版本中的实例 (new added)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
+     *
+     * @param env 环境标识 (required)
+     * @param appId 应用ID (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param excludeReleases 排除的发布ID列表，用逗号分隔 (optional)
+     * @return  (status code 200)
+     */
+    @Operation(
+        operationId = "getByReleasesNotIn",
+        summary = "查询不在指定发布版本中的实例 (new added)",
+        description = "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases=1,2,3",
+        tags = { "Instance Management" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenInstanceDTO.class)))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "ApiKeyAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in",
+        produces = { "application/json" }
+    )
+    default ResponseEntity<List<OpenInstanceDTO>> getByReleasesNotIn(
+        @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
+        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
+        @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
+        @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
+        @Parameter(name = "excludeReleases", description = "排除的发布ID列表，用逗号分隔", in = ParameterIn.QUERY) @Valid @RequestParam(value = "excludeReleases", required = false) String excludeReleases
+    ) {
+        return getDelegate().getByReleasesNotIn(env, appId, clusterName, namespaceName, excludeReleases);
+    }
+
+
+    /**
      * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances : 获取命名空间下的实例数量 (original openapi)
      * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances
      *
@@ -74,86 +154,6 @@ public interface InstanceManagementApi {
         @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName
     ) {
         return getDelegate().getInstanceCountByNamespace(env, appId, clusterName, namespaceName);
-    }
-
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_int : 查询不在指定发布版本中的实例 (new added)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
-     *
-     * @param env 环境标识 (required)
-     * @param appId 应用ID (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param excludeReleases 排除的发布ID列表，用逗号分隔 (optional)
-     * @return  (status code 200)
-     */
-    @Operation(
-        operationId = "openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet",
-        summary = "查询不在指定发布版本中的实例 (new added)",
-        description = "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases=1,2,3",
-        tags = { "Instance Management" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenInstanceDTO.class)))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "ApiKeyAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_int",
-        produces = { "application/json" }
-    )
-    default ResponseEntity<List<OpenInstanceDTO>> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet(
-        @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
-        @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
-        @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
-        @Parameter(name = "excludeReleases", description = "排除的发布ID列表，用逗号分隔", in = ParameterIn.QUERY) @Valid @RequestParam(value = "excludeReleases", required = false) String excludeReleases
-    ) {
-        return getDelegate().openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet(env, appId, clusterName, namespaceName, excludeReleases);
-    }
-
-
-    /**
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances : 根据发布版本查询实例（支持分页） (new added)
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
-     *
-     * @param env  (required)
-     * @param releaseId  (required)
-     * @param page  (required)
-     * @param size  (required)
-     * @return  (status code 200)
-     */
-    @Operation(
-        operationId = "openapiV1EnvsEnvReleasesReleaseIdInstancesGet",
-        summary = "根据发布版本查询实例（支持分页） (new added)",
-        description = "GET /openapi/v1/envs/{env}/releases/{releaseId}/instances",
-        tags = { "Instance Management" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenPageDTOOpenInstanceDTO.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "ApiKeyAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/openapi/v1/envs/{env}/releases/{releaseId}/instances",
-        produces = { "application/json" }
-    )
-    default ResponseEntity<OpenPageDTOOpenInstanceDTO> openapiV1EnvsEnvReleasesReleaseIdInstancesGet(
-        @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "releaseId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("releaseId") Integer releaseId,
-        @NotNull @Parameter(name = "page", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = true) Integer page,
-        @NotNull @Parameter(name = "size", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "size", required = true) Integer size
-    ) {
-        return getDelegate().openapiV1EnvsEnvReleasesReleaseIdInstancesGet(env, releaseId, page, size);
     }
 
 }

@@ -12,15 +12,15 @@ from unittest.mock import patch
 import urllib3
 
 import apollo_openapi
-from apollo_openapi.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_int import get  # noqa: E501
+from apollo_openapi.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_in import get  # noqa: E501
 from apollo_openapi import configuration, schemas, api_client
 
 from .. import ApiTestMixin
 
 
-class TestOpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotInt(ApiTestMixin, unittest.TestCase):
+class TestOpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIn(ApiTestMixin, unittest.TestCase):
     """
-    OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotInt unit test stubs
+    OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIn unit test stubs
         查询不在指定发布版本中的实例 (new added)  # noqa: E501
     """
     _configuration = configuration.Configuration()

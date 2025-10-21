@@ -75,6 +75,326 @@ public class InstanceManagementApi {
     }
 
     /**
+     * Build call for getByRelease
+     * @param env  (required)
+     * @param releaseId  (required)
+     * @param page  (required)
+     * @param size  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getByReleaseCall(String env, Integer releaseId, Integer page, Integer size, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/openapi/v1/envs/{env}/releases/{releaseId}/instances"
+            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
+            .replace("{" + "releaseId" + "}", localVarApiClient.escapeString(releaseId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (page != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("page", page));
+        }
+
+        if (size != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("size", size));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getByReleaseValidateBeforeCall(String env, Integer releaseId, Integer page, Integer size, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'env' is set
+        if (env == null) {
+            throw new ApiException("Missing the required parameter 'env' when calling getByRelease(Async)");
+        }
+
+        // verify the required parameter 'releaseId' is set
+        if (releaseId == null) {
+            throw new ApiException("Missing the required parameter 'releaseId' when calling getByRelease(Async)");
+        }
+
+        // verify the required parameter 'page' is set
+        if (page == null) {
+            throw new ApiException("Missing the required parameter 'page' when calling getByRelease(Async)");
+        }
+
+        // verify the required parameter 'size' is set
+        if (size == null) {
+            throw new ApiException("Missing the required parameter 'size' when calling getByRelease(Async)");
+        }
+
+        return getByReleaseCall(env, releaseId, page, size, _callback);
+
+    }
+
+    /**
+     * 根据发布版本查询实例（支持分页） (new added)
+     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
+     * @param env  (required)
+     * @param releaseId  (required)
+     * @param page  (required)
+     * @param size  (required)
+     * @return OpenPageDTOOpenInstanceDTO
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
+     </table>
+     */
+    public OpenPageDTOOpenInstanceDTO getByRelease(String env, Integer releaseId, Integer page, Integer size) throws ApiException {
+        ApiResponse<OpenPageDTOOpenInstanceDTO> localVarResp = getByReleaseWithHttpInfo(env, releaseId, page, size);
+        return localVarResp.getData();
+    }
+
+    /**
+     * 根据发布版本查询实例（支持分页） (new added)
+     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
+     * @param env  (required)
+     * @param releaseId  (required)
+     * @param page  (required)
+     * @param size  (required)
+     * @return ApiResponse&lt;OpenPageDTOOpenInstanceDTO&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<OpenPageDTOOpenInstanceDTO> getByReleaseWithHttpInfo(String env, Integer releaseId, Integer page, Integer size) throws ApiException {
+        okhttp3.Call localVarCall = getByReleaseValidateBeforeCall(env, releaseId, page, size, null);
+        Type localVarReturnType = new TypeToken<OpenPageDTOOpenInstanceDTO>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * 根据发布版本查询实例（支持分页） (new added) (asynchronously)
+     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
+     * @param env  (required)
+     * @param releaseId  (required)
+     * @param page  (required)
+     * @param size  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getByReleaseAsync(String env, Integer releaseId, Integer page, Integer size, final ApiCallback<OpenPageDTOOpenInstanceDTO> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getByReleaseValidateBeforeCall(env, releaseId, page, size, _callback);
+        Type localVarReturnType = new TypeToken<OpenPageDTOOpenInstanceDTO>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for getByReleasesNotIn
+     * @param env 环境标识 (required)
+     * @param appId 应用ID (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param excludeReleases 排除的发布ID列表，用逗号分隔 (optional)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getByReleasesNotInCall(String env, String appId, String clusterName, String namespaceName, String excludeReleases, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in"
+            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
+            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
+            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
+            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (excludeReleases != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("excludeReleases", excludeReleases));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getByReleasesNotInValidateBeforeCall(String env, String appId, String clusterName, String namespaceName, String excludeReleases, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'env' is set
+        if (env == null) {
+            throw new ApiException("Missing the required parameter 'env' when calling getByReleasesNotIn(Async)");
+        }
+
+        // verify the required parameter 'appId' is set
+        if (appId == null) {
+            throw new ApiException("Missing the required parameter 'appId' when calling getByReleasesNotIn(Async)");
+        }
+
+        // verify the required parameter 'clusterName' is set
+        if (clusterName == null) {
+            throw new ApiException("Missing the required parameter 'clusterName' when calling getByReleasesNotIn(Async)");
+        }
+
+        // verify the required parameter 'namespaceName' is set
+        if (namespaceName == null) {
+            throw new ApiException("Missing the required parameter 'namespaceName' when calling getByReleasesNotIn(Async)");
+        }
+
+        return getByReleasesNotInCall(env, appId, clusterName, namespaceName, excludeReleases, _callback);
+
+    }
+
+    /**
+     * 查询不在指定发布版本中的实例 (new added)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
+     * @param env 环境标识 (required)
+     * @param appId 应用ID (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param excludeReleases 排除的发布ID列表，用逗号分隔 (optional)
+     * @return List&lt;OpenInstanceDTO&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<OpenInstanceDTO> getByReleasesNotIn(String env, String appId, String clusterName, String namespaceName, String excludeReleases) throws ApiException {
+        ApiResponse<List<OpenInstanceDTO>> localVarResp = getByReleasesNotInWithHttpInfo(env, appId, clusterName, namespaceName, excludeReleases);
+        return localVarResp.getData();
+    }
+
+    /**
+     * 查询不在指定发布版本中的实例 (new added)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
+     * @param env 环境标识 (required)
+     * @param appId 应用ID (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param excludeReleases 排除的发布ID列表，用逗号分隔 (optional)
+     * @return ApiResponse&lt;List&lt;OpenInstanceDTO&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<OpenInstanceDTO>> getByReleasesNotInWithHttpInfo(String env, String appId, String clusterName, String namespaceName, String excludeReleases) throws ApiException {
+        okhttp3.Call localVarCall = getByReleasesNotInValidateBeforeCall(env, appId, clusterName, namespaceName, excludeReleases, null);
+        Type localVarReturnType = new TypeToken<List<OpenInstanceDTO>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * 查询不在指定发布版本中的实例 (new added) (asynchronously)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
+     * @param env 环境标识 (required)
+     * @param appId 应用ID (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param excludeReleases 排除的发布ID列表，用逗号分隔 (optional)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getByReleasesNotInAsync(String env, String appId, String clusterName, String namespaceName, String excludeReleases, final ApiCallback<List<OpenInstanceDTO>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getByReleasesNotInValidateBeforeCall(env, appId, clusterName, namespaceName, excludeReleases, _callback);
+        Type localVarReturnType = new TypeToken<List<OpenInstanceDTO>>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for getInstanceCountByNamespace
      * @param env  (required)
      * @param appId 应用ID (required)
@@ -224,326 +544,6 @@ public class InstanceManagementApi {
 
         okhttp3.Call localVarCall = getInstanceCountByNamespaceValidateBeforeCall(env, appId, clusterName, namespaceName, _callback);
         Type localVarReturnType = new TypeToken<Integer>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet
-     * @param env 环境标识 (required)
-     * @param appId 应用ID (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param excludeReleases 排除的发布ID列表，用逗号分隔 (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGetCall(String env, String appId, String clusterName, String namespaceName, String excludeReleases, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_int"
-            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
-            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
-            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (excludeReleases != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("excludeReleases", excludeReleases));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGetValidateBeforeCall(String env, String appId, String clusterName, String namespaceName, String excludeReleases, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'env' is set
-        if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet(Async)");
-        }
-
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet(Async)");
-        }
-
-        // verify the required parameter 'clusterName' is set
-        if (clusterName == null) {
-            throw new ApiException("Missing the required parameter 'clusterName' when calling openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet(Async)");
-        }
-
-        // verify the required parameter 'namespaceName' is set
-        if (namespaceName == null) {
-            throw new ApiException("Missing the required parameter 'namespaceName' when calling openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet(Async)");
-        }
-
-        return openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGetCall(env, appId, clusterName, namespaceName, excludeReleases, _callback);
-
-    }
-
-    /**
-     * 查询不在指定发布版本中的实例 (new added)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
-     * @param env 环境标识 (required)
-     * @param appId 应用ID (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param excludeReleases 排除的发布ID列表，用逗号分隔 (optional)
-     * @return List&lt;OpenInstanceDTO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public List<OpenInstanceDTO> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet(String env, String appId, String clusterName, String namespaceName, String excludeReleases) throws ApiException {
-        ApiResponse<List<OpenInstanceDTO>> localVarResp = openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGetWithHttpInfo(env, appId, clusterName, namespaceName, excludeReleases);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 查询不在指定发布版本中的实例 (new added)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
-     * @param env 环境标识 (required)
-     * @param appId 应用ID (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param excludeReleases 排除的发布ID列表，用逗号分隔 (optional)
-     * @return ApiResponse&lt;List&lt;OpenInstanceDTO&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<List<OpenInstanceDTO>> openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGetWithHttpInfo(String env, String appId, String clusterName, String namespaceName, String excludeReleases) throws ApiException {
-        okhttp3.Call localVarCall = openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGetValidateBeforeCall(env, appId, clusterName, namespaceName, excludeReleases, null);
-        Type localVarReturnType = new TypeToken<List<OpenInstanceDTO>>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 查询不在指定发布版本中的实例 (new added) (asynchronously)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
-     * @param env 环境标识 (required)
-     * @param appId 应用ID (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param excludeReleases 排除的发布ID列表，用逗号分隔 (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGetAsync(String env, String appId, String clusterName, String namespaceName, String excludeReleases, final ApiCallback<List<OpenInstanceDTO>> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGetValidateBeforeCall(env, appId, clusterName, namespaceName, excludeReleases, _callback);
-        Type localVarReturnType = new TypeToken<List<OpenInstanceDTO>>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for openapiV1EnvsEnvReleasesReleaseIdInstancesGet
-     * @param env  (required)
-     * @param releaseId  (required)
-     * @param page  (required)
-     * @param size  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call openapiV1EnvsEnvReleasesReleaseIdInstancesGetCall(String env, Integer releaseId, Integer page, Integer size, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/releases/{releaseId}/instances"
-            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
-            .replace("{" + "releaseId" + "}", localVarApiClient.escapeString(releaseId.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (page != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("page", page));
-        }
-
-        if (size != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("size", size));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call openapiV1EnvsEnvReleasesReleaseIdInstancesGetValidateBeforeCall(String env, Integer releaseId, Integer page, Integer size, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'env' is set
-        if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling openapiV1EnvsEnvReleasesReleaseIdInstancesGet(Async)");
-        }
-
-        // verify the required parameter 'releaseId' is set
-        if (releaseId == null) {
-            throw new ApiException("Missing the required parameter 'releaseId' when calling openapiV1EnvsEnvReleasesReleaseIdInstancesGet(Async)");
-        }
-
-        // verify the required parameter 'page' is set
-        if (page == null) {
-            throw new ApiException("Missing the required parameter 'page' when calling openapiV1EnvsEnvReleasesReleaseIdInstancesGet(Async)");
-        }
-
-        // verify the required parameter 'size' is set
-        if (size == null) {
-            throw new ApiException("Missing the required parameter 'size' when calling openapiV1EnvsEnvReleasesReleaseIdInstancesGet(Async)");
-        }
-
-        return openapiV1EnvsEnvReleasesReleaseIdInstancesGetCall(env, releaseId, page, size, _callback);
-
-    }
-
-    /**
-     * 根据发布版本查询实例（支持分页） (new added)
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
-     * @param env  (required)
-     * @param releaseId  (required)
-     * @param page  (required)
-     * @param size  (required)
-     * @return OpenPageDTOOpenInstanceDTO
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public OpenPageDTOOpenInstanceDTO openapiV1EnvsEnvReleasesReleaseIdInstancesGet(String env, Integer releaseId, Integer page, Integer size) throws ApiException {
-        ApiResponse<OpenPageDTOOpenInstanceDTO> localVarResp = openapiV1EnvsEnvReleasesReleaseIdInstancesGetWithHttpInfo(env, releaseId, page, size);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 根据发布版本查询实例（支持分页） (new added)
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
-     * @param env  (required)
-     * @param releaseId  (required)
-     * @param page  (required)
-     * @param size  (required)
-     * @return ApiResponse&lt;OpenPageDTOOpenInstanceDTO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<OpenPageDTOOpenInstanceDTO> openapiV1EnvsEnvReleasesReleaseIdInstancesGetWithHttpInfo(String env, Integer releaseId, Integer page, Integer size) throws ApiException {
-        okhttp3.Call localVarCall = openapiV1EnvsEnvReleasesReleaseIdInstancesGetValidateBeforeCall(env, releaseId, page, size, null);
-        Type localVarReturnType = new TypeToken<OpenPageDTOOpenInstanceDTO>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 根据发布版本查询实例（支持分页） (new added) (asynchronously)
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
-     * @param env  (required)
-     * @param releaseId  (required)
-     * @param page  (required)
-     * @param size  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call openapiV1EnvsEnvReleasesReleaseIdInstancesGetAsync(String env, Integer releaseId, Integer page, Integer size, final ApiCallback<OpenPageDTOOpenInstanceDTO> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = openapiV1EnvsEnvReleasesReleaseIdInstancesGetValidateBeforeCall(env, releaseId, page, size, _callback);
-        Type localVarReturnType = new TypeToken<OpenPageDTOOpenInstanceDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

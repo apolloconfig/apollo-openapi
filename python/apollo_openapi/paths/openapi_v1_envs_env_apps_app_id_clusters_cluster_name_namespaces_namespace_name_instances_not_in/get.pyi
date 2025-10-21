@@ -154,7 +154,7 @@ _all_accept_content_types = (
 
 class BaseApi(api_client.Api):
     @typing.overload
-    def _openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_int_get_oapg(
+    def _get_by_releases_not_in_oapg(
         self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -167,7 +167,7 @@ class BaseApi(api_client.Api):
     ]: ...
 
     @typing.overload
-    def _openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_int_get_oapg(
+    def _get_by_releases_not_in_oapg(
         self,
         skip_deserialization: typing_extensions.Literal[True],
         query_params: RequestQueryParams = frozendict.frozendict(),
@@ -178,7 +178,7 @@ class BaseApi(api_client.Api):
     ) -> api_client.ApiResponseWithoutDeserialization: ...
 
     @typing.overload
-    def _openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_int_get_oapg(
+    def _get_by_releases_not_in_oapg(
         self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -191,7 +191,7 @@ class BaseApi(api_client.Api):
         api_client.ApiResponseWithoutDeserialization,
     ]: ...
 
-    def _openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_int_get_oapg(
+    def _get_by_releases_not_in_oapg(
         self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -273,11 +273,11 @@ class BaseApi(api_client.Api):
         return api_response
 
 
-class OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet(BaseApi):
+class GetByReleasesNotIn(BaseApi):
     # this class is used by api classes that refer to endpoints with operationId fn names
 
     @typing.overload
-    def openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_int_get(
+    def get_by_releases_not_in(
         self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -290,7 +290,7 @@ class OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstanc
     ]: ...
 
     @typing.overload
-    def openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_int_get(
+    def get_by_releases_not_in(
         self,
         skip_deserialization: typing_extensions.Literal[True],
         query_params: RequestQueryParams = frozendict.frozendict(),
@@ -301,7 +301,7 @@ class OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstanc
     ) -> api_client.ApiResponseWithoutDeserialization: ...
 
     @typing.overload
-    def openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_int_get(
+    def get_by_releases_not_in(
         self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -314,7 +314,7 @@ class OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstanc
         api_client.ApiResponseWithoutDeserialization,
     ]: ...
 
-    def openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_int_get(
+    def get_by_releases_not_in(
         self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -323,7 +323,7 @@ class OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstanc
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
-        return self._openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_int_get_oapg(
+        return self._get_by_releases_not_in_oapg(
             query_params=query_params,
             path_params=path_params,
             accept_content_types=accept_content_types,
@@ -383,7 +383,7 @@ class ApiForget(BaseApi):
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
-        return self._openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_int_get_oapg(
+        return self._get_by_releases_not_in_oapg(
             query_params=query_params,
             path_params=path_params,
             accept_content_types=accept_content_types,

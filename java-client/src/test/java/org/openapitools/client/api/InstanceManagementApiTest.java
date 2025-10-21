@@ -33,6 +33,41 @@ public class InstanceManagementApiTest {
     private final InstanceManagementApi api = new InstanceManagementApi();
 
     /**
+     * 根据发布版本查询实例（支持分页） (new added)
+     *
+     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void getByReleaseTest() throws ApiException {
+        String env = null;
+        Integer releaseId = null;
+        Integer page = null;
+        Integer size = null;
+        OpenPageDTOOpenInstanceDTO response = api.getByRelease(env, releaseId, page, size);
+        // TODO: test validations
+    }
+
+    /**
+     * 查询不在指定发布版本中的实例 (new added)
+     *
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void getByReleasesNotInTest() throws ApiException {
+        String env = null;
+        String appId = null;
+        String clusterName = null;
+        String namespaceName = null;
+        String excludeReleases = null;
+        List<OpenInstanceDTO> response = api.getByReleasesNotIn(env, appId, clusterName, namespaceName, excludeReleases);
+        // TODO: test validations
+    }
+
+    /**
      * 获取命名空间下的实例数量 (original openapi)
      *
      * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances
@@ -46,41 +81,6 @@ public class InstanceManagementApiTest {
         String clusterName = null;
         String namespaceName = null;
         Integer response = api.getInstanceCountByNamespace(env, appId, clusterName, namespaceName);
-        // TODO: test validations
-    }
-
-    /**
-     * 查询不在指定发布版本中的实例 (new added)
-     *
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGetTest() throws ApiException {
-        String env = null;
-        String appId = null;
-        String clusterName = null;
-        String namespaceName = null;
-        String excludeReleases = null;
-        List<OpenInstanceDTO> response = api.openapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIntGet(env, appId, clusterName, namespaceName, excludeReleases);
-        // TODO: test validations
-    }
-
-    /**
-     * 根据发布版本查询实例（支持分页） (new added)
-     *
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void openapiV1EnvsEnvReleasesReleaseIdInstancesGetTest() throws ApiException {
-        String env = null;
-        Integer releaseId = null;
-        Integer page = null;
-        Integer size = null;
-        OpenPageDTOOpenInstanceDTO response = api.openapiV1EnvsEnvReleasesReleaseIdInstancesGet(env, releaseId, page, size);
         // TODO: test validations
     }
 

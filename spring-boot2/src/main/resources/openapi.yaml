@@ -2756,6 +2756,7 @@ paths:
     get:
       deprecated: false
       description: "GET /openapi/v1/envs/{env}/releases/{releaseId}/instances"
+      operationId: getByRelease
       parameters:
       - description: ""
         explode: false
@@ -2832,10 +2833,11 @@ paths:
       x-accepts: application/json
       x-tags:
       - tag: Instance Management
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_int:
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in:
     get:
       deprecated: false
       description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases=1,2,3"
+      operationId: getByReleasesNotIn
       parameters:
       - description: 环境标识
         explode: false
