@@ -2395,6 +2395,7 @@ paths:
   /openapi/v1/envs/{env}/releases/{releaseId}/instances:
     get:
       summary: 根据发布版本查询实例（支持分页） (new added)
+      operationId: getByRelease
       deprecated: false
       description: GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
       tags:
@@ -2461,9 +2462,10 @@ paths:
                         dataChangeLastModifiedTime: ''
                     dataChangeCreatedTime: ''
           headers: {}
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_int: # avoidng confliction with other server endpoint
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in: # avoidng confliction with other server endpoint
     get:
       summary: 查询不在指定发布版本中的实例 (new added)
+      operationId: getByReleasesNotIn
       deprecated: false
       description: >-
         GET
