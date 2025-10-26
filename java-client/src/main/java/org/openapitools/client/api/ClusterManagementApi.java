@@ -229,7 +229,7 @@ public class ClusterManagementApi {
      * @param env  (required)
      * @param appId  (required)
      * @param clusterName  (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名，openapi外部调用时需传入 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -310,11 +310,6 @@ public class ClusterManagementApi {
             throw new ApiException("Missing the required parameter 'clusterName' when calling deleteCluster(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling deleteCluster(Async)");
-        }
-
         return deleteClusterCall(env, appId, clusterName, operator, _callback);
 
     }
@@ -325,7 +320,7 @@ public class ClusterManagementApi {
      * @param env  (required)
      * @param appId  (required)
      * @param clusterName  (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名，openapi外部调用时需传入 (optional)
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -348,7 +343,7 @@ public class ClusterManagementApi {
      * @param env  (required)
      * @param appId  (required)
      * @param clusterName  (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名，openapi外部调用时需传入 (optional)
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -372,7 +367,7 @@ public class ClusterManagementApi {
      * @param env  (required)
      * @param appId  (required)
      * @param clusterName  (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名，openapi外部调用时需传入 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object

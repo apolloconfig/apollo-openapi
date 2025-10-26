@@ -16,6 +16,9 @@ Key | Input Type | Accessed Type | Description | Notes
 **dataChangeLastModifiedTime** | str,  | str,  | 集群最后修改时间，ISO 8601格式的时间戳 | [optional]
 **name** | str,  | str,  | 集群名称，在同一应用和环境下唯一标识一个集群 | [optional]
 **appId** | str,  | str,  | 所属应用的唯一标识符 | [optional]
+**id** | decimal.Decimal, int,  | decimal.Decimal,  | 集群的唯一标识符 | [optional] value must be a 64 bit integer
+**parentClusterId** | decimal.Decimal, int,  | decimal.Decimal,  | 父集群的ID | [optional] value must be a 64 bit integer
+**comment** | str,  | str,  | 集群的备注说明 | [optional]
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)

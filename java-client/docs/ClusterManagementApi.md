@@ -117,7 +117,7 @@ public class Example {
     String env = "env_example"; // String |
     String appId = "appId_example"; // String |
     String clusterName = "clusterName_example"; // String |
-    String operator = "operator_example"; // String | 操作人用户名
+    String operator = "operator_example"; // String | 操作人用户名，openapi外部调用时需传入
     try {
       Object result = apiInstance.deleteCluster(env, appId, clusterName, operator);
       System.out.println(result);
@@ -139,7 +139,7 @@ public class Example {
 | **env** | **String**|  | |
 | **appId** | **String**|  | |
 | **clusterName** | **String**|  | |
-| **operator** | **String**| 操作人用户名 | |
+| **operator** | **String**| 操作人用户名，openapi外部调用时需传入 | [optional] |
 
 ### Return type
 

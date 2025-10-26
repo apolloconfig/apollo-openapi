@@ -5,6 +5,7 @@ README.md
 package.json
 src/apis/AppManagementApi.ts
 src/apis/ClusterManagementApi.ts
+src/apis/EnvironmentManagementApi.ts
 src/apis/InstanceManagementApi.ts
 src/apis/ItemManagementApi.ts
 src/apis/NamespaceBranchManagementApi.ts

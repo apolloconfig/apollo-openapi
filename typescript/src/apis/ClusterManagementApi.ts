@@ -32,7 +32,7 @@ export interface DeleteClusterRequest {
     env: string;
     appId: string;
     clusterName: string;
-    operator: string;
+    operator?: string;
 }
 
 export interface GetClusterRequest {
@@ -108,10 +108,6 @@ export class ClusterManagementApi extends runtime.BaseAPI {
 
         if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
             throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling deleteCluster.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling deleteCluster.');
         }
 
         const queryParameters: any = {};

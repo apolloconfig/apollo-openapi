@@ -9,6 +9,7 @@ from apollo_openapi.apis.tags.namespace_management_api import NamespaceManagemen
 from apollo_openapi.apis.tags.namespace_namespace_branch_management_api import NamespaceNamespaceBranchManagementApi
 from apollo_openapi.apis.tags.instance_management_api import InstanceManagementApi
 from apollo_openapi.apis.tags.organization_management_api import OrganizationManagementApi
+from apollo_openapi.apis.tags.environment_management_api import EnvironmentManagementApi
 from apollo_openapi.apis.tags.namespace_branch_management_api import NamespaceBranchManagementApi
 
 TagToApi = typing_extensions.TypedDict(
@@ -22,6 +23,7 @@ TagToApi = typing_extensions.TypedDict(
         TagValues.NAMESPACE_NAMESPACE_BRANCH_MANAGEMENT: NamespaceNamespaceBranchManagementApi,
         TagValues.INSTANCE_MANAGEMENT: InstanceManagementApi,
         TagValues.ORGANIZATION_MANAGEMENT: OrganizationManagementApi,
+        TagValues.ENVIRONMENT_MANAGEMENT: EnvironmentManagementApi,
         TagValues.NAMESPACE_BRANCH_MANAGEMENT: NamespaceBranchManagementApi,
     }
 )
@@ -36,6 +38,7 @@ tag_to_api = TagToApi(
         TagValues.NAMESPACE_NAMESPACE_BRANCH_MANAGEMENT: NamespaceNamespaceBranchManagementApi,
         TagValues.INSTANCE_MANAGEMENT: InstanceManagementApi,
         TagValues.ORGANIZATION_MANAGEMENT: OrganizationManagementApi,
+        TagValues.ENVIRONMENT_MANAGEMENT: EnvironmentManagementApi,
         TagValues.NAMESPACE_BRANCH_MANAGEMENT: NamespaceBranchManagementApi,
     }
 )

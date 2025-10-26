@@ -76,6 +76,18 @@ public class OpenClusterDTO {
   @SerializedName(SERIALIZED_NAME_APP_ID)
   private String appId;
 
+  public static final String SERIALIZED_NAME_ID = "id";
+  @SerializedName(SERIALIZED_NAME_ID)
+  private Long id;
+
+  public static final String SERIALIZED_NAME_PARENT_CLUSTER_ID = "parentClusterId";
+  @SerializedName(SERIALIZED_NAME_PARENT_CLUSTER_ID)
+  private Long parentClusterId;
+
+  public static final String SERIALIZED_NAME_COMMENT = "comment";
+  @SerializedName(SERIALIZED_NAME_COMMENT)
+  private String comment;
+
   public OpenClusterDTO() {
   }
 
@@ -205,6 +217,69 @@ public class OpenClusterDTO {
   }
 
 
+  public OpenClusterDTO id(Long id) {
+
+    this.id = id;
+    return this;
+  }
+
+   /**
+   * 集群的唯一标识符
+   * @return id
+  **/
+  @javax.annotation.Nullable
+  public Long getId() {
+    return id;
+  }
+
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+
+  public OpenClusterDTO parentClusterId(Long parentClusterId) {
+
+    this.parentClusterId = parentClusterId;
+    return this;
+  }
+
+   /**
+   * 父集群的ID
+   * @return parentClusterId
+  **/
+  @javax.annotation.Nullable
+  public Long getParentClusterId() {
+    return parentClusterId;
+  }
+
+
+  public void setParentClusterId(Long parentClusterId) {
+    this.parentClusterId = parentClusterId;
+  }
+
+
+  public OpenClusterDTO comment(String comment) {
+
+    this.comment = comment;
+    return this;
+  }
+
+   /**
+   * 集群的备注说明
+   * @return comment
+  **/
+  @javax.annotation.Nullable
+  public String getComment() {
+    return comment;
+  }
+
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -220,12 +295,15 @@ public class OpenClusterDTO {
         Objects.equals(this.dataChangeCreatedTime, openClusterDTO.dataChangeCreatedTime) &&
         Objects.equals(this.dataChangeLastModifiedTime, openClusterDTO.dataChangeLastModifiedTime) &&
         Objects.equals(this.name, openClusterDTO.name) &&
-        Objects.equals(this.appId, openClusterDTO.appId);
+        Objects.equals(this.appId, openClusterDTO.appId) &&
+        Objects.equals(this.id, openClusterDTO.id) &&
+        Objects.equals(this.parentClusterId, openClusterDTO.parentClusterId) &&
+        Objects.equals(this.comment, openClusterDTO.comment);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, name, appId);
+    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, name, appId, id, parentClusterId, comment);
   }
 
   @Override
@@ -238,6 +316,9 @@ public class OpenClusterDTO {
     sb.append("    dataChangeLastModifiedTime: ").append(toIndentedString(dataChangeLastModifiedTime)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    parentClusterId: ").append(toIndentedString(parentClusterId)).append("\n");
+    sb.append("    comment: ").append(toIndentedString(comment)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -266,6 +347,9 @@ public class OpenClusterDTO {
     openapiFields.add("dataChangeLastModifiedTime");
     openapiFields.add("name");
     openapiFields.add("appId");
+    openapiFields.add("id");
+    openapiFields.add("parentClusterId");
+    openapiFields.add("comment");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -308,6 +392,9 @@ public class OpenClusterDTO {
       }
       if ((jsonObj.get("appId") != null && !jsonObj.get("appId").isJsonNull()) && !jsonObj.get("appId").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `appId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("appId").toString()));
+      }
+      if ((jsonObj.get("comment") != null && !jsonObj.get("comment").isJsonNull()) && !jsonObj.get("comment").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `comment` to be a primitive type in the JSON string but got `%s`", jsonObj.get("comment").toString()));
       }
   }
 

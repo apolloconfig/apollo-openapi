@@ -32,6 +32,15 @@ pub struct OpenClusterDto {
     /// 所属应用的唯一标识符
     #[serde(rename = "appId", skip_serializing_if = "Option::is_none")]
     pub app_id: Option<String>,
+    /// 集群的唯一标识符
+    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
+    pub id: Option<i64>,
+    /// 父集群的ID
+    #[serde(rename = "parentClusterId", skip_serializing_if = "Option::is_none")]
+    pub parent_cluster_id: Option<i64>,
+    /// 集群的备注说明
+    #[serde(rename = "comment", skip_serializing_if = "Option::is_none")]
+    pub comment: Option<String>,
 }
 
 impl OpenClusterDto {
@@ -44,6 +53,9 @@ impl OpenClusterDto {
             data_change_last_modified_time: None,
             name: None,
             app_id: None,
+            id: None,
+            parent_cluster_id: None,
+            comment: None,
         }
     }
 }

@@ -229,6 +229,7 @@ Class | Method | HTTP request | Description
 *ClusterManagementApi* | [**create_cluster**](docs/apis/tags/ClusterManagementApi.md#create_cluster) | **post** /openapi/v1/envs/{env}/apps/{appId}/clusters | 创建集群 (original openapi)
 *ClusterManagementApi* | [**delete_cluster**](docs/apis/tags/ClusterManagementApi.md#delete_cluster) | **delete** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 删除集群 (new added)
 *ClusterManagementApi* | [**get_cluster**](docs/apis/tags/ClusterManagementApi.md#get_cluster) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 获取指定集群信息 (original openapi)
+*EnvironmentManagementApi* | [**get_envs**](docs/apis/tags/EnvironmentManagementApi.md#get_envs) | **get** /openapi/v1/envs | 获取所有环境
 *InstanceManagementApi* | [**get_by_release**](docs/apis/tags/InstanceManagementApi.md#get_by_release) | **get** /openapi/v1/envs/{env}/releases/{releaseId}/instances | 根据发布版本查询实例（支持分页） (new added)
 *InstanceManagementApi* | [**get_by_releases_not_in**](docs/apis/tags/InstanceManagementApi.md#get_by_releases_not_in) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in | 查询不在指定发布版本中的实例 (new added)
 *InstanceManagementApi* | [**get_instance_count_by_namespace**](docs/apis/tags/InstanceManagementApi.md#get_instance_count_by_namespace) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances | 获取命名空间下的实例数量 (original openapi)
@@ -322,6 +323,7 @@ Authentication schemes defined for the API:
 
 
 ## Author
+
 
 
 

@@ -8,6 +8,7 @@ build.gradle
 build.sbt
 docs/AppManagementApi.md
 docs/ClusterManagementApi.md
+docs/EnvironmentManagementApi.md
 docs/InstanceManagementApi.md
 docs/ItemManagementApi.md
 docs/KVEntity.md
@@ -66,6 +67,7 @@ src/main/java/org/openapitools/client/ServerVariable.java
 src/main/java/org/openapitools/client/StringUtil.java
 src/main/java/org/openapitools/client/api/AppManagementApi.java
 src/main/java/org/openapitools/client/api/ClusterManagementApi.java
+src/main/java/org/openapitools/client/api/EnvironmentManagementApi.java
 src/main/java/org/openapitools/client/api/InstanceManagementApi.java
 src/main/java/org/openapitools/client/api/ItemManagementApi.java
 src/main/java/org/openapitools/client/api/NamespaceBranchManagementApi.java
@@ -107,6 +109,7 @@ src/main/java/org/openapitools/client/model/OpenReleaseDTO.java
 src/main/java/org/openapitools/client/model/RichResponseEntity.java
 src/test/java/org/openapitools/client/api/AppManagementApiTest.java
 src/test/java/org/openapitools/client/api/ClusterManagementApiTest.java
+src/test/java/org/openapitools/client/api/EnvironmentManagementApiTest.java
 src/test/java/org/openapitools/client/api/InstanceManagementApiTest.java
 src/test/java/org/openapitools/client/api/ItemManagementApiTest.java
 src/test/java/org/openapitools/client/api/NamespaceBranchManagementApiTest.java

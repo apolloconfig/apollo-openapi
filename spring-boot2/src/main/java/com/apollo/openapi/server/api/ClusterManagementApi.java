@@ -91,7 +91,7 @@ public interface ClusterManagementApi {
      * @param env  (required)
      * @param appId  (required)
      * @param clusterName  (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名，openapi外部调用时需传入 (optional)
      * @return 集群删除成功 (status code 200)
      *         or 删除失败，集群可能包含配置 (status code 400)
      *         or 权限不足 (status code 403)
@@ -129,7 +129,7 @@ public interface ClusterManagementApi {
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "clusterName", description = "", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
-        @NotNull @Parameter(name = "operator", description = "操作人用户名", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = true) String operator
+        @Parameter(name = "operator", description = "操作人用户名，openapi外部调用时需传入", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
         return getDelegate().deleteCluster(env, appId, clusterName, operator);
     }

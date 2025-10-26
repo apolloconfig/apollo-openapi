@@ -85,4 +85,28 @@ public class OpenClusterDTOTest {
         // TODO: test appId
     }
 
+    /**
+     * Test the property 'id'
+     */
+    @Test
+    public void idTest() {
+        // TODO: test id
+    }
+
+    /**
+     * Test the property 'parentClusterId'
+     */
+    @Test
+    public void parentClusterIdTest() {
+        // TODO: test parentClusterId
+    }
+
+    /**
+     * Test the property 'comment'
+     */
+    @Test
+    public void commentTest() {
+        // TODO: test comment
+    }
+
 }

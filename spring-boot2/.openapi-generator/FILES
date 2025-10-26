@@ -10,6 +10,9 @@ src/main/java/com/apollo/openapi/server/api/AppManagementApiDelegate.java
 src/main/java/com/apollo/openapi/server/api/ClusterManagementApi.java
 src/main/java/com/apollo/openapi/server/api/ClusterManagementApiController.java
 src/main/java/com/apollo/openapi/server/api/ClusterManagementApiDelegate.java
+src/main/java/com/apollo/openapi/server/api/EnvironmentManagementApi.java
+src/main/java/com/apollo/openapi/server/api/EnvironmentManagementApiController.java
+src/main/java/com/apollo/openapi/server/api/EnvironmentManagementApiDelegate.java
 src/main/java/com/apollo/openapi/server/api/InstanceManagementApi.java
 src/main/java/com/apollo/openapi/server/api/InstanceManagementApiController.java
 src/main/java/com/apollo/openapi/server/api/InstanceManagementApiDelegate.java

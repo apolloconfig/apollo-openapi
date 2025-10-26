@@ -39,6 +39,8 @@ tags:
   name: Instance Management
 - description: 组织管理相关接口，包括组织信息查询等功能
   name: Organization Management
+- description: 环境管理相关接口，包括环境查询等功能
+  name: Environment Management
 paths:
   /openapi/v1/apps:
     get:
@@ -1832,11 +1834,11 @@ paths:
         schema:
           type: string
         style: simple
-      - description: 操作人用户名
+      - description: 操作人用户名，openapi外部调用时需传入
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -4159,6 +4161,31 @@ paths:
       x-accepts: application/json
       x-tags:
       - tag: Namespace Branch Management
+  /openapi/v1/envs:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/envs
+      operationId: getEnvs
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - DEV
+              - FAT
+              - UAT
+              - PRO
+              schema:
+                items:
+                  type: string
+                type: array
+          description: 成功获取环境列表
+      summary: 获取所有环境
+      tags:
+      - Environment Management
+      x-accepts: application/json
+      x-tags:
+      - tag: Environment Management
 components:
   schemas:
     OpenAppDTO:
@@ -4325,6 +4352,9 @@ components:
         appId: appId
         dataChangeCreatedBy: dataChangeCreatedBy
         name: name
+        parentClusterId: 6
+        comment: comment
+        id: 0
         dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
       properties:
         dataChangeCreatedBy:
@@ -4346,6 +4376,17 @@ components:
           type: string
         appId:
           description: 所属应用的唯一标识符
+          type: string
+        id:
+          description: 集群的唯一标识符
+          format: int64
+          type: integer
+        parentClusterId:
+          description: 父集群的ID
+          format: int64
+          type: integer
+        comment:
+          description: 集群的备注说明
           type: string
       type: object
     MapString:

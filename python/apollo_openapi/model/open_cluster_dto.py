@@ -44,6 +44,9 @@ class OpenClusterDTO(
             dataChangeLastModifiedTime = schemas.StrSchema
             name = schemas.StrSchema
             appId = schemas.StrSchema
+            id = schemas.Int64Schema
+            parentClusterId = schemas.Int64Schema
+            comment = schemas.StrSchema
             __annotations__ = {
                 "dataChangeCreatedBy": dataChangeCreatedBy,
                 "dataChangeLastModifiedBy": dataChangeLastModifiedBy,
@@ -51,6 +54,9 @@ class OpenClusterDTO(
                 "dataChangeLastModifiedTime": dataChangeLastModifiedTime,
                 "name": name,
                 "appId": appId,
+                "id": id,
+                "parentClusterId": parentClusterId,
+                "comment": comment,
             }
 
     @typing.overload
@@ -72,9 +78,18 @@ class OpenClusterDTO(
     def __getitem__(self, name: typing_extensions.Literal["appId"]) -> MetaOapg.properties.appId: ...
 
     @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["id"]) -> MetaOapg.properties.id: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["parentClusterId"]) -> MetaOapg.properties.parentClusterId: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["comment"]) -> MetaOapg.properties.comment: ...
+
+    @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
 
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "name", "appId", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "name", "appId", "id", "parentClusterId", "comment", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
 
@@ -98,9 +113,18 @@ class OpenClusterDTO(
     def get_item_oapg(self, name: typing_extensions.Literal["appId"]) -> typing.Union[MetaOapg.properties.appId, schemas.Unset]: ...
 
     @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["id"]) -> typing.Union[MetaOapg.properties.id, schemas.Unset]: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["parentClusterId"]) -> typing.Union[MetaOapg.properties.parentClusterId, schemas.Unset]: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["comment"]) -> typing.Union[MetaOapg.properties.comment, schemas.Unset]: ...
+
+    @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
 
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "name", "appId", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "name", "appId", "id", "parentClusterId", "comment", ], str]):
         return super().get_item_oapg(name)
 
 
@@ -113,6 +137,9 @@ class OpenClusterDTO(
         dataChangeLastModifiedTime: typing.Union[MetaOapg.properties.dataChangeLastModifiedTime, str, schemas.Unset] = schemas.unset,
         name: typing.Union[MetaOapg.properties.name, str, schemas.Unset] = schemas.unset,
         appId: typing.Union[MetaOapg.properties.appId, str, schemas.Unset] = schemas.unset,
+        id: typing.Union[MetaOapg.properties.id, decimal.Decimal, int, schemas.Unset] = schemas.unset,
+        parentClusterId: typing.Union[MetaOapg.properties.parentClusterId, decimal.Decimal, int, schemas.Unset] = schemas.unset,
+        comment: typing.Union[MetaOapg.properties.comment, str, schemas.Unset] = schemas.unset,
         _configuration: typing.Optional[schemas.Configuration] = None,
         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
     ) -> 'OpenClusterDTO':
@@ -125,6 +152,9 @@ class OpenClusterDTO(
             dataChangeLastModifiedTime=dataChangeLastModifiedTime,
             name=name,
             appId=appId,
+            id=id,
+            parentClusterId=parentClusterId,
+            comment=comment,
             _configuration=_configuration,
             **kwargs,
         )

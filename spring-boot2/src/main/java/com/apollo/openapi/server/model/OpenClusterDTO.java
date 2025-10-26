@@ -34,6 +34,12 @@ public class OpenClusterDTO {
 
   private String appId;
 
+  private Long id;
+
+  private Long parentClusterId;
+
+  private String comment;
+
   public OpenClusterDTO dataChangeCreatedBy(String dataChangeCreatedBy) {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
     return this;
@@ -154,6 +160,66 @@ public class OpenClusterDTO {
     this.appId = appId;
   }
 
+  public OpenClusterDTO id(Long id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * 集群的唯一标识符
+   * @return id
+  */
+
+  @Schema(name = "id", description = "集群的唯一标识符", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("id")
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public OpenClusterDTO parentClusterId(Long parentClusterId) {
+    this.parentClusterId = parentClusterId;
+    return this;
+  }
+
+  /**
+   * 父集群的ID
+   * @return parentClusterId
+  */
+
+  @Schema(name = "parentClusterId", description = "父集群的ID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("parentClusterId")
+  public Long getParentClusterId() {
+    return parentClusterId;
+  }
+
+  public void setParentClusterId(Long parentClusterId) {
+    this.parentClusterId = parentClusterId;
+  }
+
+  public OpenClusterDTO comment(String comment) {
+    this.comment = comment;
+    return this;
+  }
+
+  /**
+   * 集群的备注说明
+   * @return comment
+  */
+
+  @Schema(name = "comment", description = "集群的备注说明", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("comment")
+  public String getComment() {
+    return comment;
+  }
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -168,12 +234,15 @@ public class OpenClusterDTO {
         Objects.equals(this.dataChangeCreatedTime, openClusterDTO.dataChangeCreatedTime) &&
         Objects.equals(this.dataChangeLastModifiedTime, openClusterDTO.dataChangeLastModifiedTime) &&
         Objects.equals(this.name, openClusterDTO.name) &&
-        Objects.equals(this.appId, openClusterDTO.appId);
+        Objects.equals(this.appId, openClusterDTO.appId) &&
+        Objects.equals(this.id, openClusterDTO.id) &&
+        Objects.equals(this.parentClusterId, openClusterDTO.parentClusterId) &&
+        Objects.equals(this.comment, openClusterDTO.comment);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, name, appId);
+    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, name, appId, id, parentClusterId, comment);
   }
 
   @Override
@@ -186,6 +255,9 @@ public class OpenClusterDTO {
     sb.append("    dataChangeLastModifiedTime: ").append(toIndentedString(dataChangeLastModifiedTime)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    parentClusterId: ").append(toIndentedString(parentClusterId)).append("\n");
+    sb.append("    comment: ").append(toIndentedString(comment)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -38,6 +38,8 @@ tags:
     description: 实例管理相关接口，包括实例查询、配置生效状态等功能
   - name: Organization Management
     description: 组织管理相关接口，包括组织信息查询等功能
+  - name: Environment Management
+    description: 环境管理相关接口，包括环境查询等功能
 paths:
   /openapi/v1/apps:
     post:
@@ -1659,8 +1661,8 @@ paths:
             type: string
         - name: operator
           in: query
-          description: '操作人用户名'
-          required: true
+          description: '操作人用户名，openapi外部调用时需传入'
+          required: false
           schema:
             type: string
       responses:
@@ -3599,6 +3601,29 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/SuccessEmptyResponse'
           headers: {}
+  /openapi/v1/envs:
+    get:
+      summary: 获取所有环境
+      operationId: getEnvs
+      deprecated: false
+      description: GET /openapi/v1/envs
+      tags:
+        - Environment Management
+      responses:
+        '200':
+          description: 成功获取环境列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+                - 'DEV'
+                - 'FAT'
+                - 'UAT'
+                - 'PRO'
+          headers: {}
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -3742,6 +3767,17 @@ components:
         appId:
           type: string
           description: 所属应用的唯一标识符
+        id:
+          type: integer
+          description: 集群的唯一标识符
+          format: int64
+        parentClusterId:
+          type: integer
+          description: 父集群的ID
+          format: int64
+        comment:
+          type: string
+          description: 集群的备注说明
       description: Apollo集群信息数据传输对象，表示应用在特定环境下的集群配置
     MapString:
       type: object

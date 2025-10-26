@@ -55,6 +55,24 @@ export interface OpenClusterDTO {
      * @memberof OpenClusterDTO
      */
     appId?: string;
+    /**
+     * 集群的唯一标识符
+     * @type {number}
+     * @memberof OpenClusterDTO
+     */
+    id?: number;
+    /**
+     * 父集群的ID
+     * @type {number}
+     * @memberof OpenClusterDTO
+     */
+    parentClusterId?: number;
+    /**
+     * 集群的备注说明
+     * @type {string}
+     * @memberof OpenClusterDTO
+     */
+    comment?: string;
 }
 
 /**
@@ -82,6 +100,9 @@ export function OpenClusterDTOFromJSONTyped(json: any, ignoreDiscriminator: bool
         'dataChangeLastModifiedTime': !exists(json, 'dataChangeLastModifiedTime') ? undefined : json['dataChangeLastModifiedTime'],
         'name': !exists(json, 'name') ? undefined : json['name'],
         'appId': !exists(json, 'appId') ? undefined : json['appId'],
+        'id': !exists(json, 'id') ? undefined : json['id'],
+        'parentClusterId': !exists(json, 'parentClusterId') ? undefined : json['parentClusterId'],
+        'comment': !exists(json, 'comment') ? undefined : json['comment'],
     };
 }
 
@@ -100,5 +121,8 @@ export function OpenClusterDTOToJSON(value?: OpenClusterDTO | null): any {
         'dataChangeLastModifiedTime': value.dataChangeLastModifiedTime,
         'name': value.name,
         'appId': value.appId,
+        'id': value.id,
+        'parentClusterId': value.parentClusterId,
+        'comment': value.comment,
     };
 }

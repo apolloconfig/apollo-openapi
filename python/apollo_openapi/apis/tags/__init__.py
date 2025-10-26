@@ -14,4 +14,5 @@ class TagValues(str, enum.Enum):
     NAMESPACE_NAMESPACE_BRANCH_MANAGEMENT = "Namespace Namespace Branch Management"
     INSTANCE_MANAGEMENT = "Instance Management"
     ORGANIZATION_MANAGEMENT = "Organization Management"
+    ENVIRONMENT_MANAGEMENT = "Environment Management"
     NAMESPACE_BRANCH_MANAGEMENT = "Namespace Branch Management"

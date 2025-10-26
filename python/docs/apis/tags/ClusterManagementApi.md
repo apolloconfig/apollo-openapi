@@ -59,6 +59,9 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         data_change_last_modified_time="2025-09-29T12:34:56Z",
         name="name_example",
         app_id="app_id_example",
+        id=1,
+        parent_cluster_id=1,
+        comment="comment_example",
     )
     try:
         # 创建集群 (original openapi)
@@ -182,7 +185,7 @@ Class Name | Input Type | Accessed Type | Description | Notes
 
 # **delete_cluster**
 <a id="delete_cluster"></a>
-> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} delete_cluster(envapp_idcluster_nameoperator)
+> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} delete_cluster(envapp_idcluster_name)
 
 删除集群 (new added)
 
@@ -224,6 +227,24 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         'clusterName': "clusterName_example",
     }
     query_params = {
+    }
+    try:
+        # 删除集群 (new added)
+        api_response = api_instance.delete_cluster(
+            path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling ClusterManagementApi->delete_cluster: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'env': "env_example",
+        'appId': "appId_example",
+        'clusterName': "clusterName_example",
+    }
+    query_params = {
         'operator': "operator_example",
     }
     try:
@@ -252,7 +273,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-operator | OperatorSchema | |
+operator | OperatorSchema | | optional
 
 
 # OperatorSchema

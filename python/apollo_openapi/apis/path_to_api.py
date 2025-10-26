@@ -47,6 +47,7 @@ from apollo_openapi.apis.paths.openapi_v1_organizations import OpenapiV1Organiza
 from apollo_openapi.apis.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_branches import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranches
 from apollo_openapi.apis.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_branches_branch_name import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchName
 from apollo_openapi.apis.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_branches_branch_name_rules import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameRules
+from apollo_openapi.apis.paths.openapi_v1_envs import OpenapiV1Envs
 
 PathToApi = typing_extensions.TypedDict(
     'PathToApi',
@@ -97,6 +98,7 @@ PathToApi = typing_extensions.TypedDict(
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_BRANCHES: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranches,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_BRANCHES_BRANCH_NAME: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchName,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_BRANCHES_BRANCH_NAME_RULES: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameRules,
+        PathValues.OPENAPI_V1_ENVS: OpenapiV1Envs,
     }
 )
 
@@ -148,5 +150,6 @@ path_to_api = PathToApi(
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_BRANCHES: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranches,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_BRANCHES_BRANCH_NAME: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchName,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_BRANCHES_BRANCH_NAME_RULES: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameBranchesBranchNameRules,
+        PathValues.OPENAPI_V1_ENVS: OpenapiV1Envs,
     }
 )

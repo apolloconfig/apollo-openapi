@@ -149,6 +149,7 @@ Class | Method | HTTP request | Description
 *ClusterManagementApi* | [**createCluster**](docs/ClusterManagementApi.md#createCluster) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters | 创建集群 (original openapi)
 *ClusterManagementApi* | [**deleteCluster**](docs/ClusterManagementApi.md#deleteCluster) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 删除集群 (new added)
 *ClusterManagementApi* | [**getCluster**](docs/ClusterManagementApi.md#getCluster) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 获取指定集群信息 (original openapi)
+*EnvironmentManagementApi* | [**getEnvs**](docs/EnvironmentManagementApi.md#getEnvs) | **GET** /openapi/v1/envs | 获取所有环境
 *InstanceManagementApi* | [**getByRelease**](docs/InstanceManagementApi.md#getByRelease) | **GET** /openapi/v1/envs/{env}/releases/{releaseId}/instances | 根据发布版本查询实例（支持分页） (new added)
 *InstanceManagementApi* | [**getByReleasesNotIn**](docs/InstanceManagementApi.md#getByReleasesNotIn) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in | 查询不在指定发布版本中的实例 (new added)
 *InstanceManagementApi* | [**getInstanceCountByNamespace**](docs/InstanceManagementApi.md#getInstanceCountByNamespace) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances | 获取命名空间下的实例数量 (original openapi)

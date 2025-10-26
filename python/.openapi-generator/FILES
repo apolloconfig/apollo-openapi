@@ -8,6 +8,7 @@ apollo_openapi/api_client.py
 apollo_openapi/apis/__init__.py
 apollo_openapi/apis/tags/app_management_api.py
 apollo_openapi/apis/tags/cluster_management_api.py
+apollo_openapi/apis/tags/environment_management_api.py
 apollo_openapi/apis/tags/instance_management_api.py
 apollo_openapi/apis/tags/item_management_api.py
 apollo_openapi/apis/tags/namespace_branch_management_api.py
@@ -84,6 +85,7 @@ apollo_openapi/rest.py
 apollo_openapi/schemas.py
 docs/apis/tags/AppManagementApi.md
 docs/apis/tags/ClusterManagementApi.md
+docs/apis/tags/EnvironmentManagementApi.md
 docs/apis/tags/InstanceManagementApi.md
 docs/apis/tags/ItemManagementApi.md
 docs/apis/tags/NamespaceBranchManagementApi.md
