@@ -115,7 +115,7 @@ public class Example {
     AppManagementApi apiInstance = new AppManagementApi(defaultClient);
     OpenCreateAppDTO openCreateAppDTO = new OpenCreateAppDTO(); // OpenCreateAppDTO |
     try {
-      Object result = apiInstance.createApp(openCreateAppDTO);
+      OpenAppDTO result = apiInstance.createApp(openCreateAppDTO);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AppManagementApi#createApp");
@@ -140,18 +140,19 @@ Class | Method | HTTP request | Description
 *AppManagementApi* | [**deleteApp**](docs/AppManagementApi.md#deleteApp) | **DELETE** /openapi/v1/apps/{appId} | 删除应用(new added)
 *AppManagementApi* | [**findApps**](docs/AppManagementApi.md#findApps) | **GET** /openapi/v1/apps | 查找应用 (original openapi)
 *AppManagementApi* | [**findAppsAuthorized**](docs/AppManagementApi.md#findAppsAuthorized) | **GET** /openapi/v1/apps/authorized | 获取当前Consumer授权的应用列表 (original openapi)
-*AppManagementApi* | [**findMissEnvs**](docs/AppManagementApi.md#findMissEnvs) | **GET** /openapi/v1/apps/{appId}/miss_envs | 查找缺失的环境(new added)
+*AppManagementApi* | [**findMissEnvs**](docs/AppManagementApi.md#findMissEnvs) | **GET** /openapi/v1/apps/{appId}/miss-envs | 查找缺失的环境(new added)
 *AppManagementApi* | [**getApp**](docs/AppManagementApi.md#getApp) | **GET** /openapi/v1/apps/{appId} | 获取单个应用信息(new added)
-*AppManagementApi* | [**getAppNavTree**](docs/AppManagementApi.md#getAppNavTree) | **GET** /openapi/v1/apps/{appId}/navtree | 获取应用导航树(new added)
-*AppManagementApi* | [**getAppsBySelf**](docs/AppManagementApi.md#getAppsBySelf) | **GET** /openapi/v1/apps/by-self | 获取当前Consumer的应用列表（分页）(new added)
-*AppManagementApi* | [**getEnvClusterInfo**](docs/AppManagementApi.md#getEnvClusterInfo) | **GET** /openapi/v1/apps/{appId}/envclusters | 获取应用的环境集群信息 (original openapi)
+*AppManagementApi* | [**getAppsBySelf**](docs/AppManagementApi.md#getAppsBySelf) | **GET** /openapi/v1/apps/by-self | 获取当前Consumer/User的应用列表（分页）(new added)
+*AppManagementApi* | [**getEnvClusterInfo**](docs/AppManagementApi.md#getEnvClusterInfo) | **GET** /openapi/v1/apps/{appId}/env-cluster-info | 获取应用环境集群详情(new added)
+*AppManagementApi* | [**getEnvClusters**](docs/AppManagementApi.md#getEnvClusters) | **GET** /openapi/v1/apps/{appId}/envclusters | 获取应用的环境集群信息 (original openapi)
 *AppManagementApi* | [**updateApp**](docs/AppManagementApi.md#updateApp) | **PUT** /openapi/v1/apps/{appId} | 更新应用(new added)
 *ClusterManagementApi* | [**createCluster**](docs/ClusterManagementApi.md#createCluster) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters | 创建集群 (original openapi)
 *ClusterManagementApi* | [**deleteCluster**](docs/ClusterManagementApi.md#deleteCluster) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 删除集群 (new added)
 *ClusterManagementApi* | [**getCluster**](docs/ClusterManagementApi.md#getCluster) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 获取指定集群信息 (original openapi)
 *EnvironmentManagementApi* | [**getEnvs**](docs/EnvironmentManagementApi.md#getEnvs) | **GET** /openapi/v1/envs | 获取所有环境
-*InstanceManagementApi* | [**getByRelease**](docs/InstanceManagementApi.md#getByRelease) | **GET** /openapi/v1/envs/{env}/releases/{releaseId}/instances | 根据发布版本查询实例（支持分页） (new added)
-*InstanceManagementApi* | [**getByReleasesNotIn**](docs/InstanceManagementApi.md#getByReleasesNotIn) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in | 查询不在指定发布版本中的实例 (new added)
+*InstanceManagementApi* | [**getByNamespace**](docs/InstanceManagementApi.md#getByNamespace) | **GET** /openapi/v1/envs/{env}/instances/by-namespace | 根据namespaceName查询实例（new added）
+*InstanceManagementApi* | [**getByRelease**](docs/InstanceManagementApi.md#getByRelease) | **GET** /openapi/v1/envs/{env}/instances/by-release | 根据发布版本查询实例（支持分页） (new added)
+*InstanceManagementApi* | [**getByReleasesAndNamespaceNotIn**](docs/InstanceManagementApi.md#getByReleasesAndNamespaceNotIn) | **GET** /openapi/v1/envs/{env}/instances/by-namespace-and-releases-not-in | 查询不在指定发布版本中的实例 (new added)
 *InstanceManagementApi* | [**getInstanceCountByNamespace**](docs/InstanceManagementApi.md#getInstanceCountByNamespace) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances | 获取命名空间下的实例数量 (original openapi)
 *ItemManagementApi* | [**batchUpdateItemsByText**](docs/ItemManagementApi.md#batchUpdateItemsByText) | **PUT** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate | 通过文本批量修改配置项 (new added)
 *ItemManagementApi* | [**compareItems**](docs/ItemManagementApi.md#compareItems) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare | 对比命名空间配置差异 (new added)
@@ -200,6 +201,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [ExceptionResponse](docs/ExceptionResponse.md)
  - [KVEntity](docs/KVEntity.md)
  - [MultiResponseEntity](docs/MultiResponseEntity.md)
  - [NamespaceGrayDelReleaseDTO](docs/NamespaceGrayDelReleaseDTO.md)
@@ -214,17 +216,18 @@ Class | Method | HTTP request | Description
  - [OpenGrayReleaseRuleItemDTO](docs/OpenGrayReleaseRuleItemDTO.md)
  - [OpenInstanceConfigDTO](docs/OpenInstanceConfigDTO.md)
  - [OpenInstanceDTO](docs/OpenInstanceDTO.md)
+ - [OpenInstancePageDTO](docs/OpenInstancePageDTO.md)
  - [OpenItemChangeSets](docs/OpenItemChangeSets.md)
  - [OpenItemDTO](docs/OpenItemDTO.md)
  - [OpenItemDiffs](docs/OpenItemDiffs.md)
+ - [OpenItemPageDTO](docs/OpenItemPageDTO.md)
+ - [OpenMissEnvDTO](docs/OpenMissEnvDTO.md)
  - [OpenNamespaceDTO](docs/OpenNamespaceDTO.md)
  - [OpenNamespaceIdentifier](docs/OpenNamespaceIdentifier.md)
  - [OpenNamespaceLockDTO](docs/OpenNamespaceLockDTO.md)
  - [OpenNamespaceSyncModel](docs/OpenNamespaceSyncModel.md)
  - [OpenNamespaceTextModel](docs/OpenNamespaceTextModel.md)
  - [OpenOrganizationDto](docs/OpenOrganizationDto.md)
- - [OpenPageDTOOpenInstanceDTO](docs/OpenPageDTOOpenInstanceDTO.md)
- - [OpenPageDTOOpenItemDTO](docs/OpenPageDTOOpenItemDTO.md)
  - [OpenReleaseBO](docs/OpenReleaseBO.md)
  - [OpenReleaseDTO](docs/OpenReleaseDTO.md)
  - [RichResponseEntity](docs/RichResponseEntity.md)

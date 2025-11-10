@@ -15,9 +15,12 @@
 
 import * as runtime from '../runtime';
 import type {
+  ExceptionResponse,
   OpenOrganizationDto,
 } from '../models';
 import {
+    ExceptionResponseFromJSON,
+    ExceptionResponseToJSON,
     OpenOrganizationDtoFromJSON,
     OpenOrganizationDtoToJSON,
 } from '../models';

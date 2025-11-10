@@ -27,10 +27,12 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import org.openapitools.client.model.MultiResponseEntity;
+import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.OpenAppDTO;
 import org.openapitools.client.model.OpenCreateAppDTO;
 import org.openapitools.client.model.OpenEnvClusterDTO;
+import org.openapitools.client.model.OpenEnvClusterInfo;
+import org.openapitools.client.model.OpenMissEnvDTO;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -150,7 +152,7 @@ public class AppManagementApi {
      * 创建应用 (original openapi)
      * POST /openapi/v1/apps
      * @param openCreateAppDTO  (required)
-     * @return Object
+     * @return OpenAppDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -160,8 +162,8 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public Object createApp(OpenCreateAppDTO openCreateAppDTO) throws ApiException {
-        ApiResponse<Object> localVarResp = createAppWithHttpInfo(openCreateAppDTO);
+    public OpenAppDTO createApp(OpenCreateAppDTO openCreateAppDTO) throws ApiException {
+        ApiResponse<OpenAppDTO> localVarResp = createAppWithHttpInfo(openCreateAppDTO);
         return localVarResp.getData();
     }
 
@@ -169,7 +171,7 @@ public class AppManagementApi {
      * 创建应用 (original openapi)
      * POST /openapi/v1/apps
      * @param openCreateAppDTO  (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;OpenAppDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -179,9 +181,9 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> createAppWithHttpInfo(OpenCreateAppDTO openCreateAppDTO) throws ApiException {
+    public ApiResponse<OpenAppDTO> createAppWithHttpInfo(OpenCreateAppDTO openCreateAppDTO) throws ApiException {
         okhttp3.Call localVarCall = createAppValidateBeforeCall(openCreateAppDTO, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        Type localVarReturnType = new TypeToken<OpenAppDTO>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -200,18 +202,18 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createAppAsync(OpenCreateAppDTO openCreateAppDTO, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call createAppAsync(OpenCreateAppDTO openCreateAppDTO, final ApiCallback<OpenAppDTO> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = createAppValidateBeforeCall(openCreateAppDTO, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        Type localVarReturnType = new TypeToken<OpenAppDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
      * Build call for createAppInEnv
      * @param env 环境标识，例如 DEV、FAT、UAT、PROD (required)
-     * @param operator 操作人用户名 (required)
      * @param openAppDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -223,7 +225,7 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createAppInEnvCall(String env, String operator, OpenAppDTO openAppDTO, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call createAppInEnvCall(String env, OpenAppDTO openAppDTO, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -274,15 +276,10 @@ public class AppManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createAppInEnvValidateBeforeCall(String env, String operator, OpenAppDTO openAppDTO, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createAppInEnvValidateBeforeCall(String env, OpenAppDTO openAppDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'env' is set
         if (env == null) {
             throw new ApiException("Missing the required parameter 'env' when calling createAppInEnv(Async)");
-        }
-
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling createAppInEnv(Async)");
         }
 
         // verify the required parameter 'openAppDTO' is set
@@ -290,7 +287,7 @@ public class AppManagementApi {
             throw new ApiException("Missing the required parameter 'openAppDTO' when calling createAppInEnv(Async)");
         }
 
-        return createAppInEnvCall(env, operator, openAppDTO, _callback);
+        return createAppInEnvCall(env, openAppDTO, operator, _callback);
 
     }
 
@@ -298,8 +295,8 @@ public class AppManagementApi {
      * 在指定环境创建应用(new added)
      * POST /openapi/v1/apps/envs/{env}
      * @param env 环境标识，例如 DEV、FAT、UAT、PROD (required)
-     * @param operator 操作人用户名 (required)
      * @param openAppDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -310,8 +307,8 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public Object createAppInEnv(String env, String operator, OpenAppDTO openAppDTO) throws ApiException {
-        ApiResponse<Object> localVarResp = createAppInEnvWithHttpInfo(env, operator, openAppDTO);
+    public Object createAppInEnv(String env, OpenAppDTO openAppDTO, String operator) throws ApiException {
+        ApiResponse<Object> localVarResp = createAppInEnvWithHttpInfo(env, openAppDTO, operator);
         return localVarResp.getData();
     }
 
@@ -319,8 +316,8 @@ public class AppManagementApi {
      * 在指定环境创建应用(new added)
      * POST /openapi/v1/apps/envs/{env}
      * @param env 环境标识，例如 DEV、FAT、UAT、PROD (required)
-     * @param operator 操作人用户名 (required)
      * @param openAppDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -331,8 +328,8 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> createAppInEnvWithHttpInfo(String env, String operator, OpenAppDTO openAppDTO) throws ApiException {
-        okhttp3.Call localVarCall = createAppInEnvValidateBeforeCall(env, operator, openAppDTO, null);
+    public ApiResponse<Object> createAppInEnvWithHttpInfo(String env, OpenAppDTO openAppDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = createAppInEnvValidateBeforeCall(env, openAppDTO, operator, null);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -341,8 +338,8 @@ public class AppManagementApi {
      * 在指定环境创建应用(new added) (asynchronously)
      * POST /openapi/v1/apps/envs/{env}
      * @param env 环境标识，例如 DEV、FAT、UAT、PROD (required)
-     * @param operator 操作人用户名 (required)
      * @param openAppDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -354,9 +351,9 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createAppInEnvAsync(String env, String operator, OpenAppDTO openAppDTO, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call createAppInEnvAsync(String env, OpenAppDTO openAppDTO, String operator, final ApiCallback<Object> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createAppInEnvValidateBeforeCall(env, operator, openAppDTO, _callback);
+        okhttp3.Call localVarCall = createAppInEnvValidateBeforeCall(env, openAppDTO, operator, _callback);
         Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -364,7 +361,7 @@ public class AppManagementApi {
     /**
      * Build call for deleteApp
      * @param appId 应用ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -432,11 +429,6 @@ public class AppManagementApi {
             throw new ApiException("Missing the required parameter 'appId' when calling deleteApp(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling deleteApp(Async)");
-        }
-
         return deleteAppCall(appId, operator, _callback);
 
     }
@@ -445,7 +437,7 @@ public class AppManagementApi {
      * 删除应用(new added)
      * DELETE /openapi/v1/apps/{appId}
      * @param appId 应用ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -465,7 +457,7 @@ public class AppManagementApi {
      * 删除应用(new added)
      * DELETE /openapi/v1/apps/{appId}
      * @param appId 应用ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -486,7 +478,7 @@ public class AppManagementApi {
      * 删除应用(new added) (asynchronously)
      * DELETE /openapi/v1/apps/{appId}
      * @param appId 应用ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -777,7 +769,7 @@ public class AppManagementApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/openapi/v1/apps/{appId}/miss_envs"
+        String localVarPath = "/openapi/v1/apps/{appId}/miss-envs"
             .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -818,9 +810,9 @@ public class AppManagementApi {
 
     /**
      * 查找缺失的环境(new added)
-     * GET /openapi/v1/apps/{appId}/miss_envs
+     * GET /openapi/v1/apps/{appId}/miss-envs
      * @param appId 应用ID (required)
-     * @return MultiResponseEntity
+     * @return List&lt;OpenMissEnvDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -829,16 +821,16 @@ public class AppManagementApi {
         <tr><td> 404 </td><td> 应用不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public MultiResponseEntity findMissEnvs(String appId) throws ApiException {
-        ApiResponse<MultiResponseEntity> localVarResp = findMissEnvsWithHttpInfo(appId);
+    public List<OpenMissEnvDTO> findMissEnvs(String appId) throws ApiException {
+        ApiResponse<List<OpenMissEnvDTO>> localVarResp = findMissEnvsWithHttpInfo(appId);
         return localVarResp.getData();
     }
 
     /**
      * 查找缺失的环境(new added)
-     * GET /openapi/v1/apps/{appId}/miss_envs
+     * GET /openapi/v1/apps/{appId}/miss-envs
      * @param appId 应用ID (required)
-     * @return ApiResponse&lt;MultiResponseEntity&gt;
+     * @return ApiResponse&lt;List&lt;OpenMissEnvDTO&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -847,15 +839,15 @@ public class AppManagementApi {
         <tr><td> 404 </td><td> 应用不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<MultiResponseEntity> findMissEnvsWithHttpInfo(String appId) throws ApiException {
+    public ApiResponse<List<OpenMissEnvDTO>> findMissEnvsWithHttpInfo(String appId) throws ApiException {
         okhttp3.Call localVarCall = findMissEnvsValidateBeforeCall(appId, null);
-        Type localVarReturnType = new TypeToken<MultiResponseEntity>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<OpenMissEnvDTO>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * 查找缺失的环境(new added) (asynchronously)
-     * GET /openapi/v1/apps/{appId}/miss_envs
+     * GET /openapi/v1/apps/{appId}/miss-envs
      * @param appId 应用ID (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -867,10 +859,10 @@ public class AppManagementApi {
         <tr><td> 404 </td><td> 应用不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call findMissEnvsAsync(String appId, final ApiCallback<MultiResponseEntity> _callback) throws ApiException {
+    public okhttp3.Call findMissEnvsAsync(String appId, final ApiCallback<List<OpenMissEnvDTO>> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = findMissEnvsValidateBeforeCall(appId, _callback);
-        Type localVarReturnType = new TypeToken<MultiResponseEntity>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<OpenMissEnvDTO>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -1002,129 +994,6 @@ public class AppManagementApi {
         return localVarCall;
     }
     /**
-     * Build call for getAppNavTree
-     * @param appId 应用ID (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取应用导航树 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getAppNavTreeCall(String appId, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/apps/{appId}/navtree"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getAppNavTreeValidateBeforeCall(String appId, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling getAppNavTree(Async)");
-        }
-
-        return getAppNavTreeCall(appId, _callback);
-
-    }
-
-    /**
-     * 获取应用导航树(new added)
-     * GET /openapi/v1/apps/{appId}/navtree
-     * @param appId 应用ID (required)
-     * @return MultiResponseEntity
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取应用导航树 </td><td>  -  </td></tr>
-     </table>
-     */
-    public MultiResponseEntity getAppNavTree(String appId) throws ApiException {
-        ApiResponse<MultiResponseEntity> localVarResp = getAppNavTreeWithHttpInfo(appId);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 获取应用导航树(new added)
-     * GET /openapi/v1/apps/{appId}/navtree
-     * @param appId 应用ID (required)
-     * @return ApiResponse&lt;MultiResponseEntity&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取应用导航树 </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<MultiResponseEntity> getAppNavTreeWithHttpInfo(String appId) throws ApiException {
-        okhttp3.Call localVarCall = getAppNavTreeValidateBeforeCall(appId, null);
-        Type localVarReturnType = new TypeToken<MultiResponseEntity>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 获取应用导航树(new added) (asynchronously)
-     * GET /openapi/v1/apps/{appId}/navtree
-     * @param appId 应用ID (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取应用导航树 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getAppNavTreeAsync(String appId, final ApiCallback<MultiResponseEntity> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getAppNavTreeValidateBeforeCall(appId, _callback);
-        Type localVarReturnType = new TypeToken<MultiResponseEntity>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
      * Build call for getAppsBySelf
      * @param page 页数 (required)
      * @param size 页大小 (required)
@@ -1207,7 +1076,7 @@ public class AppManagementApi {
     }
 
     /**
-     * 获取当前Consumer的应用列表（分页）(new added)
+     * 获取当前Consumer/User的应用列表（分页）(new added)
      * GET /openapi/v1/apps/by-self
      * @param page 页数 (required)
      * @param size 页大小 (required)
@@ -1226,7 +1095,7 @@ public class AppManagementApi {
     }
 
     /**
-     * 获取当前Consumer的应用列表（分页）(new added)
+     * 获取当前Consumer/User的应用列表（分页）(new added)
      * GET /openapi/v1/apps/by-self
      * @param page 页数 (required)
      * @param size 页大小 (required)
@@ -1246,7 +1115,7 @@ public class AppManagementApi {
     }
 
     /**
-     * 获取当前Consumer的应用列表（分页）(new added) (asynchronously)
+     * 获取当前Consumer/User的应用列表（分页）(new added) (asynchronously)
      * GET /openapi/v1/apps/by-self
      * @param page 页数 (required)
      * @param size 页大小 (required)
@@ -1276,11 +1145,134 @@ public class AppManagementApi {
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 成功获取应用环境集群详情 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getEnvClusterInfoCall(String appId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/openapi/v1/apps/{appId}/env-cluster-info"
+            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getEnvClusterInfoValidateBeforeCall(String appId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'appId' is set
+        if (appId == null) {
+            throw new ApiException("Missing the required parameter 'appId' when calling getEnvClusterInfo(Async)");
+        }
+
+        return getEnvClusterInfoCall(appId, _callback);
+
+    }
+
+    /**
+     * 获取应用环境集群详情(new added)
+     * /openapi/v1/apps/{appId}/env-cluster-info
+     * @param appId 应用ID (required)
+     * @return List&lt;OpenEnvClusterInfo&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 成功获取应用环境集群详情 </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<OpenEnvClusterInfo> getEnvClusterInfo(String appId) throws ApiException {
+        ApiResponse<List<OpenEnvClusterInfo>> localVarResp = getEnvClusterInfoWithHttpInfo(appId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * 获取应用环境集群详情(new added)
+     * /openapi/v1/apps/{appId}/env-cluster-info
+     * @param appId 应用ID (required)
+     * @return ApiResponse&lt;List&lt;OpenEnvClusterInfo&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 成功获取应用环境集群详情 </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<OpenEnvClusterInfo>> getEnvClusterInfoWithHttpInfo(String appId) throws ApiException {
+        okhttp3.Call localVarCall = getEnvClusterInfoValidateBeforeCall(appId, null);
+        Type localVarReturnType = new TypeToken<List<OpenEnvClusterInfo>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * 获取应用环境集群详情(new added) (asynchronously)
+     * /openapi/v1/apps/{appId}/env-cluster-info
+     * @param appId 应用ID (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 成功获取应用环境集群详情 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getEnvClusterInfoAsync(String appId, final ApiCallback<List<OpenEnvClusterInfo>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getEnvClusterInfoValidateBeforeCall(appId, _callback);
+        Type localVarReturnType = new TypeToken<List<OpenEnvClusterInfo>>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for getEnvClusters
+     * @param appId 应用ID (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> 成功获取应用环境集群信息 </td><td>  -  </td></tr>
         <tr><td> 404 </td><td> 应用不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getEnvClusterInfoCall(String appId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getEnvClustersCall(String appId, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1326,19 +1318,19 @@ public class AppManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getEnvClusterInfoValidateBeforeCall(String appId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getEnvClustersValidateBeforeCall(String appId, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling getEnvClusterInfo(Async)");
+            throw new ApiException("Missing the required parameter 'appId' when calling getEnvClusters(Async)");
         }
 
-        return getEnvClusterInfoCall(appId, _callback);
+        return getEnvClustersCall(appId, _callback);
 
     }
 
     /**
      * 获取应用的环境集群信息 (original openapi)
-     * GET /openapi/v1/apps/{appId}/envclusters
+     * GET /openapi/v1/apps/{appId}/envClusters
      * @param appId 应用ID (required)
      * @return List&lt;OpenEnvClusterDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1349,14 +1341,14 @@ public class AppManagementApi {
         <tr><td> 404 </td><td> 应用不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public List<OpenEnvClusterDTO> getEnvClusterInfo(String appId) throws ApiException {
-        ApiResponse<List<OpenEnvClusterDTO>> localVarResp = getEnvClusterInfoWithHttpInfo(appId);
+    public List<OpenEnvClusterDTO> getEnvClusters(String appId) throws ApiException {
+        ApiResponse<List<OpenEnvClusterDTO>> localVarResp = getEnvClustersWithHttpInfo(appId);
         return localVarResp.getData();
     }
 
     /**
      * 获取应用的环境集群信息 (original openapi)
-     * GET /openapi/v1/apps/{appId}/envclusters
+     * GET /openapi/v1/apps/{appId}/envClusters
      * @param appId 应用ID (required)
      * @return ApiResponse&lt;List&lt;OpenEnvClusterDTO&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1367,15 +1359,15 @@ public class AppManagementApi {
         <tr><td> 404 </td><td> 应用不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<OpenEnvClusterDTO>> getEnvClusterInfoWithHttpInfo(String appId) throws ApiException {
-        okhttp3.Call localVarCall = getEnvClusterInfoValidateBeforeCall(appId, null);
+    public ApiResponse<List<OpenEnvClusterDTO>> getEnvClustersWithHttpInfo(String appId) throws ApiException {
+        okhttp3.Call localVarCall = getEnvClustersValidateBeforeCall(appId, null);
         Type localVarReturnType = new TypeToken<List<OpenEnvClusterDTO>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * 获取应用的环境集群信息 (original openapi) (asynchronously)
-     * GET /openapi/v1/apps/{appId}/envclusters
+     * GET /openapi/v1/apps/{appId}/envClusters
      * @param appId 应用ID (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1387,9 +1379,9 @@ public class AppManagementApi {
         <tr><td> 404 </td><td> 应用不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getEnvClusterInfoAsync(String appId, final ApiCallback<List<OpenEnvClusterDTO>> _callback) throws ApiException {
+    public okhttp3.Call getEnvClustersAsync(String appId, final ApiCallback<List<OpenEnvClusterDTO>> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getEnvClusterInfoValidateBeforeCall(appId, _callback);
+        okhttp3.Call localVarCall = getEnvClustersValidateBeforeCall(appId, _callback);
         Type localVarReturnType = new TypeToken<List<OpenEnvClusterDTO>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -1397,8 +1389,8 @@ public class AppManagementApi {
     /**
      * Build call for updateApp
      * @param appId 应用ID (required)
-     * @param operator 操作人用户名 (required)
      * @param openAppDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1410,7 +1402,7 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateAppCall(String appId, String operator, OpenAppDTO openAppDTO, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call updateAppCall(String appId, OpenAppDTO openAppDTO, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1461,15 +1453,10 @@ public class AppManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateAppValidateBeforeCall(String appId, String operator, OpenAppDTO openAppDTO, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateAppValidateBeforeCall(String appId, OpenAppDTO openAppDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling updateApp(Async)");
-        }
-
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling updateApp(Async)");
         }
 
         // verify the required parameter 'openAppDTO' is set
@@ -1477,7 +1464,7 @@ public class AppManagementApi {
             throw new ApiException("Missing the required parameter 'openAppDTO' when calling updateApp(Async)");
         }
 
-        return updateAppCall(appId, operator, openAppDTO, _callback);
+        return updateAppCall(appId, openAppDTO, operator, _callback);
 
     }
 
@@ -1485,9 +1472,9 @@ public class AppManagementApi {
      * 更新应用(new added)
      * PUT /openapi/v1/apps/{appId}
      * @param appId 应用ID (required)
-     * @param operator 操作人用户名 (required)
      * @param openAppDTO  (required)
-     * @return OpenAppDTO
+     * @param operator 操作人用户名 (optional)
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1497,8 +1484,8 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public OpenAppDTO updateApp(String appId, String operator, OpenAppDTO openAppDTO) throws ApiException {
-        ApiResponse<OpenAppDTO> localVarResp = updateAppWithHttpInfo(appId, operator, openAppDTO);
+    public Object updateApp(String appId, OpenAppDTO openAppDTO, String operator) throws ApiException {
+        ApiResponse<Object> localVarResp = updateAppWithHttpInfo(appId, openAppDTO, operator);
         return localVarResp.getData();
     }
 
@@ -1506,9 +1493,9 @@ public class AppManagementApi {
      * 更新应用(new added)
      * PUT /openapi/v1/apps/{appId}
      * @param appId 应用ID (required)
-     * @param operator 操作人用户名 (required)
      * @param openAppDTO  (required)
-     * @return ApiResponse&lt;OpenAppDTO&gt;
+     * @param operator 操作人用户名 (optional)
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1518,9 +1505,9 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenAppDTO> updateAppWithHttpInfo(String appId, String operator, OpenAppDTO openAppDTO) throws ApiException {
-        okhttp3.Call localVarCall = updateAppValidateBeforeCall(appId, operator, openAppDTO, null);
-        Type localVarReturnType = new TypeToken<OpenAppDTO>(){}.getType();
+    public ApiResponse<Object> updateAppWithHttpInfo(String appId, OpenAppDTO openAppDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = updateAppValidateBeforeCall(appId, openAppDTO, operator, null);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -1528,8 +1515,8 @@ public class AppManagementApi {
      * 更新应用(new added) (asynchronously)
      * PUT /openapi/v1/apps/{appId}
      * @param appId 应用ID (required)
-     * @param operator 操作人用户名 (required)
      * @param openAppDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1541,10 +1528,10 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateAppAsync(String appId, String operator, OpenAppDTO openAppDTO, final ApiCallback<OpenAppDTO> _callback) throws ApiException {
+    public okhttp3.Call updateAppAsync(String appId, OpenAppDTO openAppDTO, String operator, final ApiCallback<Object> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateAppValidateBeforeCall(appId, operator, openAppDTO, _callback);
-        Type localVarReturnType = new TypeToken<OpenAppDTO>(){}.getType();
+        okhttp3.Call localVarCall = updateAppValidateBeforeCall(appId, openAppDTO, operator, _callback);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

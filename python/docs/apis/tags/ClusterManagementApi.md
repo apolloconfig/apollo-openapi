@@ -145,17 +145,10 @@ body | typing.Union[SchemaFor400ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor400ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ExceptionResponse**](../../models/ExceptionResponse.md) |  |
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
-
-### Composed Schemas (allOf/anyOf/oneOf/not)
-#### allOf
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[ExceptionResponse]({{complexTypePrefix}}ExceptionResponse.md) | [**ExceptionResponse**]({{complexTypePrefix}}ExceptionResponse.md) | [**ExceptionResponse**]({{complexTypePrefix}}ExceptionResponse.md) |  |
 
 #### create_cluster.ApiResponseFor403
 Name | Type | Description  | Notes
@@ -165,17 +158,10 @@ body | typing.Union[SchemaFor403ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor403ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ExceptionResponse**](../../models/ExceptionResponse.md) |  |
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
-
-### Composed Schemas (allOf/anyOf/oneOf/not)
-#### allOf
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[ExceptionResponse]({{complexTypePrefix}}ExceptionResponse.md) | [**ExceptionResponse**]({{complexTypePrefix}}ExceptionResponse.md) | [**ExceptionResponse**]({{complexTypePrefix}}ExceptionResponse.md) |  |
 
 ### Authorization
 
@@ -337,19 +323,6 @@ Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 
-### Composed Schemas (allOf/anyOf/oneOf/not)
-#### allOf
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[all_of_0](#all_of_0) | dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
-
-# all_of_0
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
-
 #### delete_cluster.ApiResponseFor400
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
@@ -358,17 +331,10 @@ body | typing.Union[SchemaFor400ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor400ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ExceptionResponse**](../../models/ExceptionResponse.md) |  |
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
-
-### Composed Schemas (allOf/anyOf/oneOf/not)
-#### allOf
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[ExceptionResponse]({{complexTypePrefix}}ExceptionResponse.md) | [**ExceptionResponse**]({{complexTypePrefix}}ExceptionResponse.md) | [**ExceptionResponse**]({{complexTypePrefix}}ExceptionResponse.md) |  |
 
 #### delete_cluster.ApiResponseFor403
 Name | Type | Description  | Notes
@@ -378,17 +344,10 @@ body | typing.Union[SchemaFor403ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor403ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ExceptionResponse**](../../models/ExceptionResponse.md) |  |
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
-
-### Composed Schemas (allOf/anyOf/oneOf/not)
-#### allOf
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[ExceptionResponse]({{complexTypePrefix}}ExceptionResponse.md) | [**ExceptionResponse**]({{complexTypePrefix}}ExceptionResponse.md) | [**ExceptionResponse**]({{complexTypePrefix}}ExceptionResponse.md) |  |
 
 #### delete_cluster.ApiResponseFor404
 Name | Type | Description  | Notes
@@ -398,17 +357,10 @@ body | typing.Union[SchemaFor404ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor404ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ExceptionResponse**](../../models/ExceptionResponse.md) |  |
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
-
-### Composed Schemas (allOf/anyOf/oneOf/not)
-#### allOf
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[ExceptionResponse]({{complexTypePrefix}}ExceptionResponse.md) | [**ExceptionResponse**]({{complexTypePrefix}}ExceptionResponse.md) | [**ExceptionResponse**]({{complexTypePrefix}}ExceptionResponse.md) |  |
 
 ### Authorization
 
@@ -538,17 +490,10 @@ body | typing.Union[SchemaFor404ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor404ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ExceptionResponse**](../../models/ExceptionResponse.md) |  |
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
-
-### Composed Schemas (allOf/anyOf/oneOf/not)
-#### allOf
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[ExceptionResponse]({{complexTypePrefix}}ExceptionResponse.md) | [**ExceptionResponse**]({{complexTypePrefix}}ExceptionResponse.md) | [**ExceptionResponse**]({{complexTypePrefix}}ExceptionResponse.md) |  |
 
 ### Authorization
 

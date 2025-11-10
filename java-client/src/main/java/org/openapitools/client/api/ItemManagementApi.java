@@ -27,11 +27,12 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.OpenItemDTO;
 import org.openapitools.client.model.OpenItemDiffs;
+import org.openapitools.client.model.OpenItemPageDTO;
 import org.openapitools.client.model.OpenNamespaceSyncModel;
 import org.openapitools.client.model.OpenNamespaceTextModel;
-import org.openapitools.client.model.OpenPageDTOOpenItemDTO;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -1075,7 +1076,7 @@ public class ItemManagementApi {
      * @param namespaceName 命名空间名称 (required)
      * @param page 页码，从0开始 (required)
      * @param size 每页数量 (required)
-     * @return OpenPageDTOOpenItemDTO
+     * @return OpenItemPageDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1084,8 +1085,8 @@ public class ItemManagementApi {
         <tr><td> 404 </td><td> 命名空间不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public OpenPageDTOOpenItemDTO findItemsByNamespace(String appId, String env, String clusterName, String namespaceName, Integer page, Integer size) throws ApiException {
-        ApiResponse<OpenPageDTOOpenItemDTO> localVarResp = findItemsByNamespaceWithHttpInfo(appId, env, clusterName, namespaceName, page, size);
+    public OpenItemPageDTO findItemsByNamespace(String appId, String env, String clusterName, String namespaceName, Integer page, Integer size) throws ApiException {
+        ApiResponse<OpenItemPageDTO> localVarResp = findItemsByNamespaceWithHttpInfo(appId, env, clusterName, namespaceName, page, size);
         return localVarResp.getData();
     }
 
@@ -1098,7 +1099,7 @@ public class ItemManagementApi {
      * @param namespaceName 命名空间名称 (required)
      * @param page 页码，从0开始 (required)
      * @param size 每页数量 (required)
-     * @return ApiResponse&lt;OpenPageDTOOpenItemDTO&gt;
+     * @return ApiResponse&lt;OpenItemPageDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1107,9 +1108,9 @@ public class ItemManagementApi {
         <tr><td> 404 </td><td> 命名空间不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenPageDTOOpenItemDTO> findItemsByNamespaceWithHttpInfo(String appId, String env, String clusterName, String namespaceName, Integer page, Integer size) throws ApiException {
+    public ApiResponse<OpenItemPageDTO> findItemsByNamespaceWithHttpInfo(String appId, String env, String clusterName, String namespaceName, Integer page, Integer size) throws ApiException {
         okhttp3.Call localVarCall = findItemsByNamespaceValidateBeforeCall(appId, env, clusterName, namespaceName, page, size, null);
-        Type localVarReturnType = new TypeToken<OpenPageDTOOpenItemDTO>(){}.getType();
+        Type localVarReturnType = new TypeToken<OpenItemPageDTO>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -1132,10 +1133,10 @@ public class ItemManagementApi {
         <tr><td> 404 </td><td> 命名空间不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call findItemsByNamespaceAsync(String appId, String env, String clusterName, String namespaceName, Integer page, Integer size, final ApiCallback<OpenPageDTOOpenItemDTO> _callback) throws ApiException {
+    public okhttp3.Call findItemsByNamespaceAsync(String appId, String env, String clusterName, String namespaceName, Integer page, Integer size, final ApiCallback<OpenItemPageDTO> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = findItemsByNamespaceValidateBeforeCall(appId, env, clusterName, namespaceName, page, size, _callback);
-        Type localVarReturnType = new TypeToken<OpenPageDTOOpenItemDTO>(){}.getType();
+        Type localVarReturnType = new TypeToken<OpenItemPageDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

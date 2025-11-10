@@ -418,7 +418,7 @@ public class Example {
 
 <a id="findItemsByNamespace"></a>
 # **findItemsByNamespace**
-> OpenPageDTOOpenItemDTO findItemsByNamespace(appId, env, clusterName, namespaceName, page, size)
+> OpenItemPageDTO findItemsByNamespace(appId, env, clusterName, namespaceName, page, size)
 
 获取命名空间下的配置项列表 (original openapi)
 
@@ -453,7 +453,7 @@ public class Example {
     Integer page = 0; // Integer | 页码，从0开始
     Integer size = 50; // Integer | 每页数量
     try {
-      OpenPageDTOOpenItemDTO result = apiInstance.findItemsByNamespace(appId, env, clusterName, namespaceName, page, size);
+      OpenItemPageDTO result = apiInstance.findItemsByNamespace(appId, env, clusterName, namespaceName, page, size);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ItemManagementApi#findItemsByNamespace");
@@ -479,7 +479,7 @@ public class Example {
 
 ### Return type
 
-[**OpenPageDTOOpenItemDTO**](OpenPageDTOOpenItemDTO.md)
+[**OpenItemPageDTO**](OpenItemPageDTO.md)
 
 ### Authorization
 

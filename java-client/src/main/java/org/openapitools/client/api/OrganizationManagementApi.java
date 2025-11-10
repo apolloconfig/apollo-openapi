@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.OpenOrganizationDto;
 
 import java.lang.reflect.Type;

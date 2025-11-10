@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.OpenAppNamespaceDTO;
 import org.openapitools.client.model.OpenNamespaceDTO;
 import org.openapitools.client.model.OpenNamespaceLockDTO;

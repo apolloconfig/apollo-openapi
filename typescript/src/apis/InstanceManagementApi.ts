@@ -16,14 +16,24 @@
 import * as runtime from '../runtime';
 import type {
   OpenInstanceDTO,
-  OpenPageDTOOpenInstanceDTO,
+  OpenInstancePageDTO,
 } from '../models';
 import {
     OpenInstanceDTOFromJSON,
     OpenInstanceDTOToJSON,
-    OpenPageDTOOpenInstanceDTOFromJSON,
-    OpenPageDTOOpenInstanceDTOToJSON,
+    OpenInstancePageDTOFromJSON,
+    OpenInstancePageDTOToJSON,
 } from '../models';
+
+export interface GetByNamespaceRequest {
+    env: string;
+    appId: string;
+    clusterName: string;
+    namespaceName: string;
+    page: number;
+    size: number;
+    instanceAppId?: string;
+}
 
 export interface GetByReleaseRequest {
     env: string;
@@ -32,12 +42,12 @@ export interface GetByReleaseRequest {
     size: number;
 }
 
-export interface GetByReleasesNotInRequest {
+export interface GetByReleasesAndNamespaceNotInRequest {
     env: string;
     appId: string;
     clusterName: string;
     namespaceName: string;
-    excludeReleases?: string;
+    releaseIds?: string;
 }
 
 export interface GetInstanceCountByNamespaceRequest {
@@ -53,10 +63,88 @@ export interface GetInstanceCountByNamespaceRequest {
 export class InstanceManagementApi extends runtime.BaseAPI {
 
     /**
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
+     * 根据namespaceName查询实例（new added）
+     */
+    async getByNamespaceRaw(requestParameters: GetByNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenInstancePageDTO>> {
+        if (requestParameters.env === null || requestParameters.env === undefined) {
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling getByNamespace.');
+        }
+
+        if (requestParameters.appId === null || requestParameters.appId === undefined) {
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getByNamespace.');
+        }
+
+        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
+            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling getByNamespace.');
+        }
+
+        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
+            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling getByNamespace.');
+        }
+
+        if (requestParameters.page === null || requestParameters.page === undefined) {
+            throw new runtime.RequiredError('page','Required parameter requestParameters.page was null or undefined when calling getByNamespace.');
+        }
+
+        if (requestParameters.size === null || requestParameters.size === undefined) {
+            throw new runtime.RequiredError('size','Required parameter requestParameters.size was null or undefined when calling getByNamespace.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.appId !== undefined) {
+            queryParameters['appId'] = requestParameters.appId;
+        }
+
+        if (requestParameters.clusterName !== undefined) {
+            queryParameters['clusterName'] = requestParameters.clusterName;
+        }
+
+        if (requestParameters.namespaceName !== undefined) {
+            queryParameters['namespaceName'] = requestParameters.namespaceName;
+        }
+
+        if (requestParameters.instanceAppId !== undefined) {
+            queryParameters['instanceAppId'] = requestParameters.instanceAppId;
+        }
+
+        if (requestParameters.page !== undefined) {
+            queryParameters['page'] = requestParameters.page;
+        }
+
+        if (requestParameters.size !== undefined) {
+            queryParameters['size'] = requestParameters.size;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/openapi/v1/envs/{env}/instances/by-namespace`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpenInstancePageDTOFromJSON(jsonValue));
+    }
+
+    /**
+     * 根据namespaceName查询实例（new added）
+     */
+    async getByNamespace(requestParameters: GetByNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenInstancePageDTO> {
+        const response = await this.getByNamespaceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * GET /openapi/v1/envs/{env}/instances/by-release
      * 根据发布版本查询实例（支持分页） (new added)
      */
-    async getByReleaseRaw(requestParameters: GetByReleaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenPageDTOOpenInstanceDTO>> {
+    async getByReleaseRaw(requestParameters: GetByReleaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenInstancePageDTO>> {
         if (requestParameters.env === null || requestParameters.env === undefined) {
             throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling getByRelease.');
         }
@@ -75,6 +163,10 @@ export class InstanceManagementApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.releaseId !== undefined) {
+            queryParameters['releaseId'] = requestParameters.releaseId;
+        }
+
         if (requestParameters.page !== undefined) {
             queryParameters['page'] = requestParameters.page;
         }
@@ -90,49 +182,60 @@ export class InstanceManagementApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/releases/{releaseId}/instances`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"releaseId"}}`, encodeURIComponent(String(requestParameters.releaseId))),
+            path: `/openapi/v1/envs/{env}/instances/by-release`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenPageDTOOpenInstanceDTOFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpenInstancePageDTOFromJSON(jsonValue));
     }
 
     /**
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
+     * GET /openapi/v1/envs/{env}/instances/by-release
      * 根据发布版本查询实例（支持分页） (new added)
      */
-    async getByRelease(requestParameters: GetByReleaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenPageDTOOpenInstanceDTO> {
+    async getByRelease(requestParameters: GetByReleaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenInstancePageDTO> {
         const response = await this.getByReleaseRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases=1,2,3
      * 查询不在指定发布版本中的实例 (new added)
      */
-    async getByReleasesNotInRaw(requestParameters: GetByReleasesNotInRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenInstanceDTO>>> {
+    async getByReleasesAndNamespaceNotInRaw(requestParameters: GetByReleasesAndNamespaceNotInRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenInstanceDTO>>> {
         if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling getByReleasesNotIn.');
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling getByReleasesAndNamespaceNotIn.');
         }
 
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getByReleasesNotIn.');
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getByReleasesAndNamespaceNotIn.');
         }
 
         if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
-            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling getByReleasesNotIn.');
+            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling getByReleasesAndNamespaceNotIn.');
         }
 
         if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling getByReleasesNotIn.');
+            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling getByReleasesAndNamespaceNotIn.');
         }
 
         const queryParameters: any = {};
 
-        if (requestParameters.excludeReleases !== undefined) {
-            queryParameters['excludeReleases'] = requestParameters.excludeReleases;
+        if (requestParameters.appId !== undefined) {
+            queryParameters['appId'] = requestParameters.appId;
+        }
+
+        if (requestParameters.clusterName !== undefined) {
+            queryParameters['clusterName'] = requestParameters.clusterName;
+        }
+
+        if (requestParameters.namespaceName !== undefined) {
+            queryParameters['namespaceName'] = requestParameters.namespaceName;
+        }
+
+        if (requestParameters.releaseIds !== undefined) {
+            queryParameters['releaseIds'] = requestParameters.releaseIds;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -142,7 +245,7 @@ export class InstanceManagementApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
+            path: `/openapi/v1/envs/{env}/instances/by-namespace-and-releases-not-in`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
@@ -152,11 +255,10 @@ export class InstanceManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases=1,2,3
      * 查询不在指定发布版本中的实例 (new added)
      */
-    async getByReleasesNotIn(requestParameters: GetByReleasesNotInRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenInstanceDTO>> {
-        const response = await this.getByReleasesNotInRaw(requestParameters, initOverrides);
+    async getByReleasesAndNamespaceNotIn(requestParameters: GetByReleasesAndNamespaceNotInRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenInstanceDTO>> {
+        const response = await this.getByReleasesAndNamespaceNotInRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

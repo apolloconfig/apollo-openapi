@@ -5,7 +5,7 @@
  */
 package com.apollo.openapi.server.api;
 
-import java.util.Map;
+import com.apollo.openapi.server.model.ExceptionResponse;
 import com.apollo.openapi.server.model.NamespaceGrayDelReleaseDTO;
 import com.apollo.openapi.server.model.NamespaceReleaseDTO;
 import com.apollo.openapi.server.model.OpenReleaseBO;
@@ -152,10 +152,10 @@ public interface ReleaseManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenReleaseDTO.class))
             }),
             @ApiResponse(responseCode = "400", description = "发布参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -321,7 +321,7 @@ public interface ReleaseManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenReleaseDTO.class))
             }),
             @ApiResponse(responseCode = "404", description = "未找到活跃发布", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -368,10 +368,10 @@ public interface ReleaseManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenReleaseDTO.class))
             }),
             @ApiResponse(responseCode = "400", description = "合并参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {

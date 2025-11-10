@@ -6,7 +6,7 @@ from apollo_openapi.apis.paths.openapi_v1_apps_authorized import OpenapiV1AppsAu
 from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envclusters import OpenapiV1AppsAppIdEnvclusters
 from apollo_openapi.apis.paths.openapi_v1_apps_app_id import OpenapiV1AppsAppId
 from apollo_openapi.apis.paths.openapi_v1_apps_by_self import OpenapiV1AppsBySelf
-from apollo_openapi.apis.paths.openapi_v1_apps_app_id_navtree import OpenapiV1AppsAppIdNavtree
+from apollo_openapi.apis.paths.openapi_v1_apps_app_id_env_cluster_info import OpenapiV1AppsAppIdEnvClusterInfo
 from apollo_openapi.apis.paths.openapi_v1_apps_envs_env import OpenapiV1AppsEnvsEnv
 from apollo_openapi.apis.paths.openapi_v1_apps_app_id_miss_envs import OpenapiV1AppsAppIdMissEnvs
 from apollo_openapi.apis.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_items_key import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKey
@@ -30,8 +30,9 @@ from apollo_openapi.apis.paths.openapi_v1_envs_env_releases_release_id import Op
 from apollo_openapi.apis.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_releases_all import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesAll
 from apollo_openapi.apis.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_releases_active import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesActive
 from apollo_openapi.apis.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstances
-from apollo_openapi.apis.paths.openapi_v1_envs_env_releases_release_id_instances import OpenapiV1EnvsEnvReleasesReleaseIdInstances
-from apollo_openapi.apis.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name_instances_not_in import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIn
+from apollo_openapi.apis.paths.openapi_v1_envs_env_instances_by_release import OpenapiV1EnvsEnvInstancesByRelease
+from apollo_openapi.apis.paths.openapi_v1_envs_env_instances_by_namespace import OpenapiV1EnvsEnvInstancesByNamespace
+from apollo_openapi.apis.paths.openapi_v1_envs_env_instances_by_namespace_and_releases_not_in import OpenapiV1EnvsEnvInstancesByNamespaceAndReleasesNotIn
 from apollo_openapi.apis.paths.openapi_v1_apps_app_id_appnamespaces import OpenapiV1AppsAppIdAppnamespaces
 from apollo_openapi.apis.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespaces
 from apollo_openapi.apis.paths.openapi_v1_envs_env_apps_app_id_clusters_cluster_name_namespaces_namespace_name import OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceName
@@ -57,9 +58,9 @@ PathToApi = typing_extensions.TypedDict(
         PathValues.OPENAPI_V1_APPS_APP_ID_ENVCLUSTERS: OpenapiV1AppsAppIdEnvclusters,
         PathValues.OPENAPI_V1_APPS_APP_ID: OpenapiV1AppsAppId,
         PathValues.OPENAPI_V1_APPS_BYSELF: OpenapiV1AppsBySelf,
-        PathValues.OPENAPI_V1_APPS_APP_ID_NAVTREE: OpenapiV1AppsAppIdNavtree,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVCLUSTERINFO: OpenapiV1AppsAppIdEnvClusterInfo,
         PathValues.OPENAPI_V1_APPS_ENVS_ENV: OpenapiV1AppsEnvsEnv,
-        PathValues.OPENAPI_V1_APPS_APP_ID_MISS_ENVS: OpenapiV1AppsAppIdMissEnvs,
+        PathValues.OPENAPI_V1_APPS_APP_ID_MISSENVS: OpenapiV1AppsAppIdMissEnvs,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_ITEMS_KEY: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKey,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_ITEMS: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItems,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_ENCODED_ITEMS_KEY: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKey,
@@ -81,8 +82,9 @@ PathToApi = typing_extensions.TypedDict(
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_RELEASES_ALL: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesAll,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_RELEASES_ACTIVE: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesActive,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_INSTANCES: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstances,
-        PathValues.OPENAPI_V1_ENVS_ENV_RELEASES_RELEASE_ID_INSTANCES: OpenapiV1EnvsEnvReleasesReleaseIdInstances,
-        PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_INSTANCES_NOT_IN: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIn,
+        PathValues.OPENAPI_V1_ENVS_ENV_INSTANCES_BYRELEASE: OpenapiV1EnvsEnvInstancesByRelease,
+        PathValues.OPENAPI_V1_ENVS_ENV_INSTANCES_BYNAMESPACE: OpenapiV1EnvsEnvInstancesByNamespace,
+        PathValues.OPENAPI_V1_ENVS_ENV_INSTANCES_BYNAMESPACEANDRELEASESNOTIN: OpenapiV1EnvsEnvInstancesByNamespaceAndReleasesNotIn,
         PathValues.OPENAPI_V1_APPS_APP_ID_APPNAMESPACES: OpenapiV1AppsAppIdAppnamespaces,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespaces,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceName,
@@ -109,9 +111,9 @@ path_to_api = PathToApi(
         PathValues.OPENAPI_V1_APPS_APP_ID_ENVCLUSTERS: OpenapiV1AppsAppIdEnvclusters,
         PathValues.OPENAPI_V1_APPS_APP_ID: OpenapiV1AppsAppId,
         PathValues.OPENAPI_V1_APPS_BYSELF: OpenapiV1AppsBySelf,
-        PathValues.OPENAPI_V1_APPS_APP_ID_NAVTREE: OpenapiV1AppsAppIdNavtree,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVCLUSTERINFO: OpenapiV1AppsAppIdEnvClusterInfo,
         PathValues.OPENAPI_V1_APPS_ENVS_ENV: OpenapiV1AppsEnvsEnv,
-        PathValues.OPENAPI_V1_APPS_APP_ID_MISS_ENVS: OpenapiV1AppsAppIdMissEnvs,
+        PathValues.OPENAPI_V1_APPS_APP_ID_MISSENVS: OpenapiV1AppsAppIdMissEnvs,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_ITEMS_KEY: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItemsKey,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_ITEMS: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameItems,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_ENCODED_ITEMS_KEY: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEncodedItemsKey,
@@ -133,8 +135,9 @@ path_to_api = PathToApi(
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_RELEASES_ALL: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesAll,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_RELEASES_ACTIVE: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameReleasesActive,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_INSTANCES: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstances,
-        PathValues.OPENAPI_V1_ENVS_ENV_RELEASES_RELEASE_ID_INSTANCES: OpenapiV1EnvsEnvReleasesReleaseIdInstances,
-        PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_INSTANCES_NOT_IN: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameInstancesNotIn,
+        PathValues.OPENAPI_V1_ENVS_ENV_INSTANCES_BYRELEASE: OpenapiV1EnvsEnvInstancesByRelease,
+        PathValues.OPENAPI_V1_ENVS_ENV_INSTANCES_BYNAMESPACE: OpenapiV1EnvsEnvInstancesByNamespace,
+        PathValues.OPENAPI_V1_ENVS_ENV_INSTANCES_BYNAMESPACEANDRELEASESNOTIN: OpenapiV1EnvsEnvInstancesByNamespaceAndReleasesNotIn,
         PathValues.OPENAPI_V1_APPS_APP_ID_APPNAMESPACES: OpenapiV1AppsAppIdAppnamespaces,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespaces,
         PathValues.OPENAPI_V1_ENVS_ENV_APPS_APP_ID_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME: OpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceName,

@@ -5,7 +5,7 @@
  */
 package com.apollo.openapi.server.api;
 
-import java.util.Map;
+import com.apollo.openapi.server.model.ExceptionResponse;
 import com.apollo.openapi.server.model.OpenClusterDTO;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -59,10 +59,10 @@ public interface ClusterManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenClusterDTO.class))
             }),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -107,13 +107,13 @@ public interface ClusterManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
             @ApiResponse(responseCode = "400", description = "删除失败，集群可能包含配置", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "集群不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -155,7 +155,7 @@ public interface ClusterManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenClusterDTO.class))
             }),
             @ApiResponse(responseCode = "404", description = "集群不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {

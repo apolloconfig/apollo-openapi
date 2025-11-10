@@ -5,12 +5,12 @@
  */
 package com.apollo.openapi.server.api;
 
-import java.util.Map;
+import com.apollo.openapi.server.model.ExceptionResponse;
 import com.apollo.openapi.server.model.OpenItemDTO;
 import com.apollo.openapi.server.model.OpenItemDiffs;
+import com.apollo.openapi.server.model.OpenItemPageDTO;
 import com.apollo.openapi.server.model.OpenNamespaceSyncModel;
 import com.apollo.openapi.server.model.OpenNamespaceTextModel;
-import com.apollo.openapi.server.model.OpenPageDTOOpenItemDTO;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -65,7 +65,7 @@ public interface ItemManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -156,10 +156,10 @@ public interface ItemManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenItemDTO.class))
             }),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -290,10 +290,10 @@ public interface ItemManagementApi {
         tags = { "Item Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "成功获取配置项列表", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenPageDTOOpenItemDTO.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenItemPageDTO.class))
             }),
             @ApiResponse(responseCode = "404", description = "命名空间不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -305,7 +305,7 @@ public interface ItemManagementApi {
         value = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items",
         produces = { "application/json" }
     )
-    default ResponseEntity<OpenPageDTOOpenItemDTO> findItemsByNamespace(
+    default ResponseEntity<OpenItemPageDTO> findItemsByNamespace(
         @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
@@ -339,7 +339,7 @@ public interface ItemManagementApi {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenItemDTO.class)))
             }),
             @ApiResponse(responseCode = "404", description = "分支不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -384,7 +384,7 @@ public interface ItemManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenItemDTO.class))
             }),
             @ApiResponse(responseCode = "404", description = "配置项不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -429,7 +429,7 @@ public interface ItemManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenItemDTO.class))
             }),
             @ApiResponse(responseCode = "404", description = "配置项不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -475,10 +475,10 @@ public interface ItemManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -525,10 +525,10 @@ public interface ItemManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -579,13 +579,13 @@ public interface ItemManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "配置项不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -637,13 +637,13 @@ public interface ItemManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "配置项不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -691,7 +691,7 @@ public interface ItemManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
             @ApiResponse(responseCode = "400", description = "配置文本语法错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {

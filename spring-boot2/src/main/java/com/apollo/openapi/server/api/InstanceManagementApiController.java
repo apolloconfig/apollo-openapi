@@ -1,7 +1,7 @@
 package com.apollo.openapi.server.api;
 
 import com.apollo.openapi.server.model.OpenInstanceDTO;
-import com.apollo.openapi.server.model.OpenPageDTOOpenInstanceDTO;
+import com.apollo.openapi.server.model.OpenInstancePageDTO;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

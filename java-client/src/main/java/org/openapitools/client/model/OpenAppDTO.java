@@ -92,6 +92,10 @@ public class OpenAppDTO {
   @SerializedName(SERIALIZED_NAME_OWNER_EMAIL)
   private String ownerEmail;
 
+  public static final String SERIALIZED_NAME_OWNER_DISPLAY_NAME = "ownerDisplayName";
+  @SerializedName(SERIALIZED_NAME_OWNER_DISPLAY_NAME)
+  private String ownerDisplayName;
+
   public OpenAppDTO() {
   }
 
@@ -305,6 +309,27 @@ public class OpenAppDTO {
   }
 
 
+  public OpenAppDTO ownerDisplayName(String ownerDisplayName) {
+
+    this.ownerDisplayName = ownerDisplayName;
+    return this;
+  }
+
+   /**
+   * Get ownerDisplayName
+   * @return ownerDisplayName
+  **/
+  @javax.annotation.Nullable
+  public String getOwnerDisplayName() {
+    return ownerDisplayName;
+  }
+
+
+  public void setOwnerDisplayName(String ownerDisplayName) {
+    this.ownerDisplayName = ownerDisplayName;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -324,12 +349,13 @@ public class OpenAppDTO {
         Objects.equals(this.orgId, openAppDTO.orgId) &&
         Objects.equals(this.orgName, openAppDTO.orgName) &&
         Objects.equals(this.ownerName, openAppDTO.ownerName) &&
-        Objects.equals(this.ownerEmail, openAppDTO.ownerEmail);
+        Objects.equals(this.ownerEmail, openAppDTO.ownerEmail) &&
+        Objects.equals(this.ownerDisplayName, openAppDTO.ownerDisplayName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, name, appId, orgId, orgName, ownerName, ownerEmail);
+    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, name, appId, orgId, orgName, ownerName, ownerEmail, ownerDisplayName);
   }
 
   @Override
@@ -346,6 +372,7 @@ public class OpenAppDTO {
     sb.append("    orgName: ").append(toIndentedString(orgName)).append("\n");
     sb.append("    ownerName: ").append(toIndentedString(ownerName)).append("\n");
     sb.append("    ownerEmail: ").append(toIndentedString(ownerEmail)).append("\n");
+    sb.append("    ownerDisplayName: ").append(toIndentedString(ownerDisplayName)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -378,6 +405,7 @@ public class OpenAppDTO {
     openapiFields.add("orgName");
     openapiFields.add("ownerName");
     openapiFields.add("ownerEmail");
+    openapiFields.add("ownerDisplayName");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -432,6 +460,9 @@ public class OpenAppDTO {
       }
       if ((jsonObj.get("ownerEmail") != null && !jsonObj.get("ownerEmail").isJsonNull()) && !jsonObj.get("ownerEmail").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ownerEmail` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ownerEmail").toString()));
+      }
+      if ((jsonObj.get("ownerDisplayName") != null && !jsonObj.get("ownerDisplayName").isJsonNull()) && !jsonObj.get("ownerDisplayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `ownerDisplayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ownerDisplayName").toString()));
       }
   }
 

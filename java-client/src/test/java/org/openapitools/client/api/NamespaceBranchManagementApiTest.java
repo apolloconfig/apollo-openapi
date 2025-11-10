@@ -14,6 +14,7 @@
 package org.openapitools.client.api;
 
 import org.openapitools.client.ApiException;
+import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.NamespaceReleaseDTO;
 import org.openapitools.client.model.OpenGrayReleaseRuleDTO;
 import org.openapitools.client.model.OpenNamespaceDTO;

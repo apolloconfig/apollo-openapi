@@ -9,17 +9,17 @@ All URIs are relative to *http://localhost*
 | [**deleteApp**](AppManagementApi.md#deleteApp) | **DELETE** /openapi/v1/apps/{appId} | 删除应用(new added) |
 | [**findApps**](AppManagementApi.md#findApps) | **GET** /openapi/v1/apps | 查找应用 (original openapi) |
 | [**findAppsAuthorized**](AppManagementApi.md#findAppsAuthorized) | **GET** /openapi/v1/apps/authorized | 获取当前Consumer授权的应用列表 (original openapi) |
-| [**findMissEnvs**](AppManagementApi.md#findMissEnvs) | **GET** /openapi/v1/apps/{appId}/miss_envs | 查找缺失的环境(new added) |
+| [**findMissEnvs**](AppManagementApi.md#findMissEnvs) | **GET** /openapi/v1/apps/{appId}/miss-envs | 查找缺失的环境(new added) |
 | [**getApp**](AppManagementApi.md#getApp) | **GET** /openapi/v1/apps/{appId} | 获取单个应用信息(new added) |
-| [**getAppNavTree**](AppManagementApi.md#getAppNavTree) | **GET** /openapi/v1/apps/{appId}/navtree | 获取应用导航树(new added) |
-| [**getAppsBySelf**](AppManagementApi.md#getAppsBySelf) | **GET** /openapi/v1/apps/by-self | 获取当前Consumer的应用列表（分页）(new added) |
-| [**getEnvClusterInfo**](AppManagementApi.md#getEnvClusterInfo) | **GET** /openapi/v1/apps/{appId}/envclusters | 获取应用的环境集群信息 (original openapi) |
+| [**getAppsBySelf**](AppManagementApi.md#getAppsBySelf) | **GET** /openapi/v1/apps/by-self | 获取当前Consumer/User的应用列表（分页）(new added) |
+| [**getEnvClusterInfo**](AppManagementApi.md#getEnvClusterInfo) | **GET** /openapi/v1/apps/{appId}/env-cluster-info | 获取应用环境集群详情(new added) |
+| [**getEnvClusters**](AppManagementApi.md#getEnvClusters) | **GET** /openapi/v1/apps/{appId}/envclusters | 获取应用的环境集群信息 (original openapi) |
 | [**updateApp**](AppManagementApi.md#updateApp) | **PUT** /openapi/v1/apps/{appId} | 更新应用(new added) |
 
 
 <a id="createApp"></a>
 # **createApp**
-> Object createApp(openCreateAppDTO)
+> OpenAppDTO createApp(openCreateAppDTO)
 
 创建应用 (original openapi)
 
@@ -49,7 +49,7 @@ public class Example {
     AppManagementApi apiInstance = new AppManagementApi(defaultClient);
     OpenCreateAppDTO openCreateAppDTO = new OpenCreateAppDTO(); // OpenCreateAppDTO |
     try {
-      Object result = apiInstance.createApp(openCreateAppDTO);
+      OpenAppDTO result = apiInstance.createApp(openCreateAppDTO);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AppManagementApi#createApp");
@@ -70,7 +70,7 @@ public class Example {
 
 ### Return type
 
-**Object**
+[**OpenAppDTO**](OpenAppDTO.md)
 
 ### Authorization
 
@@ -90,7 +90,7 @@ public class Example {
 
 <a id="createAppInEnv"></a>
 # **createAppInEnv**
-> Object createAppInEnv(env, operator, openAppDTO)
+> Object createAppInEnv(env, openAppDTO, operator)
 
 在指定环境创建应用(new added)
 
@@ -119,10 +119,10 @@ public class Example {
 
     AppManagementApi apiInstance = new AppManagementApi(defaultClient);
     String env = "env_example"; // String | 环境标识，例如 DEV、FAT、UAT、PROD
-    String operator = "operator_example"; // String | 操作人用户名
     OpenAppDTO openAppDTO = new OpenAppDTO(); // OpenAppDTO |
+    String operator = "operator_example"; // String | 操作人用户名
     try {
-      Object result = apiInstance.createAppInEnv(env, operator, openAppDTO);
+      Object result = apiInstance.createAppInEnv(env, openAppDTO, operator);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AppManagementApi#createAppInEnv");
@@ -140,8 +140,8 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **env** | **String**| 环境标识，例如 DEV、FAT、UAT、PROD | |
-| **operator** | **String**| 操作人用户名 | |
 | **openAppDTO** | [**OpenAppDTO**](OpenAppDTO.md)|  | |
+| **operator** | **String**| 操作人用户名 | [optional] |
 
 ### Return type
 
@@ -214,7 +214,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **appId** | **String**| 应用ID | |
-| **operator** | **String**| 操作人用户名 | |
+| **operator** | **String**| 操作人用户名 | [optional] |
 
 ### Return type
 
@@ -374,11 +374,11 @@ This endpoint does not need any parameter.
 
 <a id="findMissEnvs"></a>
 # **findMissEnvs**
-> MultiResponseEntity findMissEnvs(appId)
+> List&lt;OpenMissEnvDTO&gt; findMissEnvs(appId)
 
 查找缺失的环境(new added)
 
-GET /openapi/v1/apps/{appId}/miss_envs
+GET /openapi/v1/apps/{appId}/miss-envs
 
 ### Example
 ```java
@@ -404,7 +404,7 @@ public class Example {
     AppManagementApi apiInstance = new AppManagementApi(defaultClient);
     String appId = "appId_example"; // String | 应用ID
     try {
-      MultiResponseEntity result = apiInstance.findMissEnvs(appId);
+      List<OpenMissEnvDTO> result = apiInstance.findMissEnvs(appId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AppManagementApi#findMissEnvs");
@@ -425,7 +425,7 @@ public class Example {
 
 ### Return type
 
-[**MultiResponseEntity**](MultiResponseEntity.md)
+[**List&lt;OpenMissEnvDTO&gt;**](OpenMissEnvDTO.md)
 
 ### Authorization
 
@@ -512,80 +512,11 @@ public class Example {
 | **200** | 成功获取应用信息 |  -  |
 | **404** | 应用不存在 |  -  |
 
-<a id="getAppNavTree"></a>
-# **getAppNavTree**
-> MultiResponseEntity getAppNavTree(appId)
-
-获取应用导航树(new added)
-
-GET /openapi/v1/apps/{appId}/navtree
-
-### Example
-```java
-// Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.AppManagementApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
-
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    AppManagementApi apiInstance = new AppManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 应用ID
-    try {
-      MultiResponseEntity result = apiInstance.getAppNavTree(appId);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling AppManagementApi#getAppNavTree");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **appId** | **String**| 应用ID | |
-
-### Return type
-
-[**MultiResponseEntity**](MultiResponseEntity.md)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | 成功获取应用导航树 |  -  |
-
 <a id="getAppsBySelf"></a>
 # **getAppsBySelf**
 > List&lt;OpenAppDTO&gt; getAppsBySelf(page, size)
 
-获取当前Consumer的应用列表（分页）(new added)
+获取当前Consumer/User的应用列表（分页）(new added)
 
 GET /openapi/v1/apps/by-self
 
@@ -655,11 +586,11 @@ public class Example {
 
 <a id="getEnvClusterInfo"></a>
 # **getEnvClusterInfo**
-> List&lt;OpenEnvClusterDTO&gt; getEnvClusterInfo(appId)
+> List&lt;OpenEnvClusterInfo&gt; getEnvClusterInfo(appId)
 
-获取应用的环境集群信息 (original openapi)
+获取应用环境集群详情(new added)
 
-GET /openapi/v1/apps/{appId}/envclusters
+/openapi/v1/apps/{appId}/env-cluster-info
 
 ### Example
 ```java
@@ -685,10 +616,79 @@ public class Example {
     AppManagementApi apiInstance = new AppManagementApi(defaultClient);
     String appId = "appId_example"; // String | 应用ID
     try {
-      List<OpenEnvClusterDTO> result = apiInstance.getEnvClusterInfo(appId);
+      List<OpenEnvClusterInfo> result = apiInstance.getEnvClusterInfo(appId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AppManagementApi#getEnvClusterInfo");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **appId** | **String**| 应用ID | |
+
+### Return type
+
+[**List&lt;OpenEnvClusterInfo&gt;**](OpenEnvClusterInfo.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | 成功获取应用环境集群详情 |  -  |
+
+<a id="getEnvClusters"></a>
+# **getEnvClusters**
+> List&lt;OpenEnvClusterDTO&gt; getEnvClusters(appId)
+
+获取应用的环境集群信息 (original openapi)
+
+GET /openapi/v1/apps/{appId}/envClusters
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.AppManagementApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    AppManagementApi apiInstance = new AppManagementApi(defaultClient);
+    String appId = "appId_example"; // String | 应用ID
+    try {
+      List<OpenEnvClusterDTO> result = apiInstance.getEnvClusters(appId);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling AppManagementApi#getEnvClusters");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -725,7 +725,7 @@ public class Example {
 
 <a id="updateApp"></a>
 # **updateApp**
-> OpenAppDTO updateApp(appId, operator, openAppDTO)
+> Object updateApp(appId, openAppDTO, operator)
 
 更新应用(new added)
 
@@ -754,10 +754,10 @@ public class Example {
 
     AppManagementApi apiInstance = new AppManagementApi(defaultClient);
     String appId = "appId_example"; // String | 应用ID
-    String operator = "operator_example"; // String | 操作人用户名
     OpenAppDTO openAppDTO = new OpenAppDTO(); // OpenAppDTO |
+    String operator = "operator_example"; // String | 操作人用户名
     try {
-      OpenAppDTO result = apiInstance.updateApp(appId, operator, openAppDTO);
+      Object result = apiInstance.updateApp(appId, openAppDTO, operator);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling AppManagementApi#updateApp");
@@ -775,12 +775,12 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **appId** | **String**| 应用ID | |
-| **operator** | **String**| 操作人用户名 | |
 | **openAppDTO** | [**OpenAppDTO**](OpenAppDTO.md)|  | |
+| **operator** | **String**| 操作人用户名 | [optional] |
 
 ### Return type
 
-[**OpenAppDTO**](OpenAppDTO.md)
+**Object**
 
 ### Authorization
 

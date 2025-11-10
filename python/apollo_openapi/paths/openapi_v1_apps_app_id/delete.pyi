@@ -32,12 +32,12 @@ OperatorSchema = schemas.StrSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
     'RequestRequiredQueryParams',
     {
-        'operator': typing.Union[OperatorSchema, str, ],
     }
 )
 RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
+        'operator': typing.Union[OperatorSchema, str, ],
     },
     total=False
 )
@@ -51,7 +51,6 @@ request_query_operator = api_client.QueryParameter(
     name="operator",
     style=api_client.ParameterStyle.FORM,
     schema=OperatorSchema,
-    required=True,
     explode=True,
 )
 # Path params
@@ -80,44 +79,7 @@ request_path_app_id = api_client.PathParameter(
     schema=AppIdSchema,
     required=True,
 )
-
-
-class SchemaFor200ResponseBodyApplicationJson(
-    schemas.ComposedBase,
-    schemas.DictSchema
-):
-
-
-    class MetaOapg:
-        all_of_0 = schemas.DictSchema
-
-        @classmethod
-        @functools.lru_cache()
-        def all_of(cls):
-            # we need this here to make our import statements work
-            # we must store _composed_schemas in here so the code is only run
-            # when we invoke this method. If we kept this at the class
-            # level we would get an error because the class level
-            # code would be run when this module is imported, and these composed
-            # classes don't exist yet because their module has not finished
-            # loading
-            return [
-                cls.all_of_0,
-            ]
-
-
-    def __new__(
-        cls,
-        *_args: typing.Union[dict, frozendict.frozendict, ],
-        _configuration: typing.Optional[schemas.Configuration] = None,
-        **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
-    ) -> 'SchemaFor200ResponseBodyApplicationJson':
-        return super().__new__(
-            cls,
-            *_args,
-            _configuration=_configuration,
-            **kwargs,
-        )
+SchemaFor200ResponseBodyApplicationJson = schemas.DictSchema
 
 
 @dataclass
@@ -136,43 +98,7 @@ _response_for_200 = api_client.OpenApiResponse(
             schema=SchemaFor200ResponseBodyApplicationJson),
     },
 )
-
-
-class SchemaFor403ResponseBodyApplicationJson(
-    schemas.ComposedBase,
-    schemas.DictSchema
-):
-
-
-    class MetaOapg:
-
-        @classmethod
-        @functools.lru_cache()
-        def all_of(cls):
-            # we need this here to make our import statements work
-            # we must store _composed_schemas in here so the code is only run
-            # when we invoke this method. If we kept this at the class
-            # level we would get an error because the class level
-            # code would be run when this module is imported, and these composed
-            # classes don't exist yet because their module has not finished
-            # loading
-            return [
-                ExceptionResponse,
-            ]
-
-
-    def __new__(
-        cls,
-        *_args: typing.Union[dict, frozendict.frozendict, ],
-        _configuration: typing.Optional[schemas.Configuration] = None,
-        **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
-    ) -> 'SchemaFor403ResponseBodyApplicationJson':
-        return super().__new__(
-            cls,
-            *_args,
-            _configuration=_configuration,
-            **kwargs,
-        )
+SchemaFor403ResponseBodyApplicationJson = ExceptionResponse
 
 
 @dataclass
@@ -191,43 +117,7 @@ _response_for_403 = api_client.OpenApiResponse(
             schema=SchemaFor403ResponseBodyApplicationJson),
     },
 )
-
-
-class SchemaFor404ResponseBodyApplicationJson(
-    schemas.ComposedBase,
-    schemas.DictSchema
-):
-
-
-    class MetaOapg:
-
-        @classmethod
-        @functools.lru_cache()
-        def all_of(cls):
-            # we need this here to make our import statements work
-            # we must store _composed_schemas in here so the code is only run
-            # when we invoke this method. If we kept this at the class
-            # level we would get an error because the class level
-            # code would be run when this module is imported, and these composed
-            # classes don't exist yet because their module has not finished
-            # loading
-            return [
-                ExceptionResponse,
-            ]
-
-
-    def __new__(
-        cls,
-        *_args: typing.Union[dict, frozendict.frozendict, ],
-        _configuration: typing.Optional[schemas.Configuration] = None,
-        **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
-    ) -> 'SchemaFor404ResponseBodyApplicationJson':
-        return super().__new__(
-            cls,
-            *_args,
-            _configuration=_configuration,
-            **kwargs,
-        )
+SchemaFor404ResponseBodyApplicationJson = ExceptionResponse
 
 
 @dataclass

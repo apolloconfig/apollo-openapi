@@ -48,6 +48,7 @@ class OpenAppDTO(
             orgName = schemas.StrSchema
             ownerName = schemas.StrSchema
             ownerEmail = schemas.StrSchema
+            ownerDisplayName = schemas.StrSchema
             __annotations__ = {
                 "dataChangeCreatedBy": dataChangeCreatedBy,
                 "dataChangeLastModifiedBy": dataChangeLastModifiedBy,
@@ -59,6 +60,7 @@ class OpenAppDTO(
                 "orgName": orgName,
                 "ownerName": ownerName,
                 "ownerEmail": ownerEmail,
+                "ownerDisplayName": ownerDisplayName,
             }
 
     @typing.overload
@@ -92,9 +94,12 @@ class OpenAppDTO(
     def __getitem__(self, name: typing_extensions.Literal["ownerEmail"]) -> MetaOapg.properties.ownerEmail: ...
 
     @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["ownerDisplayName"]) -> MetaOapg.properties.ownerDisplayName: ...
+
+    @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
 
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "name", "appId", "orgId", "orgName", "ownerName", "ownerEmail", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "name", "appId", "orgId", "orgName", "ownerName", "ownerEmail", "ownerDisplayName", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
 
@@ -130,9 +135,12 @@ class OpenAppDTO(
     def get_item_oapg(self, name: typing_extensions.Literal["ownerEmail"]) -> typing.Union[MetaOapg.properties.ownerEmail, schemas.Unset]: ...
 
     @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["ownerDisplayName"]) -> typing.Union[MetaOapg.properties.ownerDisplayName, schemas.Unset]: ...
+
+    @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
 
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "name", "appId", "orgId", "orgName", "ownerName", "ownerEmail", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "name", "appId", "orgId", "orgName", "ownerName", "ownerEmail", "ownerDisplayName", ], str]):
         return super().get_item_oapg(name)
 
 
@@ -149,6 +157,7 @@ class OpenAppDTO(
         orgName: typing.Union[MetaOapg.properties.orgName, str, schemas.Unset] = schemas.unset,
         ownerName: typing.Union[MetaOapg.properties.ownerName, str, schemas.Unset] = schemas.unset,
         ownerEmail: typing.Union[MetaOapg.properties.ownerEmail, str, schemas.Unset] = schemas.unset,
+        ownerDisplayName: typing.Union[MetaOapg.properties.ownerDisplayName, str, schemas.Unset] = schemas.unset,
         _configuration: typing.Optional[schemas.Configuration] = None,
         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
     ) -> 'OpenAppDTO':
@@ -165,6 +174,7 @@ class OpenAppDTO(
             orgName=orgName,
             ownerName=ownerName,
             ownerEmail=ownerEmail,
+            ownerDisplayName=ownerDisplayName,
             _configuration=_configuration,
             **kwargs,
         )

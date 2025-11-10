@@ -13,6 +13,12 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct OpenEnvClusterInfo {
+    /// 查询状态码
+    #[serde(rename = "code", skip_serializing_if = "Option::is_none")]
+    pub code: Option<i32>,
+    /// 相关信息
+    #[serde(rename = "message", skip_serializing_if = "Option::is_none")]
+    pub message: Option<String>,
     /// 环境标识
     #[serde(rename = "env", skip_serializing_if = "Option::is_none")]
     pub env: Option<String>,
@@ -24,6 +30,8 @@ pub struct OpenEnvClusterInfo {
 impl OpenEnvClusterInfo {
     pub fn new() -> OpenEnvClusterInfo {
         OpenEnvClusterInfo {
+            code: None,
+            message: None,
             env: None,
             clusters: None,
         }

@@ -5,7 +5,7 @@
  */
 package com.apollo.openapi.server.api;
 
-import java.util.Map;
+import com.apollo.openapi.server.model.ExceptionResponse;
 import com.apollo.openapi.server.model.OpenOrganizationDto;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -55,7 +55,7 @@ public interface OrganizationManagementApi {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenOrganizationDto.class)))
             }),
             @ApiResponse(responseCode = "401", description = "未授权访问", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {

@@ -15,11 +15,14 @@
 
 import * as runtime from '../runtime';
 import type {
+  ExceptionResponse,
   OpenAppNamespaceDTO,
   OpenNamespaceDTO,
   OpenNamespaceLockDTO,
 } from '../models';
 import {
+    ExceptionResponseFromJSON,
+    ExceptionResponseToJSON,
     OpenAppNamespaceDTOFromJSON,
     OpenAppNamespaceDTOToJSON,
     OpenNamespaceDTOFromJSON,

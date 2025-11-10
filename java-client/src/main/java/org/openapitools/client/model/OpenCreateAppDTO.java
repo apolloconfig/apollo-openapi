@@ -21,8 +21,8 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import org.openapitools.client.model.OpenAppDTO;
 
 import com.google.gson.Gson;
@@ -61,7 +61,7 @@ public class OpenCreateAppDTO {
 
   public static final String SERIALIZED_NAME_ADMINS = "admins";
   @SerializedName(SERIALIZED_NAME_ADMINS)
-  private List<String> admins;
+  private Set<String> admins;
 
   public static final String SERIALIZED_NAME_APP = "app";
   @SerializedName(SERIALIZED_NAME_APP)
@@ -91,7 +91,7 @@ public class OpenCreateAppDTO {
   }
 
 
-  public OpenCreateAppDTO admins(List<String> admins) {
+  public OpenCreateAppDTO admins(Set<String> admins) {
 
     this.admins = admins;
     return this;
@@ -99,7 +99,7 @@ public class OpenCreateAppDTO {
 
   public OpenCreateAppDTO addAdminsItem(String adminsItem) {
     if (this.admins == null) {
-      this.admins = new ArrayList<>();
+      this.admins = new LinkedHashSet<>();
     }
     this.admins.add(adminsItem);
     return this;
@@ -110,12 +110,12 @@ public class OpenCreateAppDTO {
    * @return admins
   **/
   @javax.annotation.Nullable
-  public List<String> getAdmins() {
+  public Set<String> getAdmins() {
     return admins;
   }
 
 
-  public void setAdmins(List<String> admins) {
+  public void setAdmins(Set<String> admins) {
     this.admins = admins;
   }
 

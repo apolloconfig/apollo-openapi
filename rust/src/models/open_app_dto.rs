@@ -44,6 +44,8 @@ pub struct OpenAppDto {
     /// 应用负责人邮箱地址，用于接收应用相关通知
     #[serde(rename = "ownerEmail", skip_serializing_if = "Option::is_none")]
     pub owner_email: Option<String>,
+    #[serde(rename = "ownerDisplayName", skip_serializing_if = "Option::is_none")]
+    pub owner_display_name: Option<String>,
 }
 
 impl OpenAppDto {
@@ -60,6 +62,7 @@ impl OpenAppDto {
             org_name: None,
             owner_name: None,
             owner_email: None,
+            owner_display_name: None,
         }
     }
 }

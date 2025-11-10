@@ -1,11 +1,11 @@
 package com.apollo.openapi.server.api;
 
-import java.util.Map;
+import com.apollo.openapi.server.model.ExceptionResponse;
 import com.apollo.openapi.server.model.OpenItemDTO;
 import com.apollo.openapi.server.model.OpenItemDiffs;
+import com.apollo.openapi.server.model.OpenItemPageDTO;
 import com.apollo.openapi.server.model.OpenNamespaceSyncModel;
 import com.apollo.openapi.server.model.OpenNamespaceTextModel;
-import com.apollo.openapi.server.model.OpenPageDTOOpenItemDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -176,7 +176,7 @@ public interface ItemManagementApiDelegate {
      *         or 命名空间不存在 (status code 404)
      * @see ItemManagementApi#findItemsByNamespace
      */
-    default ResponseEntity<OpenPageDTOOpenItemDTO> findItemsByNamespace(String appId,
+    default ResponseEntity<OpenItemPageDTO> findItemsByNamespace(String appId,
         String env,
         String clusterName,
         String namespaceName,

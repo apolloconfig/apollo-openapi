@@ -1,7 +1,7 @@
 package com.apollo.openapi.server.api;
 
 import com.apollo.openapi.server.model.OpenInstanceDTO;
-import com.apollo.openapi.server.model.OpenPageDTOOpenInstanceDTO;
+import com.apollo.openapi.server.model.OpenInstancePageDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,24 +25,29 @@ public interface InstanceManagementApiDelegate {
     }
 
     /**
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances : 根据发布版本查询实例（支持分页） (new added)
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
+     * GET /openapi/v1/envs/{env}/instances/by-namespace : 根据namespaceName查询实例（new added）
      *
-     * @param env  (required)
-     * @param releaseId  (required)
-     * @param page  (required)
-     * @param size  (required)
+     * @param env 环境标识 (required)
+     * @param appId 应用ID (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param page 页数 (required)
+     * @param size 页大小 (required)
+     * @param instanceAppId Instance表中的AppID (optional)
      * @return  (status code 200)
-     * @see InstanceManagementApi#getByRelease
+     * @see InstanceManagementApi#getByNamespace
      */
-    default ResponseEntity<OpenPageDTOOpenInstanceDTO> getByRelease(String env,
-        Integer releaseId,
+    default ResponseEntity<OpenInstancePageDTO> getByNamespace(String env,
+        String appId,
+        String clusterName,
+        String namespaceName,
         Integer page,
-        Integer size) {
+        Integer size,
+        String instanceAppId) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"total\" : 1, \"size\" : 6, \"page\" : 0, \"content\" : [ { \"configs\" : [ { \"releaseDeliveryTime\" : \"2025-09-29T12:34:56Z\", \"release\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"releaseDeliveryTime\" : \"2025-09-29T12:34:56Z\", \"release\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ], \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataCenter\" : \"dataCenter\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"ip\" : \"ip\", \"id\" : 5 }, { \"configs\" : [ { \"releaseDeliveryTime\" : \"2025-09-29T12:34:56Z\", \"release\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"releaseDeliveryTime\" : \"2025-09-29T12:34:56Z\", \"release\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ], \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataCenter\" : \"dataCenter\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"ip\" : \"ip\", \"id\" : 5 } ] }";
+                    String exampleString = "{ \"total\" : 1, \"size\" : 6, \"instances\" : [ { \"configs\" : [ { \"releaseDeliveryTime\" : \"2025-09-29T12:34:56Z\", \"release\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"releaseDeliveryTime\" : \"2025-09-29T12:34:56Z\", \"release\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ], \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataCenter\" : \"dataCenter\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"ip\" : \"ip\", \"id\" : 5 }, { \"configs\" : [ { \"releaseDeliveryTime\" : \"2025-09-29T12:34:56Z\", \"release\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"releaseDeliveryTime\" : \"2025-09-29T12:34:56Z\", \"release\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ], \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataCenter\" : \"dataCenter\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"ip\" : \"ip\", \"id\" : 5 } ], \"page\" : 0 }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -53,22 +58,49 @@ public interface InstanceManagementApiDelegate {
     }
 
     /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in : 查询不在指定发布版本中的实例 (new added)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
+     * GET /openapi/v1/envs/{env}/instances/by-release : 根据发布版本查询实例（支持分页） (new added)
+     * GET /openapi/v1/envs/{env}/instances/by-release
+     *
+     * @param env  (required)
+     * @param releaseId  (required)
+     * @param page  (required)
+     * @param size  (required)
+     * @return  (status code 200)
+     * @see InstanceManagementApi#getByRelease
+     */
+    default ResponseEntity<OpenInstancePageDTO> getByRelease(String env,
+        Long releaseId,
+        Integer page,
+        Integer size) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"total\" : 1, \"size\" : 6, \"instances\" : [ { \"configs\" : [ { \"releaseDeliveryTime\" : \"2025-09-29T12:34:56Z\", \"release\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"releaseDeliveryTime\" : \"2025-09-29T12:34:56Z\", \"release\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ], \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataCenter\" : \"dataCenter\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"ip\" : \"ip\", \"id\" : 5 }, { \"configs\" : [ { \"releaseDeliveryTime\" : \"2025-09-29T12:34:56Z\", \"release\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"releaseDeliveryTime\" : \"2025-09-29T12:34:56Z\", \"release\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ], \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataCenter\" : \"dataCenter\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"ip\" : \"ip\", \"id\" : 5 } ], \"page\" : 0 }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * GET /openapi/v1/envs/{env}/instances/by-namespace-and-releases-not-in : 查询不在指定发布版本中的实例 (new added)
      *
      * @param env 环境标识 (required)
      * @param appId 应用ID (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param excludeReleases 排除的发布ID列表，用逗号分隔 (optional)
+     * @param releaseIds 排除的发布ID列表，用逗号分隔 (optional)
      * @return  (status code 200)
-     * @see InstanceManagementApi#getByReleasesNotIn
+     * @see InstanceManagementApi#getByReleasesAndNamespaceNotIn
      */
-    default ResponseEntity<List<OpenInstanceDTO>> getByReleasesNotIn(String env,
+    default ResponseEntity<List<OpenInstanceDTO>> getByReleasesAndNamespaceNotIn(String env,
         String appId,
         String clusterName,
         String namespaceName,
-        String excludeReleases) {
+        String releaseIds) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {

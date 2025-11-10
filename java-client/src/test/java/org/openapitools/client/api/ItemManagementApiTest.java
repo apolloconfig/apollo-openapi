@@ -14,11 +14,12 @@
 package org.openapitools.client.api;
 
 import org.openapitools.client.ApiException;
+import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.OpenItemDTO;
 import org.openapitools.client.model.OpenItemDiffs;
+import org.openapitools.client.model.OpenItemPageDTO;
 import org.openapitools.client.model.OpenNamespaceSyncModel;
 import org.openapitools.client.model.OpenNamespaceTextModel;
-import org.openapitools.client.model.OpenPageDTOOpenItemDTO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -144,7 +145,7 @@ public class ItemManagementApiTest {
         String namespaceName = null;
         Integer page = null;
         Integer size = null;
-        OpenPageDTOOpenItemDTO response = api.findItemsByNamespace(appId, env, clusterName, namespaceName, page, size);
+        OpenItemPageDTO response = api.findItemsByNamespace(appId, env, clusterName, namespaceName, page, size);
         // TODO: test validations
     }
 

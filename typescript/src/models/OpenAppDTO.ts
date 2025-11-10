@@ -79,6 +79,12 @@ export interface OpenAppDTO {
      * @memberof OpenAppDTO
      */
     ownerEmail?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof OpenAppDTO
+     */
+    ownerDisplayName?: string;
 }
 
 /**
@@ -110,6 +116,7 @@ export function OpenAppDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean)
         'orgName': !exists(json, 'orgName') ? undefined : json['orgName'],
         'ownerName': !exists(json, 'ownerName') ? undefined : json['ownerName'],
         'ownerEmail': !exists(json, 'ownerEmail') ? undefined : json['ownerEmail'],
+        'ownerDisplayName': !exists(json, 'ownerDisplayName') ? undefined : json['ownerDisplayName'],
     };
 }
 
@@ -132,5 +139,6 @@ export function OpenAppDTOToJSON(value?: OpenAppDTO | null): any {
         'orgName': value.orgName,
         'ownerName': value.ownerName,
         'ownerEmail': value.ownerEmail,
+        'ownerDisplayName': value.ownerDisplayName,
     };
 }

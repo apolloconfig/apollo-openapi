@@ -5,7 +5,7 @@
  */
 package com.apollo.openapi.server.api;
 
-import java.util.Map;
+import com.apollo.openapi.server.model.ExceptionResponse;
 import com.apollo.openapi.server.model.OpenAppNamespaceDTO;
 import com.apollo.openapi.server.model.OpenNamespaceDTO;
 import com.apollo.openapi.server.model.OpenNamespaceLockDTO;
@@ -97,10 +97,10 @@ public interface NamespaceManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenAppNamespaceDTO.class))
             }),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {

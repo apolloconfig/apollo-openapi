@@ -14,5 +14,6 @@ Name | Type | Description | Notes
 **org_name** | Option<**String**> | 组织名称，应用所属组织的显示名称 | [optional]
 **owner_name** | Option<**String**> | 应用负责人姓名，应用的主要负责人 | [optional]
 **owner_email** | Option<**String**> | 应用负责人邮箱地址，用于接收应用相关通知 | [optional]
+**owner_display_name** | Option<**String**> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -14,10 +14,12 @@
 package org.openapitools.client.api;
 
 import org.openapitools.client.ApiException;
-import org.openapitools.client.model.MultiResponseEntity;
+import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.OpenAppDTO;
 import org.openapitools.client.model.OpenCreateAppDTO;
 import org.openapitools.client.model.OpenEnvClusterDTO;
+import org.openapitools.client.model.OpenEnvClusterInfo;
+import org.openapitools.client.model.OpenMissEnvDTO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +46,7 @@ public class AppManagementApiTest {
     @Test
     public void createAppTest() throws ApiException {
         OpenCreateAppDTO openCreateAppDTO = null;
-        Object response = api.createApp(openCreateAppDTO);
+        OpenAppDTO response = api.createApp(openCreateAppDTO);
         // TODO: test validations
     }
 
@@ -58,9 +60,9 @@ public class AppManagementApiTest {
     @Test
     public void createAppInEnvTest() throws ApiException {
         String env = null;
-        String operator = null;
         OpenAppDTO openAppDTO = null;
-        Object response = api.createAppInEnv(env, operator, openAppDTO);
+        String operator = null;
+        Object response = api.createAppInEnv(env, openAppDTO, operator);
         // TODO: test validations
     }
 
@@ -109,14 +111,14 @@ public class AppManagementApiTest {
     /**
      * 查找缺失的环境(new added)
      *
-     * GET /openapi/v1/apps/{appId}/miss_envs
+     * GET /openapi/v1/apps/{appId}/miss-envs
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void findMissEnvsTest() throws ApiException {
         String appId = null;
-        MultiResponseEntity response = api.findMissEnvs(appId);
+        List<OpenMissEnvDTO> response = api.findMissEnvs(appId);
         // TODO: test validations
     }
 
@@ -135,21 +137,7 @@ public class AppManagementApiTest {
     }
 
     /**
-     * 获取应用导航树(new added)
-     *
-     * GET /openapi/v1/apps/{appId}/navtree
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void getAppNavTreeTest() throws ApiException {
-        String appId = null;
-        MultiResponseEntity response = api.getAppNavTree(appId);
-        // TODO: test validations
-    }
-
-    /**
-     * 获取当前Consumer的应用列表（分页）(new added)
+     * 获取当前Consumer/User的应用列表（分页）(new added)
      *
      * GET /openapi/v1/apps/by-self
      *
@@ -164,16 +152,30 @@ public class AppManagementApiTest {
     }
 
     /**
-     * 获取应用的环境集群信息 (original openapi)
+     * 获取应用环境集群详情(new added)
      *
-     * GET /openapi/v1/apps/{appId}/envclusters
+     * /openapi/v1/apps/{appId}/env-cluster-info
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getEnvClusterInfoTest() throws ApiException {
         String appId = null;
-        List<OpenEnvClusterDTO> response = api.getEnvClusterInfo(appId);
+        List<OpenEnvClusterInfo> response = api.getEnvClusterInfo(appId);
+        // TODO: test validations
+    }
+
+    /**
+     * 获取应用的环境集群信息 (original openapi)
+     *
+     * GET /openapi/v1/apps/{appId}/envClusters
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void getEnvClustersTest() throws ApiException {
+        String appId = null;
+        List<OpenEnvClusterDTO> response = api.getEnvClusters(appId);
         // TODO: test validations
     }
 
@@ -187,9 +189,9 @@ public class AppManagementApiTest {
     @Test
     public void updateAppTest() throws ApiException {
         String appId = null;
-        String operator = null;
         OpenAppDTO openAppDTO = null;
-        OpenAppDTO response = api.updateApp(appId, operator, openAppDTO);
+        String operator = null;
+        Object response = api.updateApp(appId, openAppDTO, operator);
         // TODO: test validations
     }
 

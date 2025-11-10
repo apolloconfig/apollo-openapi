@@ -15,12 +15,15 @@
 
 import * as runtime from '../runtime';
 import type {
+  ExceptionResponse,
   NamespaceGrayDelReleaseDTO,
   NamespaceReleaseDTO,
   OpenReleaseBO,
   OpenReleaseDTO,
 } from '../models';
 import {
+    ExceptionResponseFromJSON,
+    ExceptionResponseToJSON,
     NamespaceGrayDelReleaseDTOFromJSON,
     NamespaceGrayDelReleaseDTOToJSON,
     NamespaceReleaseDTOFromJSON,

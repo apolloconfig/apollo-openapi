@@ -4,4 +4,4 @@
 
 from apollo_openapi.paths import PathValues
 
-path = PathValues.OPENAPI_V1_APPS_APP_ID_MISS_ENVS
+path = PathValues.OPENAPI_V1_APPS_APP_ID_MISSENVS

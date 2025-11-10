@@ -6,7 +6,7 @@
 package com.apollo.openapi.server.api;
 
 import com.apollo.openapi.server.model.OpenInstanceDTO;
-import com.apollo.openapi.server.model.OpenPageDTOOpenInstanceDTO;
+import com.apollo.openapi.server.model.OpenInstancePageDTO;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -39,8 +39,51 @@ public interface InstanceManagementApi {
     }
 
     /**
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances : 根据发布版本查询实例（支持分页） (new added)
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
+     * GET /openapi/v1/envs/{env}/instances/by-namespace : 根据namespaceName查询实例（new added）
+     *
+     * @param env 环境标识 (required)
+     * @param appId 应用ID (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param page 页数 (required)
+     * @param size 页大小 (required)
+     * @param instanceAppId Instance表中的AppID (optional)
+     * @return  (status code 200)
+     */
+    @Operation(
+        operationId = "getByNamespace",
+        summary = "根据namespaceName查询实例（new added）",
+        tags = { "Instance Management" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenInstancePageDTO.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "ApiKeyAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/openapi/v1/envs/{env}/instances/by-namespace",
+        produces = { "application/json" }
+    )
+    default ResponseEntity<OpenInstancePageDTO> getByNamespace(
+        @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
+        @NotNull @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "appId", required = true) String appId,
+        @NotNull @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "clusterName", required = true) String clusterName,
+        @NotNull @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "namespaceName", required = true) String namespaceName,
+        @NotNull @Min(0) @Parameter(name = "page", description = "页数", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = true, defaultValue = "0") Integer page,
+        @NotNull @Min(0) @Parameter(name = "size", description = "页大小", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "size", required = true, defaultValue = "0") Integer size,
+        @Parameter(name = "instanceAppId", description = "Instance表中的AppID", in = ParameterIn.QUERY) @Valid @RequestParam(value = "instanceAppId", required = false) String instanceAppId
+    ) {
+        return getDelegate().getByNamespace(env, appId, clusterName, namespaceName, page, size, instanceAppId);
+    }
+
+
+    /**
+     * GET /openapi/v1/envs/{env}/instances/by-release : 根据发布版本查询实例（支持分页） (new added)
+     * GET /openapi/v1/envs/{env}/instances/by-release
      *
      * @param env  (required)
      * @param releaseId  (required)
@@ -51,11 +94,11 @@ public interface InstanceManagementApi {
     @Operation(
         operationId = "getByRelease",
         summary = "根据发布版本查询实例（支持分页） (new added)",
-        description = "GET /openapi/v1/envs/{env}/releases/{releaseId}/instances",
+        description = "GET /openapi/v1/envs/{env}/instances/by-release",
         tags = { "Instance Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenPageDTOOpenInstanceDTO.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenInstancePageDTO.class))
             })
         },
         security = {
@@ -64,12 +107,12 @@ public interface InstanceManagementApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/openapi/v1/envs/{env}/releases/{releaseId}/instances",
+        value = "/openapi/v1/envs/{env}/instances/by-release",
         produces = { "application/json" }
     )
-    default ResponseEntity<OpenPageDTOOpenInstanceDTO> getByRelease(
+    default ResponseEntity<OpenInstancePageDTO> getByRelease(
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "releaseId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("releaseId") Integer releaseId,
+        @NotNull @Parameter(name = "releaseId", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "releaseId", required = true) Long releaseId,
         @NotNull @Parameter(name = "page", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = true) Integer page,
         @NotNull @Parameter(name = "size", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "size", required = true) Integer size
     ) {
@@ -78,20 +121,18 @@ public interface InstanceManagementApi {
 
 
     /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in : 查询不在指定发布版本中的实例 (new added)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
+     * GET /openapi/v1/envs/{env}/instances/by-namespace-and-releases-not-in : 查询不在指定发布版本中的实例 (new added)
      *
      * @param env 环境标识 (required)
      * @param appId 应用ID (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param excludeReleases 排除的发布ID列表，用逗号分隔 (optional)
+     * @param releaseIds 排除的发布ID列表，用逗号分隔 (optional)
      * @return  (status code 200)
      */
     @Operation(
-        operationId = "getByReleasesNotIn",
+        operationId = "getByReleasesAndNamespaceNotIn",
         summary = "查询不在指定发布版本中的实例 (new added)",
-        description = "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases=1,2,3",
         tags = { "Instance Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "", content = {
@@ -104,17 +145,17 @@ public interface InstanceManagementApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in",
+        value = "/openapi/v1/envs/{env}/instances/by-namespace-and-releases-not-in",
         produces = { "application/json" }
     )
-    default ResponseEntity<List<OpenInstanceDTO>> getByReleasesNotIn(
+    default ResponseEntity<List<OpenInstanceDTO>> getByReleasesAndNamespaceNotIn(
         @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
-        @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
-        @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
-        @Parameter(name = "excludeReleases", description = "排除的发布ID列表，用逗号分隔", in = ParameterIn.QUERY) @Valid @RequestParam(value = "excludeReleases", required = false) String excludeReleases
+        @NotNull @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "appId", required = true) String appId,
+        @NotNull @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "clusterName", required = true) String clusterName,
+        @NotNull @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "namespaceName", required = true) String namespaceName,
+        @Parameter(name = "releaseIds", description = "排除的发布ID列表，用逗号分隔", in = ParameterIn.QUERY) @Valid @RequestParam(value = "releaseIds", required = false) String releaseIds
     ) {
-        return getDelegate().getByReleasesNotIn(env, appId, clusterName, namespaceName, excludeReleases);
+        return getDelegate().getByReleasesAndNamespaceNotIn(env, appId, clusterName, namespaceName, releaseIds);
     }
 
 

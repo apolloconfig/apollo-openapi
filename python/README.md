@@ -157,10 +157,11 @@ import apollo_openapi
 from pprint import pprint
 from apollo_openapi.apis.tags import app_management_api
 from apollo_openapi.model.exception_response import ExceptionResponse
-from apollo_openapi.model.multi_response_entity import MultiResponseEntity
 from apollo_openapi.model.open_app_dto import OpenAppDTO
 from apollo_openapi.model.open_create_app_dto import OpenCreateAppDTO
 from apollo_openapi.model.open_env_cluster_dto import OpenEnvClusterDTO
+from apollo_openapi.model.open_env_cluster_info import OpenEnvClusterInfo
+from apollo_openapi.model.open_miss_env_dto import OpenMissEnvDTO
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = apollo_openapi.Configuration(
@@ -198,6 +199,7 @@ with apollo_openapi.ApiClient(configuration) as api_client:
             org_name="org_name_example",
             owner_name="owner_name_example",
             owner_email="owner_email_example",
+            owner_display_name="owner_display_name_example",
         ),
     ) # OpenCreateAppDTO |
 
@@ -220,18 +222,19 @@ Class | Method | HTTP request | Description
 *AppManagementApi* | [**delete_app**](docs/apis/tags/AppManagementApi.md#delete_app) | **delete** /openapi/v1/apps/{appId} | 删除应用(new added)
 *AppManagementApi* | [**find_apps**](docs/apis/tags/AppManagementApi.md#find_apps) | **get** /openapi/v1/apps | 查找应用 (original openapi)
 *AppManagementApi* | [**find_apps_authorized**](docs/apis/tags/AppManagementApi.md#find_apps_authorized) | **get** /openapi/v1/apps/authorized | 获取当前Consumer授权的应用列表 (original openapi)
-*AppManagementApi* | [**find_miss_envs**](docs/apis/tags/AppManagementApi.md#find_miss_envs) | **get** /openapi/v1/apps/{appId}/miss_envs | 查找缺失的环境(new added)
+*AppManagementApi* | [**find_miss_envs**](docs/apis/tags/AppManagementApi.md#find_miss_envs) | **get** /openapi/v1/apps/{appId}/miss-envs | 查找缺失的环境(new added)
 *AppManagementApi* | [**get_app**](docs/apis/tags/AppManagementApi.md#get_app) | **get** /openapi/v1/apps/{appId} | 获取单个应用信息(new added)
-*AppManagementApi* | [**get_app_nav_tree**](docs/apis/tags/AppManagementApi.md#get_app_nav_tree) | **get** /openapi/v1/apps/{appId}/navtree | 获取应用导航树(new added)
-*AppManagementApi* | [**get_apps_by_self**](docs/apis/tags/AppManagementApi.md#get_apps_by_self) | **get** /openapi/v1/apps/by-self | 获取当前Consumer的应用列表（分页）(new added)
-*AppManagementApi* | [**get_env_cluster_info**](docs/apis/tags/AppManagementApi.md#get_env_cluster_info) | **get** /openapi/v1/apps/{appId}/envclusters | 获取应用的环境集群信息 (original openapi)
+*AppManagementApi* | [**get_apps_by_self**](docs/apis/tags/AppManagementApi.md#get_apps_by_self) | **get** /openapi/v1/apps/by-self | 获取当前Consumer/User的应用列表（分页）(new added)
+*AppManagementApi* | [**get_env_cluster_info**](docs/apis/tags/AppManagementApi.md#get_env_cluster_info) | **get** /openapi/v1/apps/{appId}/env-cluster-info | 获取应用环境集群详情(new added)
+*AppManagementApi* | [**get_env_clusters**](docs/apis/tags/AppManagementApi.md#get_env_clusters) | **get** /openapi/v1/apps/{appId}/envclusters | 获取应用的环境集群信息 (original openapi)
 *AppManagementApi* | [**update_app**](docs/apis/tags/AppManagementApi.md#update_app) | **put** /openapi/v1/apps/{appId} | 更新应用(new added)
 *ClusterManagementApi* | [**create_cluster**](docs/apis/tags/ClusterManagementApi.md#create_cluster) | **post** /openapi/v1/envs/{env}/apps/{appId}/clusters | 创建集群 (original openapi)
 *ClusterManagementApi* | [**delete_cluster**](docs/apis/tags/ClusterManagementApi.md#delete_cluster) | **delete** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 删除集群 (new added)
 *ClusterManagementApi* | [**get_cluster**](docs/apis/tags/ClusterManagementApi.md#get_cluster) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName} | 获取指定集群信息 (original openapi)
 *EnvironmentManagementApi* | [**get_envs**](docs/apis/tags/EnvironmentManagementApi.md#get_envs) | **get** /openapi/v1/envs | 获取所有环境
-*InstanceManagementApi* | [**get_by_release**](docs/apis/tags/InstanceManagementApi.md#get_by_release) | **get** /openapi/v1/envs/{env}/releases/{releaseId}/instances | 根据发布版本查询实例（支持分页） (new added)
-*InstanceManagementApi* | [**get_by_releases_not_in**](docs/apis/tags/InstanceManagementApi.md#get_by_releases_not_in) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in | 查询不在指定发布版本中的实例 (new added)
+*InstanceManagementApi* | [**get_by_namespace**](docs/apis/tags/InstanceManagementApi.md#get_by_namespace) | **get** /openapi/v1/envs/{env}/instances/by-namespace | 根据namespaceName查询实例（new added）
+*InstanceManagementApi* | [**get_by_release**](docs/apis/tags/InstanceManagementApi.md#get_by_release) | **get** /openapi/v1/envs/{env}/instances/by-release | 根据发布版本查询实例（支持分页） (new added)
+*InstanceManagementApi* | [**get_by_releases_and_namespace_not_in**](docs/apis/tags/InstanceManagementApi.md#get_by_releases_and_namespace_not_in) | **get** /openapi/v1/envs/{env}/instances/by-namespace-and-releases-not-in | 查询不在指定发布版本中的实例 (new added)
 *InstanceManagementApi* | [**get_instance_count_by_namespace**](docs/apis/tags/InstanceManagementApi.md#get_instance_count_by_namespace) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances | 获取命名空间下的实例数量 (original openapi)
 *ItemManagementApi* | [**batch_update_items_by_text**](docs/apis/tags/ItemManagementApi.md#batch_update_items_by_text) | **put** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate | 通过文本批量修改配置项 (new added)
 *ItemManagementApi* | [**compare_items**](docs/apis/tags/ItemManagementApi.md#compare_items) | **post** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare | 对比命名空间配置差异 (new added)
@@ -295,17 +298,18 @@ Class | Method | HTTP request | Description
  - [OpenGrayReleaseRuleItemDTO](docs/models/OpenGrayReleaseRuleItemDTO.md)
  - [OpenInstanceConfigDTO](docs/models/OpenInstanceConfigDTO.md)
  - [OpenInstanceDTO](docs/models/OpenInstanceDTO.md)
+ - [OpenInstancePageDTO](docs/models/OpenInstancePageDTO.md)
  - [OpenItemChangeSets](docs/models/OpenItemChangeSets.md)
  - [OpenItemDTO](docs/models/OpenItemDTO.md)
  - [OpenItemDiffs](docs/models/OpenItemDiffs.md)
+ - [OpenItemPageDTO](docs/models/OpenItemPageDTO.md)
+ - [OpenMissEnvDTO](docs/models/OpenMissEnvDTO.md)
  - [OpenNamespaceDTO](docs/models/OpenNamespaceDTO.md)
  - [OpenNamespaceIdentifier](docs/models/OpenNamespaceIdentifier.md)
  - [OpenNamespaceLockDTO](docs/models/OpenNamespaceLockDTO.md)
  - [OpenNamespaceSyncModel](docs/models/OpenNamespaceSyncModel.md)
  - [OpenNamespaceTextModel](docs/models/OpenNamespaceTextModel.md)
  - [OpenOrganizationDto](docs/models/OpenOrganizationDto.md)
- - [OpenPageDTOOpenInstanceDTO](docs/models/OpenPageDTOOpenInstanceDTO.md)
- - [OpenPageDTOOpenItemDTO](docs/models/OpenPageDTOOpenItemDTO.md)
  - [OpenReleaseBO](docs/models/OpenReleaseBO.md)
  - [OpenReleaseDTO](docs/models/OpenReleaseDTO.md)
  - [RichResponseEntity](docs/models/RichResponseEntity.md)

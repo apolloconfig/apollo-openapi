@@ -14,6 +14,7 @@
 package org.openapitools.client.api;
 
 import org.openapitools.client.ApiException;
+import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.OpenClusterDTO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

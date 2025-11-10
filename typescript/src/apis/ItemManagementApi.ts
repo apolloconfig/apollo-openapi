@@ -15,23 +15,26 @@
 
 import * as runtime from '../runtime';
 import type {
+  ExceptionResponse,
   OpenItemDTO,
   OpenItemDiffs,
+  OpenItemPageDTO,
   OpenNamespaceSyncModel,
   OpenNamespaceTextModel,
-  OpenPageDTOOpenItemDTO,
 } from '../models';
 import {
+    ExceptionResponseFromJSON,
+    ExceptionResponseToJSON,
     OpenItemDTOFromJSON,
     OpenItemDTOToJSON,
     OpenItemDiffsFromJSON,
     OpenItemDiffsToJSON,
+    OpenItemPageDTOFromJSON,
+    OpenItemPageDTOToJSON,
     OpenNamespaceSyncModelFromJSON,
     OpenNamespaceSyncModelToJSON,
     OpenNamespaceTextModelFromJSON,
     OpenNamespaceTextModelToJSON,
-    OpenPageDTOOpenItemDTOFromJSON,
-    OpenPageDTOOpenItemDTOToJSON,
 } from '../models';
 
 export interface BatchUpdateItemsByTextRequest {
@@ -466,7 +469,7 @@ export class ItemManagementApi extends runtime.BaseAPI {
      * 获取指定命名空间的配置项列表，支持分页
      * 获取命名空间下的配置项列表 (original openapi)
      */
-    async findItemsByNamespaceRaw(requestParameters: FindItemsByNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenPageDTOOpenItemDTO>> {
+    async findItemsByNamespaceRaw(requestParameters: FindItemsByNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenItemPageDTO>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling findItemsByNamespace.');
         }
@@ -514,14 +517,14 @@ export class ItemManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenPageDTOOpenItemDTOFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpenItemPageDTOFromJSON(jsonValue));
     }
 
     /**
      * 获取指定命名空间的配置项列表，支持分页
      * 获取命名空间下的配置项列表 (original openapi)
      */
-    async findItemsByNamespace(requestParameters: FindItemsByNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenPageDTOOpenItemDTO> {
+    async findItemsByNamespace(requestParameters: FindItemsByNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenItemPageDTO> {
         const response = await this.findItemsByNamespaceRaw(requestParameters, initOverrides);
         return await response.value();
     }

@@ -1,6 +1,6 @@
 package com.apollo.openapi.server.api;
 
-import java.util.Map;
+import com.apollo.openapi.server.model.ExceptionResponse;
 import com.apollo.openapi.server.model.OpenAppNamespaceDTO;
 import com.apollo.openapi.server.model.OpenNamespaceDTO;
 import com.apollo.openapi.server.model.OpenNamespaceLockDTO;

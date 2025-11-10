@@ -21,7 +21,7 @@ from .. import ApiTestMixin
 class TestOpenapiV1AppsBySelf(ApiTestMixin, unittest.TestCase):
     """
     OpenapiV1AppsBySelf unit test stubs
-        获取当前Consumer的应用列表（分页）(new added)  # noqa: E501
+        获取当前Consumer/User的应用列表（分页）(new added)  # noqa: E501
     """
     _configuration = configuration.Configuration()
 

@@ -5,7 +5,7 @@
  */
 package com.apollo.openapi.server.api;
 
-import java.util.Map;
+import com.apollo.openapi.server.model.ExceptionResponse;
 import com.apollo.openapi.server.model.NamespaceReleaseDTO;
 import com.apollo.openapi.server.model.OpenGrayReleaseRuleDTO;
 import com.apollo.openapi.server.model.OpenNamespaceDTO;
@@ -146,7 +146,7 @@ public interface NamespaceBranchManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenNamespaceDTO.class))
             }),
             @ApiResponse(responseCode = "404", description = "分支不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {

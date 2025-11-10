@@ -18,3 +18,4 @@ Apollo应用信息数据传输对象，包含应用的基本信息和元数据
 |**orgName** | **String** | 组织名称，应用所属组织的显示名称 |  [optional] |
 |**ownerName** | **String** | 应用负责人姓名，应用的主要负责人 |  [optional] |
 |**ownerEmail** | **String** | 应用负责人邮箱地址，用于接收应用相关通知 |  [optional] |
+|**ownerDisplayName** | **String** |  |  [optional] |

@@ -15,9 +15,12 @@
 
 import * as runtime from '../runtime';
 import type {
+  ExceptionResponse,
   OpenClusterDTO,
 } from '../models';
 import {
+    ExceptionResponseFromJSON,
+    ExceptionResponseToJSON,
     OpenClusterDTOFromJSON,
     OpenClusterDTOToJSON,
 } from '../models';

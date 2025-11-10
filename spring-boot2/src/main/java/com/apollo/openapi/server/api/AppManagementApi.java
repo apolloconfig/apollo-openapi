@@ -5,11 +5,12 @@
  */
 package com.apollo.openapi.server.api;
 
-import java.util.Map;
-import com.apollo.openapi.server.model.MultiResponseEntity;
+import com.apollo.openapi.server.model.ExceptionResponse;
 import com.apollo.openapi.server.model.OpenAppDTO;
 import com.apollo.openapi.server.model.OpenCreateAppDTO;
 import com.apollo.openapi.server.model.OpenEnvClusterDTO;
+import com.apollo.openapi.server.model.OpenEnvClusterInfo;
+import com.apollo.openapi.server.model.OpenMissEnvDTO;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -57,13 +58,13 @@ public interface AppManagementApi {
         tags = { "App Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "应用创建成功", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenAppDTO.class))
             }),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -76,7 +77,7 @@ public interface AppManagementApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Object> createApp(
+    default ResponseEntity<OpenAppDTO> createApp(
         @Parameter(name = "OpenCreateAppDTO", description = "", required = true) @Valid @RequestBody OpenCreateAppDTO openCreateAppDTO
     ) {
         return getDelegate().createApp(openCreateAppDTO);
@@ -88,8 +89,8 @@ public interface AppManagementApi {
      * POST /openapi/v1/apps/envs/{env}
      *
      * @param env 环境标识，例如 DEV、FAT、UAT、PROD (required)
-     * @param operator 操作人用户名 (required)
      * @param openAppDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return 应用在指定环境创建成功 (status code 200)
      *         or 请求参数错误 (status code 400)
      *         or 权限不足 (status code 403)
@@ -104,10 +105,10 @@ public interface AppManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -122,10 +123,10 @@ public interface AppManagementApi {
     )
     default ResponseEntity<Object> createAppInEnv(
         @Parameter(name = "env", description = "环境标识，例如 DEV、FAT、UAT、PROD", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @NotNull @Parameter(name = "operator", description = "操作人用户名", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = true) String operator,
-        @Parameter(name = "OpenAppDTO", description = "", required = true) @Valid @RequestBody OpenAppDTO openAppDTO
+        @Parameter(name = "OpenAppDTO", description = "", required = true) @Valid @RequestBody OpenAppDTO openAppDTO,
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
-        return getDelegate().createAppInEnv(env, operator, openAppDTO);
+        return getDelegate().createAppInEnv(env, openAppDTO, operator);
     }
 
 
@@ -134,7 +135,7 @@ public interface AppManagementApi {
      * DELETE /openapi/v1/apps/{appId}
      *
      * @param appId 应用ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return 应用删除成功 (status code 200)
      *         or 权限不足，需要超级管理员权限 (status code 403)
      *         or 应用不存在 (status code 404)
@@ -149,10 +150,10 @@ public interface AppManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足，需要超级管理员权限", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "404", description = "应用不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -166,7 +167,7 @@ public interface AppManagementApi {
     )
     default ResponseEntity<Object> deleteApp(
         @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
-        @NotNull @Parameter(name = "operator", description = "操作人用户名", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = true) String operator
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
         return getDelegate().deleteApp(appId, operator);
     }
@@ -190,7 +191,7 @@ public interface AppManagementApi {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenAppDTO.class)))
             }),
             @ApiResponse(responseCode = "401", description = "未授权访问", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -226,7 +227,7 @@ public interface AppManagementApi {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenAppDTO.class)))
             }),
             @ApiResponse(responseCode = "401", description = "未授权访问", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -246,8 +247,8 @@ public interface AppManagementApi {
 
 
     /**
-     * GET /openapi/v1/apps/{appId}/miss_envs : 查找缺失的环境(new added)
-     * GET /openapi/v1/apps/{appId}/miss_envs
+     * GET /openapi/v1/apps/{appId}/miss-envs : 查找缺失的环境(new added)
+     * GET /openapi/v1/apps/{appId}/miss-envs
      *
      * @param appId 应用ID (required)
      * @return 成功获取应用缺失的环境列表 (status code 200)
@@ -256,14 +257,14 @@ public interface AppManagementApi {
     @Operation(
         operationId = "findMissEnvs",
         summary = "查找缺失的环境(new added)",
-        description = "GET /openapi/v1/apps/{appId}/miss_envs",
+        description = "GET /openapi/v1/apps/{appId}/miss-envs",
         tags = { "App Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "成功获取应用缺失的环境列表", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = MultiResponseEntity.class))
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenMissEnvDTO.class)))
             }),
             @ApiResponse(responseCode = "404", description = "应用不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -272,10 +273,10 @@ public interface AppManagementApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/openapi/v1/apps/{appId}/miss_envs",
+        value = "/openapi/v1/apps/{appId}/miss-envs",
         produces = { "application/json" }
     )
-    default ResponseEntity<MultiResponseEntity> findMissEnvs(
+    default ResponseEntity<List<OpenMissEnvDTO>> findMissEnvs(
         @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId
     ) {
         return getDelegate().findMissEnvs(appId);
@@ -300,7 +301,7 @@ public interface AppManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenAppDTO.class))
             }),
             @ApiResponse(responseCode = "404", description = "应用不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -320,40 +321,7 @@ public interface AppManagementApi {
 
 
     /**
-     * GET /openapi/v1/apps/{appId}/navtree : 获取应用导航树(new added)
-     * GET /openapi/v1/apps/{appId}/navtree
-     *
-     * @param appId 应用ID (required)
-     * @return 成功获取应用导航树 (status code 200)
-     */
-    @Operation(
-        operationId = "getAppNavTree",
-        summary = "获取应用导航树(new added)",
-        description = "GET /openapi/v1/apps/{appId}/navtree",
-        tags = { "App Management" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "成功获取应用导航树", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = MultiResponseEntity.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "ApiKeyAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/openapi/v1/apps/{appId}/navtree",
-        produces = { "application/json" }
-    )
-    default ResponseEntity<MultiResponseEntity> getAppNavTree(
-        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId
-    ) {
-        return getDelegate().getAppNavTree(appId);
-    }
-
-
-    /**
-     * GET /openapi/v1/apps/by-self : 获取当前Consumer的应用列表（分页）(new added)
+     * GET /openapi/v1/apps/by-self : 获取当前Consumer/User的应用列表（分页）(new added)
      * GET /openapi/v1/apps/by-self
      *
      * @param page 页数 (required)
@@ -363,7 +331,7 @@ public interface AppManagementApi {
      */
     @Operation(
         operationId = "getAppsBySelf",
-        summary = "获取当前Consumer的应用列表（分页）(new added)",
+        summary = "获取当前Consumer/User的应用列表（分页）(new added)",
         description = "GET /openapi/v1/apps/by-self",
         tags = { "App Management" },
         responses = {
@@ -371,7 +339,7 @@ public interface AppManagementApi {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenAppDTO.class)))
             }),
             @ApiResponse(responseCode = "401", description = "未授权访问", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -392,24 +360,57 @@ public interface AppManagementApi {
 
 
     /**
+     * GET /openapi/v1/apps/{appId}/env-cluster-info : 获取应用环境集群详情(new added)
+     * /openapi/v1/apps/{appId}/env-cluster-info
+     *
+     * @param appId 应用ID (required)
+     * @return 成功获取应用环境集群详情 (status code 200)
+     */
+    @Operation(
+        operationId = "getEnvClusterInfo",
+        summary = "获取应用环境集群详情(new added)",
+        description = "/openapi/v1/apps/{appId}/env-cluster-info",
+        tags = { "App Management" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "成功获取应用环境集群详情", content = {
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenEnvClusterInfo.class)))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "ApiKeyAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/openapi/v1/apps/{appId}/env-cluster-info",
+        produces = { "application/json" }
+    )
+    default ResponseEntity<List<OpenEnvClusterInfo>> getEnvClusterInfo(
+        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId
+    ) {
+        return getDelegate().getEnvClusterInfo(appId);
+    }
+
+
+    /**
      * GET /openapi/v1/apps/{appId}/envclusters : 获取应用的环境集群信息 (original openapi)
-     * GET /openapi/v1/apps/{appId}/envclusters
+     * GET /openapi/v1/apps/{appId}/envClusters
      *
      * @param appId 应用ID (required)
      * @return 成功获取应用环境集群信息 (status code 200)
      *         or 应用不存在 (status code 404)
      */
     @Operation(
-        operationId = "getEnvClusterInfo",
+        operationId = "getEnvClusters",
         summary = "获取应用的环境集群信息 (original openapi)",
-        description = "GET /openapi/v1/apps/{appId}/envclusters",
+        description = "GET /openapi/v1/apps/{appId}/envClusters",
         tags = { "App Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "成功获取应用环境集群信息", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenEnvClusterDTO.class)))
             }),
             @ApiResponse(responseCode = "404", description = "应用不存在", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -421,10 +422,10 @@ public interface AppManagementApi {
         value = "/openapi/v1/apps/{appId}/envclusters",
         produces = { "application/json" }
     )
-    default ResponseEntity<List<OpenEnvClusterDTO>> getEnvClusterInfo(
+    default ResponseEntity<List<OpenEnvClusterDTO>> getEnvClusters(
         @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId
     ) {
-        return getDelegate().getEnvClusterInfo(appId);
+        return getDelegate().getEnvClusters(appId);
     }
 
 
@@ -433,8 +434,8 @@ public interface AppManagementApi {
      * PUT /openapi/v1/apps/{appId}
      *
      * @param appId 应用ID (required)
-     * @param operator 操作人用户名 (required)
      * @param openAppDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return 应用更新成功 (status code 200)
      *         or 请求参数错误 (status code 400)
      *         or 权限不足 (status code 403)
@@ -446,13 +447,13 @@ public interface AppManagementApi {
         tags = { "App Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "应用更新成功", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenAppDTO.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
             }),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },
         security = {
@@ -465,12 +466,12 @@ public interface AppManagementApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<OpenAppDTO> updateApp(
+    default ResponseEntity<Object> updateApp(
         @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
-        @NotNull @Parameter(name = "operator", description = "操作人用户名", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = true) String operator,
-        @Parameter(name = "OpenAppDTO", description = "", required = true) @Valid @RequestBody OpenAppDTO openAppDTO
+        @Parameter(name = "OpenAppDTO", description = "", required = true) @Valid @RequestBody OpenAppDTO openAppDTO,
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
-        return getDelegate().updateApp(appId, operator, openAppDTO);
+        return getDelegate().updateApp(appId, openAppDTO, operator);
     }
 
 }

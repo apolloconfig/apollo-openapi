@@ -36,6 +36,8 @@ class OpenEnvClusterInfo(
     class MetaOapg:
 
         class properties:
+            code = schemas.IntSchema
+            message = schemas.StrSchema
             env = schemas.StrSchema
 
 
@@ -64,9 +66,17 @@ class OpenEnvClusterInfo(
                 def __getitem__(self, i: int) -> 'OpenClusterDTO':
                     return super().__getitem__(i)
             __annotations__ = {
+                "code": code,
+                "message": message,
                 "env": env,
                 "clusters": clusters,
             }
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["code"]) -> MetaOapg.properties.code: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["message"]) -> MetaOapg.properties.message: ...
 
     @typing.overload
     def __getitem__(self, name: typing_extensions.Literal["env"]) -> MetaOapg.properties.env: ...
@@ -77,10 +87,16 @@ class OpenEnvClusterInfo(
     @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
 
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["env", "clusters", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["code", "message", "env", "clusters", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
 
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["code"]) -> typing.Union[MetaOapg.properties.code, schemas.Unset]: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["message"]) -> typing.Union[MetaOapg.properties.message, schemas.Unset]: ...
 
     @typing.overload
     def get_item_oapg(self, name: typing_extensions.Literal["env"]) -> typing.Union[MetaOapg.properties.env, schemas.Unset]: ...
@@ -91,13 +107,15 @@ class OpenEnvClusterInfo(
     @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
 
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["env", "clusters", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["code", "message", "env", "clusters", ], str]):
         return super().get_item_oapg(name)
 
 
     def __new__(
         cls,
         *_args: typing.Union[dict, frozendict.frozendict, ],
+        code: typing.Union[MetaOapg.properties.code, decimal.Decimal, int, schemas.Unset] = schemas.unset,
+        message: typing.Union[MetaOapg.properties.message, str, schemas.Unset] = schemas.unset,
         env: typing.Union[MetaOapg.properties.env, str, schemas.Unset] = schemas.unset,
         clusters: typing.Union[MetaOapg.properties.clusters, list, tuple, schemas.Unset] = schemas.unset,
         _configuration: typing.Optional[schemas.Configuration] = None,
@@ -106,6 +124,8 @@ class OpenEnvClusterInfo(
         return super().__new__(
             cls,
             *_args,
+            code=code,
+            message=message,
             env=env,
             clusters=clusters,
             _configuration=_configuration,
