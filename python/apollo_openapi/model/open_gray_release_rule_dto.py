@@ -54,6 +54,7 @@ class OpenGrayReleaseRuleDTO(
 
 
                 class MetaOapg:
+                    unique_items = True
 
                     @staticmethod
                     def items() -> typing.Type['OpenGrayReleaseRuleItemDTO']:

@@ -35,12 +35,12 @@ OperatorSchema = schemas.StrSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
     'RequestRequiredQueryParams',
     {
-        'operator': typing.Union[OperatorSchema, str, ],
     }
 )
 RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
+        'operator': typing.Union[OperatorSchema, str, ],
     },
     total=False
 )
@@ -54,7 +54,6 @@ request_query_operator = api_client.QueryParameter(
     name="operator",
     style=api_client.ParameterStyle.FORM,
     schema=OperatorSchema,
-    required=True,
     explode=True,
 )
 # Path params

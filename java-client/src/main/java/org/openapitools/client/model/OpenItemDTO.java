@@ -21,6 +21,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import org.openapitools.client.model.OpenItemExtendDTO;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,10 +49,30 @@ import java.util.Set;
 import org.openapitools.client.JSON;
 
 /**
- * Apollo配置项数据传输对象，表示一个具体的配置键值对及其元数据
+ * Apollo配置项核心数据对象，仅包含键值及基础审计信息
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class OpenItemDTO {
+  public static final String SERIALIZED_NAME_KEY = "key";
+  @SerializedName(SERIALIZED_NAME_KEY)
+  private String key;
+
+  public static final String SERIALIZED_NAME_VALUE = "value";
+  @SerializedName(SERIALIZED_NAME_VALUE)
+  private String value;
+
+  public static final String SERIALIZED_NAME_TYPE = "type";
+  @SerializedName(SERIALIZED_NAME_TYPE)
+  private Integer type;
+
+  public static final String SERIALIZED_NAME_COMMENT = "comment";
+  @SerializedName(SERIALIZED_NAME_COMMENT)
+  private String comment;
+
+  public static final String SERIALIZED_NAME_EXTEND_INFO = "extendInfo";
+  @SerializedName(SERIALIZED_NAME_EXTEND_INFO)
+  private OpenItemExtendDTO extendInfo;
+
   public static final String SERIALIZED_NAME_DATA_CHANGE_CREATED_BY = "dataChangeCreatedBy";
   @SerializedName(SERIALIZED_NAME_DATA_CHANGE_CREATED_BY)
   private String dataChangeCreatedBy;
@@ -68,24 +89,113 @@ public class OpenItemDTO {
   @SerializedName(SERIALIZED_NAME_DATA_CHANGE_LAST_MODIFIED_TIME)
   private String dataChangeLastModifiedTime;
 
-  public static final String SERIALIZED_NAME_KEY = "key";
-  @SerializedName(SERIALIZED_NAME_KEY)
-  private String key;
-
-  public static final String SERIALIZED_NAME_TYPE = "type";
-  @SerializedName(SERIALIZED_NAME_TYPE)
-  private Integer type;
-
-  public static final String SERIALIZED_NAME_VALUE = "value";
-  @SerializedName(SERIALIZED_NAME_VALUE)
-  private String value;
-
-  public static final String SERIALIZED_NAME_COMMENT = "comment";
-  @SerializedName(SERIALIZED_NAME_COMMENT)
-  private String comment;
-
   public OpenItemDTO() {
   }
+
+  public OpenItemDTO key(String key) {
+
+    this.key = key;
+    return this;
+  }
+
+   /**
+   * 配置项的键名，在同一命名空间内唯一标识一个配置项
+   * @return key
+  **/
+  @javax.annotation.Nullable
+  public String getKey() {
+    return key;
+  }
+
+
+  public void setKey(String key) {
+    this.key = key;
+  }
+
+
+  public OpenItemDTO value(String value) {
+
+    this.value = value;
+    return this;
+  }
+
+   /**
+   * 配置项的值，可以是字符串、数字、JSON等格式
+   * @return value
+  **/
+  @javax.annotation.Nullable
+  public String getValue() {
+    return value;
+  }
+
+
+  public void setValue(String value) {
+    this.value = value;
+  }
+
+
+  public OpenItemDTO type(Integer type) {
+
+    this.type = type;
+    return this;
+  }
+
+   /**
+   * 配置项类型
+   * @return type
+  **/
+  @javax.annotation.Nullable
+  public Integer getType() {
+    return type;
+  }
+
+
+  public void setType(Integer type) {
+    this.type = type;
+  }
+
+
+  public OpenItemDTO comment(String comment) {
+
+    this.comment = comment;
+    return this;
+  }
+
+   /**
+   * 配置项的注释说明，用于描述配置项的用途和含义
+   * @return comment
+  **/
+  @javax.annotation.Nullable
+  public String getComment() {
+    return comment;
+  }
+
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
+
+
+  public OpenItemDTO extendInfo(OpenItemExtendDTO extendInfo) {
+
+    this.extendInfo = extendInfo;
+    return this;
+  }
+
+   /**
+   * Get extendInfo
+   * @return extendInfo
+  **/
+  @javax.annotation.Nullable
+  public OpenItemExtendDTO getExtendInfo() {
+    return extendInfo;
+  }
+
+
+  public void setExtendInfo(OpenItemExtendDTO extendInfo) {
+    this.extendInfo = extendInfo;
+  }
+
 
   public OpenItemDTO dataChangeCreatedBy(String dataChangeCreatedBy) {
 
@@ -171,90 +281,6 @@ public class OpenItemDTO {
   }
 
 
-  public OpenItemDTO key(String key) {
-
-    this.key = key;
-    return this;
-  }
-
-   /**
-   * 配置项的键名，在同一命名空间内唯一标识一个配置项
-   * @return key
-  **/
-  @javax.annotation.Nullable
-  public String getKey() {
-    return key;
-  }
-
-
-  public void setKey(String key) {
-    this.key = key;
-  }
-
-
-  public OpenItemDTO type(Integer type) {
-
-    this.type = type;
-    return this;
-  }
-
-   /**
-   * 配置项类型，0表示普通配置项，1表示文件类型配置项
-   * @return type
-  **/
-  @javax.annotation.Nullable
-  public Integer getType() {
-    return type;
-  }
-
-
-  public void setType(Integer type) {
-    this.type = type;
-  }
-
-
-  public OpenItemDTO value(String value) {
-
-    this.value = value;
-    return this;
-  }
-
-   /**
-   * 配置项的值，可以是字符串、数字、JSON等格式
-   * @return value
-  **/
-  @javax.annotation.Nullable
-  public String getValue() {
-    return value;
-  }
-
-
-  public void setValue(String value) {
-    this.value = value;
-  }
-
-
-  public OpenItemDTO comment(String comment) {
-
-    this.comment = comment;
-    return this;
-  }
-
-   /**
-   * 配置项的注释说明，用于描述配置项的用途和含义
-   * @return comment
-  **/
-  @javax.annotation.Nullable
-  public String getComment() {
-    return comment;
-  }
-
-
-  public void setComment(String comment) {
-    this.comment = comment;
-  }
-
-
 
   @Override
   public boolean equals(Object o) {
@@ -265,33 +291,35 @@ public class OpenItemDTO {
       return false;
     }
     OpenItemDTO openItemDTO = (OpenItemDTO) o;
-    return Objects.equals(this.dataChangeCreatedBy, openItemDTO.dataChangeCreatedBy) &&
+    return Objects.equals(this.key, openItemDTO.key) &&
+        Objects.equals(this.value, openItemDTO.value) &&
+        Objects.equals(this.type, openItemDTO.type) &&
+        Objects.equals(this.comment, openItemDTO.comment) &&
+        Objects.equals(this.extendInfo, openItemDTO.extendInfo) &&
+        Objects.equals(this.dataChangeCreatedBy, openItemDTO.dataChangeCreatedBy) &&
         Objects.equals(this.dataChangeLastModifiedBy, openItemDTO.dataChangeLastModifiedBy) &&
         Objects.equals(this.dataChangeCreatedTime, openItemDTO.dataChangeCreatedTime) &&
-        Objects.equals(this.dataChangeLastModifiedTime, openItemDTO.dataChangeLastModifiedTime) &&
-        Objects.equals(this.key, openItemDTO.key) &&
-        Objects.equals(this.type, openItemDTO.type) &&
-        Objects.equals(this.value, openItemDTO.value) &&
-        Objects.equals(this.comment, openItemDTO.comment);
+        Objects.equals(this.dataChangeLastModifiedTime, openItemDTO.dataChangeLastModifiedTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, key, type, value, comment);
+    return Objects.hash(key, value, type, comment, extendInfo, dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OpenItemDTO {\n");
+    sb.append("    key: ").append(toIndentedString(key)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    comment: ").append(toIndentedString(comment)).append("\n");
+    sb.append("    extendInfo: ").append(toIndentedString(extendInfo)).append("\n");
     sb.append("    dataChangeCreatedBy: ").append(toIndentedString(dataChangeCreatedBy)).append("\n");
     sb.append("    dataChangeLastModifiedBy: ").append(toIndentedString(dataChangeLastModifiedBy)).append("\n");
     sb.append("    dataChangeCreatedTime: ").append(toIndentedString(dataChangeCreatedTime)).append("\n");
     sb.append("    dataChangeLastModifiedTime: ").append(toIndentedString(dataChangeLastModifiedTime)).append("\n");
-    sb.append("    key: ").append(toIndentedString(key)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    value: ").append(toIndentedString(value)).append("\n");
-    sb.append("    comment: ").append(toIndentedString(comment)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -314,14 +342,15 @@ public class OpenItemDTO {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
+    openapiFields.add("key");
+    openapiFields.add("value");
+    openapiFields.add("type");
+    openapiFields.add("comment");
+    openapiFields.add("extendInfo");
     openapiFields.add("dataChangeCreatedBy");
     openapiFields.add("dataChangeLastModifiedBy");
     openapiFields.add("dataChangeCreatedTime");
     openapiFields.add("dataChangeLastModifiedTime");
-    openapiFields.add("key");
-    openapiFields.add("type");
-    openapiFields.add("value");
-    openapiFields.add("comment");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -347,6 +376,19 @@ public class OpenItemDTO {
           throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `OpenItemDTO` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
         }
       }
+      if ((jsonObj.get("key") != null && !jsonObj.get("key").isJsonNull()) && !jsonObj.get("key").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `key` to be a primitive type in the JSON string but got `%s`", jsonObj.get("key").toString()));
+      }
+      if ((jsonObj.get("value") != null && !jsonObj.get("value").isJsonNull()) && !jsonObj.get("value").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `value` to be a primitive type in the JSON string but got `%s`", jsonObj.get("value").toString()));
+      }
+      if ((jsonObj.get("comment") != null && !jsonObj.get("comment").isJsonNull()) && !jsonObj.get("comment").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `comment` to be a primitive type in the JSON string but got `%s`", jsonObj.get("comment").toString()));
+      }
+      // validate the optional field `extendInfo`
+      if (jsonObj.get("extendInfo") != null && !jsonObj.get("extendInfo").isJsonNull()) {
+        OpenItemExtendDTO.validateJsonObject(jsonObj.getAsJsonObject("extendInfo"));
+      }
       if ((jsonObj.get("dataChangeCreatedBy") != null && !jsonObj.get("dataChangeCreatedBy").isJsonNull()) && !jsonObj.get("dataChangeCreatedBy").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `dataChangeCreatedBy` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dataChangeCreatedBy").toString()));
       }
@@ -358,15 +400,6 @@ public class OpenItemDTO {
       }
       if ((jsonObj.get("dataChangeLastModifiedTime") != null && !jsonObj.get("dataChangeLastModifiedTime").isJsonNull()) && !jsonObj.get("dataChangeLastModifiedTime").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `dataChangeLastModifiedTime` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dataChangeLastModifiedTime").toString()));
-      }
-      if ((jsonObj.get("key") != null && !jsonObj.get("key").isJsonNull()) && !jsonObj.get("key").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `key` to be a primitive type in the JSON string but got `%s`", jsonObj.get("key").toString()));
-      }
-      if ((jsonObj.get("value") != null && !jsonObj.get("value").isJsonNull()) && !jsonObj.get("value").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `value` to be a primitive type in the JSON string but got `%s`", jsonObj.get("value").toString()));
-      }
-      if ((jsonObj.get("comment") != null && !jsonObj.get("comment").isJsonNull()) && !jsonObj.get("comment").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `comment` to be a primitive type in the JSON string but got `%s`", jsonObj.get("comment").toString()));
       }
   }
 

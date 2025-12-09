@@ -34,7 +34,7 @@ import javax.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
 @Validated
-@Tag(name = "Namespace Branch Management", description = "the Namespace Branch Management API")
+@Tag(name = "Namespace Branch Management", description = "命名空间分支管理相关接口，包括分支创建、合并、灰度发布等功能")
 public interface NamespaceBranchManagementApi {
 
     default NamespaceBranchManagementApiDelegate getDelegate() {
@@ -49,7 +49,7 @@ public interface NamespaceBranchManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return 命名空间分支创建成功 (status code 200)
      */
     @Operation(
@@ -76,7 +76,7 @@ public interface NamespaceBranchManagementApi {
         @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
         @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
-        @NotNull @Parameter(name = "operator", description = "操作人用户名", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = true) String operator
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
         return getDelegate().createBranch(appId, env, clusterName, namespaceName, operator);
     }
@@ -100,9 +100,7 @@ public interface NamespaceBranchManagementApi {
         description = "DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}",
         tags = { "Namespace Branch Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "分支删除成功", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            })
+            @ApiResponse(responseCode = "200", description = "分支删除成功")
         },
         security = {
             @SecurityRequirement(name = "ApiKeyAuth")
@@ -110,10 +108,9 @@ public interface NamespaceBranchManagementApi {
     )
     @RequestMapping(
         method = RequestMethod.DELETE,
-        value = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}",
-        produces = { "application/json" }
+        value = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}"
     )
-    default ResponseEntity<Object> deleteBranch(
+    default ResponseEntity<Void> deleteBranch(
         @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
@@ -133,6 +130,7 @@ public interface NamespaceBranchManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
+     * @param extendInfo  (optional, default to false)
      * @return 成功获取分支信息 (status code 200)
      *         or 分支不存在 (status code 404)
      */
@@ -162,9 +160,10 @@ public interface NamespaceBranchManagementApi {
         @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
-        @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName
+        @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
+        @Parameter(name = "extendInfo", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "extendInfo", required = false, defaultValue = "false") Boolean extendInfo
     ) {
-        return getDelegate().findBranch(appId, env, clusterName, namespaceName);
+        return getDelegate().findBranch(appId, env, clusterName, namespaceName, extendInfo);
     }
 
 
@@ -210,8 +209,62 @@ public interface NamespaceBranchManagementApi {
 
 
     /**
-     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} : 合并分支到主分支 (new added)
-     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}  使用 PATCH 方法表示部分更新操作（将分支状态从\&quot;独立\&quot;更新为\&quot;合并\&quot;）
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge : 合并分支 (original openapi)
+     * 合并灰度分支并可选择删除分支
+     *
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @param deleteBranch 合并后是否删除分支（true/false） (required)
+     * @param namespaceReleaseDTO  (required)
+     * @return 分支合并成功 (status code 200)
+     *         or 合并参数错误 (status code 400)
+     *         or 权限不足 (status code 403)
+     */
+    @Operation(
+        operationId = "merge",
+        summary = "合并分支 (original openapi)",
+        description = "合并灰度分支并可选择删除分支",
+        tags = { "Namespace Branch Management" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "分支合并成功", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenReleaseDTO.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "合并参数错误", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
+            }),
+            @ApiResponse(responseCode = "403", description = "权限不足", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "ApiKeyAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.POST,
+        value = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge",
+        produces = { "application/json" },
+        consumes = { "application/json" }
+    )
+    default ResponseEntity<OpenReleaseDTO> merge(
+        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
+        @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
+        @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
+        @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
+        @Parameter(name = "branchName", description = "分支名称", required = true, in = ParameterIn.PATH) @PathVariable("branchName") String branchName,
+        @NotNull @Parameter(name = "deleteBranch", description = "合并后是否删除分支（true/false）", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "deleteBranch", required = true) Boolean deleteBranch,
+        @Parameter(name = "NamespaceReleaseDTO", description = "", required = true) @Valid @RequestBody NamespaceReleaseDTO namespaceReleaseDTO
+    ) {
+        return getDelegate().merge(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO);
+    }
+
+
+    /**
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} : 合并分支到主分支 (new added)
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
      *
      * @param env 环境标识 (required)
      * @param appId 应用ID (required)
@@ -219,14 +272,14 @@ public interface NamespaceBranchManagementApi {
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param operator 操作人用户名 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return 分支合并成功 (status code 200)
      */
     @Operation(
         operationId = "mergeBranch",
         summary = "合并分支到主分支 (new added)",
-        description = "PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}  使用 PATCH 方法表示部分更新操作（将分支状态从\"独立\"更新为\"合并\"）",
+        description = "POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}",
         tags = { "Namespace Branch Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "分支合并成功", content = {
@@ -238,7 +291,7 @@ public interface NamespaceBranchManagementApi {
         }
     )
     @RequestMapping(
-        method = RequestMethod.PATCH,
+        method = RequestMethod.POST,
         value = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}",
         produces = { "application/json" },
         consumes = { "application/json" }
@@ -250,10 +303,10 @@ public interface NamespaceBranchManagementApi {
         @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
         @Parameter(name = "branchName", description = "分支名称", required = true, in = ParameterIn.PATH) @PathVariable("branchName") String branchName,
         @NotNull @Parameter(name = "deleteBranch", description = "合并后是否删除分支（true/false）", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "deleteBranch", required = true) Boolean deleteBranch,
-        @NotNull @Parameter(name = "operator", description = "操作人用户名", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = true) String operator,
-        @Parameter(name = "NamespaceReleaseDTO", description = "", required = true) @Valid @RequestBody NamespaceReleaseDTO namespaceReleaseDTO
+        @Parameter(name = "NamespaceReleaseDTO", description = "", required = true) @Valid @RequestBody NamespaceReleaseDTO namespaceReleaseDTO,
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
-        return getDelegate().mergeBranch(env, appId, clusterName, namespaceName, branchName, deleteBranch, operator, namespaceReleaseDTO);
+        return getDelegate().mergeBranch(env, appId, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, operator);
     }
 
 
@@ -276,9 +329,7 @@ public interface NamespaceBranchManagementApi {
         description = "PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules",
         tags = { "Namespace Branch Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "灰度规则更新成功", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            })
+            @ApiResponse(responseCode = "200", description = "灰度规则更新成功")
         },
         security = {
             @SecurityRequirement(name = "ApiKeyAuth")
@@ -287,10 +338,9 @@ public interface NamespaceBranchManagementApi {
     @RequestMapping(
         method = RequestMethod.PUT,
         value = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules",
-        produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Object> updateBranchRules(
+    default ResponseEntity<Void> updateBranchRules(
         @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,

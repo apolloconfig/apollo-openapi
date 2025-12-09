@@ -168,7 +168,7 @@ public class AppManagementApiTest {
     /**
      * 获取应用的环境集群信息 (original openapi)
      *
-     * GET /openapi/v1/apps/{appId}/envClusters
+     * GET /openapi/v1/apps/{appId}/envclusters
      *
      * @throws ApiException if the Api call fails
      */

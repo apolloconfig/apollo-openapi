@@ -90,20 +90,10 @@ export interface LoadLatestActiveReleaseRequest {
     namespaceName: string;
 }
 
-export interface MergeRequest {
-    appId: string;
-    env: string;
-    clusterName: string;
-    namespaceName: string;
-    branchName: string;
-    deleteBranch: boolean;
-    namespaceReleaseDTO: NamespaceReleaseDTO;
-}
-
 export interface RollbackRequest {
     env: string;
     releaseId: number;
-    operator: string;
+    operator?: string;
 }
 
 /**
@@ -501,73 +491,6 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * 合并灰度分支并可选择删除分支
-     * 合并分支 (original openapi)
-     */
-    async mergeRaw(requestParameters: MergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenReleaseDTO>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling merge.');
-        }
-
-        if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling merge.');
-        }
-
-        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
-            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling merge.');
-        }
-
-        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling merge.');
-        }
-
-        if (requestParameters.branchName === null || requestParameters.branchName === undefined) {
-            throw new runtime.RequiredError('branchName','Required parameter requestParameters.branchName was null or undefined when calling merge.');
-        }
-
-        if (requestParameters.deleteBranch === null || requestParameters.deleteBranch === undefined) {
-            throw new runtime.RequiredError('deleteBranch','Required parameter requestParameters.deleteBranch was null or undefined when calling merge.');
-        }
-
-        if (requestParameters.namespaceReleaseDTO === null || requestParameters.namespaceReleaseDTO === undefined) {
-            throw new runtime.RequiredError('namespaceReleaseDTO','Required parameter requestParameters.namespaceReleaseDTO was null or undefined when calling merge.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.deleteBranch !== undefined) {
-            queryParameters['deleteBranch'] = requestParameters.deleteBranch;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))).replace(`{${"branchName"}}`, encodeURIComponent(String(requestParameters.branchName))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: NamespaceReleaseDTOToJSON(requestParameters.namespaceReleaseDTO),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenReleaseDTOFromJSON(jsonValue));
-    }
-
-    /**
-     * 合并灰度分支并可选择删除分支
-     * 合并分支 (original openapi)
-     */
-    async merge(requestParameters: MergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenReleaseDTO> {
-        const response = await this.mergeRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * 回滚到指定的发布版本
      * 回滚发布 (original openapi)
      */
@@ -578,10 +501,6 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
 
         if (requestParameters.releaseId === null || requestParameters.releaseId === undefined) {
             throw new runtime.RequiredError('releaseId','Required parameter requestParameters.releaseId was null or undefined when calling rollback.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling rollback.');
         }
 
         const queryParameters: any = {};

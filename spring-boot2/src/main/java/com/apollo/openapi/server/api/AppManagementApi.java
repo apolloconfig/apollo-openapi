@@ -394,7 +394,7 @@ public interface AppManagementApi {
 
     /**
      * GET /openapi/v1/apps/{appId}/envclusters : 获取应用的环境集群信息 (original openapi)
-     * GET /openapi/v1/apps/{appId}/envClusters
+     * GET /openapi/v1/apps/{appId}/envclusters
      *
      * @param appId 应用ID (required)
      * @return 成功获取应用环境集群信息 (status code 200)
@@ -403,7 +403,7 @@ public interface AppManagementApi {
     @Operation(
         operationId = "getEnvClusters",
         summary = "获取应用的环境集群信息 (original openapi)",
-        description = "GET /openapi/v1/apps/{appId}/envClusters",
+        description = "GET /openapi/v1/apps/{appId}/envclusters",
         tags = { "App Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "成功获取应用环境集群信息", content = {

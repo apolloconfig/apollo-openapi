@@ -47,6 +47,8 @@ pub struct OpenNamespaceDto {
     /// 命名空间包含的配置项列表
     #[serde(rename = "items", skip_serializing_if = "Option::is_none")]
     pub items: Option<Vec<crate::models::OpenItemDto>>,
+    #[serde(rename = "extendInfo", skip_serializing_if = "Option::is_none")]
+    pub extend_info: Option<Box<crate::models::OpenNamespaceExtendDto>>,
 }
 
 impl OpenNamespaceDto {
@@ -64,6 +66,7 @@ impl OpenNamespaceDto {
             format: None,
             is_public: None,
             items: None,
+            extend_info: None,
         }
     }
 }

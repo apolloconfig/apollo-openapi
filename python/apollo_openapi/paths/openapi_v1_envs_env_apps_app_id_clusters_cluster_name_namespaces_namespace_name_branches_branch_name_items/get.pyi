@@ -156,7 +156,7 @@ _all_accept_content_types = (
 
 class BaseApi(api_client.Api):
     @typing.overload
-    def _get_branch_items_oapg(
+    def _find_branch_items_oapg(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -168,7 +168,7 @@ class BaseApi(api_client.Api):
     ]: ...
 
     @typing.overload
-    def _get_branch_items_oapg(
+    def _find_branch_items_oapg(
         self,
         skip_deserialization: typing_extensions.Literal[True],
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -178,7 +178,7 @@ class BaseApi(api_client.Api):
     ) -> api_client.ApiResponseWithoutDeserialization: ...
 
     @typing.overload
-    def _get_branch_items_oapg(
+    def _find_branch_items_oapg(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -190,7 +190,7 @@ class BaseApi(api_client.Api):
         api_client.ApiResponseWithoutDeserialization,
     ]: ...
 
-    def _get_branch_items_oapg(
+    def _find_branch_items_oapg(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -258,11 +258,11 @@ class BaseApi(api_client.Api):
         return api_response
 
 
-class GetBranchItems(BaseApi):
+class FindBranchItems(BaseApi):
     # this class is used by api classes that refer to endpoints with operationId fn names
 
     @typing.overload
-    def get_branch_items(
+    def find_branch_items(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -274,7 +274,7 @@ class GetBranchItems(BaseApi):
     ]: ...
 
     @typing.overload
-    def get_branch_items(
+    def find_branch_items(
         self,
         skip_deserialization: typing_extensions.Literal[True],
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -284,7 +284,7 @@ class GetBranchItems(BaseApi):
     ) -> api_client.ApiResponseWithoutDeserialization: ...
 
     @typing.overload
-    def get_branch_items(
+    def find_branch_items(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -296,7 +296,7 @@ class GetBranchItems(BaseApi):
         api_client.ApiResponseWithoutDeserialization,
     ]: ...
 
-    def get_branch_items(
+    def find_branch_items(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -304,7 +304,7 @@ class GetBranchItems(BaseApi):
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
-        return self._get_branch_items_oapg(
+        return self._find_branch_items_oapg(
             path_params=path_params,
             accept_content_types=accept_content_types,
             stream=stream,
@@ -359,7 +359,7 @@ class ApiForget(BaseApi):
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
-        return self._get_branch_items_oapg(
+        return self._find_branch_items_oapg(
             path_params=path_params,
             accept_content_types=accept_content_types,
             stream=stream,

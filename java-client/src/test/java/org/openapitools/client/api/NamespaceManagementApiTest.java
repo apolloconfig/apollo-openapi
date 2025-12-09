@@ -14,10 +14,9 @@
 package org.openapitools.client.api;
 
 import org.openapitools.client.ApiException;
-import org.openapitools.client.model.ExceptionResponse;
-import org.openapitools.client.model.OpenAppNamespaceDTO;
+import org.openapitools.client.model.OpenCreateNamespaceDTO;
 import org.openapitools.client.model.OpenNamespaceDTO;
-import org.openapitools.client.model.OpenNamespaceLockDTO;
+import org.openapitools.client.model.OpenNamespaceUsageDTO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -35,67 +34,104 @@ public class NamespaceManagementApiTest {
     private final NamespaceManagementApi api = new NamespaceManagementApi();
 
     /**
-     * 检查缺失的Namespace (new added)
+     * 创建缺失的Namespace (new added)
      *
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check
+     * POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
      *
      * @throws ApiException if the Api call fails
      */
     @Test
-    public void checkNamespaceIntegrityTest() throws ApiException {
+    public void createMissingNamespacesTest() throws ApiException {
         String appId = null;
         String env = null;
         String clusterName = null;
-        List<String> response = api.checkNamespaceIntegrity(appId, env, clusterName);
-        // TODO: test validations
-    }
-
-    /**
-     * 创建AppNamespace (original openapi)
-     *
-     * POST /openapi/v1/apps/{appId}/appnamespaces
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void createNamespaceTest() throws ApiException {
-        String appId = null;
-        OpenAppNamespaceDTO openAppNamespaceDTO = null;
-        OpenAppNamespaceDTO response = api.createNamespace(appId, openAppNamespaceDTO);
-        // TODO: test validations
-    }
-
-    /**
-     * 删除AppNamespace (new added)
-     *
-     * DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void deleteAppNamespaceTest() throws ApiException {
-        String appId = null;
-        String namespaceName = null;
         String operator = null;
-        Object response = api.deleteAppNamespace(appId, namespaceName, operator);
+        Object response = api.createMissingNamespaces(appId, env, clusterName, operator);
         // TODO: test validations
     }
 
     /**
-     * 删除关联的Namespace (new added)
+     * 创建Namespace (new added)
      *
-     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links
+     * POST /openapi/v1/apps/{appId}/namespaces
      *
      * @throws ApiException if the Api call fails
      */
     @Test
-    public void deleteNamespaceLinksTest() throws ApiException {
+    public void createNamespacesTest() throws ApiException {
+        List<OpenCreateNamespaceDTO> openCreateNamespaceDTO = null;
+        String operator = null;
+        api.createNamespaces(openCreateNamespaceDTO, operator);
+        // TODO: test validations
+    }
+
+    /**
+     * 删除指定的Namespace (new added)
+     *
+     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void deleteNamespaceTest() throws ApiException {
         String appId = null;
         String env = null;
         String clusterName = null;
         String namespaceName = null;
         String operator = null;
-        Object response = api.deleteNamespaceLinks(appId, env, clusterName, namespaceName, operator);
+        api.deleteNamespace(appId, env, clusterName, namespaceName, operator);
+        // TODO: test validations
+    }
+
+    /**
+     * 查找缺失的Namespace (new added)
+     *
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void findMissingNamespacesTest() throws ApiException {
+        String appId = null;
+        String env = null;
+        String clusterName = null;
+        List<String> response = api.findMissingNamespaces(appId, env, clusterName);
+        // TODO: test validations
+    }
+
+    /**
+     * 获取指定的Namespace (original openapi)
+     *
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void findNamespaceTest() throws ApiException {
+        String appId = null;
+        String env = null;
+        String clusterName = null;
+        String namespaceName = null;
+        Boolean fillItemDetail = null;
+        Boolean extendInfo = null;
+        OpenNamespaceDTO response = api.findNamespace(appId, env, clusterName, namespaceName, fillItemDetail, extendInfo);
+        // TODO: test validations
+    }
+
+    /**
+     * 查询namespace使用情况(new added)
+     *
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void findNamespaceUsageTest() throws ApiException {
+        String appId = null;
+        String env = null;
+        String clusterName = null;
+        String namespaceName = null;
+        List<OpenNamespaceUsageDTO> response = api.findNamespaceUsage(appId, env, clusterName, namespaceName);
         // TODO: test validations
     }
 
@@ -112,67 +148,26 @@ public class NamespaceManagementApiTest {
         String env = null;
         String clusterName = null;
         Boolean fillItemDetail = null;
-        List<OpenNamespaceDTO> response = api.findNamespaces(appId, env, clusterName, fillItemDetail);
+        Boolean extendInfo = null;
+        List<OpenNamespaceDTO> response = api.findNamespaces(appId, env, clusterName, fillItemDetail, extendInfo);
         // TODO: test validations
     }
 
     /**
-     * 获取指定的AppNamespace (new added)
+     * 查询关联Namespace对应的公共Namespace详情 (new added)
      *
-     * GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void getAppNamespaceTest() throws ApiException {
-        String appId = null;
-        String namespaceName = null;
-        OpenAppNamespaceDTO response = api.getAppNamespace(appId, namespaceName);
-        // TODO: test validations
-    }
-
-    /**
-     * 获取所有公共AppNamespace (new added)
-     *
-     * GET /openapi/v1/appnamespaces?public&#x3D;true
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace
      *
      * @throws ApiException if the Api call fails
      */
     @Test
-    public void getAppNamespacesTest() throws ApiException {
-        Boolean publicOnly = null;
-        List<OpenAppNamespaceDTO> response = api.getAppNamespaces(publicOnly);
-        // TODO: test validations
-    }
-
-    /**
-     * 获取指定应用的AppNamespace (new added)
-     *
-     * GET /openapi/v1/apps/{appId}/appnamespaces
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void getAppNamespacesByAppTest() throws ApiException {
-        String appId = null;
-        List<OpenAppNamespaceDTO> response = api.getAppNamespacesByApp(appId);
-        // TODO: test validations
-    }
-
-    /**
-     * 获取Namespace的锁状态 (original openapi)
-     *
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void getNamespaceLockTest() throws ApiException {
-        String appId = null;
+    public void findPublicNamespaceForAssociatedNamespaceTest() throws ApiException {
         String env = null;
+        String appId = null;
         String clusterName = null;
         String namespaceName = null;
-        OpenNamespaceLockDTO response = api.getNamespaceLock(appId, env, clusterName, namespaceName);
+        Boolean extendInfo = null;
+        OpenNamespaceDTO response = api.findPublicNamespaceForAssociatedNamespace(env, appId, clusterName, namespaceName, extendInfo);
         // TODO: test validations
     }
 
@@ -187,58 +182,6 @@ public class NamespaceManagementApiTest {
     public void getNamespacesReleaseStatusTest() throws ApiException {
         String appId = null;
         Map<String, Map<String, Boolean>> response = api.getNamespacesReleaseStatus(appId);
-        // TODO: test validations
-    }
-
-    /**
-     * 获取公共AppNamespace的所有实例 (new added)
-     *
-     * GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void getPublicAppNamespaceInstancesTest() throws ApiException {
-        String env = null;
-        String publicNamespaceName = null;
-        Integer page = null;
-        Integer size = null;
-        List<OpenNamespaceDTO> response = api.getPublicAppNamespaceInstances(env, publicNamespaceName, page, size);
-        // TODO: test validations
-    }
-
-    /**
-     * 获取关联的公共Namespace (new added)
-     *
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void getPublicNamespaceAssociationTest() throws ApiException {
-        String appId = null;
-        String env = null;
-        String clusterName = null;
-        String namespaceName = null;
-        OpenNamespaceDTO response = api.getPublicNamespaceAssociation(appId, env, clusterName, namespaceName);
-        // TODO: test validations
-    }
-
-    /**
-     * 获取指定的Namespace (original openapi)
-     *
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void loadNamespaceTest() throws ApiException {
-        String appId = null;
-        String env = null;
-        String clusterName = null;
-        String namespaceName = null;
-        Boolean fillItemDetail = null;
-        OpenNamespaceDTO response = api.loadNamespace(appId, env, clusterName, namespaceName, fillItemDetail);
         // TODO: test validations
     }
 

@@ -439,7 +439,7 @@ export class AppManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * GET /openapi/v1/apps/{appId}/envClusters
+     * GET /openapi/v1/apps/{appId}/envclusters
      * 获取应用的环境集群信息 (original openapi)
      */
     async getEnvClustersRaw(requestParameters: GetEnvClustersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenEnvClusterDTO>>> {
@@ -466,7 +466,7 @@ export class AppManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * GET /openapi/v1/apps/{appId}/envClusters
+     * GET /openapi/v1/apps/{appId}/envclusters
      * 获取应用的环境集群信息 (original openapi)
      */
     async getEnvClusters(requestParameters: GetEnvClustersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenEnvClusterDTO>> {

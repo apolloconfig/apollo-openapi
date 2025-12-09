@@ -37,6 +37,12 @@ export interface OpenNamespaceLockDTO {
      * @memberof OpenNamespaceLockDTO
      */
     lockedBy?: string;
+    /**
+     * 是否允许紧急发布
+     * @type {boolean}
+     * @memberof OpenNamespaceLockDTO
+     */
+    isEmergencyPublishAllowed?: boolean;
 }
 
 /**
@@ -61,6 +67,7 @@ export function OpenNamespaceLockDTOFromJSONTyped(json: any, ignoreDiscriminator
         'namespaceName': !exists(json, 'namespaceName') ? undefined : json['namespaceName'],
         'isLocked': !exists(json, 'isLocked') ? undefined : json['isLocked'],
         'lockedBy': !exists(json, 'lockedBy') ? undefined : json['lockedBy'],
+        'isEmergencyPublishAllowed': !exists(json, 'isEmergencyPublishAllowed') ? undefined : json['isEmergencyPublishAllowed'],
     };
 }
 
@@ -76,5 +83,6 @@ export function OpenNamespaceLockDTOToJSON(value?: OpenNamespaceLockDTO | null):
         'namespaceName': value.namespaceName,
         'isLocked': value.isLocked,
         'lockedBy': value.lockedBy,
+        'isEmergencyPublishAllowed': value.isEmergencyPublishAllowed,
     };
 }

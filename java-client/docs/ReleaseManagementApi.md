@@ -11,7 +11,6 @@ All URIs are relative to *http://localhost*
 | [**findAllReleases**](ReleaseManagementApi.md#findAllReleases) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all | 获取所有发布（分页） (new added) |
 | [**getReleaseById**](ReleaseManagementApi.md#getReleaseById) | **GET** /openapi/v1/envs/{env}/releases/{releaseId} | 获取发布详情 (new added) |
 | [**loadLatestActiveRelease**](ReleaseManagementApi.md#loadLatestActiveRelease) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/latest | 获取最新活跃发布 (original openapi) |
-| [**merge**](ReleaseManagementApi.md#merge) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge | 合并分支 (original openapi) |
 | [**rollback**](ReleaseManagementApi.md#rollback) | **PUT** /openapi/v1/envs/{env}/releases/{releaseId}/rollback | 回滚发布 (original openapi) |
 
 
@@ -557,89 +556,6 @@ public class Example {
 | **200** | 成功获取最新活跃发布 |  -  |
 | **404** | 未找到活跃发布 |  -  |
 
-<a id="merge"></a>
-# **merge**
-> OpenReleaseDTO merge(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO)
-
-合并分支 (original openapi)
-
-合并灰度分支并可选择删除分支
-
-### Example
-```java
-// Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.ReleaseManagementApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("http://localhost");
-
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    ReleaseManagementApi apiInstance = new ReleaseManagementApi(defaultClient);
-    String appId = "appId_example"; // String | 应用ID
-    String env = "env_example"; // String | 环境标识
-    String clusterName = "clusterName_example"; // String | 集群名称
-    String namespaceName = "namespaceName_example"; // String | 命名空间名称
-    String branchName = "branchName_example"; // String | 分支名称
-    Boolean deleteBranch = true; // Boolean | 合并后是否删除分支（true/false）
-    NamespaceReleaseDTO namespaceReleaseDTO = new NamespaceReleaseDTO(); // NamespaceReleaseDTO |
-    try {
-      OpenReleaseDTO result = apiInstance.merge(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ReleaseManagementApi#merge");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-| Name | Type | Description  | Notes |
-|------------- | ------------- | ------------- | -------------|
-| **appId** | **String**| 应用ID | |
-| **env** | **String**| 环境标识 | |
-| **clusterName** | **String**| 集群名称 | |
-| **namespaceName** | **String**| 命名空间名称 | |
-| **branchName** | **String**| 分支名称 | |
-| **deleteBranch** | **Boolean**| 合并后是否删除分支（true/false） | |
-| **namespaceReleaseDTO** | [**NamespaceReleaseDTO**](NamespaceReleaseDTO.md)|  | |
-
-### Return type
-
-[**OpenReleaseDTO**](OpenReleaseDTO.md)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | 分支合并成功 |  -  |
-| **400** | 合并参数错误 |  -  |
-| **403** | 权限不足 |  -  |
-
 <a id="rollback"></a>
 # **rollback**
 > Object rollback(env, releaseId, operator)
@@ -693,7 +609,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **env** | **String**| 环境标识 | |
 | **releaseId** | **Long**| 发布ID | |
-| **operator** | **String**| 操作人用户名 | |
+| **operator** | **String**| 操作人用户名 | [optional] |
 
 ### Return type
 

@@ -28,6 +28,8 @@ public class OpenNamespaceLockDTO {
 
   private String lockedBy;
 
+  private Boolean isEmergencyPublishAllowed;
+
   public OpenNamespaceLockDTO namespaceName(String namespaceName) {
     this.namespaceName = namespaceName;
     return this;
@@ -88,6 +90,26 @@ public class OpenNamespaceLockDTO {
     this.lockedBy = lockedBy;
   }
 
+  public OpenNamespaceLockDTO isEmergencyPublishAllowed(Boolean isEmergencyPublishAllowed) {
+    this.isEmergencyPublishAllowed = isEmergencyPublishAllowed;
+    return this;
+  }
+
+  /**
+   * 是否允许紧急发布
+   * @return isEmergencyPublishAllowed
+  */
+
+  @Schema(name = "isEmergencyPublishAllowed", description = "是否允许紧急发布", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("isEmergencyPublishAllowed")
+  public Boolean getIsEmergencyPublishAllowed() {
+    return isEmergencyPublishAllowed;
+  }
+
+  public void setIsEmergencyPublishAllowed(Boolean isEmergencyPublishAllowed) {
+    this.isEmergencyPublishAllowed = isEmergencyPublishAllowed;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -99,12 +121,13 @@ public class OpenNamespaceLockDTO {
     OpenNamespaceLockDTO openNamespaceLockDTO = (OpenNamespaceLockDTO) o;
     return Objects.equals(this.namespaceName, openNamespaceLockDTO.namespaceName) &&
         Objects.equals(this.isLocked, openNamespaceLockDTO.isLocked) &&
-        Objects.equals(this.lockedBy, openNamespaceLockDTO.lockedBy);
+        Objects.equals(this.lockedBy, openNamespaceLockDTO.lockedBy) &&
+        Objects.equals(this.isEmergencyPublishAllowed, openNamespaceLockDTO.isEmergencyPublishAllowed);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(namespaceName, isLocked, lockedBy);
+    return Objects.hash(namespaceName, isLocked, lockedBy, isEmergencyPublishAllowed);
   }
 
   @Override
@@ -114,6 +137,7 @@ public class OpenNamespaceLockDTO {
     sb.append("    namespaceName: ").append(toIndentedString(namespaceName)).append("\n");
     sb.append("    isLocked: ").append(toIndentedString(isLocked)).append("\n");
     sb.append("    lockedBy: ").append(toIndentedString(lockedBy)).append("\n");
+    sb.append("    isEmergencyPublishAllowed: ").append(toIndentedString(isEmergencyPublishAllowed)).append("\n");
     sb.append("}");
     return sb.toString();
   }

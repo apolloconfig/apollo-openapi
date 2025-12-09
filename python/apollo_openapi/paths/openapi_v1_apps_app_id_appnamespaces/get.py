@@ -112,7 +112,7 @@ _all_accept_content_types = (
 
 class BaseApi(api_client.Api):
     @typing.overload
-    def _get_app_namespaces_by_app_oapg(
+    def _get_app_namespaces_by_app_id_oapg(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -124,7 +124,7 @@ class BaseApi(api_client.Api):
     ]: ...
 
     @typing.overload
-    def _get_app_namespaces_by_app_oapg(
+    def _get_app_namespaces_by_app_id_oapg(
         self,
         skip_deserialization: typing_extensions.Literal[True],
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -134,7 +134,7 @@ class BaseApi(api_client.Api):
     ) -> api_client.ApiResponseWithoutDeserialization: ...
 
     @typing.overload
-    def _get_app_namespaces_by_app_oapg(
+    def _get_app_namespaces_by_app_id_oapg(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -146,7 +146,7 @@ class BaseApi(api_client.Api):
         api_client.ApiResponseWithoutDeserialization,
     ]: ...
 
-    def _get_app_namespaces_by_app_oapg(
+    def _get_app_namespaces_by_app_id_oapg(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -210,11 +210,11 @@ class BaseApi(api_client.Api):
         return api_response
 
 
-class GetAppNamespacesByApp(BaseApi):
+class GetAppNamespacesByAppId(BaseApi):
     # this class is used by api classes that refer to endpoints with operationId fn names
 
     @typing.overload
-    def get_app_namespaces_by_app(
+    def get_app_namespaces_by_app_id(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -226,7 +226,7 @@ class GetAppNamespacesByApp(BaseApi):
     ]: ...
 
     @typing.overload
-    def get_app_namespaces_by_app(
+    def get_app_namespaces_by_app_id(
         self,
         skip_deserialization: typing_extensions.Literal[True],
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -236,7 +236,7 @@ class GetAppNamespacesByApp(BaseApi):
     ) -> api_client.ApiResponseWithoutDeserialization: ...
 
     @typing.overload
-    def get_app_namespaces_by_app(
+    def get_app_namespaces_by_app_id(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -248,7 +248,7 @@ class GetAppNamespacesByApp(BaseApi):
         api_client.ApiResponseWithoutDeserialization,
     ]: ...
 
-    def get_app_namespaces_by_app(
+    def get_app_namespaces_by_app_id(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -256,7 +256,7 @@ class GetAppNamespacesByApp(BaseApi):
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
-        return self._get_app_namespaces_by_app_oapg(
+        return self._get_app_namespaces_by_app_id_oapg(
             path_params=path_params,
             accept_content_types=accept_content_types,
             stream=stream,
@@ -311,7 +311,7 @@ class ApiForget(BaseApi):
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
-        return self._get_app_namespaces_by_app_oapg(
+        return self._get_app_namespaces_by_app_id_oapg(
             path_params=path_params,
             accept_content_types=accept_content_types,
             stream=stream,

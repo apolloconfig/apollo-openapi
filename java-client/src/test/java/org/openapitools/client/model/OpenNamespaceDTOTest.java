@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.openapitools.client.model.OpenItemDTO;
+import org.openapitools.client.model.OpenNamespaceExtendDTO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -126,6 +127,14 @@ public class OpenNamespaceDTOTest {
     @Test
     public void itemsTest() {
         // TODO: test items
+    }
+
+    /**
+     * Test the property 'extendInfo'
+     */
+    @Test
+    public void extendInfoTest() {
+        // TODO: test extendInfo
     }
 
 }

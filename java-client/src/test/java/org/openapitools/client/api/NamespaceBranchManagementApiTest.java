@@ -68,7 +68,7 @@ public class NamespaceBranchManagementApiTest {
         String namespaceName = null;
         String branchName = null;
         String operator = null;
-        Object response = api.deleteBranch(env, appId, clusterName, namespaceName, branchName, operator);
+        api.deleteBranch(env, appId, clusterName, namespaceName, branchName, operator);
         // TODO: test validations
     }
 
@@ -85,7 +85,8 @@ public class NamespaceBranchManagementApiTest {
         String env = null;
         String clusterName = null;
         String namespaceName = null;
-        OpenNamespaceDTO response = api.findBranch(appId, env, clusterName, namespaceName);
+        Boolean extendInfo = null;
+        OpenNamespaceDTO response = api.findBranch(appId, env, clusterName, namespaceName, extendInfo);
         // TODO: test validations
     }
 
@@ -108,9 +109,29 @@ public class NamespaceBranchManagementApiTest {
     }
 
     /**
+     * 合并分支 (original openapi)
+     *
+     * 合并灰度分支并可选择删除分支
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void mergeTest() throws ApiException {
+        String appId = null;
+        String env = null;
+        String clusterName = null;
+        String namespaceName = null;
+        String branchName = null;
+        Boolean deleteBranch = null;
+        NamespaceReleaseDTO namespaceReleaseDTO = null;
+        OpenReleaseDTO response = api.merge(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO);
+        // TODO: test validations
+    }
+
+    /**
      * 合并分支到主分支 (new added)
      *
-     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}  使用 PATCH 方法表示部分更新操作（将分支状态从\&quot;独立\&quot;更新为\&quot;合并\&quot;）
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
      *
      * @throws ApiException if the Api call fails
      */
@@ -122,9 +143,9 @@ public class NamespaceBranchManagementApiTest {
         String namespaceName = null;
         String branchName = null;
         Boolean deleteBranch = null;
-        String operator = null;
         NamespaceReleaseDTO namespaceReleaseDTO = null;
-        OpenReleaseDTO response = api.mergeBranch(env, appId, clusterName, namespaceName, branchName, deleteBranch, operator, namespaceReleaseDTO);
+        String operator = null;
+        OpenReleaseDTO response = api.mergeBranch(env, appId, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, operator);
         // TODO: test validations
     }
 
@@ -144,7 +165,7 @@ public class NamespaceBranchManagementApiTest {
         String branchName = null;
         String operator = null;
         OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO = null;
-        Object response = api.updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO);
+        api.updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO);
         // TODO: test validations
     }
 

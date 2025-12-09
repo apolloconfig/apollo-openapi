@@ -1330,7 +1330,7 @@ public class AppManagementApi {
 
     /**
      * 获取应用的环境集群信息 (original openapi)
-     * GET /openapi/v1/apps/{appId}/envClusters
+     * GET /openapi/v1/apps/{appId}/envclusters
      * @param appId 应用ID (required)
      * @return List&lt;OpenEnvClusterDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1348,7 +1348,7 @@ public class AppManagementApi {
 
     /**
      * 获取应用的环境集群信息 (original openapi)
-     * GET /openapi/v1/apps/{appId}/envClusters
+     * GET /openapi/v1/apps/{appId}/envclusters
      * @param appId 应用ID (required)
      * @return ApiResponse&lt;List&lt;OpenEnvClusterDTO&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1367,7 +1367,7 @@ public class AppManagementApi {
 
     /**
      * 获取应用的环境集群信息 (original openapi) (asynchronously)
-     * GET /openapi/v1/apps/{appId}/envClusters
+     * GET /openapi/v1/apps/{appId}/envclusters
      * @param appId 应用ID (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call

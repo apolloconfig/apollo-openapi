@@ -5,8 +5,9 @@ import java.util.Objects;
 import com.apollo.openapi.server.model.OpenGrayReleaseRuleItemDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -42,7 +43,7 @@ public class OpenGrayReleaseRuleDTO {
   private String branchName;
 
   @Valid
-  private List<@Valid OpenGrayReleaseRuleItemDTO> ruleItems;
+  private Set<@Valid OpenGrayReleaseRuleItemDTO> ruleItems;
 
   public OpenGrayReleaseRuleDTO dataChangeCreatedBy(String dataChangeCreatedBy) {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
@@ -204,14 +205,14 @@ public class OpenGrayReleaseRuleDTO {
     this.branchName = branchName;
   }
 
-  public OpenGrayReleaseRuleDTO ruleItems(List<@Valid OpenGrayReleaseRuleItemDTO> ruleItems) {
+  public OpenGrayReleaseRuleDTO ruleItems(Set<@Valid OpenGrayReleaseRuleItemDTO> ruleItems) {
     this.ruleItems = ruleItems;
     return this;
   }
 
   public OpenGrayReleaseRuleDTO addRuleItemsItem(OpenGrayReleaseRuleItemDTO ruleItemsItem) {
     if (this.ruleItems == null) {
-      this.ruleItems = new ArrayList<>();
+      this.ruleItems = new LinkedHashSet<>();
     }
     this.ruleItems.add(ruleItemsItem);
     return this;
@@ -224,11 +225,12 @@ public class OpenGrayReleaseRuleDTO {
   @Valid
   @Schema(name = "ruleItems", description = "灰度发布规则项列表，包含具体的灰度规则条件", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("ruleItems")
-  public List<@Valid OpenGrayReleaseRuleItemDTO> getRuleItems() {
+  public Set<@Valid OpenGrayReleaseRuleItemDTO> getRuleItems() {
     return ruleItems;
   }
 
-  public void setRuleItems(List<@Valid OpenGrayReleaseRuleItemDTO> ruleItems) {
+  @JsonDeserialize(as = LinkedHashSet.class)
+  public void setRuleItems(Set<@Valid OpenGrayReleaseRuleItemDTO> ruleItems) {
     this.ruleItems = ruleItems;
   }
 

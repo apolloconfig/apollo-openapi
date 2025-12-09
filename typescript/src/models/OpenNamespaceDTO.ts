@@ -19,6 +19,12 @@ import {
     OpenItemDTOFromJSONTyped,
     OpenItemDTOToJSON,
 } from './OpenItemDTO';
+import type { OpenNamespaceExtendDTO } from './OpenNamespaceExtendDTO';
+import {
+    OpenNamespaceExtendDTOFromJSON,
+    OpenNamespaceExtendDTOFromJSONTyped,
+    OpenNamespaceExtendDTOToJSON,
+} from './OpenNamespaceExtendDTO';
 
 /**
  * Apollo命名空间数据传输对象，表示一个完整的命名空间及其配置项
@@ -92,6 +98,12 @@ export interface OpenNamespaceDTO {
      * @memberof OpenNamespaceDTO
      */
     items?: Array<OpenItemDTO>;
+    /**
+     *
+     * @type {OpenNamespaceExtendDTO}
+     * @memberof OpenNamespaceDTO
+     */
+    extendInfo?: OpenNamespaceExtendDTO;
 }
 
 /**
@@ -124,6 +136,7 @@ export function OpenNamespaceDTOFromJSONTyped(json: any, ignoreDiscriminator: bo
         'format': !exists(json, 'format') ? undefined : json['format'],
         'isPublic': !exists(json, 'isPublic') ? undefined : json['isPublic'],
         'items': !exists(json, 'items') ? undefined : ((json['items'] as Array<any>).map(OpenItemDTOFromJSON)),
+        'extendInfo': !exists(json, 'extendInfo') ? undefined : OpenNamespaceExtendDTOFromJSON(json['extendInfo']),
     };
 }
 
@@ -147,5 +160,6 @@ export function OpenNamespaceDTOToJSON(value?: OpenNamespaceDTO | null): any {
         'format': value.format,
         'isPublic': value.isPublic,
         'items': value.items === undefined ? undefined : ((value.items as Array<any>).map(OpenItemDTOToJSON)),
+        'extendInfo': OpenNamespaceExtendDTOToJSON(value.extendInfo),
     };
 }

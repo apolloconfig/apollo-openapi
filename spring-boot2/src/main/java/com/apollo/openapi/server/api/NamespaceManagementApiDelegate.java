@@ -1,9 +1,9 @@
 package com.apollo.openapi.server.api;
 
-import com.apollo.openapi.server.model.ExceptionResponse;
-import com.apollo.openapi.server.model.OpenAppNamespaceDTO;
+import java.util.List;
+import com.apollo.openapi.server.model.OpenCreateNamespaceDTO;
 import com.apollo.openapi.server.model.OpenNamespaceDTO;
-import com.apollo.openapi.server.model.OpenNamespaceLockDTO;
+import com.apollo.openapi.server.model.OpenNamespaceUsageDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,16 +27,71 @@ public interface NamespaceManagementApiDelegate {
     }
 
     /**
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check : 检查缺失的Namespace (new added)
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check
+     * POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces : 创建缺失的Namespace (new added)
+     * POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
+     *
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param operator 操作人用户名 (optional)
+     * @return 缺失的命名空间创建成功 (status code 200)
+     * @see NamespaceManagementApi#createMissingNamespaces
+     */
+    default ResponseEntity<Object> createMissingNamespaces(String appId,
+        String env,
+        String clusterName,
+        String operator) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * POST /openapi/v1/namespaces : 创建Namespace (new added)
+     * POST /openapi/v1/apps/{appId}/namespaces
+     *
+     * @param openCreateNamespaceDTO  (required)
+     * @param operator 操作人用户名 (optional)
+     * @return Namespace创建成功 (status code 200)
+     * @see NamespaceManagementApi#createNamespaces
+     */
+    default ResponseEntity<Void> createNamespaces(List<OpenCreateNamespaceDTO> openCreateNamespaceDTO,
+        String operator) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName} : 删除指定的Namespace (new added)
+     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}
+     *
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param operator 操作人用户名 (optional)
+     * @return 解除关联成功 (status code 200)
+     * @see NamespaceManagementApi#deleteNamespace
+     */
+    default ResponseEntity<Void> deleteNamespace(String appId,
+        String env,
+        String clusterName,
+        String namespaceName,
+        String operator) {
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces : 查找缺失的Namespace (new added)
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
      *
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @return 缺失的命名空间名称列表 (status code 200)
-     * @see NamespaceManagementApi#checkNamespaceIntegrity
+     * @see NamespaceManagementApi#findMissingNamespaces
      */
-    default ResponseEntity<List<String>> checkNamespaceIntegrity(String appId,
+    default ResponseEntity<List<String>> findMissingNamespaces(String appId,
         String env,
         String clusterName) {
         getRequest().ifPresent(request -> {
@@ -53,22 +108,28 @@ public interface NamespaceManagementApiDelegate {
     }
 
     /**
-     * POST /openapi/v1/apps/{appId}/appnamespaces : 创建AppNamespace (original openapi)
-     * POST /openapi/v1/apps/{appId}/appnamespaces
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName} : 获取指定的Namespace (original openapi)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
      *
      * @param appId  (required)
-     * @param openAppNamespaceDTO  (required)
-     * @return AppNamespace创建成功 (status code 200)
-     *         or 请求参数错误 (status code 400)
-     *         or 权限不足 (status code 403)
-     * @see NamespaceManagementApi#createNamespace
+     * @param env  (required)
+     * @param clusterName  (required)
+     * @param namespaceName  (required)
+     * @param fillItemDetail  (required)
+     * @param extendInfo  (optional, default to false)
+     * @return  (status code 200)
+     * @see NamespaceManagementApi#findNamespace
      */
-    default ResponseEntity<OpenAppNamespaceDTO> createNamespace(String appId,
-        OpenAppNamespaceDTO openAppNamespaceDTO) {
+    default ResponseEntity<OpenNamespaceDTO> findNamespace(String appId,
+        String env,
+        String clusterName,
+        String namespaceName,
+        Boolean fillItemDetail,
+        Boolean extendInfo) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appendNamespacePrefix\" : true, \"appId\" : \"appId\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }";
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"extendInfo\" : { \"parentAppId\" : \"parentAppId\", \"isConfigHidden\" : true, \"itemModifiedCnt\" : 0 }, \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"extendInfo\" : { \"newValue\" : \"newValue\", \"isModified\" : true, \"isDeleted\" : true, \"namespaceId\" : 6, \"oldValue\" : \"oldValue\", \"isNewlyAdded\" : true }, \"value\" : \"value\", \"key\" : \"key\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"extendInfo\" : { \"newValue\" : \"newValue\", \"isModified\" : true, \"isDeleted\" : true, \"namespaceId\" : 6, \"oldValue\" : \"oldValue\", \"isNewlyAdded\" : true }, \"value\" : \"value\", \"key\" : \"key\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -79,39 +140,29 @@ public interface NamespaceManagementApiDelegate {
     }
 
     /**
-     * DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName} : 删除AppNamespace (new added)
-     * DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     *
-     * @param appId 应用ID (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
-     * @return AppNamespace删除成功 (status code 200)
-     * @see NamespaceManagementApi#deleteAppNamespace
-     */
-    default ResponseEntity<Object> deleteAppNamespace(String appId,
-        String namespaceName,
-        String operator) {
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links : 删除关联的Namespace (new added)
-     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage : 查询namespace使用情况(new added)
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage
      *
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
-     * @return 解除关联成功 (status code 200)
-     * @see NamespaceManagementApi#deleteNamespaceLinks
+     * @return NamespaceUsage查询成功 (status code 200)
+     * @see NamespaceManagementApi#findNamespaceUsage
      */
-    default ResponseEntity<Object> deleteNamespaceLinks(String appId,
+    default ResponseEntity<List<OpenNamespaceUsageDTO>> findNamespaceUsage(String appId,
         String env,
         String clusterName,
-        String namespaceName,
-        String operator) {
+        String namespaceName) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "[ { \"branchInstanceCount\" : 6, \"envName\" : \"envName\", \"instanceCount\" : 0, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"linkedNamespaceCount\" : 1, \"namespaceName\" : \"namespaceName\" }, { \"branchInstanceCount\" : 6, \"envName\" : \"envName\", \"instanceCount\" : 0, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"linkedNamespaceCount\" : 1, \"namespaceName\" : \"namespaceName\" } ]";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -124,17 +175,19 @@ public interface NamespaceManagementApiDelegate {
      * @param env  (required)
      * @param clusterName  (required)
      * @param fillItemDetail  (required)
+     * @param extendInfo  (optional, default to false)
      * @return  (status code 200)
      * @see NamespaceManagementApi#findNamespaces
      */
     default ResponseEntity<List<OpenNamespaceDTO>> findNamespaces(String appId,
         String env,
         String clusterName,
-        Boolean fillItemDetail) {
+        Boolean fillItemDetail,
+        Boolean extendInfo) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" } ]";
+                    String exampleString = "[ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"extendInfo\" : { \"parentAppId\" : \"parentAppId\", \"isConfigHidden\" : true, \"itemModifiedCnt\" : 0 }, \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"extendInfo\" : { \"newValue\" : \"newValue\", \"isModified\" : true, \"isDeleted\" : true, \"namespaceId\" : 6, \"oldValue\" : \"oldValue\", \"isNewlyAdded\" : true }, \"value\" : \"value\", \"key\" : \"key\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"extendInfo\" : { \"newValue\" : \"newValue\", \"isModified\" : true, \"isDeleted\" : true, \"namespaceId\" : 6, \"oldValue\" : \"oldValue\", \"isNewlyAdded\" : true }, \"value\" : \"value\", \"key\" : \"key\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"extendInfo\" : { \"parentAppId\" : \"parentAppId\", \"isConfigHidden\" : true, \"itemModifiedCnt\" : 0 }, \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"extendInfo\" : { \"newValue\" : \"newValue\", \"isModified\" : true, \"isDeleted\" : true, \"namespaceId\" : 6, \"oldValue\" : \"oldValue\", \"isNewlyAdded\" : true }, \"value\" : \"value\", \"key\" : \"key\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"extendInfo\" : { \"newValue\" : \"newValue\", \"isModified\" : true, \"isDeleted\" : true, \"namespaceId\" : 6, \"oldValue\" : \"oldValue\", \"isNewlyAdded\" : true }, \"value\" : \"value\", \"key\" : \"key\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -145,92 +198,26 @@ public interface NamespaceManagementApiDelegate {
     }
 
     /**
-     * GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName} : 获取指定的AppNamespace (new added)
-     * GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace : 查询关联Namespace对应的公共Namespace详情 (new added)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace
      *
+     * @param env 环境标识 (required)
      * @param appId 应用ID (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @return 成功获取AppNamespace (status code 200)
-     * @see NamespaceManagementApi#getAppNamespace
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 关联Namespace名称 (required)
+     * @param extendInfo  (optional, default to false)
+     * @return 成功获取关联的公共Namespace详情 (status code 200)
+     * @see NamespaceManagementApi#findPublicNamespaceForAssociatedNamespace
      */
-    default ResponseEntity<OpenAppNamespaceDTO> getAppNamespace(String appId,
-        String namespaceName) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appendNamespacePrefix\" : true, \"appId\" : \"appId\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * GET /openapi/v1/appnamespaces : 获取所有公共AppNamespace (new added)
-     * GET /openapi/v1/appnamespaces?public&#x3D;true
-     *
-     * @param publicOnly  (required)
-     * @return  (status code 200)
-     * @see NamespaceManagementApi#getAppNamespaces
-     */
-    default ResponseEntity<List<OpenAppNamespaceDTO>> getAppNamespaces(Boolean publicOnly) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appendNamespacePrefix\" : true, \"appId\" : \"appId\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appendNamespacePrefix\" : true, \"appId\" : \"appId\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ]";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * GET /openapi/v1/apps/{appId}/appnamespaces : 获取指定应用的AppNamespace (new added)
-     * GET /openapi/v1/apps/{appId}/appnamespaces
-     *
-     * @param appId  (required)
-     * @return  (status code 200)
-     * @see NamespaceManagementApi#getAppNamespacesByApp
-     */
-    default ResponseEntity<List<OpenAppNamespaceDTO>> getAppNamespacesByApp(String appId) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appendNamespacePrefix\" : true, \"appId\" : \"appId\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appendNamespacePrefix\" : true, \"appId\" : \"appId\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ]";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock : 获取Namespace的锁状态 (original openapi)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock
-     *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @return  (status code 200)
-     * @see NamespaceManagementApi#getNamespaceLock
-     */
-    default ResponseEntity<OpenNamespaceLockDTO> getNamespaceLock(String appId,
-        String env,
+    default ResponseEntity<OpenNamespaceDTO> findPublicNamespaceForAssociatedNamespace(String env,
+        String appId,
         String clusterName,
-        String namespaceName) {
+        String namespaceName,
+        Boolean extendInfo) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"lockedBy\" : \"lockedBy\", \"isLocked\" : true, \"namespaceName\" : \"namespaceName\" }";
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"extendInfo\" : { \"parentAppId\" : \"parentAppId\", \"isConfigHidden\" : true, \"itemModifiedCnt\" : 0 }, \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"extendInfo\" : { \"newValue\" : \"newValue\", \"isModified\" : true, \"isDeleted\" : true, \"namespaceId\" : 6, \"oldValue\" : \"oldValue\", \"isNewlyAdded\" : true }, \"value\" : \"value\", \"key\" : \"key\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"extendInfo\" : { \"newValue\" : \"newValue\", \"isModified\" : true, \"isDeleted\" : true, \"namespaceId\" : 6, \"oldValue\" : \"oldValue\", \"isNewlyAdded\" : true }, \"value\" : \"value\", \"key\" : \"key\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -253,92 +240,6 @@ public interface NamespaceManagementApiDelegate {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
                     String exampleString = "{ \"projectA\" : { \"featureX\" : true, \"featureY\" : false }, \"projectB\" : { \"darkMode\" : true } }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances : 获取公共AppNamespace的所有实例 (new added)
-     * GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
-     *
-     * @param env 环境标识 (required)
-     * @param publicNamespaceName 公共命名空间名称 (required)
-     * @param page 页码，从0开始 (required)
-     * @param size 每页数量 (required)
-     * @return 成功获取实例列表 (status code 200)
-     * @see NamespaceManagementApi#getPublicAppNamespaceInstances
-     */
-    default ResponseEntity<List<OpenNamespaceDTO>> getPublicAppNamespaceInstances(String env,
-        String publicNamespaceName,
-        Integer page,
-        Integer size) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" } ]";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association : 获取关联的公共Namespace (new added)
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association
-     *
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @return 成功获取关联的公共Namespace (status code 200)
-     * @see NamespaceManagementApi#getPublicNamespaceAssociation
-     */
-    default ResponseEntity<OpenNamespaceDTO> getPublicNamespaceAssociation(String appId,
-        String env,
-        String clusterName,
-        String namespaceName) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName} : 获取指定的Namespace (original openapi)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
-     *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param fillItemDetail  (required)
-     * @return  (status code 200)
-     * @see NamespaceManagementApi#loadNamespace
-     */
-    default ResponseEntity<OpenNamespaceDTO> loadNamespace(String appId,
-        String env,
-        String clusterName,
-        String namespaceName,
-        Boolean fillItemDetail) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

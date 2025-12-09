@@ -1223,7 +1223,7 @@ Class Name | Input Type | Accessed Type | Description | Notes
 
 获取应用的环境集群信息 (original openapi)
 
-GET /openapi/v1/apps/{appId}/envClusters
+GET /openapi/v1/apps/{appId}/envclusters
 
 ### Example
 

@@ -2,9 +2,9 @@ package com.apollo.openapi.server.api;
 
 import com.apollo.openapi.server.model.ExceptionResponse;
 import com.apollo.openapi.server.model.OpenItemDTO;
-import com.apollo.openapi.server.model.OpenItemDiffs;
+import com.apollo.openapi.server.model.OpenItemDiffDTO;
 import com.apollo.openapi.server.model.OpenItemPageDTO;
-import com.apollo.openapi.server.model.OpenNamespaceSyncModel;
+import com.apollo.openapi.server.model.OpenNamespaceSyncDTO;
 import com.apollo.openapi.server.model.OpenNamespaceTextModel;
 
 

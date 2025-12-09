@@ -74,6 +74,10 @@ class OpenNamespaceDTO(
 
                 def __getitem__(self, i: int) -> 'OpenItemDTO':
                     return super().__getitem__(i)
+
+            @staticmethod
+            def extendInfo() -> typing.Type['OpenNamespaceExtendDTO']:
+                return OpenNamespaceExtendDTO
             __annotations__ = {
                 "dataChangeCreatedBy": dataChangeCreatedBy,
                 "dataChangeLastModifiedBy": dataChangeLastModifiedBy,
@@ -86,6 +90,7 @@ class OpenNamespaceDTO(
                 "format": format,
                 "isPublic": isPublic,
                 "items": items,
+                "extendInfo": extendInfo,
             }
 
     @typing.overload
@@ -122,9 +127,12 @@ class OpenNamespaceDTO(
     def __getitem__(self, name: typing_extensions.Literal["items"]) -> MetaOapg.properties.items: ...
 
     @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["extendInfo"]) -> 'OpenNamespaceExtendDTO': ...
+
+    @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
 
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "appId", "clusterName", "namespaceName", "comment", "format", "isPublic", "items", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "appId", "clusterName", "namespaceName", "comment", "format", "isPublic", "items", "extendInfo", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
 
@@ -163,9 +171,12 @@ class OpenNamespaceDTO(
     def get_item_oapg(self, name: typing_extensions.Literal["items"]) -> typing.Union[MetaOapg.properties.items, schemas.Unset]: ...
 
     @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["extendInfo"]) -> typing.Union['OpenNamespaceExtendDTO', schemas.Unset]: ...
+
+    @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
 
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "appId", "clusterName", "namespaceName", "comment", "format", "isPublic", "items", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "appId", "clusterName", "namespaceName", "comment", "format", "isPublic", "items", "extendInfo", ], str]):
         return super().get_item_oapg(name)
 
 
@@ -183,6 +194,7 @@ class OpenNamespaceDTO(
         format: typing.Union[MetaOapg.properties.format, str, schemas.Unset] = schemas.unset,
         isPublic: typing.Union[MetaOapg.properties.isPublic, bool, schemas.Unset] = schemas.unset,
         items: typing.Union[MetaOapg.properties.items, list, tuple, schemas.Unset] = schemas.unset,
+        extendInfo: typing.Union['OpenNamespaceExtendDTO', schemas.Unset] = schemas.unset,
         _configuration: typing.Optional[schemas.Configuration] = None,
         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
     ) -> 'OpenNamespaceDTO':
@@ -200,8 +212,10 @@ class OpenNamespaceDTO(
             format=format,
             isPublic=isPublic,
             items=items,
+            extendInfo=extendInfo,
             _configuration=_configuration,
             **kwargs,
         )
 
 from apollo_openapi.model.open_item_dto import OpenItemDTO
+from apollo_openapi.model.open_namespace_extend_dto import OpenNamespaceExtendDTO

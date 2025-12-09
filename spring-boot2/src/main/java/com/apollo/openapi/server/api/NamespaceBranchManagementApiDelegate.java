@@ -35,7 +35,7 @@ public interface NamespaceBranchManagementApiDelegate {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return 命名空间分支创建成功 (status code 200)
      * @see NamespaceBranchManagementApi#createBranch
      */
@@ -47,7 +47,7 @@ public interface NamespaceBranchManagementApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"extendInfo\" : { \"parentAppId\" : \"parentAppId\", \"isConfigHidden\" : true, \"itemModifiedCnt\" : 0 }, \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"extendInfo\" : { \"newValue\" : \"newValue\", \"isModified\" : true, \"isDeleted\" : true, \"namespaceId\" : 6, \"oldValue\" : \"oldValue\", \"isNewlyAdded\" : true }, \"value\" : \"value\", \"key\" : \"key\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"extendInfo\" : { \"newValue\" : \"newValue\", \"isModified\" : true, \"isDeleted\" : true, \"namespaceId\" : 6, \"oldValue\" : \"oldValue\", \"isNewlyAdded\" : true }, \"value\" : \"value\", \"key\" : \"key\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -70,7 +70,7 @@ public interface NamespaceBranchManagementApiDelegate {
      * @return 分支删除成功 (status code 200)
      * @see NamespaceBranchManagementApi#deleteBranch
      */
-    default ResponseEntity<Object> deleteBranch(String env,
+    default ResponseEntity<Void> deleteBranch(String env,
         String appId,
         String clusterName,
         String namespaceName,
@@ -88,6 +88,7 @@ public interface NamespaceBranchManagementApiDelegate {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
+     * @param extendInfo  (optional, default to false)
      * @return 成功获取分支信息 (status code 200)
      *         or 分支不存在 (status code 404)
      * @see NamespaceBranchManagementApi#findBranch
@@ -95,11 +96,12 @@ public interface NamespaceBranchManagementApiDelegate {
     default ResponseEntity<OpenNamespaceDTO> findBranch(String appId,
         String env,
         String clusterName,
-        String namespaceName) {
+        String namespaceName,
+        Boolean extendInfo) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"value\" : \"value\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"key\" : \"key\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"format\" : \"format\", \"isPublic\" : true, \"comment\" : \"comment\", \"extendInfo\" : { \"parentAppId\" : \"parentAppId\", \"isConfigHidden\" : true, \"itemModifiedCnt\" : 0 }, \"items\" : [ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"extendInfo\" : { \"newValue\" : \"newValue\", \"isModified\" : true, \"isDeleted\" : true, \"namespaceId\" : 6, \"oldValue\" : \"oldValue\", \"isNewlyAdded\" : true }, \"value\" : \"value\", \"key\" : \"key\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"comment\" : \"comment\", \"type\" : 0, \"extendInfo\" : { \"newValue\" : \"newValue\", \"isModified\" : true, \"isDeleted\" : true, \"namespaceId\" : 6, \"oldValue\" : \"oldValue\", \"isNewlyAdded\" : true }, \"value\" : \"value\", \"key\" : \"key\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\" } ], \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -140,8 +142,44 @@ public interface NamespaceBranchManagementApiDelegate {
     }
 
     /**
-     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} : 合并分支到主分支 (new added)
-     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}  使用 PATCH 方法表示部分更新操作（将分支状态从\&quot;独立\&quot;更新为\&quot;合并\&quot;）
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge : 合并分支 (original openapi)
+     * 合并灰度分支并可选择删除分支
+     *
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @param deleteBranch 合并后是否删除分支（true/false） (required)
+     * @param namespaceReleaseDTO  (required)
+     * @return 分支合并成功 (status code 200)
+     *         or 合并参数错误 (status code 400)
+     *         or 权限不足 (status code 403)
+     * @see NamespaceBranchManagementApi#merge
+     */
+    default ResponseEntity<OpenReleaseDTO> merge(String appId,
+        String env,
+        String clusterName,
+        String namespaceName,
+        String branchName,
+        Boolean deleteBranch,
+        NamespaceReleaseDTO namespaceReleaseDTO) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} : 合并分支到主分支 (new added)
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
      *
      * @param env 环境标识 (required)
      * @param appId 应用ID (required)
@@ -149,8 +187,8 @@ public interface NamespaceBranchManagementApiDelegate {
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param operator 操作人用户名 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return 分支合并成功 (status code 200)
      * @see NamespaceBranchManagementApi#mergeBranch
      */
@@ -160,8 +198,8 @@ public interface NamespaceBranchManagementApiDelegate {
         String namespaceName,
         String branchName,
         Boolean deleteBranch,
-        String operator,
-        NamespaceReleaseDTO namespaceReleaseDTO) {
+        NamespaceReleaseDTO namespaceReleaseDTO,
+        String operator) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
@@ -189,7 +227,7 @@ public interface NamespaceBranchManagementApiDelegate {
      * @return 灰度规则更新成功 (status code 200)
      * @see NamespaceBranchManagementApi#updateBranchRules
      */
-    default ResponseEntity<Object> updateBranchRules(String appId,
+    default ResponseEntity<Void> updateBranchRules(String appId,
         String env,
         String clusterName,
         String namespaceName,

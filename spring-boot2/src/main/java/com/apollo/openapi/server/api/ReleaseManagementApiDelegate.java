@@ -241,48 +241,12 @@ public interface ReleaseManagementApiDelegate {
     }
 
     /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge : 合并分支 (original openapi)
-     * 合并灰度分支并可选择删除分支
-     *
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param namespaceReleaseDTO  (required)
-     * @return 分支合并成功 (status code 200)
-     *         or 合并参数错误 (status code 400)
-     *         or 权限不足 (status code 403)
-     * @see ReleaseManagementApi#merge
-     */
-    default ResponseEntity<OpenReleaseDTO> merge(String appId,
-        String env,
-        String clusterName,
-        String namespaceName,
-        String branchName,
-        Boolean deleteBranch,
-        NamespaceReleaseDTO namespaceReleaseDTO) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
      * PUT /openapi/v1/envs/{env}/releases/{releaseId}/rollback : 回滚发布 (original openapi)
      * 回滚到指定的发布版本
      *
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return 发布回滚成功 (status code 200)
      * @see ReleaseManagementApi#rollback
      */

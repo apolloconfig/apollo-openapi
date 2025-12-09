@@ -47,6 +47,7 @@ class OpenGrayReleaseRuleItemDTO(
 
 
                 class MetaOapg:
+                    unique_items = True
                     items = schemas.StrSchema
 
                 def __new__(
@@ -70,6 +71,7 @@ class OpenGrayReleaseRuleItemDTO(
 
 
                 class MetaOapg:
+                    unique_items = True
                     items = schemas.StrSchema
 
                 def __new__(

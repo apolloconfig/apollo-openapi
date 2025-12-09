@@ -83,7 +83,7 @@ public class NamespaceBranchManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -167,11 +167,6 @@ public class NamespaceBranchManagementApi {
             throw new ApiException("Missing the required parameter 'namespaceName' when calling createBranch(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling createBranch(Async)");
-        }
-
         return createBranchCall(appId, env, clusterName, namespaceName, operator, _callback);
 
     }
@@ -183,7 +178,7 @@ public class NamespaceBranchManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return OpenNamespaceDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -204,7 +199,7 @@ public class NamespaceBranchManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return ApiResponse&lt;OpenNamespaceDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -226,7 +221,7 @@ public class NamespaceBranchManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -295,7 +290,6 @@ public class NamespaceBranchManagementApi {
         }
 
         final String[] localVarAccepts = {
-            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -358,7 +352,6 @@ public class NamespaceBranchManagementApi {
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param operator 操作人用户名 (required)
-     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -366,9 +359,8 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 分支删除成功 </td><td>  -  </td></tr>
      </table>
      */
-    public Object deleteBranch(String env, String appId, String clusterName, String namespaceName, String branchName, String operator) throws ApiException {
-        ApiResponse<Object> localVarResp = deleteBranchWithHttpInfo(env, appId, clusterName, namespaceName, branchName, operator);
-        return localVarResp.getData();
+    public void deleteBranch(String env, String appId, String clusterName, String namespaceName, String branchName, String operator) throws ApiException {
+        deleteBranchWithHttpInfo(env, appId, clusterName, namespaceName, branchName, operator);
     }
 
     /**
@@ -380,7 +372,7 @@ public class NamespaceBranchManagementApi {
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param operator 操作人用户名 (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -388,10 +380,9 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 分支删除成功 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> deleteBranchWithHttpInfo(String env, String appId, String clusterName, String namespaceName, String branchName, String operator) throws ApiException {
+    public ApiResponse<Void> deleteBranchWithHttpInfo(String env, String appId, String clusterName, String namespaceName, String branchName, String operator) throws ApiException {
         okhttp3.Call localVarCall = deleteBranchValidateBeforeCall(env, appId, clusterName, namespaceName, branchName, operator, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -412,11 +403,10 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 分支删除成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteBranchAsync(String env, String appId, String clusterName, String namespaceName, String branchName, String operator, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call deleteBranchAsync(String env, String appId, String clusterName, String namespaceName, String branchName, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = deleteBranchValidateBeforeCall(env, appId, clusterName, namespaceName, branchName, operator, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**
@@ -425,6 +415,7 @@ public class NamespaceBranchManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
+     * @param extendInfo  (optional, default to false)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -435,7 +426,7 @@ public class NamespaceBranchManagementApi {
         <tr><td> 404 </td><td> 分支不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call findBranchCall(String appId, String env, String clusterName, String namespaceName, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call findBranchCall(String appId, String env, String clusterName, String namespaceName, Boolean extendInfo, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -464,6 +455,10 @@ public class NamespaceBranchManagementApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (extendInfo != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("extendInfo", extendInfo));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -484,7 +479,7 @@ public class NamespaceBranchManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call findBranchValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call findBranchValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, Boolean extendInfo, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling findBranch(Async)");
@@ -505,7 +500,7 @@ public class NamespaceBranchManagementApi {
             throw new ApiException("Missing the required parameter 'namespaceName' when calling findBranch(Async)");
         }
 
-        return findBranchCall(appId, env, clusterName, namespaceName, _callback);
+        return findBranchCall(appId, env, clusterName, namespaceName, extendInfo, _callback);
 
     }
 
@@ -516,6 +511,7 @@ public class NamespaceBranchManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
+     * @param extendInfo  (optional, default to false)
      * @return OpenNamespaceDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -525,8 +521,8 @@ public class NamespaceBranchManagementApi {
         <tr><td> 404 </td><td> 分支不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public OpenNamespaceDTO findBranch(String appId, String env, String clusterName, String namespaceName) throws ApiException {
-        ApiResponse<OpenNamespaceDTO> localVarResp = findBranchWithHttpInfo(appId, env, clusterName, namespaceName);
+    public OpenNamespaceDTO findBranch(String appId, String env, String clusterName, String namespaceName, Boolean extendInfo) throws ApiException {
+        ApiResponse<OpenNamespaceDTO> localVarResp = findBranchWithHttpInfo(appId, env, clusterName, namespaceName, extendInfo);
         return localVarResp.getData();
     }
 
@@ -537,6 +533,7 @@ public class NamespaceBranchManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
+     * @param extendInfo  (optional, default to false)
      * @return ApiResponse&lt;OpenNamespaceDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -546,8 +543,8 @@ public class NamespaceBranchManagementApi {
         <tr><td> 404 </td><td> 分支不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenNamespaceDTO> findBranchWithHttpInfo(String appId, String env, String clusterName, String namespaceName) throws ApiException {
-        okhttp3.Call localVarCall = findBranchValidateBeforeCall(appId, env, clusterName, namespaceName, null);
+    public ApiResponse<OpenNamespaceDTO> findBranchWithHttpInfo(String appId, String env, String clusterName, String namespaceName, Boolean extendInfo) throws ApiException {
+        okhttp3.Call localVarCall = findBranchValidateBeforeCall(appId, env, clusterName, namespaceName, extendInfo, null);
         Type localVarReturnType = new TypeToken<OpenNamespaceDTO>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -559,6 +556,7 @@ public class NamespaceBranchManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
+     * @param extendInfo  (optional, default to false)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -569,9 +567,9 @@ public class NamespaceBranchManagementApi {
         <tr><td> 404 </td><td> 分支不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call findBranchAsync(String appId, String env, String clusterName, String namespaceName, final ApiCallback<OpenNamespaceDTO> _callback) throws ApiException {
+    public okhttp3.Call findBranchAsync(String appId, String env, String clusterName, String namespaceName, Boolean extendInfo, final ApiCallback<OpenNamespaceDTO> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = findBranchValidateBeforeCall(appId, env, clusterName, namespaceName, _callback);
+        okhttp3.Call localVarCall = findBranchValidateBeforeCall(appId, env, clusterName, namespaceName, extendInfo, _callback);
         Type localVarReturnType = new TypeToken<OpenNamespaceDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -740,6 +738,200 @@ public class NamespaceBranchManagementApi {
         return localVarCall;
     }
     /**
+     * Build call for merge
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @param deleteBranch 合并后是否删除分支（true/false） (required)
+     * @param namespaceReleaseDTO  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> 合并参数错误 </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call mergeCall(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = namespaceReleaseDTO;
+
+        // create path and map variables
+        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge"
+            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
+            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
+            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
+            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()))
+            .replace("{" + "branchName" + "}", localVarApiClient.escapeString(branchName.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (deleteBranch != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("deleteBranch", deleteBranch));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call mergeValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'appId' is set
+        if (appId == null) {
+            throw new ApiException("Missing the required parameter 'appId' when calling merge(Async)");
+        }
+
+        // verify the required parameter 'env' is set
+        if (env == null) {
+            throw new ApiException("Missing the required parameter 'env' when calling merge(Async)");
+        }
+
+        // verify the required parameter 'clusterName' is set
+        if (clusterName == null) {
+            throw new ApiException("Missing the required parameter 'clusterName' when calling merge(Async)");
+        }
+
+        // verify the required parameter 'namespaceName' is set
+        if (namespaceName == null) {
+            throw new ApiException("Missing the required parameter 'namespaceName' when calling merge(Async)");
+        }
+
+        // verify the required parameter 'branchName' is set
+        if (branchName == null) {
+            throw new ApiException("Missing the required parameter 'branchName' when calling merge(Async)");
+        }
+
+        // verify the required parameter 'deleteBranch' is set
+        if (deleteBranch == null) {
+            throw new ApiException("Missing the required parameter 'deleteBranch' when calling merge(Async)");
+        }
+
+        // verify the required parameter 'namespaceReleaseDTO' is set
+        if (namespaceReleaseDTO == null) {
+            throw new ApiException("Missing the required parameter 'namespaceReleaseDTO' when calling merge(Async)");
+        }
+
+        return mergeCall(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, _callback);
+
+    }
+
+    /**
+     * 合并分支 (original openapi)
+     * 合并灰度分支并可选择删除分支
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @param deleteBranch 合并后是否删除分支（true/false） (required)
+     * @param namespaceReleaseDTO  (required)
+     * @return OpenReleaseDTO
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> 合并参数错误 </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
+     </table>
+     */
+    public OpenReleaseDTO merge(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO) throws ApiException {
+        ApiResponse<OpenReleaseDTO> localVarResp = mergeWithHttpInfo(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO);
+        return localVarResp.getData();
+    }
+
+    /**
+     * 合并分支 (original openapi)
+     * 合并灰度分支并可选择删除分支
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @param deleteBranch 合并后是否删除分支（true/false） (required)
+     * @param namespaceReleaseDTO  (required)
+     * @return ApiResponse&lt;OpenReleaseDTO&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> 合并参数错误 </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<OpenReleaseDTO> mergeWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO) throws ApiException {
+        okhttp3.Call localVarCall = mergeValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, null);
+        Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * 合并分支 (original openapi) (asynchronously)
+     * 合并灰度分支并可选择删除分支
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @param deleteBranch 合并后是否删除分支（true/false） (required)
+     * @param namespaceReleaseDTO  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> 合并参数错误 </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call mergeAsync(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback<OpenReleaseDTO> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = mergeValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, _callback);
+        Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for mergeBranch
      * @param env 环境标识 (required)
      * @param appId 应用ID (required)
@@ -747,8 +939,8 @@ public class NamespaceBranchManagementApi {
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param operator 操作人用户名 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -758,7 +950,7 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call mergeBranchCall(String env, String appId, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, String operator, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call mergeBranchCall(String env, String appId, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -813,11 +1005,11 @@ public class NamespaceBranchManagementApi {
         }
 
         String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "PATCH", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call mergeBranchValidateBeforeCall(String env, String appId, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, String operator, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call mergeBranchValidateBeforeCall(String env, String appId, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'env' is set
         if (env == null) {
             throw new ApiException("Missing the required parameter 'env' when calling mergeBranch(Async)");
@@ -848,31 +1040,26 @@ public class NamespaceBranchManagementApi {
             throw new ApiException("Missing the required parameter 'deleteBranch' when calling mergeBranch(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling mergeBranch(Async)");
-        }
-
         // verify the required parameter 'namespaceReleaseDTO' is set
         if (namespaceReleaseDTO == null) {
             throw new ApiException("Missing the required parameter 'namespaceReleaseDTO' when calling mergeBranch(Async)");
         }
 
-        return mergeBranchCall(env, appId, clusterName, namespaceName, branchName, deleteBranch, operator, namespaceReleaseDTO, _callback);
+        return mergeBranchCall(env, appId, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, operator, _callback);
 
     }
 
     /**
      * 合并分支到主分支 (new added)
-     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}  使用 PATCH 方法表示部分更新操作（将分支状态从\&quot;独立\&quot;更新为\&quot;合并\&quot;）
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
      * @param env 环境标识 (required)
      * @param appId 应用ID (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param operator 操作人用户名 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return OpenReleaseDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -881,22 +1068,22 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
      </table>
      */
-    public OpenReleaseDTO mergeBranch(String env, String appId, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, String operator, NamespaceReleaseDTO namespaceReleaseDTO) throws ApiException {
-        ApiResponse<OpenReleaseDTO> localVarResp = mergeBranchWithHttpInfo(env, appId, clusterName, namespaceName, branchName, deleteBranch, operator, namespaceReleaseDTO);
+    public OpenReleaseDTO mergeBranch(String env, String appId, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, String operator) throws ApiException {
+        ApiResponse<OpenReleaseDTO> localVarResp = mergeBranchWithHttpInfo(env, appId, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, operator);
         return localVarResp.getData();
     }
 
     /**
      * 合并分支到主分支 (new added)
-     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}  使用 PATCH 方法表示部分更新操作（将分支状态从\&quot;独立\&quot;更新为\&quot;合并\&quot;）
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
      * @param env 环境标识 (required)
      * @param appId 应用ID (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param operator 操作人用户名 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return ApiResponse&lt;OpenReleaseDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -905,23 +1092,23 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenReleaseDTO> mergeBranchWithHttpInfo(String env, String appId, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, String operator, NamespaceReleaseDTO namespaceReleaseDTO) throws ApiException {
-        okhttp3.Call localVarCall = mergeBranchValidateBeforeCall(env, appId, clusterName, namespaceName, branchName, deleteBranch, operator, namespaceReleaseDTO, null);
+    public ApiResponse<OpenReleaseDTO> mergeBranchWithHttpInfo(String env, String appId, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = mergeBranchValidateBeforeCall(env, appId, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, operator, null);
         Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * 合并分支到主分支 (new added) (asynchronously)
-     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}  使用 PATCH 方法表示部分更新操作（将分支状态从\&quot;独立\&quot;更新为\&quot;合并\&quot;）
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
      * @param env 环境标识 (required)
      * @param appId 应用ID (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param operator 操作人用户名 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -931,9 +1118,9 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call mergeBranchAsync(String env, String appId, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, String operator, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback<OpenReleaseDTO> _callback) throws ApiException {
+    public okhttp3.Call mergeBranchAsync(String env, String appId, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, String operator, final ApiCallback<OpenReleaseDTO> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = mergeBranchValidateBeforeCall(env, appId, clusterName, namespaceName, branchName, deleteBranch, operator, namespaceReleaseDTO, _callback);
+        okhttp3.Call localVarCall = mergeBranchValidateBeforeCall(env, appId, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, operator, _callback);
         Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -991,7 +1178,6 @@ public class NamespaceBranchManagementApi {
         }
 
         final String[] localVarAccepts = {
-            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1061,7 +1247,6 @@ public class NamespaceBranchManagementApi {
      * @param branchName 分支名称 (required)
      * @param operator 操作人用户名 (required)
      * @param openGrayReleaseRuleDTO  (required)
-     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1069,9 +1254,8 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 灰度规则更新成功 </td><td>  -  </td></tr>
      </table>
      */
-    public Object updateBranchRules(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO) throws ApiException {
-        ApiResponse<Object> localVarResp = updateBranchRulesWithHttpInfo(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO);
-        return localVarResp.getData();
+    public void updateBranchRules(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO) throws ApiException {
+        updateBranchRulesWithHttpInfo(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO);
     }
 
     /**
@@ -1084,7 +1268,7 @@ public class NamespaceBranchManagementApi {
      * @param branchName 分支名称 (required)
      * @param operator 操作人用户名 (required)
      * @param openGrayReleaseRuleDTO  (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1092,10 +1276,9 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 灰度规则更新成功 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> updateBranchRulesWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO) throws ApiException {
+    public ApiResponse<Void> updateBranchRulesWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO) throws ApiException {
         okhttp3.Call localVarCall = updateBranchRulesValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -1117,11 +1300,10 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 灰度规则更新成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateBranchRulesAsync(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call updateBranchRulesAsync(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = updateBranchRulesValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
 }

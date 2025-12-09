@@ -19,3 +19,4 @@ Apollo命名空间数据传输对象，表示一个完整的命名空间及其�
 |**format** | **String** | 命名空间格式类型，如properties、xml、json、yml等 |  [optional] |
 |**isPublic** | **Boolean** | 是否为公共命名空间，公共命名空间可以被其他应用关联使用 |  [optional] |
 |**items** | [**List&lt;OpenItemDTO&gt;**](OpenItemDTO.md) | 命名空间包含的配置项列表 |  [optional] |
+|**extendInfo** | [**OpenNamespaceExtendDTO**](OpenNamespaceExtendDTO.md) |  |  [optional] |

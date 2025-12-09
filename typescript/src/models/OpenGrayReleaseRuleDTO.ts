@@ -76,10 +76,10 @@ export interface OpenGrayReleaseRuleDTO {
     branchName?: string;
     /**
      * 灰度发布规则项列表，包含具体的灰度规则条件
-     * @type {Array<OpenGrayReleaseRuleItemDTO>}
+     * @type {Set<OpenGrayReleaseRuleItemDTO>}
      * @memberof OpenGrayReleaseRuleDTO
      */
-    ruleItems?: Array<OpenGrayReleaseRuleItemDTO>;
+    ruleItems?: Set<OpenGrayReleaseRuleItemDTO>;
 }
 
 /**
@@ -109,7 +109,7 @@ export function OpenGrayReleaseRuleDTOFromJSONTyped(json: any, ignoreDiscriminat
         'clusterName': !exists(json, 'clusterName') ? undefined : json['clusterName'],
         'namespaceName': !exists(json, 'namespaceName') ? undefined : json['namespaceName'],
         'branchName': !exists(json, 'branchName') ? undefined : json['branchName'],
-        'ruleItems': !exists(json, 'ruleItems') ? undefined : ((json['ruleItems'] as Array<any>).map(OpenGrayReleaseRuleItemDTOFromJSON)),
+        'ruleItems': !exists(json, 'ruleItems') ? undefined : (new Set((json['ruleItems'] as Array<any>).map(OpenGrayReleaseRuleItemDTOFromJSON))),
     };
 }
 
@@ -130,6 +130,6 @@ export function OpenGrayReleaseRuleDTOToJSON(value?: OpenGrayReleaseRuleDTO | nu
         'clusterName': value.clusterName,
         'namespaceName': value.namespaceName,
         'branchName': value.branchName,
-        'ruleItems': value.ruleItems === undefined ? undefined : ((value.ruleItems as Array<any>).map(OpenGrayReleaseRuleItemDTOToJSON)),
+        'ruleItems': value.ruleItems === undefined ? undefined : (Array.from(value.ruleItems as Set<any>).map(OpenGrayReleaseRuleItemDTOToJSON)),
     };
 }

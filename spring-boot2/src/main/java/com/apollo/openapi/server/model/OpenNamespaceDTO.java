@@ -3,6 +3,7 @@ package com.apollo.openapi.server.model;
 import java.net.URI;
 import java.util.Objects;
 import com.apollo.openapi.server.model.OpenItemDTO;
+import com.apollo.openapi.server.model.OpenNamespaceExtendDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.ArrayList;
@@ -47,6 +48,8 @@ public class OpenNamespaceDTO {
 
   @Valid
   private List<@Valid OpenItemDTO> items;
+
+  private OpenNamespaceExtendDTO extendInfo;
 
   public OpenNamespaceDTO dataChangeCreatedBy(String dataChangeCreatedBy) {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
@@ -276,6 +279,26 @@ public class OpenNamespaceDTO {
     this.items = items;
   }
 
+  public OpenNamespaceDTO extendInfo(OpenNamespaceExtendDTO extendInfo) {
+    this.extendInfo = extendInfo;
+    return this;
+  }
+
+  /**
+   * Get extendInfo
+   * @return extendInfo
+  */
+  @Valid
+  @Schema(name = "extendInfo", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("extendInfo")
+  public OpenNamespaceExtendDTO getExtendInfo() {
+    return extendInfo;
+  }
+
+  public void setExtendInfo(OpenNamespaceExtendDTO extendInfo) {
+    this.extendInfo = extendInfo;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -295,12 +318,13 @@ public class OpenNamespaceDTO {
         Objects.equals(this.comment, openNamespaceDTO.comment) &&
         Objects.equals(this.format, openNamespaceDTO.format) &&
         Objects.equals(this.isPublic, openNamespaceDTO.isPublic) &&
-        Objects.equals(this.items, openNamespaceDTO.items);
+        Objects.equals(this.items, openNamespaceDTO.items) &&
+        Objects.equals(this.extendInfo, openNamespaceDTO.extendInfo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, appId, clusterName, namespaceName, comment, format, isPublic, items);
+    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, appId, clusterName, namespaceName, comment, format, isPublic, items, extendInfo);
   }
 
   @Override
@@ -318,6 +342,7 @@ public class OpenNamespaceDTO {
     sb.append("    format: ").append(toIndentedString(format)).append("\n");
     sb.append("    isPublic: ").append(toIndentedString(isPublic)).append("\n");
     sb.append("    items: ").append(toIndentedString(items)).append("\n");
+    sb.append("    extendInfo: ").append(toIndentedString(extendInfo)).append("\n");
     sb.append("}");
     return sb.toString();
   }

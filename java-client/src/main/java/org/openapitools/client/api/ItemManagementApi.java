@@ -29,9 +29,9 @@ import java.io.IOException;
 
 import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.OpenItemDTO;
-import org.openapitools.client.model.OpenItemDiffs;
+import org.openapitools.client.model.OpenItemDiffDTO;
 import org.openapitools.client.model.OpenItemPageDTO;
-import org.openapitools.client.model.OpenNamespaceSyncModel;
+import org.openapitools.client.model.OpenNamespaceSyncDTO;
 import org.openapitools.client.model.OpenNamespaceTextModel;
 
 import java.lang.reflect.Type;
@@ -84,8 +84,8 @@ public class ItemManagementApi {
      * @param env  (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param operator 操作人用户名 (required)
      * @param openNamespaceTextModel  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -96,7 +96,7 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call batchUpdateItemsByTextCall(String appId, String env, String clusterName, String namespaceName, String operator, OpenNamespaceTextModel openNamespaceTextModel, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call batchUpdateItemsByTextCall(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -113,7 +113,7 @@ public class ItemManagementApi {
         Object localVarPostBody = openNamespaceTextModel;
 
         // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate"
+        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items"
             .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
             .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
             .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
@@ -150,7 +150,7 @@ public class ItemManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call batchUpdateItemsByTextValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String operator, OpenNamespaceTextModel openNamespaceTextModel, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call batchUpdateItemsByTextValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling batchUpdateItemsByText(Async)");
@@ -171,30 +171,24 @@ public class ItemManagementApi {
             throw new ApiException("Missing the required parameter 'namespaceName' when calling batchUpdateItemsByText(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling batchUpdateItemsByText(Async)");
-        }
-
         // verify the required parameter 'openNamespaceTextModel' is set
         if (openNamespaceTextModel == null) {
             throw new ApiException("Missing the required parameter 'openNamespaceTextModel' when calling batchUpdateItemsByText(Async)");
         }
 
-        return batchUpdateItemsByTextCall(appId, env, clusterName, namespaceName, operator, openNamespaceTextModel, _callback);
+        return batchUpdateItemsByTextCall(appId, env, clusterName, namespaceName, openNamespaceTextModel, operator, _callback);
 
     }
 
     /**
      * 通过文本批量修改配置项 (new added)
-     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate:
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:
      * @param appId  (required)
      * @param env  (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param operator 操作人用户名 (required)
      * @param openNamespaceTextModel  (required)
-     * @return Object
+     * @param operator 操作人用户名 (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -203,21 +197,20 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public Object batchUpdateItemsByText(String appId, String env, String clusterName, String namespaceName, String operator, OpenNamespaceTextModel openNamespaceTextModel) throws ApiException {
-        ApiResponse<Object> localVarResp = batchUpdateItemsByTextWithHttpInfo(appId, env, clusterName, namespaceName, operator, openNamespaceTextModel);
-        return localVarResp.getData();
+    public void batchUpdateItemsByText(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel, String operator) throws ApiException {
+        batchUpdateItemsByTextWithHttpInfo(appId, env, clusterName, namespaceName, openNamespaceTextModel, operator);
     }
 
     /**
      * 通过文本批量修改配置项 (new added)
-     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate:
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:
      * @param appId  (required)
      * @param env  (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param operator 操作人用户名 (required)
      * @param openNamespaceTextModel  (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @param operator 操作人用户名 (optional)
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -226,21 +219,20 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> batchUpdateItemsByTextWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String operator, OpenNamespaceTextModel openNamespaceTextModel) throws ApiException {
-        okhttp3.Call localVarCall = batchUpdateItemsByTextValidateBeforeCall(appId, env, clusterName, namespaceName, operator, openNamespaceTextModel, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    public ApiResponse<Void> batchUpdateItemsByTextWithHttpInfo(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel, String operator) throws ApiException {
+        okhttp3.Call localVarCall = batchUpdateItemsByTextValidateBeforeCall(appId, env, clusterName, namespaceName, openNamespaceTextModel, operator, null);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
      * 通过文本批量修改配置项 (new added) (asynchronously)
-     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate:
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:
      * @param appId  (required)
      * @param env  (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param operator 操作人用户名 (required)
      * @param openNamespaceTextModel  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -251,11 +243,10 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call batchUpdateItemsByTextAsync(String appId, String env, String clusterName, String namespaceName, String operator, OpenNamespaceTextModel openNamespaceTextModel, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call batchUpdateItemsByTextAsync(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = batchUpdateItemsByTextValidateBeforeCall(appId, env, clusterName, namespaceName, operator, openNamespaceTextModel, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        okhttp3.Call localVarCall = batchUpdateItemsByTextValidateBeforeCall(appId, env, clusterName, namespaceName, openNamespaceTextModel, operator, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**
@@ -264,7 +255,7 @@ public class ItemManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param openNamespaceSyncModel  (required)
+     * @param openNamespaceSyncDTO  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -274,7 +265,7 @@ public class ItemManagementApi {
         <tr><td> 200 </td><td> 成功对比命名空间配置差异 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call compareItemsCall(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncModel openNamespaceSyncModel, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call compareItemsCall(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncDTO openNamespaceSyncDTO, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -288,10 +279,10 @@ public class ItemManagementApi {
             basePath = null;
         }
 
-        Object localVarPostBody = openNamespaceSyncModel;
+        Object localVarPostBody = openNamespaceSyncDTO;
 
         // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare"
+        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/diff"
             .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
             .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
             .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
@@ -324,7 +315,7 @@ public class ItemManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call compareItemsValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncModel openNamespaceSyncModel, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call compareItemsValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncDTO openNamespaceSyncDTO, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling compareItems(Async)");
@@ -345,24 +336,24 @@ public class ItemManagementApi {
             throw new ApiException("Missing the required parameter 'namespaceName' when calling compareItems(Async)");
         }
 
-        // verify the required parameter 'openNamespaceSyncModel' is set
-        if (openNamespaceSyncModel == null) {
-            throw new ApiException("Missing the required parameter 'openNamespaceSyncModel' when calling compareItems(Async)");
+        // verify the required parameter 'openNamespaceSyncDTO' is set
+        if (openNamespaceSyncDTO == null) {
+            throw new ApiException("Missing the required parameter 'openNamespaceSyncDTO' when calling compareItems(Async)");
         }
 
-        return compareItemsCall(appId, env, clusterName, namespaceName, openNamespaceSyncModel, _callback);
+        return compareItemsCall(appId, env, clusterName, namespaceName, openNamespaceSyncDTO, _callback);
 
     }
 
     /**
      * 对比命名空间配置差异 (new added)
-     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare
+     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/diff
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param openNamespaceSyncModel  (required)
-     * @return List&lt;OpenItemDiffs&gt;
+     * @param openNamespaceSyncDTO  (required)
+     * @return List&lt;OpenItemDiffDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -370,20 +361,20 @@ public class ItemManagementApi {
         <tr><td> 200 </td><td> 成功对比命名空间配置差异 </td><td>  -  </td></tr>
      </table>
      */
-    public List<OpenItemDiffs> compareItems(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncModel openNamespaceSyncModel) throws ApiException {
-        ApiResponse<List<OpenItemDiffs>> localVarResp = compareItemsWithHttpInfo(appId, env, clusterName, namespaceName, openNamespaceSyncModel);
+    public List<OpenItemDiffDTO> compareItems(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncDTO openNamespaceSyncDTO) throws ApiException {
+        ApiResponse<List<OpenItemDiffDTO>> localVarResp = compareItemsWithHttpInfo(appId, env, clusterName, namespaceName, openNamespaceSyncDTO);
         return localVarResp.getData();
     }
 
     /**
      * 对比命名空间配置差异 (new added)
-     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare
+     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/diff
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param openNamespaceSyncModel  (required)
-     * @return ApiResponse&lt;List&lt;OpenItemDiffs&gt;&gt;
+     * @param openNamespaceSyncDTO  (required)
+     * @return ApiResponse&lt;List&lt;OpenItemDiffDTO&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -391,20 +382,20 @@ public class ItemManagementApi {
         <tr><td> 200 </td><td> 成功对比命名空间配置差异 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<OpenItemDiffs>> compareItemsWithHttpInfo(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncModel openNamespaceSyncModel) throws ApiException {
-        okhttp3.Call localVarCall = compareItemsValidateBeforeCall(appId, env, clusterName, namespaceName, openNamespaceSyncModel, null);
-        Type localVarReturnType = new TypeToken<List<OpenItemDiffs>>(){}.getType();
+    public ApiResponse<List<OpenItemDiffDTO>> compareItemsWithHttpInfo(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncDTO openNamespaceSyncDTO) throws ApiException {
+        okhttp3.Call localVarCall = compareItemsValidateBeforeCall(appId, env, clusterName, namespaceName, openNamespaceSyncDTO, null);
+        Type localVarReturnType = new TypeToken<List<OpenItemDiffDTO>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * 对比命名空间配置差异 (new added) (asynchronously)
-     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare
+     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/diff
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param openNamespaceSyncModel  (required)
+     * @param openNamespaceSyncDTO  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -414,10 +405,10 @@ public class ItemManagementApi {
         <tr><td> 200 </td><td> 成功对比命名空间配置差异 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call compareItemsAsync(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncModel openNamespaceSyncModel, final ApiCallback<List<OpenItemDiffs>> _callback) throws ApiException {
+    public okhttp3.Call compareItemsAsync(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncDTO openNamespaceSyncDTO, final ApiCallback<List<OpenItemDiffDTO>> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = compareItemsValidateBeforeCall(appId, env, clusterName, namespaceName, openNamespaceSyncModel, _callback);
-        Type localVarReturnType = new TypeToken<List<OpenItemDiffs>>(){}.getType();
+        okhttp3.Call localVarCall = compareItemsValidateBeforeCall(appId, env, clusterName, namespaceName, openNamespaceSyncDTO, _callback);
+        Type localVarReturnType = new TypeToken<List<OpenItemDiffDTO>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -427,8 +418,8 @@ public class ItemManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
      * @param openItemDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -440,7 +431,7 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createItemCall(String appId, String env, String clusterName, String namespaceName, String operator, OpenItemDTO openItemDTO, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call createItemCall(String appId, String env, String clusterName, String namespaceName, OpenItemDTO openItemDTO, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -494,7 +485,7 @@ public class ItemManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createItemValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String operator, OpenItemDTO openItemDTO, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createItemValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, OpenItemDTO openItemDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling createItem(Async)");
@@ -515,17 +506,12 @@ public class ItemManagementApi {
             throw new ApiException("Missing the required parameter 'namespaceName' when calling createItem(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling createItem(Async)");
-        }
-
         // verify the required parameter 'openItemDTO' is set
         if (openItemDTO == null) {
             throw new ApiException("Missing the required parameter 'openItemDTO' when calling createItem(Async)");
         }
 
-        return createItemCall(appId, env, clusterName, namespaceName, operator, openItemDTO, _callback);
+        return createItemCall(appId, env, clusterName, namespaceName, openItemDTO, operator, _callback);
 
     }
 
@@ -536,8 +522,8 @@ public class ItemManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
      * @param openItemDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return OpenItemDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -548,8 +534,8 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public OpenItemDTO createItem(String appId, String env, String clusterName, String namespaceName, String operator, OpenItemDTO openItemDTO) throws ApiException {
-        ApiResponse<OpenItemDTO> localVarResp = createItemWithHttpInfo(appId, env, clusterName, namespaceName, operator, openItemDTO);
+    public OpenItemDTO createItem(String appId, String env, String clusterName, String namespaceName, OpenItemDTO openItemDTO, String operator) throws ApiException {
+        ApiResponse<OpenItemDTO> localVarResp = createItemWithHttpInfo(appId, env, clusterName, namespaceName, openItemDTO, operator);
         return localVarResp.getData();
     }
 
@@ -560,8 +546,8 @@ public class ItemManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
      * @param openItemDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return ApiResponse&lt;OpenItemDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -572,8 +558,8 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenItemDTO> createItemWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String operator, OpenItemDTO openItemDTO) throws ApiException {
-        okhttp3.Call localVarCall = createItemValidateBeforeCall(appId, env, clusterName, namespaceName, operator, openItemDTO, null);
+    public ApiResponse<OpenItemDTO> createItemWithHttpInfo(String appId, String env, String clusterName, String namespaceName, OpenItemDTO openItemDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = createItemValidateBeforeCall(appId, env, clusterName, namespaceName, openItemDTO, operator, null);
         Type localVarReturnType = new TypeToken<OpenItemDTO>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -585,8 +571,8 @@ public class ItemManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
      * @param openItemDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -598,9 +584,9 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createItemAsync(String appId, String env, String clusterName, String namespaceName, String operator, OpenItemDTO openItemDTO, final ApiCallback<OpenItemDTO> _callback) throws ApiException {
+    public okhttp3.Call createItemAsync(String appId, String env, String clusterName, String namespaceName, OpenItemDTO openItemDTO, String operator, final ApiCallback<OpenItemDTO> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createItemValidateBeforeCall(appId, env, clusterName, namespaceName, operator, openItemDTO, _callback);
+        okhttp3.Call localVarCall = createItemValidateBeforeCall(appId, env, clusterName, namespaceName, openItemDTO, operator, _callback);
         Type localVarReturnType = new TypeToken<OpenItemDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -612,7 +598,7 @@ public class ItemManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param key 配置项键名 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -657,7 +643,6 @@ public class ItemManagementApi {
         }
 
         final String[] localVarAccepts = {
-            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -702,11 +687,6 @@ public class ItemManagementApi {
             throw new ApiException("Missing the required parameter 'key' when calling deleteItem(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling deleteItem(Async)");
-        }
-
         return deleteItemCall(appId, env, clusterName, namespaceName, key, operator, _callback);
 
     }
@@ -719,8 +699,7 @@ public class ItemManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param key 配置项键名 (required)
-     * @param operator 操作人用户名 (required)
-     * @return Object
+     * @param operator 操作人用户名 (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -728,9 +707,8 @@ public class ItemManagementApi {
         <tr><td> 200 </td><td> 配置项删除成功 </td><td>  -  </td></tr>
      </table>
      */
-    public Object deleteItem(String appId, String env, String clusterName, String namespaceName, String key, String operator) throws ApiException {
-        ApiResponse<Object> localVarResp = deleteItemWithHttpInfo(appId, env, clusterName, namespaceName, key, operator);
-        return localVarResp.getData();
+    public void deleteItem(String appId, String env, String clusterName, String namespaceName, String key, String operator) throws ApiException {
+        deleteItemWithHttpInfo(appId, env, clusterName, namespaceName, key, operator);
     }
 
     /**
@@ -741,8 +719,8 @@ public class ItemManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param key 配置项键名 (required)
-     * @param operator 操作人用户名 (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @param operator 操作人用户名 (optional)
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -750,10 +728,9 @@ public class ItemManagementApi {
         <tr><td> 200 </td><td> 配置项删除成功 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> deleteItemWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String key, String operator) throws ApiException {
+    public ApiResponse<Void> deleteItemWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String key, String operator) throws ApiException {
         okhttp3.Call localVarCall = deleteItemValidateBeforeCall(appId, env, clusterName, namespaceName, key, operator, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -764,7 +741,7 @@ public class ItemManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param key 配置项键名 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -774,11 +751,10 @@ public class ItemManagementApi {
         <tr><td> 200 </td><td> 配置项删除成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteItemAsync(String appId, String env, String clusterName, String namespaceName, String key, String operator, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call deleteItemAsync(String appId, String env, String clusterName, String namespaceName, String key, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = deleteItemValidateBeforeCall(appId, env, clusterName, namespaceName, key, operator, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**
@@ -833,7 +809,6 @@ public class ItemManagementApi {
         }
 
         final String[] localVarAccepts = {
-            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -896,7 +871,6 @@ public class ItemManagementApi {
      * @param namespaceName  (required)
      * @param key  (required)
      * @param operator  (required)
-     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -904,9 +878,8 @@ public class ItemManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public Object deleteItemByEncodedKey(String appId, String env, String clusterName, String namespaceName, String key, String operator) throws ApiException {
-        ApiResponse<Object> localVarResp = deleteItemByEncodedKeyWithHttpInfo(appId, env, clusterName, namespaceName, key, operator);
-        return localVarResp.getData();
+    public void deleteItemByEncodedKey(String appId, String env, String clusterName, String namespaceName, String key, String operator) throws ApiException {
+        deleteItemByEncodedKeyWithHttpInfo(appId, env, clusterName, namespaceName, key, operator);
     }
 
     /**
@@ -918,7 +891,7 @@ public class ItemManagementApi {
      * @param namespaceName  (required)
      * @param key  (required)
      * @param operator  (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -926,10 +899,9 @@ public class ItemManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> deleteItemByEncodedKeyWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String key, String operator) throws ApiException {
+    public ApiResponse<Void> deleteItemByEncodedKeyWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String key, String operator) throws ApiException {
         okhttp3.Call localVarCall = deleteItemByEncodedKeyValidateBeforeCall(appId, env, clusterName, namespaceName, key, operator, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -950,10 +922,176 @@ public class ItemManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteItemByEncodedKeyAsync(String appId, String env, String clusterName, String namespaceName, String key, String operator, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call deleteItemByEncodedKeyAsync(String appId, String env, String clusterName, String namespaceName, String key, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = deleteItemByEncodedKeyValidateBeforeCall(appId, env, clusterName, namespaceName, key, operator, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for findBranchItems
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 成功获取分支下的配置项列表 </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> 分支不存在 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call findBranchItemsCall(String appId, String env, String clusterName, String namespaceName, String branchName, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items"
+            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
+            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
+            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
+            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()))
+            .replace("{" + "branchName" + "}", localVarApiClient.escapeString(branchName.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call findBranchItemsValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String branchName, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'appId' is set
+        if (appId == null) {
+            throw new ApiException("Missing the required parameter 'appId' when calling findBranchItems(Async)");
+        }
+
+        // verify the required parameter 'env' is set
+        if (env == null) {
+            throw new ApiException("Missing the required parameter 'env' when calling findBranchItems(Async)");
+        }
+
+        // verify the required parameter 'clusterName' is set
+        if (clusterName == null) {
+            throw new ApiException("Missing the required parameter 'clusterName' when calling findBranchItems(Async)");
+        }
+
+        // verify the required parameter 'namespaceName' is set
+        if (namespaceName == null) {
+            throw new ApiException("Missing the required parameter 'namespaceName' when calling findBranchItems(Async)");
+        }
+
+        // verify the required parameter 'branchName' is set
+        if (branchName == null) {
+            throw new ApiException("Missing the required parameter 'branchName' when calling findBranchItems(Async)");
+        }
+
+        return findBranchItemsCall(appId, env, clusterName, namespaceName, branchName, _callback);
+
+    }
+
+    /**
+     * 获取分支下的配置项 (new added)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @return List&lt;OpenItemDTO&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 成功获取分支下的配置项列表 </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> 分支不存在 </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<OpenItemDTO> findBranchItems(String appId, String env, String clusterName, String namespaceName, String branchName) throws ApiException {
+        ApiResponse<List<OpenItemDTO>> localVarResp = findBranchItemsWithHttpInfo(appId, env, clusterName, namespaceName, branchName);
+        return localVarResp.getData();
+    }
+
+    /**
+     * 获取分支下的配置项 (new added)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @return ApiResponse&lt;List&lt;OpenItemDTO&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 成功获取分支下的配置项列表 </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> 分支不存在 </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<OpenItemDTO>> findBranchItemsWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName) throws ApiException {
+        okhttp3.Call localVarCall = findBranchItemsValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, null);
+        Type localVarReturnType = new TypeToken<List<OpenItemDTO>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * 获取分支下的配置项 (new added) (asynchronously)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 成功获取分支下的配置项列表 </td><td>  -  </td></tr>
+        <tr><td> 404 </td><td> 分支不存在 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call findBranchItemsAsync(String appId, String env, String clusterName, String namespaceName, String branchName, final ApiCallback<List<OpenItemDTO>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = findBranchItemsValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, _callback);
+        Type localVarReturnType = new TypeToken<List<OpenItemDTO>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -1137,173 +1275,6 @@ public class ItemManagementApi {
 
         okhttp3.Call localVarCall = findItemsByNamespaceValidateBeforeCall(appId, env, clusterName, namespaceName, page, size, _callback);
         Type localVarReturnType = new TypeToken<OpenItemPageDTO>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for getBranchItems
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取分支下的配置项列表 </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> 分支不存在 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getBranchItemsCall(String appId, String env, String clusterName, String namespaceName, String branchName, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
-            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
-            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
-            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()))
-            .replace("{" + "branchName" + "}", localVarApiClient.escapeString(branchName.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getBranchItemsValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String branchName, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling getBranchItems(Async)");
-        }
-
-        // verify the required parameter 'env' is set
-        if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling getBranchItems(Async)");
-        }
-
-        // verify the required parameter 'clusterName' is set
-        if (clusterName == null) {
-            throw new ApiException("Missing the required parameter 'clusterName' when calling getBranchItems(Async)");
-        }
-
-        // verify the required parameter 'namespaceName' is set
-        if (namespaceName == null) {
-            throw new ApiException("Missing the required parameter 'namespaceName' when calling getBranchItems(Async)");
-        }
-
-        // verify the required parameter 'branchName' is set
-        if (branchName == null) {
-            throw new ApiException("Missing the required parameter 'branchName' when calling getBranchItems(Async)");
-        }
-
-        return getBranchItemsCall(appId, env, clusterName, namespaceName, branchName, _callback);
-
-    }
-
-    /**
-     * 获取分支下的配置项 (new added)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @return List&lt;OpenItemDTO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取分支下的配置项列表 </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> 分支不存在 </td><td>  -  </td></tr>
-     </table>
-     */
-    public List<OpenItemDTO> getBranchItems(String appId, String env, String clusterName, String namespaceName, String branchName) throws ApiException {
-        ApiResponse<List<OpenItemDTO>> localVarResp = getBranchItemsWithHttpInfo(appId, env, clusterName, namespaceName, branchName);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 获取分支下的配置项 (new added)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @return ApiResponse&lt;List&lt;OpenItemDTO&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取分支下的配置项列表 </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> 分支不存在 </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<List<OpenItemDTO>> getBranchItemsWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName) throws ApiException {
-        okhttp3.Call localVarCall = getBranchItemsValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, null);
-        Type localVarReturnType = new TypeToken<List<OpenItemDTO>>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 获取分支下的配置项 (new added) (asynchronously)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取分支下的配置项列表 </td><td>  -  </td></tr>
-        <tr><td> 404 </td><td> 分支不存在 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getBranchItemsAsync(String appId, String env, String clusterName, String namespaceName, String branchName, final ApiCallback<List<OpenItemDTO>> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getBranchItemsValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, _callback);
-        Type localVarReturnType = new TypeToken<List<OpenItemDTO>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -1647,7 +1618,7 @@ public class ItemManagementApi {
      * @param env  (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1676,7 +1647,7 @@ public class ItemManagementApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert"
+        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revocation"
             .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
             .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
             .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
@@ -1733,24 +1704,18 @@ public class ItemManagementApi {
             throw new ApiException("Missing the required parameter 'namespaceName' when calling revertItems(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling revertItems(Async)");
-        }
-
         return revertItemsCall(appId, env, clusterName, namespaceName, operator, _callback);
 
     }
 
     /**
      * 撤销配置项更改 (new added)
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revocation
      * @param appId  (required)
      * @param env  (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param operator 操作人用户名 (required)
-     * @return Object
+     * @param operator 操作人用户名 (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1760,20 +1725,19 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public Object revertItems(String appId, String env, String clusterName, String namespaceName, String operator) throws ApiException {
-        ApiResponse<Object> localVarResp = revertItemsWithHttpInfo(appId, env, clusterName, namespaceName, operator);
-        return localVarResp.getData();
+    public void revertItems(String appId, String env, String clusterName, String namespaceName, String operator) throws ApiException {
+        revertItemsWithHttpInfo(appId, env, clusterName, namespaceName, operator);
     }
 
     /**
      * 撤销配置项更改 (new added)
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revocation
      * @param appId  (required)
      * @param env  (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param operator 操作人用户名 (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @param operator 操作人用户名 (optional)
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1783,20 +1747,19 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> revertItemsWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String operator) throws ApiException {
+    public ApiResponse<Void> revertItemsWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String operator) throws ApiException {
         okhttp3.Call localVarCall = revertItemsValidateBeforeCall(appId, env, clusterName, namespaceName, operator, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
      * 撤销配置项更改 (new added) (asynchronously)
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revocation
      * @param appId  (required)
      * @param env  (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1808,11 +1771,10 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call revertItemsAsync(String appId, String env, String clusterName, String namespaceName, String operator, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call revertItemsAsync(String appId, String env, String clusterName, String namespaceName, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = revertItemsValidateBeforeCall(appId, env, clusterName, namespaceName, operator, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**
@@ -1821,8 +1783,8 @@ public class ItemManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param operator 操作人用户名 (required)
-     * @param openNamespaceSyncModel  (required)
+     * @param openNamespaceSyncDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1834,7 +1796,7 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call syncItemsCall(String appId, String env, String clusterName, String namespaceName, String operator, OpenNamespaceSyncModel openNamespaceSyncModel, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call syncItemsCall(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncDTO openNamespaceSyncDTO, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1848,10 +1810,10 @@ public class ItemManagementApi {
             basePath = null;
         }
 
-        Object localVarPostBody = openNamespaceSyncModel;
+        Object localVarPostBody = openNamespaceSyncDTO;
 
         // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync"
+        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/synchronize"
             .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
             .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
             .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
@@ -1888,7 +1850,7 @@ public class ItemManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call syncItemsValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String operator, OpenNamespaceSyncModel openNamespaceSyncModel, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call syncItemsValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncDTO openNamespaceSyncDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling syncItems(Async)");
@@ -1909,30 +1871,24 @@ public class ItemManagementApi {
             throw new ApiException("Missing the required parameter 'namespaceName' when calling syncItems(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling syncItems(Async)");
+        // verify the required parameter 'openNamespaceSyncDTO' is set
+        if (openNamespaceSyncDTO == null) {
+            throw new ApiException("Missing the required parameter 'openNamespaceSyncDTO' when calling syncItems(Async)");
         }
 
-        // verify the required parameter 'openNamespaceSyncModel' is set
-        if (openNamespaceSyncModel == null) {
-            throw new ApiException("Missing the required parameter 'openNamespaceSyncModel' when calling syncItems(Async)");
-        }
-
-        return syncItemsCall(appId, env, clusterName, namespaceName, operator, openNamespaceSyncModel, _callback);
+        return syncItemsCall(appId, env, clusterName, namespaceName, openNamespaceSyncDTO, operator, _callback);
 
     }
 
     /**
      * 同步配置项到多个命名空间 (new added)
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync:
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/synchronize:
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param operator 操作人用户名 (required)
-     * @param openNamespaceSyncModel  (required)
-     * @return Object
+     * @param openNamespaceSyncDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1942,21 +1898,20 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public Object syncItems(String appId, String env, String clusterName, String namespaceName, String operator, OpenNamespaceSyncModel openNamespaceSyncModel) throws ApiException {
-        ApiResponse<Object> localVarResp = syncItemsWithHttpInfo(appId, env, clusterName, namespaceName, operator, openNamespaceSyncModel);
-        return localVarResp.getData();
+    public void syncItems(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncDTO openNamespaceSyncDTO, String operator) throws ApiException {
+        syncItemsWithHttpInfo(appId, env, clusterName, namespaceName, openNamespaceSyncDTO, operator);
     }
 
     /**
      * 同步配置项到多个命名空间 (new added)
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync:
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/synchronize:
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param operator 操作人用户名 (required)
-     * @param openNamespaceSyncModel  (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @param openNamespaceSyncDTO  (required)
+     * @param operator 操作人用户名 (optional)
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1966,21 +1921,20 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> syncItemsWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String operator, OpenNamespaceSyncModel openNamespaceSyncModel) throws ApiException {
-        okhttp3.Call localVarCall = syncItemsValidateBeforeCall(appId, env, clusterName, namespaceName, operator, openNamespaceSyncModel, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    public ApiResponse<Void> syncItemsWithHttpInfo(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncDTO openNamespaceSyncDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = syncItemsValidateBeforeCall(appId, env, clusterName, namespaceName, openNamespaceSyncDTO, operator, null);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
      * 同步配置项到多个命名空间 (new added) (asynchronously)
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync:
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/synchronize:
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
      * @param clusterName  (required)
      * @param namespaceName  (required)
-     * @param operator 操作人用户名 (required)
-     * @param openNamespaceSyncModel  (required)
+     * @param openNamespaceSyncDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1992,11 +1946,173 @@ public class ItemManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call syncItemsAsync(String appId, String env, String clusterName, String namespaceName, String operator, OpenNamespaceSyncModel openNamespaceSyncModel, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call syncItemsAsync(String appId, String env, String clusterName, String namespaceName, OpenNamespaceSyncDTO openNamespaceSyncDTO, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = syncItemsValidateBeforeCall(appId, env, clusterName, namespaceName, operator, openNamespaceSyncModel, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        okhttp3.Call localVarCall = syncItemsValidateBeforeCall(appId, env, clusterName, namespaceName, openNamespaceSyncDTO, operator, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for syntaxCheck
+     * @param appId  (required)
+     * @param env  (required)
+     * @param clusterName  (required)
+     * @param namespaceName  (required)
+     * @param openNamespaceTextModel  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 配置文本语法验证通过 </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> 配置文本语法错误 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call syntaxCheckCall(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = openNamespaceTextModel;
+
+        // create path and map variables
+        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validation"
+            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
+            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
+            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
+            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call syntaxCheckValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'appId' is set
+        if (appId == null) {
+            throw new ApiException("Missing the required parameter 'appId' when calling syntaxCheck(Async)");
+        }
+
+        // verify the required parameter 'env' is set
+        if (env == null) {
+            throw new ApiException("Missing the required parameter 'env' when calling syntaxCheck(Async)");
+        }
+
+        // verify the required parameter 'clusterName' is set
+        if (clusterName == null) {
+            throw new ApiException("Missing the required parameter 'clusterName' when calling syntaxCheck(Async)");
+        }
+
+        // verify the required parameter 'namespaceName' is set
+        if (namespaceName == null) {
+            throw new ApiException("Missing the required parameter 'namespaceName' when calling syntaxCheck(Async)");
+        }
+
+        // verify the required parameter 'openNamespaceTextModel' is set
+        if (openNamespaceTextModel == null) {
+            throw new ApiException("Missing the required parameter 'openNamespaceTextModel' when calling syntaxCheck(Async)");
+        }
+
+        return syntaxCheckCall(appId, env, clusterName, namespaceName, openNamespaceTextModel, _callback);
+
+    }
+
+    /**
+     * 验证配置文本语法 (new added)
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validation
+     * @param appId  (required)
+     * @param env  (required)
+     * @param clusterName  (required)
+     * @param namespaceName  (required)
+     * @param openNamespaceTextModel  (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 配置文本语法验证通过 </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> 配置文本语法错误 </td><td>  -  </td></tr>
+     </table>
+     */
+    public void syntaxCheck(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel) throws ApiException {
+        syntaxCheckWithHttpInfo(appId, env, clusterName, namespaceName, openNamespaceTextModel);
+    }
+
+    /**
+     * 验证配置文本语法 (new added)
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validation
+     * @param appId  (required)
+     * @param env  (required)
+     * @param clusterName  (required)
+     * @param namespaceName  (required)
+     * @param openNamespaceTextModel  (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 配置文本语法验证通过 </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> 配置文本语法错误 </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<Void> syntaxCheckWithHttpInfo(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel) throws ApiException {
+        okhttp3.Call localVarCall = syntaxCheckValidateBeforeCall(appId, env, clusterName, namespaceName, openNamespaceTextModel, null);
+        return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * 验证配置文本语法 (new added) (asynchronously)
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validation
+     * @param appId  (required)
+     * @param env  (required)
+     * @param clusterName  (required)
+     * @param namespaceName  (required)
+     * @param openNamespaceTextModel  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 配置文本语法验证通过 </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> 配置文本语法错误 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call syntaxCheckAsync(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel, final ApiCallback<Void> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = syntaxCheckValidateBeforeCall(appId, env, clusterName, namespaceName, openNamespaceTextModel, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**
@@ -2008,6 +2124,7 @@ public class ItemManagementApi {
      * @param key  (required)
      * @param createIfNotExists  (required)
      * @param openItemDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2020,7 +2137,7 @@ public class ItemManagementApi {
         <tr><td> 404 </td><td> 配置项不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateItemCall(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call updateItemCall(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2054,6 +2171,10 @@ public class ItemManagementApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("createIfNotExists", createIfNotExists));
         }
 
+        if (operator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -2075,7 +2196,7 @@ public class ItemManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateItemValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateItemValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling updateItem(Async)");
@@ -2111,7 +2232,7 @@ public class ItemManagementApi {
             throw new ApiException("Missing the required parameter 'openItemDTO' when calling updateItem(Async)");
         }
 
-        return updateItemCall(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, _callback);
+        return updateItemCall(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, operator, _callback);
 
     }
 
@@ -2125,7 +2246,7 @@ public class ItemManagementApi {
      * @param key  (required)
      * @param createIfNotExists  (required)
      * @param openItemDTO  (required)
-     * @return Object
+     * @param operator 操作人用户名 (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -2136,9 +2257,8 @@ public class ItemManagementApi {
         <tr><td> 404 </td><td> 配置项不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public Object updateItem(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO) throws ApiException {
-        ApiResponse<Object> localVarResp = updateItemWithHttpInfo(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO);
-        return localVarResp.getData();
+    public void updateItem(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, String operator) throws ApiException {
+        updateItemWithHttpInfo(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, operator);
     }
 
     /**
@@ -2151,7 +2271,8 @@ public class ItemManagementApi {
      * @param key  (required)
      * @param createIfNotExists  (required)
      * @param openItemDTO  (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @param operator 操作人用户名 (optional)
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -2162,10 +2283,9 @@ public class ItemManagementApi {
         <tr><td> 404 </td><td> 配置项不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> updateItemWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO) throws ApiException {
-        okhttp3.Call localVarCall = updateItemValidateBeforeCall(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    public ApiResponse<Void> updateItemWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = updateItemValidateBeforeCall(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, operator, null);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -2178,6 +2298,7 @@ public class ItemManagementApi {
      * @param key  (required)
      * @param createIfNotExists  (required)
      * @param openItemDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2190,11 +2311,10 @@ public class ItemManagementApi {
         <tr><td> 404 </td><td> 配置项不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateItemAsync(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call updateItemAsync(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateItemValidateBeforeCall(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        okhttp3.Call localVarCall = updateItemValidateBeforeCall(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, operator, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**
@@ -2206,6 +2326,7 @@ public class ItemManagementApi {
      * @param key 配置项键名（需要URL编码） (required)
      * @param createIfNotExists 若不存在则创建（true/false） (required)
      * @param openItemDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -2218,7 +2339,7 @@ public class ItemManagementApi {
         <tr><td> 404 </td><td> 配置项不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateItemByEncodedKeyCall(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call updateItemByEncodedKeyCall(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -2252,6 +2373,10 @@ public class ItemManagementApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("createIfNotExists", createIfNotExists));
         }
 
+        if (operator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -2273,7 +2398,7 @@ public class ItemManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateItemByEncodedKeyValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateItemByEncodedKeyValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling updateItemByEncodedKey(Async)");
@@ -2309,7 +2434,7 @@ public class ItemManagementApi {
             throw new ApiException("Missing the required parameter 'openItemDTO' when calling updateItemByEncodedKey(Async)");
         }
 
-        return updateItemByEncodedKeyCall(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, _callback);
+        return updateItemByEncodedKeyCall(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, operator, _callback);
 
     }
 
@@ -2323,7 +2448,7 @@ public class ItemManagementApi {
      * @param key 配置项键名（需要URL编码） (required)
      * @param createIfNotExists 若不存在则创建（true/false） (required)
      * @param openItemDTO  (required)
-     * @return Object
+     * @param operator 操作人用户名 (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -2334,9 +2459,8 @@ public class ItemManagementApi {
         <tr><td> 404 </td><td> 配置项不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public Object updateItemByEncodedKey(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO) throws ApiException {
-        ApiResponse<Object> localVarResp = updateItemByEncodedKeyWithHttpInfo(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO);
-        return localVarResp.getData();
+    public void updateItemByEncodedKey(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, String operator) throws ApiException {
+        updateItemByEncodedKeyWithHttpInfo(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, operator);
     }
 
     /**
@@ -2349,7 +2473,8 @@ public class ItemManagementApi {
      * @param key 配置项键名（需要URL编码） (required)
      * @param createIfNotExists 若不存在则创建（true/false） (required)
      * @param openItemDTO  (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @param operator 操作人用户名 (optional)
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -2360,10 +2485,9 @@ public class ItemManagementApi {
         <tr><td> 404 </td><td> 配置项不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> updateItemByEncodedKeyWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO) throws ApiException {
-        okhttp3.Call localVarCall = updateItemByEncodedKeyValidateBeforeCall(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    public ApiResponse<Void> updateItemByEncodedKeyWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = updateItemByEncodedKeyValidateBeforeCall(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, operator, null);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -2376,6 +2500,7 @@ public class ItemManagementApi {
      * @param key 配置项键名（需要URL编码） (required)
      * @param createIfNotExists 若不存在则创建（true/false） (required)
      * @param openItemDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -2388,178 +2513,10 @@ public class ItemManagementApi {
         <tr><td> 404 </td><td> 配置项不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateItemByEncodedKeyAsync(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call updateItemByEncodedKeyAsync(String appId, String env, String clusterName, String namespaceName, String key, Boolean createIfNotExists, OpenItemDTO openItemDTO, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateItemByEncodedKeyValidateBeforeCall(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for validateItems
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param openNamespaceTextModel  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 配置文本语法验证通过 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 配置文本语法错误 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call validateItemsCall(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = openNamespaceTextModel;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
-            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
-            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
-            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call validateItemsValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling validateItems(Async)");
-        }
-
-        // verify the required parameter 'env' is set
-        if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling validateItems(Async)");
-        }
-
-        // verify the required parameter 'clusterName' is set
-        if (clusterName == null) {
-            throw new ApiException("Missing the required parameter 'clusterName' when calling validateItems(Async)");
-        }
-
-        // verify the required parameter 'namespaceName' is set
-        if (namespaceName == null) {
-            throw new ApiException("Missing the required parameter 'namespaceName' when calling validateItems(Async)");
-        }
-
-        // verify the required parameter 'openNamespaceTextModel' is set
-        if (openNamespaceTextModel == null) {
-            throw new ApiException("Missing the required parameter 'openNamespaceTextModel' when calling validateItems(Async)");
-        }
-
-        return validateItemsCall(appId, env, clusterName, namespaceName, openNamespaceTextModel, _callback);
-
-    }
-
-    /**
-     * 验证配置文本语法 (new added)
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param openNamespaceTextModel  (required)
-     * @return Object
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 配置文本语法验证通过 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 配置文本语法错误 </td><td>  -  </td></tr>
-     </table>
-     */
-    public Object validateItems(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel) throws ApiException {
-        ApiResponse<Object> localVarResp = validateItemsWithHttpInfo(appId, env, clusterName, namespaceName, openNamespaceTextModel);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 验证配置文本语法 (new added)
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param openNamespaceTextModel  (required)
-     * @return ApiResponse&lt;Object&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 配置文本语法验证通过 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 配置文本语法错误 </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<Object> validateItemsWithHttpInfo(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel) throws ApiException {
-        okhttp3.Call localVarCall = validateItemsValidateBeforeCall(appId, env, clusterName, namespaceName, openNamespaceTextModel, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 验证配置文本语法 (new added) (asynchronously)
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param openNamespaceTextModel  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 配置文本语法验证通过 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 配置文本语法错误 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call validateItemsAsync(String appId, String env, String clusterName, String namespaceName, OpenNamespaceTextModel openNamespaceTextModel, final ApiCallback<Object> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = validateItemsValidateBeforeCall(appId, env, clusterName, namespaceName, openNamespaceTextModel, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        okhttp3.Call localVarCall = updateItemByEncodedKeyValidateBeforeCall(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, operator, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
 }

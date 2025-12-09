@@ -29,6 +29,7 @@ from apollo_openapi.model.open_namespace_dto import OpenNamespaceDTO
 
 # Query params
 FillItemDetailSchema = schemas.BoolSchema
+ExtendInfoSchema = schemas.BoolSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
     'RequestRequiredQueryParams',
     {
@@ -38,6 +39,7 @@ RequestRequiredQueryParams = typing_extensions.TypedDict(
 RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
+        'extendInfo': typing.Union[ExtendInfoSchema, bool, ],
     },
     total=False
 )
@@ -52,6 +54,12 @@ request_query_fill_item_detail = api_client.QueryParameter(
     style=api_client.ParameterStyle.FORM,
     schema=FillItemDetailSchema,
     required=True,
+    explode=True,
+)
+request_query_extend_info = api_client.QueryParameter(
+    name="extendInfo",
+    style=api_client.ParameterStyle.FORM,
+    schema=ExtendInfoSchema,
     explode=True,
 )
 # Path params
@@ -221,6 +229,7 @@ class BaseApi(api_client.Api):
         prefix_separator_iterator = None
         for parameter in (
             request_query_fill_item_detail,
+            request_query_extend_info,
         ):
             parameter_data = query_params.get(parameter.name, schemas.unset)
             if parameter_data is schemas.unset:

@@ -162,26 +162,6 @@ public class ReleaseManagementApiTest {
     }
 
     /**
-     * 合并分支 (original openapi)
-     *
-     * 合并灰度分支并可选择删除分支
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void mergeTest() throws ApiException {
-        String appId = null;
-        String env = null;
-        String clusterName = null;
-        String namespaceName = null;
-        String branchName = null;
-        Boolean deleteBranch = null;
-        NamespaceReleaseDTO namespaceReleaseDTO = null;
-        OpenReleaseDTO response = api.merge(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO);
-        // TODO: test validations
-    }
-
-    /**
      * 回滚发布 (original openapi)
      *
      * 回滚到指定的发布版本

@@ -41,10 +41,12 @@ class OpenNamespaceLockDTO(
             namespaceName = schemas.StrSchema
             isLocked = schemas.BoolSchema
             lockedBy = schemas.StrSchema
+            isEmergencyPublishAllowed = schemas.BoolSchema
             __annotations__ = {
                 "namespaceName": namespaceName,
                 "isLocked": isLocked,
                 "lockedBy": lockedBy,
+                "isEmergencyPublishAllowed": isEmergencyPublishAllowed,
             }
 
     @typing.overload
@@ -57,9 +59,12 @@ class OpenNamespaceLockDTO(
     def __getitem__(self, name: typing_extensions.Literal["lockedBy"]) -> MetaOapg.properties.lockedBy: ...
 
     @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["isEmergencyPublishAllowed"]) -> MetaOapg.properties.isEmergencyPublishAllowed: ...
+
+    @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
 
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["namespaceName", "isLocked", "lockedBy", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["namespaceName", "isLocked", "lockedBy", "isEmergencyPublishAllowed", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
 
@@ -74,9 +79,12 @@ class OpenNamespaceLockDTO(
     def get_item_oapg(self, name: typing_extensions.Literal["lockedBy"]) -> typing.Union[MetaOapg.properties.lockedBy, schemas.Unset]: ...
 
     @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["isEmergencyPublishAllowed"]) -> typing.Union[MetaOapg.properties.isEmergencyPublishAllowed, schemas.Unset]: ...
+
+    @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
 
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["namespaceName", "isLocked", "lockedBy", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["namespaceName", "isLocked", "lockedBy", "isEmergencyPublishAllowed", ], str]):
         return super().get_item_oapg(name)
 
 
@@ -86,6 +94,7 @@ class OpenNamespaceLockDTO(
         namespaceName: typing.Union[MetaOapg.properties.namespaceName, str, schemas.Unset] = schemas.unset,
         isLocked: typing.Union[MetaOapg.properties.isLocked, bool, schemas.Unset] = schemas.unset,
         lockedBy: typing.Union[MetaOapg.properties.lockedBy, str, schemas.Unset] = schemas.unset,
+        isEmergencyPublishAllowed: typing.Union[MetaOapg.properties.isEmergencyPublishAllowed, bool, schemas.Unset] = schemas.unset,
         _configuration: typing.Optional[schemas.Configuration] = None,
         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
     ) -> 'OpenNamespaceLockDTO':
@@ -95,6 +104,7 @@ class OpenNamespaceLockDTO(
             namespaceName=namespaceName,
             isLocked=isLocked,
             lockedBy=lockedBy,
+            isEmergencyPublishAllowed=isEmergencyPublishAllowed,
             _configuration=_configuration,
             **kwargs,
         )

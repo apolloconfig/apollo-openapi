@@ -33,8 +33,7 @@ class TestOpenapiV1EnvsEnvAppsAppIdClustersClusterNameNamespacesNamespaceNameEnc
         pass
 
     response_status = 200
-
-
+    response_body = ''
 
 
 

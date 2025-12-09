@@ -16,9 +16,9 @@ package org.openapitools.client.api;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.OpenItemDTO;
-import org.openapitools.client.model.OpenItemDiffs;
+import org.openapitools.client.model.OpenItemDiffDTO;
 import org.openapitools.client.model.OpenItemPageDTO;
-import org.openapitools.client.model.OpenNamespaceSyncModel;
+import org.openapitools.client.model.OpenNamespaceSyncDTO;
 import org.openapitools.client.model.OpenNamespaceTextModel;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -39,7 +39,7 @@ public class ItemManagementApiTest {
     /**
      * 通过文本批量修改配置项 (new added)
      *
-     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate:
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:
      *
      * @throws ApiException if the Api call fails
      */
@@ -49,16 +49,16 @@ public class ItemManagementApiTest {
         String env = null;
         String clusterName = null;
         String namespaceName = null;
-        String operator = null;
         OpenNamespaceTextModel openNamespaceTextModel = null;
-        Object response = api.batchUpdateItemsByText(appId, env, clusterName, namespaceName, operator, openNamespaceTextModel);
+        String operator = null;
+        api.batchUpdateItemsByText(appId, env, clusterName, namespaceName, openNamespaceTextModel, operator);
         // TODO: test validations
     }
 
     /**
      * 对比命名空间配置差异 (new added)
      *
-     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare
+     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/diff
      *
      * @throws ApiException if the Api call fails
      */
@@ -68,8 +68,8 @@ public class ItemManagementApiTest {
         String env = null;
         String clusterName = null;
         String namespaceName = null;
-        OpenNamespaceSyncModel openNamespaceSyncModel = null;
-        List<OpenItemDiffs> response = api.compareItems(appId, env, clusterName, namespaceName, openNamespaceSyncModel);
+        OpenNamespaceSyncDTO openNamespaceSyncDTO = null;
+        List<OpenItemDiffDTO> response = api.compareItems(appId, env, clusterName, namespaceName, openNamespaceSyncDTO);
         // TODO: test validations
     }
 
@@ -86,9 +86,9 @@ public class ItemManagementApiTest {
         String env = null;
         String clusterName = null;
         String namespaceName = null;
-        String operator = null;
         OpenItemDTO openItemDTO = null;
-        OpenItemDTO response = api.createItem(appId, env, clusterName, namespaceName, operator, openItemDTO);
+        String operator = null;
+        OpenItemDTO response = api.createItem(appId, env, clusterName, namespaceName, openItemDTO, operator);
         // TODO: test validations
     }
 
@@ -107,7 +107,7 @@ public class ItemManagementApiTest {
         String namespaceName = null;
         String key = null;
         String operator = null;
-        Object response = api.deleteItem(appId, env, clusterName, namespaceName, key, operator);
+        api.deleteItem(appId, env, clusterName, namespaceName, key, operator);
         // TODO: test validations
     }
 
@@ -126,7 +126,25 @@ public class ItemManagementApiTest {
         String namespaceName = null;
         String key = null;
         String operator = null;
-        Object response = api.deleteItemByEncodedKey(appId, env, clusterName, namespaceName, key, operator);
+        api.deleteItemByEncodedKey(appId, env, clusterName, namespaceName, key, operator);
+        // TODO: test validations
+    }
+
+    /**
+     * 获取分支下的配置项 (new added)
+     *
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void findBranchItemsTest() throws ApiException {
+        String appId = null;
+        String env = null;
+        String clusterName = null;
+        String namespaceName = null;
+        String branchName = null;
+        List<OpenItemDTO> response = api.findBranchItems(appId, env, clusterName, namespaceName, branchName);
         // TODO: test validations
     }
 
@@ -146,24 +164,6 @@ public class ItemManagementApiTest {
         Integer page = null;
         Integer size = null;
         OpenItemPageDTO response = api.findItemsByNamespace(appId, env, clusterName, namespaceName, page, size);
-        // TODO: test validations
-    }
-
-    /**
-     * 获取分支下的配置项 (new added)
-     *
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void getBranchItemsTest() throws ApiException {
-        String appId = null;
-        String env = null;
-        String clusterName = null;
-        String namespaceName = null;
-        String branchName = null;
-        List<OpenItemDTO> response = api.getBranchItems(appId, env, clusterName, namespaceName, branchName);
         // TODO: test validations
     }
 
@@ -206,7 +206,7 @@ public class ItemManagementApiTest {
     /**
      * 撤销配置项更改 (new added)
      *
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revocation
      *
      * @throws ApiException if the Api call fails
      */
@@ -217,14 +217,14 @@ public class ItemManagementApiTest {
         String clusterName = null;
         String namespaceName = null;
         String operator = null;
-        Object response = api.revertItems(appId, env, clusterName, namespaceName, operator);
+        api.revertItems(appId, env, clusterName, namespaceName, operator);
         // TODO: test validations
     }
 
     /**
      * 同步配置项到多个命名空间 (new added)
      *
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync:
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/synchronize:
      *
      * @throws ApiException if the Api call fails
      */
@@ -234,9 +234,27 @@ public class ItemManagementApiTest {
         String env = null;
         String clusterName = null;
         String namespaceName = null;
+        OpenNamespaceSyncDTO openNamespaceSyncDTO = null;
         String operator = null;
-        OpenNamespaceSyncModel openNamespaceSyncModel = null;
-        Object response = api.syncItems(appId, env, clusterName, namespaceName, operator, openNamespaceSyncModel);
+        api.syncItems(appId, env, clusterName, namespaceName, openNamespaceSyncDTO, operator);
+        // TODO: test validations
+    }
+
+    /**
+     * 验证配置文本语法 (new added)
+     *
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validation
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void syntaxCheckTest() throws ApiException {
+        String appId = null;
+        String env = null;
+        String clusterName = null;
+        String namespaceName = null;
+        OpenNamespaceTextModel openNamespaceTextModel = null;
+        api.syntaxCheck(appId, env, clusterName, namespaceName, openNamespaceTextModel);
         // TODO: test validations
     }
 
@@ -256,7 +274,8 @@ public class ItemManagementApiTest {
         String key = null;
         Boolean createIfNotExists = null;
         OpenItemDTO openItemDTO = null;
-        Object response = api.updateItem(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO);
+        String operator = null;
+        api.updateItem(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, operator);
         // TODO: test validations
     }
 
@@ -276,25 +295,8 @@ public class ItemManagementApiTest {
         String key = null;
         Boolean createIfNotExists = null;
         OpenItemDTO openItemDTO = null;
-        Object response = api.updateItemByEncodedKey(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO);
-        // TODO: test validations
-    }
-
-    /**
-     * 验证配置文本语法 (new added)
-     *
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void validateItemsTest() throws ApiException {
-        String appId = null;
-        String env = null;
-        String clusterName = null;
-        String namespaceName = null;
-        OpenNamespaceTextModel openNamespaceTextModel = null;
-        Object response = api.validateItems(appId, env, clusterName, namespaceName, openNamespaceTextModel);
+        String operator = null;
+        api.updateItemByEncodedKey(appId, env, clusterName, namespaceName, key, createIfNotExists, openItemDTO, operator);
         // TODO: test validations
     }
 

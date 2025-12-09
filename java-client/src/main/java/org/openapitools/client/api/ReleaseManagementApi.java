@@ -1243,204 +1243,10 @@ public class ReleaseManagementApi {
         return localVarCall;
     }
     /**
-     * Build call for merge
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param namespaceReleaseDTO  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 合并参数错误 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call mergeCall(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = namespaceReleaseDTO;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
-            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
-            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
-            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()))
-            .replace("{" + "branchName" + "}", localVarApiClient.escapeString(branchName.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (deleteBranch != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("deleteBranch", deleteBranch));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call mergeValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling merge(Async)");
-        }
-
-        // verify the required parameter 'env' is set
-        if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling merge(Async)");
-        }
-
-        // verify the required parameter 'clusterName' is set
-        if (clusterName == null) {
-            throw new ApiException("Missing the required parameter 'clusterName' when calling merge(Async)");
-        }
-
-        // verify the required parameter 'namespaceName' is set
-        if (namespaceName == null) {
-            throw new ApiException("Missing the required parameter 'namespaceName' when calling merge(Async)");
-        }
-
-        // verify the required parameter 'branchName' is set
-        if (branchName == null) {
-            throw new ApiException("Missing the required parameter 'branchName' when calling merge(Async)");
-        }
-
-        // verify the required parameter 'deleteBranch' is set
-        if (deleteBranch == null) {
-            throw new ApiException("Missing the required parameter 'deleteBranch' when calling merge(Async)");
-        }
-
-        // verify the required parameter 'namespaceReleaseDTO' is set
-        if (namespaceReleaseDTO == null) {
-            throw new ApiException("Missing the required parameter 'namespaceReleaseDTO' when calling merge(Async)");
-        }
-
-        return mergeCall(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, _callback);
-
-    }
-
-    /**
-     * 合并分支 (original openapi)
-     * 合并灰度分支并可选择删除分支
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param namespaceReleaseDTO  (required)
-     * @return OpenReleaseDTO
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 合并参数错误 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
-     </table>
-     */
-    public OpenReleaseDTO merge(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO) throws ApiException {
-        ApiResponse<OpenReleaseDTO> localVarResp = mergeWithHttpInfo(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 合并分支 (original openapi)
-     * 合并灰度分支并可选择删除分支
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param namespaceReleaseDTO  (required)
-     * @return ApiResponse&lt;OpenReleaseDTO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 合并参数错误 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<OpenReleaseDTO> mergeWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO) throws ApiException {
-        okhttp3.Call localVarCall = mergeValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, null);
-        Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 合并分支 (original openapi) (asynchronously)
-     * 合并灰度分支并可选择删除分支
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param namespaceReleaseDTO  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 合并参数错误 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call mergeAsync(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback<OpenReleaseDTO> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = mergeValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, _callback);
-        Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
      * Build call for rollback
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1512,11 +1318,6 @@ public class ReleaseManagementApi {
             throw new ApiException("Missing the required parameter 'releaseId' when calling rollback(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling rollback(Async)");
-        }
-
         return rollbackCall(env, releaseId, operator, _callback);
 
     }
@@ -1526,7 +1327,7 @@ public class ReleaseManagementApi {
      * 回滚到指定的发布版本
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1545,7 +1346,7 @@ public class ReleaseManagementApi {
      * 回滚到指定的发布版本
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1565,7 +1366,7 @@ public class ReleaseManagementApi {
      * 回滚到指定的发布版本
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object

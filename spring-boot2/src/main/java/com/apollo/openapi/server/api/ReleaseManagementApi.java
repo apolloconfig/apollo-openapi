@@ -344,66 +344,12 @@ public interface ReleaseManagementApi {
 
 
     /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge : 合并分支 (original openapi)
-     * 合并灰度分支并可选择删除分支
-     *
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param namespaceReleaseDTO  (required)
-     * @return 分支合并成功 (status code 200)
-     *         or 合并参数错误 (status code 400)
-     *         or 权限不足 (status code 403)
-     */
-    @Operation(
-        operationId = "merge",
-        summary = "合并分支 (original openapi)",
-        description = "合并灰度分支并可选择删除分支",
-        tags = { "Release Management" },
-        responses = {
-            @ApiResponse(responseCode = "200", description = "分支合并成功", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenReleaseDTO.class))
-            }),
-            @ApiResponse(responseCode = "400", description = "合并参数错误", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
-            }),
-            @ApiResponse(responseCode = "403", description = "权限不足", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
-            })
-        },
-        security = {
-            @SecurityRequirement(name = "ApiKeyAuth")
-        }
-    )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
-    default ResponseEntity<OpenReleaseDTO> merge(
-        @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
-        @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
-        @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
-        @Parameter(name = "branchName", description = "分支名称", required = true, in = ParameterIn.PATH) @PathVariable("branchName") String branchName,
-        @NotNull @Parameter(name = "deleteBranch", description = "合并后是否删除分支（true/false）", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "deleteBranch", required = true) Boolean deleteBranch,
-        @Parameter(name = "NamespaceReleaseDTO", description = "", required = true) @Valid @RequestBody NamespaceReleaseDTO namespaceReleaseDTO
-    ) {
-        return getDelegate().merge(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO);
-    }
-
-
-    /**
      * PUT /openapi/v1/envs/{env}/releases/{releaseId}/rollback : 回滚发布 (original openapi)
      * 回滚到指定的发布版本
      *
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return 发布回滚成功 (status code 200)
      */
     @Operation(
@@ -428,7 +374,7 @@ public interface ReleaseManagementApi {
     default ResponseEntity<Object> rollback(
         @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "releaseId", description = "发布ID", required = true, in = ParameterIn.PATH) @PathVariable("releaseId") Long releaseId,
-        @NotNull @Parameter(name = "operator", description = "操作人用户名", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = true) String operator
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
         return getDelegate().rollback(env, releaseId, operator);
     }

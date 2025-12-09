@@ -30,6 +30,7 @@ from apollo_openapi.model.exception_response import ExceptionResponse
 
 # Query params
 CreateIfNotExistsSchema = schemas.BoolSchema
+OperatorSchema = schemas.StrSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
     'RequestRequiredQueryParams',
     {
@@ -39,6 +40,7 @@ RequestRequiredQueryParams = typing_extensions.TypedDict(
 RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
+        'operator': typing.Union[OperatorSchema, str, ],
     },
     total=False
 )
@@ -53,6 +55,12 @@ request_query_create_if_not_exists = api_client.QueryParameter(
     style=api_client.ParameterStyle.FORM,
     schema=CreateIfNotExistsSchema,
     required=True,
+    explode=True,
+)
+request_query_operator = api_client.QueryParameter(
+    name="operator",
+    style=api_client.ParameterStyle.FORM,
+    schema=OperatorSchema,
     explode=True,
 )
 # Path params
@@ -124,24 +132,17 @@ request_body_open_item_dto = api_client.RequestBody(
     },
     required=True,
 )
-SchemaFor200ResponseBodyApplicationJson = schemas.DictSchema
 
 
 @dataclass
 class ApiResponseFor200(api_client.ApiResponse):
     response: urllib3.HTTPResponse
-    body: typing.Union[
-        SchemaFor200ResponseBodyApplicationJson,
-    ]
+    body: schemas.Unset = schemas.unset
     headers: schemas.Unset = schemas.unset
 
 
 _response_for_200 = api_client.OpenApiResponse(
     response_cls=ApiResponseFor200,
-    content={
-        'application/json': api_client.MediaType(
-            schema=SchemaFor200ResponseBodyApplicationJson),
-    },
 )
 SchemaFor400ResponseBodyApplicationJson = ExceptionResponse
 
@@ -307,6 +308,7 @@ class BaseApi(api_client.Api):
         prefix_separator_iterator = None
         for parameter in (
             request_query_create_if_not_exists,
+            request_query_operator,
         ):
             parameter_data = query_params.get(parameter.name, schemas.unset)
             if parameter_data is schemas.unset:

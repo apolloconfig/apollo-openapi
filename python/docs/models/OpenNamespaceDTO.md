@@ -21,6 +21,7 @@ Key | Input Type | Accessed Type | Description | Notes
 **format** | str,  | str,  | 命名空间格式类型，如properties、xml、json、yml等 | [optional]
 **isPublic** | bool,  | BoolClass,  | 是否为公共命名空间，公共命名空间可以被其他应用关联使用 | [optional]
 **[items](#items)** | list, tuple,  | tuple,  | 命名空间包含的配置项列表 | [optional]
+**extendInfo** | [**OpenNamespaceExtendDTO**](OpenNamespaceExtendDTO.md) | [**OpenNamespaceExtendDTO**](OpenNamespaceExtendDTO.md) |  | [optional]
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
 
 # items

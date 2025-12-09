@@ -23,6 +23,9 @@ pub struct OpenNamespaceLockDto {
     /// 锁定者用户名
     #[serde(rename = "lockedBy", skip_serializing_if = "Option::is_none")]
     pub locked_by: Option<String>,
+    /// 是否允许紧急发布
+    #[serde(rename = "isEmergencyPublishAllowed", skip_serializing_if = "Option::is_none")]
+    pub is_emergency_publish_allowed: Option<bool>,
 }
 
 impl OpenNamespaceLockDto {
@@ -32,6 +35,7 @@ impl OpenNamespaceLockDto {
             namespace_name: None,
             is_locked: None,
             locked_by: None,
+            is_emergency_publish_allowed: None,
         }
     }
 }

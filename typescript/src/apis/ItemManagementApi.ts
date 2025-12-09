@@ -17,9 +17,9 @@ import * as runtime from '../runtime';
 import type {
   ExceptionResponse,
   OpenItemDTO,
-  OpenItemDiffs,
+  OpenItemDiffDTO,
   OpenItemPageDTO,
-  OpenNamespaceSyncModel,
+  OpenNamespaceSyncDTO,
   OpenNamespaceTextModel,
 } from '../models';
 import {
@@ -27,12 +27,12 @@ import {
     ExceptionResponseToJSON,
     OpenItemDTOFromJSON,
     OpenItemDTOToJSON,
-    OpenItemDiffsFromJSON,
-    OpenItemDiffsToJSON,
+    OpenItemDiffDTOFromJSON,
+    OpenItemDiffDTOToJSON,
     OpenItemPageDTOFromJSON,
     OpenItemPageDTOToJSON,
-    OpenNamespaceSyncModelFromJSON,
-    OpenNamespaceSyncModelToJSON,
+    OpenNamespaceSyncDTOFromJSON,
+    OpenNamespaceSyncDTOToJSON,
     OpenNamespaceTextModelFromJSON,
     OpenNamespaceTextModelToJSON,
 } from '../models';
@@ -42,8 +42,8 @@ export interface BatchUpdateItemsByTextRequest {
     env: string;
     clusterName: string;
     namespaceName: string;
-    operator: string;
     openNamespaceTextModel: OpenNamespaceTextModel;
+    operator?: string;
 }
 
 export interface CompareItemsRequest {
@@ -51,7 +51,7 @@ export interface CompareItemsRequest {
     env: string;
     clusterName: string;
     namespaceName: string;
-    openNamespaceSyncModel: OpenNamespaceSyncModel;
+    openNamespaceSyncDTO: OpenNamespaceSyncDTO;
 }
 
 export interface CreateItemRequest {
@@ -59,8 +59,8 @@ export interface CreateItemRequest {
     env: string;
     clusterName: string;
     namespaceName: string;
-    operator: string;
     openItemDTO: OpenItemDTO;
+    operator?: string;
 }
 
 export interface DeleteItemRequest {
@@ -69,7 +69,7 @@ export interface DeleteItemRequest {
     clusterName: string;
     namespaceName: string;
     key: string;
-    operator: string;
+    operator?: string;
 }
 
 export interface DeleteItemByEncodedKeyRequest {
@@ -81,6 +81,14 @@ export interface DeleteItemByEncodedKeyRequest {
     operator: string;
 }
 
+export interface FindBranchItemsRequest {
+    appId: string;
+    env: string;
+    clusterName: string;
+    namespaceName: string;
+    branchName: string;
+}
+
 export interface FindItemsByNamespaceRequest {
     appId: string;
     env: string;
@@ -88,14 +96,6 @@ export interface FindItemsByNamespaceRequest {
     namespaceName: string;
     page: number;
     size: number;
-}
-
-export interface GetBranchItemsRequest {
-    appId: string;
-    env: string;
-    clusterName: string;
-    namespaceName: string;
-    branchName: string;
 }
 
 export interface GetItemRequest {
@@ -119,7 +119,7 @@ export interface RevertItemsRequest {
     env: string;
     clusterName: string;
     namespaceName: string;
-    operator: string;
+    operator?: string;
 }
 
 export interface SyncItemsRequest {
@@ -127,8 +127,16 @@ export interface SyncItemsRequest {
     env: string;
     clusterName: string;
     namespaceName: string;
-    operator: string;
-    openNamespaceSyncModel: OpenNamespaceSyncModel;
+    openNamespaceSyncDTO: OpenNamespaceSyncDTO;
+    operator?: string;
+}
+
+export interface SyntaxCheckRequest {
+    appId: string;
+    env: string;
+    clusterName: string;
+    namespaceName: string;
+    openNamespaceTextModel: OpenNamespaceTextModel;
 }
 
 export interface UpdateItemRequest {
@@ -139,6 +147,7 @@ export interface UpdateItemRequest {
     key: string;
     createIfNotExists: boolean;
     openItemDTO: OpenItemDTO;
+    operator?: string;
 }
 
 export interface UpdateItemByEncodedKeyRequest {
@@ -149,14 +158,7 @@ export interface UpdateItemByEncodedKeyRequest {
     key: string;
     createIfNotExists: boolean;
     openItemDTO: OpenItemDTO;
-}
-
-export interface ValidateItemsRequest {
-    appId: string;
-    env: string;
-    clusterName: string;
-    namespaceName: string;
-    openNamespaceTextModel: OpenNamespaceTextModel;
+    operator?: string;
 }
 
 /**
@@ -165,10 +167,10 @@ export interface ValidateItemsRequest {
 export class ItemManagementApi extends runtime.BaseAPI {
 
     /**
-     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate:
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:
      * 通过文本批量修改配置项 (new added)
      */
-    async batchUpdateItemsByTextRaw(requestParameters: BatchUpdateItemsByTextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async batchUpdateItemsByTextRaw(requestParameters: BatchUpdateItemsByTextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling batchUpdateItemsByText.');
         }
@@ -183,10 +185,6 @@ export class ItemManagementApi extends runtime.BaseAPI {
 
         if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
             throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling batchUpdateItemsByText.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling batchUpdateItemsByText.');
         }
 
         if (requestParameters.openNamespaceTextModel === null || requestParameters.openNamespaceTextModel === undefined) {
@@ -208,30 +206,29 @@ export class ItemManagementApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
+            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
             body: OpenNamespaceTextModelToJSON(requestParameters.openNamespaceTextModel),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate:
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:
      * 通过文本批量修改配置项 (new added)
      */
-    async batchUpdateItemsByText(requestParameters: BatchUpdateItemsByTextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.batchUpdateItemsByTextRaw(requestParameters, initOverrides);
-        return await response.value();
+    async batchUpdateItemsByText(requestParameters: BatchUpdateItemsByTextRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.batchUpdateItemsByTextRaw(requestParameters, initOverrides);
     }
 
     /**
-     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare
+     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/diff
      * 对比命名空间配置差异 (new added)
      */
-    async compareItemsRaw(requestParameters: CompareItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenItemDiffs>>> {
+    async compareItemsRaw(requestParameters: CompareItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenItemDiffDTO>>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling compareItems.');
         }
@@ -248,8 +245,8 @@ export class ItemManagementApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling compareItems.');
         }
 
-        if (requestParameters.openNamespaceSyncModel === null || requestParameters.openNamespaceSyncModel === undefined) {
-            throw new runtime.RequiredError('openNamespaceSyncModel','Required parameter requestParameters.openNamespaceSyncModel was null or undefined when calling compareItems.');
+        if (requestParameters.openNamespaceSyncDTO === null || requestParameters.openNamespaceSyncDTO === undefined) {
+            throw new runtime.RequiredError('openNamespaceSyncDTO','Required parameter requestParameters.openNamespaceSyncDTO was null or undefined when calling compareItems.');
         }
 
         const queryParameters: any = {};
@@ -263,21 +260,21 @@ export class ItemManagementApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
+            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/diff`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: OpenNamespaceSyncModelToJSON(requestParameters.openNamespaceSyncModel),
+            body: OpenNamespaceSyncDTOToJSON(requestParameters.openNamespaceSyncDTO),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenItemDiffsFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenItemDiffDTOFromJSON));
     }
 
     /**
-     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare
+     * POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/diff
      * 对比命名空间配置差异 (new added)
      */
-    async compareItems(requestParameters: CompareItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenItemDiffs>> {
+    async compareItems(requestParameters: CompareItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenItemDiffDTO>> {
         const response = await this.compareItemsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -301,10 +298,6 @@ export class ItemManagementApi extends runtime.BaseAPI {
 
         if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
             throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling createItem.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling createItem.');
         }
 
         if (requestParameters.openItemDTO === null || requestParameters.openItemDTO === undefined) {
@@ -349,7 +342,7 @@ export class ItemManagementApi extends runtime.BaseAPI {
      * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}
      * 删除配置项 (original openapi)
      */
-    async deleteItemRaw(requestParameters: DeleteItemRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async deleteItemRaw(requestParameters: DeleteItemRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling deleteItem.');
         }
@@ -368,10 +361,6 @@ export class ItemManagementApi extends runtime.BaseAPI {
 
         if (requestParameters.key === null || requestParameters.key === undefined) {
             throw new runtime.RequiredError('key','Required parameter requestParameters.key was null or undefined when calling deleteItem.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling deleteItem.');
         }
 
         const queryParameters: any = {};
@@ -393,23 +382,22 @@ export class ItemManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}
      * 删除配置项 (original openapi)
      */
-    async deleteItem(requestParameters: DeleteItemRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.deleteItemRaw(requestParameters, initOverrides);
-        return await response.value();
+    async deleteItem(requestParameters: DeleteItemRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteItemRaw(requestParameters, initOverrides);
     }
 
     /**
      * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}
      * 通过编码的key删除配置项 (original openapi)
      */
-    async deleteItemByEncodedKeyRaw(requestParameters: DeleteItemByEncodedKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async deleteItemByEncodedKeyRaw(requestParameters: DeleteItemByEncodedKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling deleteItemByEncodedKey.');
         }
@@ -453,15 +441,66 @@ export class ItemManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}
      * 通过编码的key删除配置项 (original openapi)
      */
-    async deleteItemByEncodedKey(requestParameters: DeleteItemByEncodedKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.deleteItemByEncodedKeyRaw(requestParameters, initOverrides);
+    async deleteItemByEncodedKey(requestParameters: DeleteItemByEncodedKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteItemByEncodedKeyRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
+     * 获取分支下的配置项 (new added)
+     */
+    async findBranchItemsRaw(requestParameters: FindBranchItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenItemDTO>>> {
+        if (requestParameters.appId === null || requestParameters.appId === undefined) {
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling findBranchItems.');
+        }
+
+        if (requestParameters.env === null || requestParameters.env === undefined) {
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling findBranchItems.');
+        }
+
+        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
+            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling findBranchItems.');
+        }
+
+        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
+            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling findBranchItems.');
+        }
+
+        if (requestParameters.branchName === null || requestParameters.branchName === undefined) {
+            throw new runtime.RequiredError('branchName','Required parameter requestParameters.branchName was null or undefined when calling findBranchItems.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))).replace(`{${"branchName"}}`, encodeURIComponent(String(requestParameters.branchName))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenItemDTOFromJSON));
+    }
+
+    /**
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
+     * 获取分支下的配置项 (new added)
+     */
+    async findBranchItems(requestParameters: FindBranchItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenItemDTO>> {
+        const response = await this.findBranchItemsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -526,58 +565,6 @@ export class ItemManagementApi extends runtime.BaseAPI {
      */
     async findItemsByNamespace(requestParameters: FindItemsByNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenItemPageDTO> {
         const response = await this.findItemsByNamespaceRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
-     * 获取分支下的配置项 (new added)
-     */
-    async getBranchItemsRaw(requestParameters: GetBranchItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenItemDTO>>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getBranchItems.');
-        }
-
-        if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling getBranchItems.');
-        }
-
-        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
-            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling getBranchItems.');
-        }
-
-        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling getBranchItems.');
-        }
-
-        if (requestParameters.branchName === null || requestParameters.branchName === undefined) {
-            throw new runtime.RequiredError('branchName','Required parameter requestParameters.branchName was null or undefined when calling getBranchItems.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))).replace(`{${"branchName"}}`, encodeURIComponent(String(requestParameters.branchName))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenItemDTOFromJSON));
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
-     * 获取分支下的配置项 (new added)
-     */
-    async getBranchItems(requestParameters: GetBranchItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenItemDTO>> {
-        const response = await this.getBranchItemsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -686,10 +673,10 @@ export class ItemManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revocation
      * 撤销配置项更改 (new added)
      */
-    async revertItemsRaw(requestParameters: RevertItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async revertItemsRaw(requestParameters: RevertItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling revertItems.');
         }
@@ -706,10 +693,6 @@ export class ItemManagementApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling revertItems.');
         }
 
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling revertItems.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.operator !== undefined) {
@@ -723,29 +706,28 @@ export class ItemManagementApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
+            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revocation`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revocation
      * 撤销配置项更改 (new added)
      */
-    async revertItems(requestParameters: RevertItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.revertItemsRaw(requestParameters, initOverrides);
-        return await response.value();
+    async revertItems(requestParameters: RevertItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.revertItemsRaw(requestParameters, initOverrides);
     }
 
     /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync:
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/synchronize:
      * 同步配置项到多个命名空间 (new added)
      */
-    async syncItemsRaw(requestParameters: SyncItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async syncItemsRaw(requestParameters: SyncItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling syncItems.');
         }
@@ -762,12 +744,8 @@ export class ItemManagementApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling syncItems.');
         }
 
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling syncItems.');
-        }
-
-        if (requestParameters.openNamespaceSyncModel === null || requestParameters.openNamespaceSyncModel === undefined) {
-            throw new runtime.RequiredError('openNamespaceSyncModel','Required parameter requestParameters.openNamespaceSyncModel was null or undefined when calling syncItems.');
+        if (requestParameters.openNamespaceSyncDTO === null || requestParameters.openNamespaceSyncDTO === undefined) {
+            throw new runtime.RequiredError('openNamespaceSyncDTO','Required parameter requestParameters.openNamespaceSyncDTO was null or undefined when calling syncItems.');
         }
 
         const queryParameters: any = {};
@@ -785,30 +763,83 @@ export class ItemManagementApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
+            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/synchronize`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: OpenNamespaceSyncModelToJSON(requestParameters.openNamespaceSyncModel),
+            body: OpenNamespaceSyncDTOToJSON(requestParameters.openNamespaceSyncDTO),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync:
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/synchronize:
      * 同步配置项到多个命名空间 (new added)
      */
-    async syncItems(requestParameters: SyncItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.syncItemsRaw(requestParameters, initOverrides);
-        return await response.value();
+    async syncItems(requestParameters: SyncItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.syncItemsRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validation
+     * 验证配置文本语法 (new added)
+     */
+    async syntaxCheckRaw(requestParameters: SyntaxCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.appId === null || requestParameters.appId === undefined) {
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling syntaxCheck.');
+        }
+
+        if (requestParameters.env === null || requestParameters.env === undefined) {
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling syntaxCheck.');
+        }
+
+        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
+            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling syntaxCheck.');
+        }
+
+        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
+            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling syntaxCheck.');
+        }
+
+        if (requestParameters.openNamespaceTextModel === null || requestParameters.openNamespaceTextModel === undefined) {
+            throw new runtime.RequiredError('openNamespaceTextModel','Required parameter requestParameters.openNamespaceTextModel was null or undefined when calling syntaxCheck.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validation`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: OpenNamespaceTextModelToJSON(requestParameters.openNamespaceTextModel),
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validation
+     * 验证配置文本语法 (new added)
+     */
+    async syntaxCheck(requestParameters: SyntaxCheckRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.syntaxCheckRaw(requestParameters, initOverrides);
     }
 
     /**
      * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}
      * 更新配置项 (original openapi)
      */
-    async updateItemRaw(requestParameters: UpdateItemRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async updateItemRaw(requestParameters: UpdateItemRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling updateItem.');
         }
@@ -843,6 +874,10 @@ export class ItemManagementApi extends runtime.BaseAPI {
             queryParameters['createIfNotExists'] = requestParameters.createIfNotExists;
         }
 
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
@@ -859,23 +894,22 @@ export class ItemManagementApi extends runtime.BaseAPI {
             body: OpenItemDTOToJSON(requestParameters.openItemDTO),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}
      * 更新配置项 (original openapi)
      */
-    async updateItem(requestParameters: UpdateItemRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.updateItemRaw(requestParameters, initOverrides);
-        return await response.value();
+    async updateItem(requestParameters: UpdateItemRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.updateItemRaw(requestParameters, initOverrides);
     }
 
     /**
      * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}
      * 通过编码的key更新配置项 (original openapi)
      */
-    async updateItemByEncodedKeyRaw(requestParameters: UpdateItemByEncodedKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async updateItemByEncodedKeyRaw(requestParameters: UpdateItemByEncodedKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling updateItemByEncodedKey.');
         }
@@ -910,6 +944,10 @@ export class ItemManagementApi extends runtime.BaseAPI {
             queryParameters['createIfNotExists'] = requestParameters.createIfNotExists;
         }
 
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
@@ -926,71 +964,15 @@ export class ItemManagementApi extends runtime.BaseAPI {
             body: OpenItemDTOToJSON(requestParameters.openItemDTO),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}
      * 通过编码的key更新配置项 (original openapi)
      */
-    async updateItemByEncodedKey(requestParameters: UpdateItemByEncodedKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.updateItemByEncodedKeyRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate
-     * 验证配置文本语法 (new added)
-     */
-    async validateItemsRaw(requestParameters: ValidateItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling validateItems.');
-        }
-
-        if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling validateItems.');
-        }
-
-        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
-            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling validateItems.');
-        }
-
-        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling validateItems.');
-        }
-
-        if (requestParameters.openNamespaceTextModel === null || requestParameters.openNamespaceTextModel === undefined) {
-            throw new runtime.RequiredError('openNamespaceTextModel','Required parameter requestParameters.openNamespaceTextModel was null or undefined when calling validateItems.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: OpenNamespaceTextModelToJSON(requestParameters.openNamespaceTextModel),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate
-     * 验证配置文本语法 (new added)
-     */
-    async validateItems(requestParameters: ValidateItemsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.validateItemsRaw(requestParameters, initOverrides);
-        return await response.value();
+    async updateItemByEncodedKey(requestParameters: UpdateItemByEncodedKeyRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.updateItemByEncodedKeyRaw(requestParameters, initOverrides);
     }
 
 }

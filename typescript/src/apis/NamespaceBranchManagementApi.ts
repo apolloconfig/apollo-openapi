@@ -39,7 +39,7 @@ export interface CreateBranchRequest {
     env: string;
     clusterName: string;
     namespaceName: string;
-    operator: string;
+    operator?: string;
 }
 
 export interface DeleteBranchRequest {
@@ -56,6 +56,7 @@ export interface FindBranchRequest {
     env: string;
     clusterName: string;
     namespaceName: string;
+    extendInfo?: boolean;
 }
 
 export interface GetBranchGrayRulesRequest {
@@ -66,6 +67,16 @@ export interface GetBranchGrayRulesRequest {
     branchName: string;
 }
 
+export interface MergeRequest {
+    appId: string;
+    env: string;
+    clusterName: string;
+    namespaceName: string;
+    branchName: string;
+    deleteBranch: boolean;
+    namespaceReleaseDTO: NamespaceReleaseDTO;
+}
+
 export interface MergeBranchRequest {
     env: string;
     appId: string;
@@ -73,8 +84,8 @@ export interface MergeBranchRequest {
     namespaceName: string;
     branchName: string;
     deleteBranch: boolean;
-    operator: string;
     namespaceReleaseDTO: NamespaceReleaseDTO;
+    operator?: string;
 }
 
 export interface UpdateBranchRulesRequest {
@@ -113,10 +124,6 @@ export class NamespaceBranchManagementApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling createBranch.');
         }
 
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling createBranch.');
-        }
-
         const queryParameters: any = {};
 
         if (requestParameters.operator !== undefined) {
@@ -152,7 +159,7 @@ export class NamespaceBranchManagementApi extends runtime.BaseAPI {
      * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
      * 删除命名空间分支 (original openapi)
      */
-    async deleteBranchRaw(requestParameters: DeleteBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async deleteBranchRaw(requestParameters: DeleteBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.env === null || requestParameters.env === undefined) {
             throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling deleteBranch.');
         }
@@ -196,16 +203,15 @@ export class NamespaceBranchManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
      * 删除命名空间分支 (original openapi)
      */
-    async deleteBranch(requestParameters: DeleteBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.deleteBranchRaw(requestParameters, initOverrides);
-        return await response.value();
+    async deleteBranch(requestParameters: DeleteBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteBranchRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -230,6 +236,10 @@ export class NamespaceBranchManagementApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.extendInfo !== undefined) {
+            queryParameters['extendInfo'] = requestParameters.extendInfo;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -309,7 +319,74 @@ export class NamespaceBranchManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}  使用 PATCH 方法表示部分更新操作（将分支状态从\"独立\"更新为\"合并\"）
+     * 合并灰度分支并可选择删除分支
+     * 合并分支 (original openapi)
+     */
+    async mergeRaw(requestParameters: MergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenReleaseDTO>> {
+        if (requestParameters.appId === null || requestParameters.appId === undefined) {
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling merge.');
+        }
+
+        if (requestParameters.env === null || requestParameters.env === undefined) {
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling merge.');
+        }
+
+        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
+            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling merge.');
+        }
+
+        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
+            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling merge.');
+        }
+
+        if (requestParameters.branchName === null || requestParameters.branchName === undefined) {
+            throw new runtime.RequiredError('branchName','Required parameter requestParameters.branchName was null or undefined when calling merge.');
+        }
+
+        if (requestParameters.deleteBranch === null || requestParameters.deleteBranch === undefined) {
+            throw new runtime.RequiredError('deleteBranch','Required parameter requestParameters.deleteBranch was null or undefined when calling merge.');
+        }
+
+        if (requestParameters.namespaceReleaseDTO === null || requestParameters.namespaceReleaseDTO === undefined) {
+            throw new runtime.RequiredError('namespaceReleaseDTO','Required parameter requestParameters.namespaceReleaseDTO was null or undefined when calling merge.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.deleteBranch !== undefined) {
+            queryParameters['deleteBranch'] = requestParameters.deleteBranch;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))).replace(`{${"branchName"}}`, encodeURIComponent(String(requestParameters.branchName))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: NamespaceReleaseDTOToJSON(requestParameters.namespaceReleaseDTO),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpenReleaseDTOFromJSON(jsonValue));
+    }
+
+    /**
+     * 合并灰度分支并可选择删除分支
+     * 合并分支 (original openapi)
+     */
+    async merge(requestParameters: MergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenReleaseDTO> {
+        const response = await this.mergeRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
      * 合并分支到主分支 (new added)
      */
     async mergeBranchRaw(requestParameters: MergeBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenReleaseDTO>> {
@@ -337,10 +414,6 @@ export class NamespaceBranchManagementApi extends runtime.BaseAPI {
             throw new runtime.RequiredError('deleteBranch','Required parameter requestParameters.deleteBranch was null or undefined when calling mergeBranch.');
         }
 
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling mergeBranch.');
-        }
-
         if (requestParameters.namespaceReleaseDTO === null || requestParameters.namespaceReleaseDTO === undefined) {
             throw new runtime.RequiredError('namespaceReleaseDTO','Required parameter requestParameters.namespaceReleaseDTO was null or undefined when calling mergeBranch.');
         }
@@ -365,7 +438,7 @@ export class NamespaceBranchManagementApi extends runtime.BaseAPI {
 
         const response = await this.request({
             path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))).replace(`{${"branchName"}}`, encodeURIComponent(String(requestParameters.branchName))),
-            method: 'PATCH',
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
             body: NamespaceReleaseDTOToJSON(requestParameters.namespaceReleaseDTO),
@@ -375,7 +448,7 @@ export class NamespaceBranchManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}  使用 PATCH 方法表示部分更新操作（将分支状态从\"独立\"更新为\"合并\"）
+     * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
      * 合并分支到主分支 (new added)
      */
     async mergeBranch(requestParameters: MergeBranchRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenReleaseDTO> {
@@ -387,7 +460,7 @@ export class NamespaceBranchManagementApi extends runtime.BaseAPI {
      * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules
      * 更新分支灰度发布规则 (original openapi)
      */
-    async updateBranchRulesRaw(requestParameters: UpdateBranchRulesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async updateBranchRulesRaw(requestParameters: UpdateBranchRulesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling updateBranchRules.');
         }
@@ -438,16 +511,15 @@ export class NamespaceBranchManagementApi extends runtime.BaseAPI {
             body: OpenGrayReleaseRuleDTOToJSON(requestParameters.openGrayReleaseRuleDTO),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules
      * 更新分支灰度发布规则 (original openapi)
      */
-    async updateBranchRules(requestParameters: UpdateBranchRulesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.updateBranchRulesRaw(requestParameters, initOverrides);
-        return await response.value();
+    async updateBranchRules(requestParameters: UpdateBranchRulesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.updateBranchRulesRaw(requestParameters, initOverrides);
     }
 
 }

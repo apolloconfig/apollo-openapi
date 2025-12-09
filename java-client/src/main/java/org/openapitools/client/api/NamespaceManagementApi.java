@@ -27,10 +27,9 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import org.openapitools.client.model.ExceptionResponse;
-import org.openapitools.client.model.OpenAppNamespaceDTO;
+import org.openapitools.client.model.OpenCreateNamespaceDTO;
 import org.openapitools.client.model.OpenNamespaceDTO;
-import org.openapitools.client.model.OpenNamespaceLockDTO;
+import org.openapitools.client.model.OpenNamespaceUsageDTO;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -77,20 +76,21 @@ public class NamespaceManagementApi {
     }
 
     /**
-     * Build call for checkNamespaceIntegrity
+     * Build call for createMissingNamespaces
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 缺失的命名空间名称列表 </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> 缺失的命名空间创建成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkNamespaceIntegrityCall(String appId, String env, String clusterName, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call createMissingNamespacesCall(String appId, String env, String clusterName, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -107,7 +107,439 @@ public class NamespaceManagementApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check"
+        String localVarPath = "/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces"
+            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
+            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
+            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (operator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call createMissingNamespacesValidateBeforeCall(String appId, String env, String clusterName, String operator, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'appId' is set
+        if (appId == null) {
+            throw new ApiException("Missing the required parameter 'appId' when calling createMissingNamespaces(Async)");
+        }
+
+        // verify the required parameter 'env' is set
+        if (env == null) {
+            throw new ApiException("Missing the required parameter 'env' when calling createMissingNamespaces(Async)");
+        }
+
+        // verify the required parameter 'clusterName' is set
+        if (clusterName == null) {
+            throw new ApiException("Missing the required parameter 'clusterName' when calling createMissingNamespaces(Async)");
+        }
+
+        return createMissingNamespacesCall(appId, env, clusterName, operator, _callback);
+
+    }
+
+    /**
+     * 创建缺失的Namespace (new added)
+     * POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param operator 操作人用户名 (optional)
+     * @return Object
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 缺失的命名空间创建成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public Object createMissingNamespaces(String appId, String env, String clusterName, String operator) throws ApiException {
+        ApiResponse<Object> localVarResp = createMissingNamespacesWithHttpInfo(appId, env, clusterName, operator);
+        return localVarResp.getData();
+    }
+
+    /**
+     * 创建缺失的Namespace (new added)
+     * POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param operator 操作人用户名 (optional)
+     * @return ApiResponse&lt;Object&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 缺失的命名空间创建成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<Object> createMissingNamespacesWithHttpInfo(String appId, String env, String clusterName, String operator) throws ApiException {
+        okhttp3.Call localVarCall = createMissingNamespacesValidateBeforeCall(appId, env, clusterName, operator, null);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * 创建缺失的Namespace (new added) (asynchronously)
+     * POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param operator 操作人用户名 (optional)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 缺失的命名空间创建成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call createMissingNamespacesAsync(String appId, String env, String clusterName, String operator, final ApiCallback<Object> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = createMissingNamespacesValidateBeforeCall(appId, env, clusterName, operator, _callback);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for createNamespaces
+     * @param openCreateNamespaceDTO  (required)
+     * @param operator 操作人用户名 (optional)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Namespace创建成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call createNamespacesCall(List<OpenCreateNamespaceDTO> openCreateNamespaceDTO, String operator, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = openCreateNamespaceDTO;
+
+        // create path and map variables
+        String localVarPath = "/openapi/v1/namespaces";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (operator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        }
+
+        final String[] localVarAccepts = {
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call createNamespacesValidateBeforeCall(List<OpenCreateNamespaceDTO> openCreateNamespaceDTO, String operator, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'openCreateNamespaceDTO' is set
+        if (openCreateNamespaceDTO == null) {
+            throw new ApiException("Missing the required parameter 'openCreateNamespaceDTO' when calling createNamespaces(Async)");
+        }
+
+        return createNamespacesCall(openCreateNamespaceDTO, operator, _callback);
+
+    }
+
+    /**
+     * 创建Namespace (new added)
+     * POST /openapi/v1/apps/{appId}/namespaces
+     * @param openCreateNamespaceDTO  (required)
+     * @param operator 操作人用户名 (optional)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Namespace创建成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public void createNamespaces(List<OpenCreateNamespaceDTO> openCreateNamespaceDTO, String operator) throws ApiException {
+        createNamespacesWithHttpInfo(openCreateNamespaceDTO, operator);
+    }
+
+    /**
+     * 创建Namespace (new added)
+     * POST /openapi/v1/apps/{appId}/namespaces
+     * @param openCreateNamespaceDTO  (required)
+     * @param operator 操作人用户名 (optional)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Namespace创建成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<Void> createNamespacesWithHttpInfo(List<OpenCreateNamespaceDTO> openCreateNamespaceDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = createNamespacesValidateBeforeCall(openCreateNamespaceDTO, operator, null);
+        return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * 创建Namespace (new added) (asynchronously)
+     * POST /openapi/v1/apps/{appId}/namespaces
+     * @param openCreateNamespaceDTO  (required)
+     * @param operator 操作人用户名 (optional)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Namespace创建成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call createNamespacesAsync(List<OpenCreateNamespaceDTO> openCreateNamespaceDTO, String operator, final ApiCallback<Void> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = createNamespacesValidateBeforeCall(openCreateNamespaceDTO, operator, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for deleteNamespace
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param operator 操作人用户名 (optional)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 解除关联成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call deleteNamespaceCall(String appId, String env, String clusterName, String namespaceName, String operator, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}"
+            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
+            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
+            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
+            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (operator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        }
+
+        final String[] localVarAccepts = {
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call deleteNamespaceValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String operator, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'appId' is set
+        if (appId == null) {
+            throw new ApiException("Missing the required parameter 'appId' when calling deleteNamespace(Async)");
+        }
+
+        // verify the required parameter 'env' is set
+        if (env == null) {
+            throw new ApiException("Missing the required parameter 'env' when calling deleteNamespace(Async)");
+        }
+
+        // verify the required parameter 'clusterName' is set
+        if (clusterName == null) {
+            throw new ApiException("Missing the required parameter 'clusterName' when calling deleteNamespace(Async)");
+        }
+
+        // verify the required parameter 'namespaceName' is set
+        if (namespaceName == null) {
+            throw new ApiException("Missing the required parameter 'namespaceName' when calling deleteNamespace(Async)");
+        }
+
+        return deleteNamespaceCall(appId, env, clusterName, namespaceName, operator, _callback);
+
+    }
+
+    /**
+     * 删除指定的Namespace (new added)
+     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param operator 操作人用户名 (optional)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 解除关联成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public void deleteNamespace(String appId, String env, String clusterName, String namespaceName, String operator) throws ApiException {
+        deleteNamespaceWithHttpInfo(appId, env, clusterName, namespaceName, operator);
+    }
+
+    /**
+     * 删除指定的Namespace (new added)
+     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param operator 操作人用户名 (optional)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 解除关联成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<Void> deleteNamespaceWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String operator) throws ApiException {
+        okhttp3.Call localVarCall = deleteNamespaceValidateBeforeCall(appId, env, clusterName, namespaceName, operator, null);
+        return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * 删除指定的Namespace (new added) (asynchronously)
+     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param operator 操作人用户名 (optional)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 解除关联成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call deleteNamespaceAsync(String appId, String env, String clusterName, String namespaceName, String operator, final ApiCallback<Void> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = deleteNamespaceValidateBeforeCall(appId, env, clusterName, namespaceName, operator, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for findMissingNamespaces
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 缺失的命名空间名称列表 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call findMissingNamespacesCall(String appId, String env, String clusterName, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces"
             .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
             .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
             .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()));
@@ -138,29 +570,29 @@ public class NamespaceManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call checkNamespaceIntegrityValidateBeforeCall(String appId, String env, String clusterName, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call findMissingNamespacesValidateBeforeCall(String appId, String env, String clusterName, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling checkNamespaceIntegrity(Async)");
+            throw new ApiException("Missing the required parameter 'appId' when calling findMissingNamespaces(Async)");
         }
 
         // verify the required parameter 'env' is set
         if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling checkNamespaceIntegrity(Async)");
+            throw new ApiException("Missing the required parameter 'env' when calling findMissingNamespaces(Async)");
         }
 
         // verify the required parameter 'clusterName' is set
         if (clusterName == null) {
-            throw new ApiException("Missing the required parameter 'clusterName' when calling checkNamespaceIntegrity(Async)");
+            throw new ApiException("Missing the required parameter 'clusterName' when calling findMissingNamespaces(Async)");
         }
 
-        return checkNamespaceIntegrityCall(appId, env, clusterName, _callback);
+        return findMissingNamespacesCall(appId, env, clusterName, _callback);
 
     }
 
     /**
-     * 检查缺失的Namespace (new added)
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check
+     * 查找缺失的Namespace (new added)
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
@@ -172,14 +604,14 @@ public class NamespaceManagementApi {
         <tr><td> 200 </td><td> 缺失的命名空间名称列表 </td><td>  -  </td></tr>
      </table>
      */
-    public List<String> checkNamespaceIntegrity(String appId, String env, String clusterName) throws ApiException {
-        ApiResponse<List<String>> localVarResp = checkNamespaceIntegrityWithHttpInfo(appId, env, clusterName);
+    public List<String> findMissingNamespaces(String appId, String env, String clusterName) throws ApiException {
+        ApiResponse<List<String>> localVarResp = findMissingNamespacesWithHttpInfo(appId, env, clusterName);
         return localVarResp.getData();
     }
 
     /**
-     * 检查缺失的Namespace (new added)
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check
+     * 查找缺失的Namespace (new added)
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
@@ -191,15 +623,15 @@ public class NamespaceManagementApi {
         <tr><td> 200 </td><td> 缺失的命名空间名称列表 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<String>> checkNamespaceIntegrityWithHttpInfo(String appId, String env, String clusterName) throws ApiException {
-        okhttp3.Call localVarCall = checkNamespaceIntegrityValidateBeforeCall(appId, env, clusterName, null);
+    public ApiResponse<List<String>> findMissingNamespacesWithHttpInfo(String appId, String env, String clusterName) throws ApiException {
+        okhttp3.Call localVarCall = findMissingNamespacesValidateBeforeCall(appId, env, clusterName, null);
         Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * 检查缺失的Namespace (new added) (asynchronously)
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check
+     * 查找缺失的Namespace (new added) (asynchronously)
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
@@ -212,169 +644,31 @@ public class NamespaceManagementApi {
         <tr><td> 200 </td><td> 缺失的命名空间名称列表 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call checkNamespaceIntegrityAsync(String appId, String env, String clusterName, final ApiCallback<List<String>> _callback) throws ApiException {
+    public okhttp3.Call findMissingNamespacesAsync(String appId, String env, String clusterName, final ApiCallback<List<String>> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = checkNamespaceIntegrityValidateBeforeCall(appId, env, clusterName, _callback);
+        okhttp3.Call localVarCall = findMissingNamespacesValidateBeforeCall(appId, env, clusterName, _callback);
         Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
-     * Build call for createNamespace
+     * Build call for findNamespace
      * @param appId  (required)
-     * @param openAppNamespaceDTO  (required)
+     * @param env  (required)
+     * @param clusterName  (required)
+     * @param namespaceName  (required)
+     * @param fillItemDetail  (required)
+     * @param extendInfo  (optional, default to false)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> AppNamespace创建成功 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 请求参数错误 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createNamespaceCall(String appId, OpenAppNamespaceDTO openAppNamespaceDTO, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = openAppNamespaceDTO;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/apps/{appId}/appnamespaces"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call createNamespaceValidateBeforeCall(String appId, OpenAppNamespaceDTO openAppNamespaceDTO, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling createNamespace(Async)");
-        }
-
-        // verify the required parameter 'openAppNamespaceDTO' is set
-        if (openAppNamespaceDTO == null) {
-            throw new ApiException("Missing the required parameter 'openAppNamespaceDTO' when calling createNamespace(Async)");
-        }
-
-        return createNamespaceCall(appId, openAppNamespaceDTO, _callback);
-
-    }
-
-    /**
-     * 创建AppNamespace (original openapi)
-     * POST /openapi/v1/apps/{appId}/appnamespaces
-     * @param appId  (required)
-     * @param openAppNamespaceDTO  (required)
-     * @return OpenAppNamespaceDTO
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> AppNamespace创建成功 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 请求参数错误 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
-     </table>
-     */
-    public OpenAppNamespaceDTO createNamespace(String appId, OpenAppNamespaceDTO openAppNamespaceDTO) throws ApiException {
-        ApiResponse<OpenAppNamespaceDTO> localVarResp = createNamespaceWithHttpInfo(appId, openAppNamespaceDTO);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 创建AppNamespace (original openapi)
-     * POST /openapi/v1/apps/{appId}/appnamespaces
-     * @param appId  (required)
-     * @param openAppNamespaceDTO  (required)
-     * @return ApiResponse&lt;OpenAppNamespaceDTO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> AppNamespace创建成功 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 请求参数错误 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<OpenAppNamespaceDTO> createNamespaceWithHttpInfo(String appId, OpenAppNamespaceDTO openAppNamespaceDTO) throws ApiException {
-        okhttp3.Call localVarCall = createNamespaceValidateBeforeCall(appId, openAppNamespaceDTO, null);
-        Type localVarReturnType = new TypeToken<OpenAppNamespaceDTO>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 创建AppNamespace (original openapi) (asynchronously)
-     * POST /openapi/v1/apps/{appId}/appnamespaces
-     * @param appId  (required)
-     * @param openAppNamespaceDTO  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> AppNamespace创建成功 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 请求参数错误 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call createNamespaceAsync(String appId, OpenAppNamespaceDTO openAppNamespaceDTO, final ApiCallback<OpenAppNamespaceDTO> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = createNamespaceValidateBeforeCall(appId, openAppNamespaceDTO, _callback);
-        Type localVarReturnType = new TypeToken<OpenAppNamespaceDTO>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for deleteAppNamespace
-     * @param appId 应用ID (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> AppNamespace删除成功 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call deleteAppNamespaceCall(String appId, String namespaceName, String operator, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call findNamespaceCall(String appId, String env, String clusterName, String namespaceName, Boolean fillItemDetail, Boolean extendInfo, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -391,155 +685,7 @@ public class NamespaceManagementApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/openapi/v1/apps/{appId}/appnamespaces/{namespaceName}"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
-            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (operator != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call deleteAppNamespaceValidateBeforeCall(String appId, String namespaceName, String operator, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling deleteAppNamespace(Async)");
-        }
-
-        // verify the required parameter 'namespaceName' is set
-        if (namespaceName == null) {
-            throw new ApiException("Missing the required parameter 'namespaceName' when calling deleteAppNamespace(Async)");
-        }
-
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling deleteAppNamespace(Async)");
-        }
-
-        return deleteAppNamespaceCall(appId, namespaceName, operator, _callback);
-
-    }
-
-    /**
-     * 删除AppNamespace (new added)
-     * DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     * @param appId 应用ID (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
-     * @return Object
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> AppNamespace删除成功 </td><td>  -  </td></tr>
-     </table>
-     */
-    public Object deleteAppNamespace(String appId, String namespaceName, String operator) throws ApiException {
-        ApiResponse<Object> localVarResp = deleteAppNamespaceWithHttpInfo(appId, namespaceName, operator);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 删除AppNamespace (new added)
-     * DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     * @param appId 应用ID (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
-     * @return ApiResponse&lt;Object&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> AppNamespace删除成功 </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<Object> deleteAppNamespaceWithHttpInfo(String appId, String namespaceName, String operator) throws ApiException {
-        okhttp3.Call localVarCall = deleteAppNamespaceValidateBeforeCall(appId, namespaceName, operator, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 删除AppNamespace (new added) (asynchronously)
-     * DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     * @param appId 应用ID (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> AppNamespace删除成功 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call deleteAppNamespaceAsync(String appId, String namespaceName, String operator, final ApiCallback<Object> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = deleteAppNamespaceValidateBeforeCall(appId, namespaceName, operator, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for deleteNamespaceLinks
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 解除关联成功 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call deleteNamespaceLinksCall(String appId, String env, String clusterName, String namespaceName, String operator, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links"
+        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}"
             .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
             .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
             .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
@@ -551,8 +697,12 @@ public class NamespaceManagementApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-        if (operator != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        if (fillItemDetail != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("fillItemDetail", fillItemDetail));
+        }
+
+        if (extendInfo != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("extendInfo", extendInfo));
         }
 
         final String[] localVarAccepts = {
@@ -571,104 +721,260 @@ public class NamespaceManagementApi {
         }
 
         String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call deleteNamespaceLinksValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String operator, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call findNamespaceValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, Boolean fillItemDetail, Boolean extendInfo, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling deleteNamespaceLinks(Async)");
+            throw new ApiException("Missing the required parameter 'appId' when calling findNamespace(Async)");
         }
 
         // verify the required parameter 'env' is set
         if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling deleteNamespaceLinks(Async)");
+            throw new ApiException("Missing the required parameter 'env' when calling findNamespace(Async)");
         }
 
         // verify the required parameter 'clusterName' is set
         if (clusterName == null) {
-            throw new ApiException("Missing the required parameter 'clusterName' when calling deleteNamespaceLinks(Async)");
+            throw new ApiException("Missing the required parameter 'clusterName' when calling findNamespace(Async)");
         }
 
         // verify the required parameter 'namespaceName' is set
         if (namespaceName == null) {
-            throw new ApiException("Missing the required parameter 'namespaceName' when calling deleteNamespaceLinks(Async)");
+            throw new ApiException("Missing the required parameter 'namespaceName' when calling findNamespace(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling deleteNamespaceLinks(Async)");
+        // verify the required parameter 'fillItemDetail' is set
+        if (fillItemDetail == null) {
+            throw new ApiException("Missing the required parameter 'fillItemDetail' when calling findNamespace(Async)");
         }
 
-        return deleteNamespaceLinksCall(appId, env, clusterName, namespaceName, operator, _callback);
+        return findNamespaceCall(appId, env, clusterName, namespaceName, fillItemDetail, extendInfo, _callback);
 
     }
 
     /**
-     * 删除关联的Namespace (new added)
-     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
-     * @return Object
+     * 获取指定的Namespace (original openapi)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
+     * @param appId  (required)
+     * @param env  (required)
+     * @param clusterName  (required)
+     * @param namespaceName  (required)
+     * @param fillItemDetail  (required)
+     * @param extendInfo  (optional, default to false)
+     * @return OpenNamespaceDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 解除关联成功 </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public Object deleteNamespaceLinks(String appId, String env, String clusterName, String namespaceName, String operator) throws ApiException {
-        ApiResponse<Object> localVarResp = deleteNamespaceLinksWithHttpInfo(appId, env, clusterName, namespaceName, operator);
+    public OpenNamespaceDTO findNamespace(String appId, String env, String clusterName, String namespaceName, Boolean fillItemDetail, Boolean extendInfo) throws ApiException {
+        ApiResponse<OpenNamespaceDTO> localVarResp = findNamespaceWithHttpInfo(appId, env, clusterName, namespaceName, fillItemDetail, extendInfo);
         return localVarResp.getData();
     }
 
     /**
-     * 删除关联的Namespace (new added)
-     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
-     * @return ApiResponse&lt;Object&gt;
+     * 获取指定的Namespace (original openapi)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
+     * @param appId  (required)
+     * @param env  (required)
+     * @param clusterName  (required)
+     * @param namespaceName  (required)
+     * @param fillItemDetail  (required)
+     * @param extendInfo  (optional, default to false)
+     * @return ApiResponse&lt;OpenNamespaceDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 解除关联成功 </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> deleteNamespaceLinksWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String operator) throws ApiException {
-        okhttp3.Call localVarCall = deleteNamespaceLinksValidateBeforeCall(appId, env, clusterName, namespaceName, operator, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+    public ApiResponse<OpenNamespaceDTO> findNamespaceWithHttpInfo(String appId, String env, String clusterName, String namespaceName, Boolean fillItemDetail, Boolean extendInfo) throws ApiException {
+        okhttp3.Call localVarCall = findNamespaceValidateBeforeCall(appId, env, clusterName, namespaceName, fillItemDetail, extendInfo, null);
+        Type localVarReturnType = new TypeToken<OpenNamespaceDTO>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * 删除关联的Namespace (new added) (asynchronously)
-     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param operator 操作人用户名 (required)
+     * 获取指定的Namespace (original openapi) (asynchronously)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
+     * @param appId  (required)
+     * @param env  (required)
+     * @param clusterName  (required)
+     * @param namespaceName  (required)
+     * @param fillItemDetail  (required)
+     * @param extendInfo  (optional, default to false)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 解除关联成功 </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteNamespaceLinksAsync(String appId, String env, String clusterName, String namespaceName, String operator, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call findNamespaceAsync(String appId, String env, String clusterName, String namespaceName, Boolean fillItemDetail, Boolean extendInfo, final ApiCallback<OpenNamespaceDTO> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = deleteNamespaceLinksValidateBeforeCall(appId, env, clusterName, namespaceName, operator, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        okhttp3.Call localVarCall = findNamespaceValidateBeforeCall(appId, env, clusterName, namespaceName, fillItemDetail, extendInfo, _callback);
+        Type localVarReturnType = new TypeToken<OpenNamespaceDTO>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for findNamespaceUsage
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> NamespaceUsage查询成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call findNamespaceUsageCall(String appId, String env, String clusterName, String namespaceName, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage"
+            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
+            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
+            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
+            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call findNamespaceUsageValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'appId' is set
+        if (appId == null) {
+            throw new ApiException("Missing the required parameter 'appId' when calling findNamespaceUsage(Async)");
+        }
+
+        // verify the required parameter 'env' is set
+        if (env == null) {
+            throw new ApiException("Missing the required parameter 'env' when calling findNamespaceUsage(Async)");
+        }
+
+        // verify the required parameter 'clusterName' is set
+        if (clusterName == null) {
+            throw new ApiException("Missing the required parameter 'clusterName' when calling findNamespaceUsage(Async)");
+        }
+
+        // verify the required parameter 'namespaceName' is set
+        if (namespaceName == null) {
+            throw new ApiException("Missing the required parameter 'namespaceName' when calling findNamespaceUsage(Async)");
+        }
+
+        return findNamespaceUsageCall(appId, env, clusterName, namespaceName, _callback);
+
+    }
+
+    /**
+     * 查询namespace使用情况(new added)
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @return List&lt;OpenNamespaceUsageDTO&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> NamespaceUsage查询成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<OpenNamespaceUsageDTO> findNamespaceUsage(String appId, String env, String clusterName, String namespaceName) throws ApiException {
+        ApiResponse<List<OpenNamespaceUsageDTO>> localVarResp = findNamespaceUsageWithHttpInfo(appId, env, clusterName, namespaceName);
+        return localVarResp.getData();
+    }
+
+    /**
+     * 查询namespace使用情况(new added)
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @return ApiResponse&lt;List&lt;OpenNamespaceUsageDTO&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> NamespaceUsage查询成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<OpenNamespaceUsageDTO>> findNamespaceUsageWithHttpInfo(String appId, String env, String clusterName, String namespaceName) throws ApiException {
+        okhttp3.Call localVarCall = findNamespaceUsageValidateBeforeCall(appId, env, clusterName, namespaceName, null);
+        Type localVarReturnType = new TypeToken<List<OpenNamespaceUsageDTO>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * 查询namespace使用情况(new added) (asynchronously)
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> NamespaceUsage查询成功 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call findNamespaceUsageAsync(String appId, String env, String clusterName, String namespaceName, final ApiCallback<List<OpenNamespaceUsageDTO>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = findNamespaceUsageValidateBeforeCall(appId, env, clusterName, namespaceName, _callback);
+        Type localVarReturnType = new TypeToken<List<OpenNamespaceUsageDTO>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -678,6 +984,7 @@ public class NamespaceManagementApi {
      * @param env  (required)
      * @param clusterName  (required)
      * @param fillItemDetail  (required)
+     * @param extendInfo  (optional, default to false)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -687,7 +994,7 @@ public class NamespaceManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call findNamespacesCall(String appId, String env, String clusterName, Boolean fillItemDetail, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call findNamespacesCall(String appId, String env, String clusterName, Boolean fillItemDetail, Boolean extendInfo, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -719,6 +1026,10 @@ public class NamespaceManagementApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("fillItemDetail", fillItemDetail));
         }
 
+        if (extendInfo != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("extendInfo", extendInfo));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -739,7 +1050,7 @@ public class NamespaceManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call findNamespacesValidateBeforeCall(String appId, String env, String clusterName, Boolean fillItemDetail, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call findNamespacesValidateBeforeCall(String appId, String env, String clusterName, Boolean fillItemDetail, Boolean extendInfo, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling findNamespaces(Async)");
@@ -760,7 +1071,7 @@ public class NamespaceManagementApi {
             throw new ApiException("Missing the required parameter 'fillItemDetail' when calling findNamespaces(Async)");
         }
 
-        return findNamespacesCall(appId, env, clusterName, fillItemDetail, _callback);
+        return findNamespacesCall(appId, env, clusterName, fillItemDetail, extendInfo, _callback);
 
     }
 
@@ -771,6 +1082,7 @@ public class NamespaceManagementApi {
      * @param env  (required)
      * @param clusterName  (required)
      * @param fillItemDetail  (required)
+     * @param extendInfo  (optional, default to false)
      * @return List&lt;OpenNamespaceDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -779,8 +1091,8 @@ public class NamespaceManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public List<OpenNamespaceDTO> findNamespaces(String appId, String env, String clusterName, Boolean fillItemDetail) throws ApiException {
-        ApiResponse<List<OpenNamespaceDTO>> localVarResp = findNamespacesWithHttpInfo(appId, env, clusterName, fillItemDetail);
+    public List<OpenNamespaceDTO> findNamespaces(String appId, String env, String clusterName, Boolean fillItemDetail, Boolean extendInfo) throws ApiException {
+        ApiResponse<List<OpenNamespaceDTO>> localVarResp = findNamespacesWithHttpInfo(appId, env, clusterName, fillItemDetail, extendInfo);
         return localVarResp.getData();
     }
 
@@ -791,6 +1103,7 @@ public class NamespaceManagementApi {
      * @param env  (required)
      * @param clusterName  (required)
      * @param fillItemDetail  (required)
+     * @param extendInfo  (optional, default to false)
      * @return ApiResponse&lt;List&lt;OpenNamespaceDTO&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -799,8 +1112,8 @@ public class NamespaceManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<OpenNamespaceDTO>> findNamespacesWithHttpInfo(String appId, String env, String clusterName, Boolean fillItemDetail) throws ApiException {
-        okhttp3.Call localVarCall = findNamespacesValidateBeforeCall(appId, env, clusterName, fillItemDetail, null);
+    public ApiResponse<List<OpenNamespaceDTO>> findNamespacesWithHttpInfo(String appId, String env, String clusterName, Boolean fillItemDetail, Boolean extendInfo) throws ApiException {
+        okhttp3.Call localVarCall = findNamespacesValidateBeforeCall(appId, env, clusterName, fillItemDetail, extendInfo, null);
         Type localVarReturnType = new TypeToken<List<OpenNamespaceDTO>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -812,6 +1125,7 @@ public class NamespaceManagementApi {
      * @param env  (required)
      * @param clusterName  (required)
      * @param fillItemDetail  (required)
+     * @param extendInfo  (optional, default to false)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -821,27 +1135,30 @@ public class NamespaceManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call findNamespacesAsync(String appId, String env, String clusterName, Boolean fillItemDetail, final ApiCallback<List<OpenNamespaceDTO>> _callback) throws ApiException {
+    public okhttp3.Call findNamespacesAsync(String appId, String env, String clusterName, Boolean fillItemDetail, Boolean extendInfo, final ApiCallback<List<OpenNamespaceDTO>> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = findNamespacesValidateBeforeCall(appId, env, clusterName, fillItemDetail, _callback);
+        okhttp3.Call localVarCall = findNamespacesValidateBeforeCall(appId, env, clusterName, fillItemDetail, extendInfo, _callback);
         Type localVarReturnType = new TypeToken<List<OpenNamespaceDTO>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
     /**
-     * Build call for getAppNamespace
+     * Build call for findPublicNamespaceForAssociatedNamespace
+     * @param env 环境标识 (required)
      * @param appId 应用ID (required)
-     * @param namespaceName 命名空间名称 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 关联Namespace名称 (required)
+     * @param extendInfo  (optional, default to false)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取AppNamespace </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> 成功获取关联的公共Namespace详情 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getAppNamespaceCall(String appId, String namespaceName, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call findPublicNamespaceForAssociatedNamespaceCall(String env, String appId, String clusterName, String namespaceName, Boolean extendInfo, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -858,393 +1175,9 @@ public class NamespaceManagementApi {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/openapi/v1/apps/{appId}/appnamespaces/{namespaceName}"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
-            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getAppNamespaceValidateBeforeCall(String appId, String namespaceName, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling getAppNamespace(Async)");
-        }
-
-        // verify the required parameter 'namespaceName' is set
-        if (namespaceName == null) {
-            throw new ApiException("Missing the required parameter 'namespaceName' when calling getAppNamespace(Async)");
-        }
-
-        return getAppNamespaceCall(appId, namespaceName, _callback);
-
-    }
-
-    /**
-     * 获取指定的AppNamespace (new added)
-     * GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     * @param appId 应用ID (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @return OpenAppNamespaceDTO
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取AppNamespace </td><td>  -  </td></tr>
-     </table>
-     */
-    public OpenAppNamespaceDTO getAppNamespace(String appId, String namespaceName) throws ApiException {
-        ApiResponse<OpenAppNamespaceDTO> localVarResp = getAppNamespaceWithHttpInfo(appId, namespaceName);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 获取指定的AppNamespace (new added)
-     * GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     * @param appId 应用ID (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @return ApiResponse&lt;OpenAppNamespaceDTO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取AppNamespace </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<OpenAppNamespaceDTO> getAppNamespaceWithHttpInfo(String appId, String namespaceName) throws ApiException {
-        okhttp3.Call localVarCall = getAppNamespaceValidateBeforeCall(appId, namespaceName, null);
-        Type localVarReturnType = new TypeToken<OpenAppNamespaceDTO>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 获取指定的AppNamespace (new added) (asynchronously)
-     * GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     * @param appId 应用ID (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取AppNamespace </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getAppNamespaceAsync(String appId, String namespaceName, final ApiCallback<OpenAppNamespaceDTO> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getAppNamespaceValidateBeforeCall(appId, namespaceName, _callback);
-        Type localVarReturnType = new TypeToken<OpenAppNamespaceDTO>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for getAppNamespaces
-     * @param publicOnly  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getAppNamespacesCall(Boolean publicOnly, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/appnamespaces";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (publicOnly != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("publicOnly", publicOnly));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getAppNamespacesValidateBeforeCall(Boolean publicOnly, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'publicOnly' is set
-        if (publicOnly == null) {
-            throw new ApiException("Missing the required parameter 'publicOnly' when calling getAppNamespaces(Async)");
-        }
-
-        return getAppNamespacesCall(publicOnly, _callback);
-
-    }
-
-    /**
-     * 获取所有公共AppNamespace (new added)
-     * GET /openapi/v1/appnamespaces?public&#x3D;true
-     * @param publicOnly  (required)
-     * @return List&lt;OpenAppNamespaceDTO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public List<OpenAppNamespaceDTO> getAppNamespaces(Boolean publicOnly) throws ApiException {
-        ApiResponse<List<OpenAppNamespaceDTO>> localVarResp = getAppNamespacesWithHttpInfo(publicOnly);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 获取所有公共AppNamespace (new added)
-     * GET /openapi/v1/appnamespaces?public&#x3D;true
-     * @param publicOnly  (required)
-     * @return ApiResponse&lt;List&lt;OpenAppNamespaceDTO&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<List<OpenAppNamespaceDTO>> getAppNamespacesWithHttpInfo(Boolean publicOnly) throws ApiException {
-        okhttp3.Call localVarCall = getAppNamespacesValidateBeforeCall(publicOnly, null);
-        Type localVarReturnType = new TypeToken<List<OpenAppNamespaceDTO>>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 获取所有公共AppNamespace (new added) (asynchronously)
-     * GET /openapi/v1/appnamespaces?public&#x3D;true
-     * @param publicOnly  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getAppNamespacesAsync(Boolean publicOnly, final ApiCallback<List<OpenAppNamespaceDTO>> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getAppNamespacesValidateBeforeCall(publicOnly, _callback);
-        Type localVarReturnType = new TypeToken<List<OpenAppNamespaceDTO>>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for getAppNamespacesByApp
-     * @param appId  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getAppNamespacesByAppCall(String appId, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/apps/{appId}/appnamespaces"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getAppNamespacesByAppValidateBeforeCall(String appId, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling getAppNamespacesByApp(Async)");
-        }
-
-        return getAppNamespacesByAppCall(appId, _callback);
-
-    }
-
-    /**
-     * 获取指定应用的AppNamespace (new added)
-     * GET /openapi/v1/apps/{appId}/appnamespaces
-     * @param appId  (required)
-     * @return List&lt;OpenAppNamespaceDTO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public List<OpenAppNamespaceDTO> getAppNamespacesByApp(String appId) throws ApiException {
-        ApiResponse<List<OpenAppNamespaceDTO>> localVarResp = getAppNamespacesByAppWithHttpInfo(appId);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 获取指定应用的AppNamespace (new added)
-     * GET /openapi/v1/apps/{appId}/appnamespaces
-     * @param appId  (required)
-     * @return ApiResponse&lt;List&lt;OpenAppNamespaceDTO&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<List<OpenAppNamespaceDTO>> getAppNamespacesByAppWithHttpInfo(String appId) throws ApiException {
-        okhttp3.Call localVarCall = getAppNamespacesByAppValidateBeforeCall(appId, null);
-        Type localVarReturnType = new TypeToken<List<OpenAppNamespaceDTO>>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 获取指定应用的AppNamespace (new added) (asynchronously)
-     * GET /openapi/v1/apps/{appId}/appnamespaces
-     * @param appId  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getAppNamespacesByAppAsync(String appId, final ApiCallback<List<OpenAppNamespaceDTO>> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getAppNamespacesByAppValidateBeforeCall(appId, _callback);
-        Type localVarReturnType = new TypeToken<List<OpenAppNamespaceDTO>>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for getNamespaceLock
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getNamespaceLockCall(String appId, String env, String clusterName, String namespaceName, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
+        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace"
             .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
+            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
             .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
             .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()));
 
@@ -1254,6 +1187,10 @@ public class NamespaceManagementApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (extendInfo != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("extendInfo", extendInfo));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1274,92 +1211,95 @@ public class NamespaceManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getNamespaceLockValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling getNamespaceLock(Async)");
-        }
-
+    private okhttp3.Call findPublicNamespaceForAssociatedNamespaceValidateBeforeCall(String env, String appId, String clusterName, String namespaceName, Boolean extendInfo, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'env' is set
         if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling getNamespaceLock(Async)");
+            throw new ApiException("Missing the required parameter 'env' when calling findPublicNamespaceForAssociatedNamespace(Async)");
+        }
+
+        // verify the required parameter 'appId' is set
+        if (appId == null) {
+            throw new ApiException("Missing the required parameter 'appId' when calling findPublicNamespaceForAssociatedNamespace(Async)");
         }
 
         // verify the required parameter 'clusterName' is set
         if (clusterName == null) {
-            throw new ApiException("Missing the required parameter 'clusterName' when calling getNamespaceLock(Async)");
+            throw new ApiException("Missing the required parameter 'clusterName' when calling findPublicNamespaceForAssociatedNamespace(Async)");
         }
 
         // verify the required parameter 'namespaceName' is set
         if (namespaceName == null) {
-            throw new ApiException("Missing the required parameter 'namespaceName' when calling getNamespaceLock(Async)");
+            throw new ApiException("Missing the required parameter 'namespaceName' when calling findPublicNamespaceForAssociatedNamespace(Async)");
         }
 
-        return getNamespaceLockCall(appId, env, clusterName, namespaceName, _callback);
+        return findPublicNamespaceForAssociatedNamespaceCall(env, appId, clusterName, namespaceName, extendInfo, _callback);
 
     }
 
     /**
-     * 获取Namespace的锁状态 (original openapi)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @return OpenNamespaceLockDTO
+     * 查询关联Namespace对应的公共Namespace详情 (new added)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace
+     * @param env 环境标识 (required)
+     * @param appId 应用ID (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 关联Namespace名称 (required)
+     * @param extendInfo  (optional, default to false)
+     * @return OpenNamespaceDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> 成功获取关联的公共Namespace详情 </td><td>  -  </td></tr>
      </table>
      */
-    public OpenNamespaceLockDTO getNamespaceLock(String appId, String env, String clusterName, String namespaceName) throws ApiException {
-        ApiResponse<OpenNamespaceLockDTO> localVarResp = getNamespaceLockWithHttpInfo(appId, env, clusterName, namespaceName);
+    public OpenNamespaceDTO findPublicNamespaceForAssociatedNamespace(String env, String appId, String clusterName, String namespaceName, Boolean extendInfo) throws ApiException {
+        ApiResponse<OpenNamespaceDTO> localVarResp = findPublicNamespaceForAssociatedNamespaceWithHttpInfo(env, appId, clusterName, namespaceName, extendInfo);
         return localVarResp.getData();
     }
 
     /**
-     * 获取Namespace的锁状态 (original openapi)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @return ApiResponse&lt;OpenNamespaceLockDTO&gt;
+     * 查询关联Namespace对应的公共Namespace详情 (new added)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace
+     * @param env 环境标识 (required)
+     * @param appId 应用ID (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 关联Namespace名称 (required)
+     * @param extendInfo  (optional, default to false)
+     * @return ApiResponse&lt;OpenNamespaceDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> 成功获取关联的公共Namespace详情 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenNamespaceLockDTO> getNamespaceLockWithHttpInfo(String appId, String env, String clusterName, String namespaceName) throws ApiException {
-        okhttp3.Call localVarCall = getNamespaceLockValidateBeforeCall(appId, env, clusterName, namespaceName, null);
-        Type localVarReturnType = new TypeToken<OpenNamespaceLockDTO>(){}.getType();
+    public ApiResponse<OpenNamespaceDTO> findPublicNamespaceForAssociatedNamespaceWithHttpInfo(String env, String appId, String clusterName, String namespaceName, Boolean extendInfo) throws ApiException {
+        okhttp3.Call localVarCall = findPublicNamespaceForAssociatedNamespaceValidateBeforeCall(env, appId, clusterName, namespaceName, extendInfo, null);
+        Type localVarReturnType = new TypeToken<OpenNamespaceDTO>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * 获取Namespace的锁状态 (original openapi) (asynchronously)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
+     * 查询关联Namespace对应的公共Namespace详情 (new added) (asynchronously)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace
+     * @param env 环境标识 (required)
+     * @param appId 应用ID (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 关联Namespace名称 (required)
+     * @param extendInfo  (optional, default to false)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> 成功获取关联的公共Namespace详情 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getNamespaceLockAsync(String appId, String env, String clusterName, String namespaceName, final ApiCallback<OpenNamespaceLockDTO> _callback) throws ApiException {
+    public okhttp3.Call findPublicNamespaceForAssociatedNamespaceAsync(String env, String appId, String clusterName, String namespaceName, Boolean extendInfo, final ApiCallback<OpenNamespaceDTO> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getNamespaceLockValidateBeforeCall(appId, env, clusterName, namespaceName, _callback);
-        Type localVarReturnType = new TypeToken<OpenNamespaceLockDTO>(){}.getType();
+        okhttp3.Call localVarCall = findPublicNamespaceForAssociatedNamespaceValidateBeforeCall(env, appId, clusterName, namespaceName, extendInfo, _callback);
+        Type localVarReturnType = new TypeToken<OpenNamespaceDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -1483,484 +1423,6 @@ public class NamespaceManagementApi {
 
         okhttp3.Call localVarCall = getNamespacesReleaseStatusValidateBeforeCall(appId, _callback);
         Type localVarReturnType = new TypeToken<Map<String, Map<String, Boolean>>>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for getPublicAppNamespaceInstances
-     * @param env 环境标识 (required)
-     * @param publicNamespaceName 公共命名空间名称 (required)
-     * @param page 页码，从0开始 (required)
-     * @param size 每页数量 (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取实例列表 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getPublicAppNamespaceInstancesCall(String env, String publicNamespaceName, Integer page, Integer size, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances"
-            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
-            .replace("{" + "publicNamespaceName" + "}", localVarApiClient.escapeString(publicNamespaceName.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (page != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("page", page));
-        }
-
-        if (size != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("size", size));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getPublicAppNamespaceInstancesValidateBeforeCall(String env, String publicNamespaceName, Integer page, Integer size, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'env' is set
-        if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling getPublicAppNamespaceInstances(Async)");
-        }
-
-        // verify the required parameter 'publicNamespaceName' is set
-        if (publicNamespaceName == null) {
-            throw new ApiException("Missing the required parameter 'publicNamespaceName' when calling getPublicAppNamespaceInstances(Async)");
-        }
-
-        // verify the required parameter 'page' is set
-        if (page == null) {
-            throw new ApiException("Missing the required parameter 'page' when calling getPublicAppNamespaceInstances(Async)");
-        }
-
-        // verify the required parameter 'size' is set
-        if (size == null) {
-            throw new ApiException("Missing the required parameter 'size' when calling getPublicAppNamespaceInstances(Async)");
-        }
-
-        return getPublicAppNamespaceInstancesCall(env, publicNamespaceName, page, size, _callback);
-
-    }
-
-    /**
-     * 获取公共AppNamespace的所有实例 (new added)
-     * GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
-     * @param env 环境标识 (required)
-     * @param publicNamespaceName 公共命名空间名称 (required)
-     * @param page 页码，从0开始 (required)
-     * @param size 每页数量 (required)
-     * @return List&lt;OpenNamespaceDTO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取实例列表 </td><td>  -  </td></tr>
-     </table>
-     */
-    public List<OpenNamespaceDTO> getPublicAppNamespaceInstances(String env, String publicNamespaceName, Integer page, Integer size) throws ApiException {
-        ApiResponse<List<OpenNamespaceDTO>> localVarResp = getPublicAppNamespaceInstancesWithHttpInfo(env, publicNamespaceName, page, size);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 获取公共AppNamespace的所有实例 (new added)
-     * GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
-     * @param env 环境标识 (required)
-     * @param publicNamespaceName 公共命名空间名称 (required)
-     * @param page 页码，从0开始 (required)
-     * @param size 每页数量 (required)
-     * @return ApiResponse&lt;List&lt;OpenNamespaceDTO&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取实例列表 </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<List<OpenNamespaceDTO>> getPublicAppNamespaceInstancesWithHttpInfo(String env, String publicNamespaceName, Integer page, Integer size) throws ApiException {
-        okhttp3.Call localVarCall = getPublicAppNamespaceInstancesValidateBeforeCall(env, publicNamespaceName, page, size, null);
-        Type localVarReturnType = new TypeToken<List<OpenNamespaceDTO>>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 获取公共AppNamespace的所有实例 (new added) (asynchronously)
-     * GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
-     * @param env 环境标识 (required)
-     * @param publicNamespaceName 公共命名空间名称 (required)
-     * @param page 页码，从0开始 (required)
-     * @param size 每页数量 (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取实例列表 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getPublicAppNamespaceInstancesAsync(String env, String publicNamespaceName, Integer page, Integer size, final ApiCallback<List<OpenNamespaceDTO>> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getPublicAppNamespaceInstancesValidateBeforeCall(env, publicNamespaceName, page, size, _callback);
-        Type localVarReturnType = new TypeToken<List<OpenNamespaceDTO>>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for getPublicNamespaceAssociation
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取关联的公共Namespace </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getPublicNamespaceAssociationCall(String appId, String env, String clusterName, String namespaceName, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
-            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
-            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
-            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getPublicNamespaceAssociationValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling getPublicNamespaceAssociation(Async)");
-        }
-
-        // verify the required parameter 'env' is set
-        if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling getPublicNamespaceAssociation(Async)");
-        }
-
-        // verify the required parameter 'clusterName' is set
-        if (clusterName == null) {
-            throw new ApiException("Missing the required parameter 'clusterName' when calling getPublicNamespaceAssociation(Async)");
-        }
-
-        // verify the required parameter 'namespaceName' is set
-        if (namespaceName == null) {
-            throw new ApiException("Missing the required parameter 'namespaceName' when calling getPublicNamespaceAssociation(Async)");
-        }
-
-        return getPublicNamespaceAssociationCall(appId, env, clusterName, namespaceName, _callback);
-
-    }
-
-    /**
-     * 获取关联的公共Namespace (new added)
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @return OpenNamespaceDTO
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取关联的公共Namespace </td><td>  -  </td></tr>
-     </table>
-     */
-    public OpenNamespaceDTO getPublicNamespaceAssociation(String appId, String env, String clusterName, String namespaceName) throws ApiException {
-        ApiResponse<OpenNamespaceDTO> localVarResp = getPublicNamespaceAssociationWithHttpInfo(appId, env, clusterName, namespaceName);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 获取关联的公共Namespace (new added)
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @return ApiResponse&lt;OpenNamespaceDTO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取关联的公共Namespace </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<OpenNamespaceDTO> getPublicNamespaceAssociationWithHttpInfo(String appId, String env, String clusterName, String namespaceName) throws ApiException {
-        okhttp3.Call localVarCall = getPublicNamespaceAssociationValidateBeforeCall(appId, env, clusterName, namespaceName, null);
-        Type localVarReturnType = new TypeToken<OpenNamespaceDTO>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 获取关联的公共Namespace (new added) (asynchronously)
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取关联的公共Namespace </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getPublicNamespaceAssociationAsync(String appId, String env, String clusterName, String namespaceName, final ApiCallback<OpenNamespaceDTO> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getPublicNamespaceAssociationValidateBeforeCall(appId, env, clusterName, namespaceName, _callback);
-        Type localVarReturnType = new TypeToken<OpenNamespaceDTO>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for loadNamespace
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param fillItemDetail  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call loadNamespaceCall(String appId, String env, String clusterName, String namespaceName, Boolean fillItemDetail, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
-            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
-            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
-            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (fillItemDetail != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("fillItemDetail", fillItemDetail));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call loadNamespaceValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, Boolean fillItemDetail, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling loadNamespace(Async)");
-        }
-
-        // verify the required parameter 'env' is set
-        if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling loadNamespace(Async)");
-        }
-
-        // verify the required parameter 'clusterName' is set
-        if (clusterName == null) {
-            throw new ApiException("Missing the required parameter 'clusterName' when calling loadNamespace(Async)");
-        }
-
-        // verify the required parameter 'namespaceName' is set
-        if (namespaceName == null) {
-            throw new ApiException("Missing the required parameter 'namespaceName' when calling loadNamespace(Async)");
-        }
-
-        // verify the required parameter 'fillItemDetail' is set
-        if (fillItemDetail == null) {
-            throw new ApiException("Missing the required parameter 'fillItemDetail' when calling loadNamespace(Async)");
-        }
-
-        return loadNamespaceCall(appId, env, clusterName, namespaceName, fillItemDetail, _callback);
-
-    }
-
-    /**
-     * 获取指定的Namespace (original openapi)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param fillItemDetail  (required)
-     * @return OpenNamespaceDTO
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public OpenNamespaceDTO loadNamespace(String appId, String env, String clusterName, String namespaceName, Boolean fillItemDetail) throws ApiException {
-        ApiResponse<OpenNamespaceDTO> localVarResp = loadNamespaceWithHttpInfo(appId, env, clusterName, namespaceName, fillItemDetail);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 获取指定的Namespace (original openapi)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param fillItemDetail  (required)
-     * @return ApiResponse&lt;OpenNamespaceDTO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<OpenNamespaceDTO> loadNamespaceWithHttpInfo(String appId, String env, String clusterName, String namespaceName, Boolean fillItemDetail) throws ApiException {
-        okhttp3.Call localVarCall = loadNamespaceValidateBeforeCall(appId, env, clusterName, namespaceName, fillItemDetail, null);
-        Type localVarReturnType = new TypeToken<OpenNamespaceDTO>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 获取指定的Namespace (original openapi) (asynchronously)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
-     * @param appId  (required)
-     * @param env  (required)
-     * @param clusterName  (required)
-     * @param namespaceName  (required)
-     * @param fillItemDetail  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call loadNamespaceAsync(String appId, String env, String clusterName, String namespaceName, Boolean fillItemDetail, final ApiCallback<OpenNamespaceDTO> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = loadNamespaceValidateBeforeCall(appId, env, clusterName, namespaceName, fillItemDetail, _callback);
-        Type localVarReturnType = new TypeToken<OpenNamespaceDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

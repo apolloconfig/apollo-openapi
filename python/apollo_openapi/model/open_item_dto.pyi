@@ -31,31 +31,51 @@ class OpenItemDTO(
 
     Do not edit the class manually.
 
-    Apollo配置项数据传输对象，表示一个具体的配置键值对及其元数据
+    Apollo配置项核心数据对象，仅包含键值及基础审计信息
     """
 
 
     class MetaOapg:
 
         class properties:
+            key = schemas.StrSchema
+            value = schemas.StrSchema
+            type = schemas.IntSchema
+            comment = schemas.StrSchema
+
+            @staticmethod
+            def extendInfo() -> typing.Type['OpenItemExtendDTO']:
+                return OpenItemExtendDTO
             dataChangeCreatedBy = schemas.StrSchema
             dataChangeLastModifiedBy = schemas.StrSchema
             dataChangeCreatedTime = schemas.StrSchema
             dataChangeLastModifiedTime = schemas.StrSchema
-            key = schemas.StrSchema
-            type = schemas.IntSchema
-            value = schemas.StrSchema
-            comment = schemas.StrSchema
             __annotations__ = {
+                "key": key,
+                "value": value,
+                "type": type,
+                "comment": comment,
+                "extendInfo": extendInfo,
                 "dataChangeCreatedBy": dataChangeCreatedBy,
                 "dataChangeLastModifiedBy": dataChangeLastModifiedBy,
                 "dataChangeCreatedTime": dataChangeCreatedTime,
                 "dataChangeLastModifiedTime": dataChangeLastModifiedTime,
-                "key": key,
-                "type": type,
-                "value": value,
-                "comment": comment,
             }
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["key"]) -> MetaOapg.properties.key: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["value"]) -> MetaOapg.properties.value: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["type"]) -> MetaOapg.properties.type: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["comment"]) -> MetaOapg.properties.comment: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["extendInfo"]) -> 'OpenItemExtendDTO': ...
 
     @typing.overload
     def __getitem__(self, name: typing_extensions.Literal["dataChangeCreatedBy"]) -> MetaOapg.properties.dataChangeCreatedBy: ...
@@ -70,24 +90,27 @@ class OpenItemDTO(
     def __getitem__(self, name: typing_extensions.Literal["dataChangeLastModifiedTime"]) -> MetaOapg.properties.dataChangeLastModifiedTime: ...
 
     @typing.overload
-    def __getitem__(self, name: typing_extensions.Literal["key"]) -> MetaOapg.properties.key: ...
-
-    @typing.overload
-    def __getitem__(self, name: typing_extensions.Literal["type"]) -> MetaOapg.properties.type: ...
-
-    @typing.overload
-    def __getitem__(self, name: typing_extensions.Literal["value"]) -> MetaOapg.properties.value: ...
-
-    @typing.overload
-    def __getitem__(self, name: typing_extensions.Literal["comment"]) -> MetaOapg.properties.comment: ...
-
-    @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
 
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "key", "type", "value", "comment", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["key", "value", "type", "comment", "extendInfo", "dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
 
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["key"]) -> typing.Union[MetaOapg.properties.key, schemas.Unset]: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["value"]) -> typing.Union[MetaOapg.properties.value, schemas.Unset]: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["type"]) -> typing.Union[MetaOapg.properties.type, schemas.Unset]: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["comment"]) -> typing.Union[MetaOapg.properties.comment, schemas.Unset]: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["extendInfo"]) -> typing.Union['OpenItemExtendDTO', schemas.Unset]: ...
 
     @typing.overload
     def get_item_oapg(self, name: typing_extensions.Literal["dataChangeCreatedBy"]) -> typing.Union[MetaOapg.properties.dataChangeCreatedBy, schemas.Unset]: ...
@@ -102,49 +125,41 @@ class OpenItemDTO(
     def get_item_oapg(self, name: typing_extensions.Literal["dataChangeLastModifiedTime"]) -> typing.Union[MetaOapg.properties.dataChangeLastModifiedTime, schemas.Unset]: ...
 
     @typing.overload
-    def get_item_oapg(self, name: typing_extensions.Literal["key"]) -> typing.Union[MetaOapg.properties.key, schemas.Unset]: ...
-
-    @typing.overload
-    def get_item_oapg(self, name: typing_extensions.Literal["type"]) -> typing.Union[MetaOapg.properties.type, schemas.Unset]: ...
-
-    @typing.overload
-    def get_item_oapg(self, name: typing_extensions.Literal["value"]) -> typing.Union[MetaOapg.properties.value, schemas.Unset]: ...
-
-    @typing.overload
-    def get_item_oapg(self, name: typing_extensions.Literal["comment"]) -> typing.Union[MetaOapg.properties.comment, schemas.Unset]: ...
-
-    @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
 
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", "key", "type", "value", "comment", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["key", "value", "type", "comment", "extendInfo", "dataChangeCreatedBy", "dataChangeLastModifiedBy", "dataChangeCreatedTime", "dataChangeLastModifiedTime", ], str]):
         return super().get_item_oapg(name)
 
 
     def __new__(
         cls,
         *_args: typing.Union[dict, frozendict.frozendict, ],
+        key: typing.Union[MetaOapg.properties.key, str, schemas.Unset] = schemas.unset,
+        value: typing.Union[MetaOapg.properties.value, str, schemas.Unset] = schemas.unset,
+        type: typing.Union[MetaOapg.properties.type, decimal.Decimal, int, schemas.Unset] = schemas.unset,
+        comment: typing.Union[MetaOapg.properties.comment, str, schemas.Unset] = schemas.unset,
+        extendInfo: typing.Union['OpenItemExtendDTO', schemas.Unset] = schemas.unset,
         dataChangeCreatedBy: typing.Union[MetaOapg.properties.dataChangeCreatedBy, str, schemas.Unset] = schemas.unset,
         dataChangeLastModifiedBy: typing.Union[MetaOapg.properties.dataChangeLastModifiedBy, str, schemas.Unset] = schemas.unset,
         dataChangeCreatedTime: typing.Union[MetaOapg.properties.dataChangeCreatedTime, str, schemas.Unset] = schemas.unset,
         dataChangeLastModifiedTime: typing.Union[MetaOapg.properties.dataChangeLastModifiedTime, str, schemas.Unset] = schemas.unset,
-        key: typing.Union[MetaOapg.properties.key, str, schemas.Unset] = schemas.unset,
-        type: typing.Union[MetaOapg.properties.type, decimal.Decimal, int, schemas.Unset] = schemas.unset,
-        value: typing.Union[MetaOapg.properties.value, str, schemas.Unset] = schemas.unset,
-        comment: typing.Union[MetaOapg.properties.comment, str, schemas.Unset] = schemas.unset,
         _configuration: typing.Optional[schemas.Configuration] = None,
         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
     ) -> 'OpenItemDTO':
         return super().__new__(
             cls,
             *_args,
+            key=key,
+            value=value,
+            type=type,
+            comment=comment,
+            extendInfo=extendInfo,
             dataChangeCreatedBy=dataChangeCreatedBy,
             dataChangeLastModifiedBy=dataChangeLastModifiedBy,
             dataChangeCreatedTime=dataChangeCreatedTime,
             dataChangeLastModifiedTime=dataChangeLastModifiedTime,
-            key=key,
-            type=type,
-            value=value,
-            comment=comment,
             _configuration=_configuration,
             **kwargs,
         )
+
+from apollo_openapi.model.open_item_extend_dto import OpenItemExtendDTO

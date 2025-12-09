@@ -8,7 +8,8 @@ All URIs are relative to *http://localhost*
 | [**deleteBranch**](NamespaceBranchManagementApi.md#deleteBranch) | **DELETE** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} | 删除命名空间分支 (original openapi) |
 | [**findBranch**](NamespaceBranchManagementApi.md#findBranch) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches | 获取命名空间分支信息 (original openapi) |
 | [**getBranchGrayRules**](NamespaceBranchManagementApi.md#getBranchGrayRules) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules | 获取分支灰度发布规则 (original openapi) |
-| [**mergeBranch**](NamespaceBranchManagementApi.md#mergeBranch) | **PATCH** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} | 合并分支到主分支 (new added) |
+| [**merge**](NamespaceBranchManagementApi.md#merge) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge | 合并分支 (original openapi) |
+| [**mergeBranch**](NamespaceBranchManagementApi.md#mergeBranch) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName} | 合并分支到主分支 (new added) |
 | [**updateBranchRules**](NamespaceBranchManagementApi.md#updateBranchRules) | **PUT** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules | 更新分支灰度发布规则 (original openapi) |
 
 
@@ -69,7 +70,7 @@ public class Example {
 | **env** | **String**| 环境标识 | |
 | **clusterName** | **String**| 集群名称 | |
 | **namespaceName** | **String**| 命名空间名称 | |
-| **operator** | **String**| 操作人用户名 | |
+| **operator** | **String**| 操作人用户名 | [optional] |
 
 ### Return type
 
@@ -91,7 +92,7 @@ public class Example {
 
 <a id="deleteBranch"></a>
 # **deleteBranch**
-> Object deleteBranch(env, appId, clusterName, namespaceName, branchName, operator)
+> deleteBranch(env, appId, clusterName, namespaceName, branchName, operator)
 
 删除命名空间分支 (original openapi)
 
@@ -126,8 +127,7 @@ public class Example {
     String branchName = "branchName_example"; // String | 分支名称
     String operator = "operator_example"; // String | 操作人用户名
     try {
-      Object result = apiInstance.deleteBranch(env, appId, clusterName, namespaceName, branchName, operator);
-      System.out.println(result);
+      apiInstance.deleteBranch(env, appId, clusterName, namespaceName, branchName, operator);
     } catch (ApiException e) {
       System.err.println("Exception when calling NamespaceBranchManagementApi#deleteBranch");
       System.err.println("Status code: " + e.getCode());
@@ -152,7 +152,7 @@ public class Example {
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -161,7 +161,7 @@ public class Example {
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -170,7 +170,7 @@ public class Example {
 
 <a id="findBranch"></a>
 # **findBranch**
-> OpenNamespaceDTO findBranch(appId, env, clusterName, namespaceName)
+> OpenNamespaceDTO findBranch(appId, env, clusterName, namespaceName, extendInfo)
 
 获取命名空间分支信息 (original openapi)
 
@@ -202,8 +202,9 @@ public class Example {
     String env = "env_example"; // String | 环境标识
     String clusterName = "clusterName_example"; // String | 集群名称
     String namespaceName = "namespaceName_example"; // String | 命名空间名称
+    Boolean extendInfo = false; // Boolean |
     try {
-      OpenNamespaceDTO result = apiInstance.findBranch(appId, env, clusterName, namespaceName);
+      OpenNamespaceDTO result = apiInstance.findBranch(appId, env, clusterName, namespaceName, extendInfo);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling NamespaceBranchManagementApi#findBranch");
@@ -224,6 +225,7 @@ public class Example {
 | **env** | **String**| 环境标识 | |
 | **clusterName** | **String**| 集群名称 | |
 | **namespaceName** | **String**| 命名空间名称 | |
+| **extendInfo** | **Boolean**|  | [optional] [default to false] |
 
 ### Return type
 
@@ -321,13 +323,96 @@ public class Example {
 |-------------|-------------|------------------|
 | **200** | 成功获取灰度发布规则 |  -  |
 
+<a id="merge"></a>
+# **merge**
+> OpenReleaseDTO merge(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO)
+
+合并分支 (original openapi)
+
+合并灰度分支并可选择删除分支
+
+### Example
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.NamespaceBranchManagementApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("http://localhost");
+
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    NamespaceBranchManagementApi apiInstance = new NamespaceBranchManagementApi(defaultClient);
+    String appId = "appId_example"; // String | 应用ID
+    String env = "env_example"; // String | 环境标识
+    String clusterName = "clusterName_example"; // String | 集群名称
+    String namespaceName = "namespaceName_example"; // String | 命名空间名称
+    String branchName = "branchName_example"; // String | 分支名称
+    Boolean deleteBranch = true; // Boolean | 合并后是否删除分支（true/false）
+    NamespaceReleaseDTO namespaceReleaseDTO = new NamespaceReleaseDTO(); // NamespaceReleaseDTO |
+    try {
+      OpenReleaseDTO result = apiInstance.merge(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling NamespaceBranchManagementApi#merge");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **appId** | **String**| 应用ID | |
+| **env** | **String**| 环境标识 | |
+| **clusterName** | **String**| 集群名称 | |
+| **namespaceName** | **String**| 命名空间名称 | |
+| **branchName** | **String**| 分支名称 | |
+| **deleteBranch** | **Boolean**| 合并后是否删除分支（true/false） | |
+| **namespaceReleaseDTO** | [**NamespaceReleaseDTO**](NamespaceReleaseDTO.md)|  | |
+
+### Return type
+
+[**OpenReleaseDTO**](OpenReleaseDTO.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | 分支合并成功 |  -  |
+| **400** | 合并参数错误 |  -  |
+| **403** | 权限不足 |  -  |
+
 <a id="mergeBranch"></a>
 # **mergeBranch**
-> OpenReleaseDTO mergeBranch(env, appId, clusterName, namespaceName, branchName, deleteBranch, operator, namespaceReleaseDTO)
+> OpenReleaseDTO mergeBranch(env, appId, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, operator)
 
 合并分支到主分支 (new added)
 
-PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}  使用 PATCH 方法表示部分更新操作（将分支状态从\&quot;独立\&quot;更新为\&quot;合并\&quot;）
+POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
 
 ### Example
 ```java
@@ -357,10 +442,10 @@ public class Example {
     String namespaceName = "namespaceName_example"; // String | 命名空间名称
     String branchName = "branchName_example"; // String | 分支名称
     Boolean deleteBranch = true; // Boolean | 合并后是否删除分支（true/false）
-    String operator = "operator_example"; // String | 操作人用户名
     NamespaceReleaseDTO namespaceReleaseDTO = new NamespaceReleaseDTO(); // NamespaceReleaseDTO |
+    String operator = "operator_example"; // String | 操作人用户名
     try {
-      OpenReleaseDTO result = apiInstance.mergeBranch(env, appId, clusterName, namespaceName, branchName, deleteBranch, operator, namespaceReleaseDTO);
+      OpenReleaseDTO result = apiInstance.mergeBranch(env, appId, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, operator);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling NamespaceBranchManagementApi#mergeBranch");
@@ -383,8 +468,8 @@ public class Example {
 | **namespaceName** | **String**| 命名空间名称 | |
 | **branchName** | **String**| 分支名称 | |
 | **deleteBranch** | **Boolean**| 合并后是否删除分支（true/false） | |
-| **operator** | **String**| 操作人用户名 | |
 | **namespaceReleaseDTO** | [**NamespaceReleaseDTO**](NamespaceReleaseDTO.md)|  | |
+| **operator** | **String**| 操作人用户名 | [optional] |
 
 ### Return type
 
@@ -406,7 +491,7 @@ public class Example {
 
 <a id="updateBranchRules"></a>
 # **updateBranchRules**
-> Object updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO)
+> updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO)
 
 更新分支灰度发布规则 (original openapi)
 
@@ -442,8 +527,7 @@ public class Example {
     String operator = "operator_example"; // String | 操作人用户名
     OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO = new OpenGrayReleaseRuleDTO(); // OpenGrayReleaseRuleDTO |
     try {
-      Object result = apiInstance.updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO);
-      System.out.println(result);
+      apiInstance.updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO);
     } catch (ApiException e) {
       System.err.println("Exception when calling NamespaceBranchManagementApi#updateBranchRules");
       System.err.println("Status code: " + e.getCode());
@@ -469,7 +553,7 @@ public class Example {
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -478,7 +562,7 @@ public class Example {
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 ### HTTP response details
 | Status code | Description | Response headers |

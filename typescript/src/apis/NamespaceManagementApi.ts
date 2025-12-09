@@ -15,45 +15,59 @@
 
 import * as runtime from '../runtime';
 import type {
-  ExceptionResponse,
-  OpenAppNamespaceDTO,
+  OpenCreateNamespaceDTO,
   OpenNamespaceDTO,
-  OpenNamespaceLockDTO,
+  OpenNamespaceUsageDTO,
 } from '../models';
 import {
-    ExceptionResponseFromJSON,
-    ExceptionResponseToJSON,
-    OpenAppNamespaceDTOFromJSON,
-    OpenAppNamespaceDTOToJSON,
+    OpenCreateNamespaceDTOFromJSON,
+    OpenCreateNamespaceDTOToJSON,
     OpenNamespaceDTOFromJSON,
     OpenNamespaceDTOToJSON,
-    OpenNamespaceLockDTOFromJSON,
-    OpenNamespaceLockDTOToJSON,
+    OpenNamespaceUsageDTOFromJSON,
+    OpenNamespaceUsageDTOToJSON,
 } from '../models';
 
-export interface CheckNamespaceIntegrityRequest {
+export interface CreateMissingNamespacesRequest {
+    appId: string;
+    env: string;
+    clusterName: string;
+    operator?: string;
+}
+
+export interface CreateNamespacesRequest {
+    openCreateNamespaceDTO: Array<OpenCreateNamespaceDTO>;
+    operator?: string;
+}
+
+export interface DeleteNamespaceRequest {
+    appId: string;
+    env: string;
+    clusterName: string;
+    namespaceName: string;
+    operator?: string;
+}
+
+export interface FindMissingNamespacesRequest {
     appId: string;
     env: string;
     clusterName: string;
 }
 
-export interface CreateNamespaceRequest {
-    appId: string;
-    openAppNamespaceDTO: OpenAppNamespaceDTO;
-}
-
-export interface DeleteAppNamespaceRequest {
-    appId: string;
-    namespaceName: string;
-    operator: string;
-}
-
-export interface DeleteNamespaceLinksRequest {
+export interface FindNamespaceRequest {
     appId: string;
     env: string;
     clusterName: string;
     namespaceName: string;
-    operator: string;
+    fillItemDetail: boolean;
+    extendInfo?: boolean;
+}
+
+export interface FindNamespaceUsageRequest {
+    appId: string;
+    env: string;
+    clusterName: string;
+    namespaceName: string;
 }
 
 export interface FindNamespacesRequest {
@@ -61,52 +75,19 @@ export interface FindNamespacesRequest {
     env: string;
     clusterName: string;
     fillItemDetail: boolean;
+    extendInfo?: boolean;
 }
 
-export interface GetAppNamespaceRequest {
-    appId: string;
-    namespaceName: string;
-}
-
-export interface GetAppNamespacesRequest {
-    publicOnly: boolean;
-}
-
-export interface GetAppNamespacesByAppRequest {
-    appId: string;
-}
-
-export interface GetNamespaceLockRequest {
-    appId: string;
+export interface FindPublicNamespaceForAssociatedNamespaceRequest {
     env: string;
+    appId: string;
     clusterName: string;
     namespaceName: string;
+    extendInfo?: boolean;
 }
 
 export interface GetNamespacesReleaseStatusRequest {
     appId: string;
-}
-
-export interface GetPublicAppNamespaceInstancesRequest {
-    env: string;
-    publicNamespaceName: string;
-    page: number;
-    size: number;
-}
-
-export interface GetPublicNamespaceAssociationRequest {
-    appId: string;
-    env: string;
-    clusterName: string;
-    namespaceName: string;
-}
-
-export interface LoadNamespaceRequest {
-    appId: string;
-    env: string;
-    clusterName: string;
-    namespaceName: string;
-    fillItemDetail: boolean;
 }
 
 /**
@@ -115,23 +96,27 @@ export interface LoadNamespaceRequest {
 export class NamespaceManagementApi extends runtime.BaseAPI {
 
     /**
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check
-     * 检查缺失的Namespace (new added)
+     * POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
+     * 创建缺失的Namespace (new added)
      */
-    async checkNamespaceIntegrityRaw(requestParameters: CheckNamespaceIntegrityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<string>>> {
+    async createMissingNamespacesRaw(requestParameters: CreateMissingNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling checkNamespaceIntegrity.');
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling createMissingNamespaces.');
         }
 
         if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling checkNamespaceIntegrity.');
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling createMissingNamespaces.');
         }
 
         if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
-            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling checkNamespaceIntegrity.');
+            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling createMissingNamespaces.');
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -140,8 +125,8 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))),
-            method: 'GET',
+            path: `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))),
+            method: 'POST',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
@@ -150,28 +135,28 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check
-     * 检查缺失的Namespace (new added)
+     * POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
+     * 创建缺失的Namespace (new added)
      */
-    async checkNamespaceIntegrity(requestParameters: CheckNamespaceIntegrityRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>> {
-        const response = await this.checkNamespaceIntegrityRaw(requestParameters, initOverrides);
+    async createMissingNamespaces(requestParameters: CreateMissingNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+        const response = await this.createMissingNamespacesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * POST /openapi/v1/apps/{appId}/appnamespaces
-     * 创建AppNamespace (original openapi)
+     * POST /openapi/v1/apps/{appId}/namespaces
+     * 创建Namespace (new added)
      */
-    async createNamespaceRaw(requestParameters: CreateNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenAppNamespaceDTO>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling createNamespace.');
-        }
-
-        if (requestParameters.openAppNamespaceDTO === null || requestParameters.openAppNamespaceDTO === undefined) {
-            throw new runtime.RequiredError('openAppNamespaceDTO','Required parameter requestParameters.openAppNamespaceDTO was null or undefined when calling createNamespace.');
+    async createNamespacesRaw(requestParameters: CreateNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters.openCreateNamespaceDTO === null || requestParameters.openCreateNamespaceDTO === undefined) {
+            throw new runtime.RequiredError('openCreateNamespaceDTO','Required parameter requestParameters.openCreateNamespaceDTO was null or undefined when calling createNamespaces.');
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -182,96 +167,43 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/appnamespaces`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))),
+            path: `/openapi/v1/namespaces`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: OpenAppNamespaceDTOToJSON(requestParameters.openAppNamespaceDTO),
+            body: requestParameters.openCreateNamespaceDTO.map(OpenCreateNamespaceDTOToJSON),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenAppNamespaceDTOFromJSON(jsonValue));
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
-     * POST /openapi/v1/apps/{appId}/appnamespaces
-     * 创建AppNamespace (original openapi)
+     * POST /openapi/v1/apps/{appId}/namespaces
+     * 创建Namespace (new added)
      */
-    async createNamespace(requestParameters: CreateNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenAppNamespaceDTO> {
-        const response = await this.createNamespaceRaw(requestParameters, initOverrides);
-        return await response.value();
+    async createNamespaces(requestParameters: CreateNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.createNamespacesRaw(requestParameters, initOverrides);
     }
 
     /**
-     * DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     * 删除AppNamespace (new added)
+     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}
+     * 删除指定的Namespace (new added)
      */
-    async deleteAppNamespaceRaw(requestParameters: DeleteAppNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async deleteNamespaceRaw(requestParameters: DeleteNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling deleteAppNamespace.');
-        }
-
-        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling deleteAppNamespace.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling deleteAppNamespace.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.operator !== undefined) {
-            queryParameters['operator'] = requestParameters.operator;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/appnamespaces/{namespaceName}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
-            method: 'DELETE',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse<any>(response);
-    }
-
-    /**
-     * DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     * 删除AppNamespace (new added)
-     */
-    async deleteAppNamespace(requestParameters: DeleteAppNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.deleteAppNamespaceRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links
-     * 删除关联的Namespace (new added)
-     */
-    async deleteNamespaceLinksRaw(requestParameters: DeleteNamespaceLinksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling deleteNamespaceLinks.');
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling deleteNamespace.');
         }
 
         if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling deleteNamespaceLinks.');
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling deleteNamespace.');
         }
 
         if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
-            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling deleteNamespaceLinks.');
+            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling deleteNamespace.');
         }
 
         if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling deleteNamespaceLinks.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling deleteNamespaceLinks.');
+            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling deleteNamespace.');
         }
 
         const queryParameters: any = {};
@@ -287,8 +219,51 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
+            path: `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
             method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}
+     * 删除指定的Namespace (new added)
+     */
+    async deleteNamespace(requestParameters: DeleteNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteNamespaceRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
+     * 查找缺失的Namespace (new added)
+     */
+    async findMissingNamespacesRaw(requestParameters: FindMissingNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<string>>> {
+        if (requestParameters.appId === null || requestParameters.appId === undefined) {
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling findMissingNamespaces.');
+        }
+
+        if (requestParameters.env === null || requestParameters.env === undefined) {
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling findMissingNamespaces.');
+        }
+
+        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
+            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling findMissingNamespaces.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))),
+            method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
@@ -297,11 +272,119 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links
-     * 删除关联的Namespace (new added)
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
+     * 查找缺失的Namespace (new added)
      */
-    async deleteNamespaceLinks(requestParameters: DeleteNamespaceLinksRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.deleteNamespaceLinksRaw(requestParameters, initOverrides);
+    async findMissingNamespaces(requestParameters: FindMissingNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<string>> {
+        const response = await this.findMissingNamespacesRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
+     * 获取指定的Namespace (original openapi)
+     */
+    async findNamespaceRaw(requestParameters: FindNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenNamespaceDTO>> {
+        if (requestParameters.appId === null || requestParameters.appId === undefined) {
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling findNamespace.');
+        }
+
+        if (requestParameters.env === null || requestParameters.env === undefined) {
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling findNamespace.');
+        }
+
+        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
+            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling findNamespace.');
+        }
+
+        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
+            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling findNamespace.');
+        }
+
+        if (requestParameters.fillItemDetail === null || requestParameters.fillItemDetail === undefined) {
+            throw new runtime.RequiredError('fillItemDetail','Required parameter requestParameters.fillItemDetail was null or undefined when calling findNamespace.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.fillItemDetail !== undefined) {
+            queryParameters['fillItemDetail'] = requestParameters.fillItemDetail;
+        }
+
+        if (requestParameters.extendInfo !== undefined) {
+            queryParameters['extendInfo'] = requestParameters.extendInfo;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpenNamespaceDTOFromJSON(jsonValue));
+    }
+
+    /**
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
+     * 获取指定的Namespace (original openapi)
+     */
+    async findNamespace(requestParameters: FindNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenNamespaceDTO> {
+        const response = await this.findNamespaceRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage
+     * 查询namespace使用情况(new added)
+     */
+    async findNamespaceUsageRaw(requestParameters: FindNamespaceUsageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenNamespaceUsageDTO>>> {
+        if (requestParameters.appId === null || requestParameters.appId === undefined) {
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling findNamespaceUsage.');
+        }
+
+        if (requestParameters.env === null || requestParameters.env === undefined) {
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling findNamespaceUsage.');
+        }
+
+        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
+            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling findNamespaceUsage.');
+        }
+
+        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
+            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling findNamespaceUsage.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenNamespaceUsageDTOFromJSON));
+    }
+
+    /**
+     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage
+     * 查询namespace使用情况(new added)
+     */
+    async findNamespaceUsage(requestParameters: FindNamespaceUsageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenNamespaceUsageDTO>> {
+        const response = await this.findNamespaceUsageRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -332,6 +415,10 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
             queryParameters['fillItemDetail'] = requestParameters.fillItemDetail;
         }
 
+        if (requestParameters.extendInfo !== undefined) {
+            queryParameters['extendInfo'] = requestParameters.extendInfo;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -358,143 +445,31 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     * 获取指定的AppNamespace (new added)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace
+     * 查询关联Namespace对应的公共Namespace详情 (new added)
      */
-    async getAppNamespaceRaw(requestParameters: GetAppNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenAppNamespaceDTO>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getAppNamespace.');
-        }
-
-        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling getAppNamespace.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/appnamespaces/{namespaceName}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenAppNamespaceDTOFromJSON(jsonValue));
-    }
-
-    /**
-     * GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
-     * 获取指定的AppNamespace (new added)
-     */
-    async getAppNamespace(requestParameters: GetAppNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenAppNamespaceDTO> {
-        const response = await this.getAppNamespaceRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * GET /openapi/v1/appnamespaces?public=true
-     * 获取所有公共AppNamespace (new added)
-     */
-    async getAppNamespacesRaw(requestParameters: GetAppNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenAppNamespaceDTO>>> {
-        if (requestParameters.publicOnly === null || requestParameters.publicOnly === undefined) {
-            throw new runtime.RequiredError('publicOnly','Required parameter requestParameters.publicOnly was null or undefined when calling getAppNamespaces.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.publicOnly !== undefined) {
-            queryParameters['publicOnly'] = requestParameters.publicOnly;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/appnamespaces`,
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenAppNamespaceDTOFromJSON));
-    }
-
-    /**
-     * GET /openapi/v1/appnamespaces?public=true
-     * 获取所有公共AppNamespace (new added)
-     */
-    async getAppNamespaces(requestParameters: GetAppNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenAppNamespaceDTO>> {
-        const response = await this.getAppNamespacesRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * GET /openapi/v1/apps/{appId}/appnamespaces
-     * 获取指定应用的AppNamespace (new added)
-     */
-    async getAppNamespacesByAppRaw(requestParameters: GetAppNamespacesByAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenAppNamespaceDTO>>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getAppNamespacesByApp.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/appnamespaces`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenAppNamespaceDTOFromJSON));
-    }
-
-    /**
-     * GET /openapi/v1/apps/{appId}/appnamespaces
-     * 获取指定应用的AppNamespace (new added)
-     */
-    async getAppNamespacesByApp(requestParameters: GetAppNamespacesByAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenAppNamespaceDTO>> {
-        const response = await this.getAppNamespacesByAppRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock
-     * 获取Namespace的锁状态 (original openapi)
-     */
-    async getNamespaceLockRaw(requestParameters: GetNamespaceLockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenNamespaceLockDTO>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getNamespaceLock.');
-        }
-
+    async findPublicNamespaceForAssociatedNamespaceRaw(requestParameters: FindPublicNamespaceForAssociatedNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenNamespaceDTO>> {
         if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling getNamespaceLock.');
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling findPublicNamespaceForAssociatedNamespace.');
+        }
+
+        if (requestParameters.appId === null || requestParameters.appId === undefined) {
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling findPublicNamespaceForAssociatedNamespace.');
         }
 
         if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
-            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling getNamespaceLock.');
+            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling findPublicNamespaceForAssociatedNamespace.');
         }
 
         if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling getNamespaceLock.');
+            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling findPublicNamespaceForAssociatedNamespace.');
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.extendInfo !== undefined) {
+            queryParameters['extendInfo'] = requestParameters.extendInfo;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -503,21 +478,21 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
+            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenNamespaceLockDTOFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpenNamespaceDTOFromJSON(jsonValue));
     }
 
     /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock
-     * 获取Namespace的锁状态 (original openapi)
+     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace
+     * 查询关联Namespace对应的公共Namespace详情 (new added)
      */
-    async getNamespaceLock(requestParameters: GetNamespaceLockRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenNamespaceLockDTO> {
-        const response = await this.getNamespaceLockRaw(requestParameters, initOverrides);
+    async findPublicNamespaceForAssociatedNamespace(requestParameters: FindPublicNamespaceForAssociatedNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenNamespaceDTO> {
+        const response = await this.findPublicNamespaceForAssociatedNamespaceRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -554,166 +529,6 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
      */
     async getNamespacesReleaseStatus(requestParameters: GetNamespacesReleaseStatusRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<{ [key: string]: { [key: string]: boolean; }; }> {
         const response = await this.getNamespacesReleaseStatusRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
-     * 获取公共AppNamespace的所有实例 (new added)
-     */
-    async getPublicAppNamespaceInstancesRaw(requestParameters: GetPublicAppNamespaceInstancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenNamespaceDTO>>> {
-        if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling getPublicAppNamespaceInstances.');
-        }
-
-        if (requestParameters.publicNamespaceName === null || requestParameters.publicNamespaceName === undefined) {
-            throw new runtime.RequiredError('publicNamespaceName','Required parameter requestParameters.publicNamespaceName was null or undefined when calling getPublicAppNamespaceInstances.');
-        }
-
-        if (requestParameters.page === null || requestParameters.page === undefined) {
-            throw new runtime.RequiredError('page','Required parameter requestParameters.page was null or undefined when calling getPublicAppNamespaceInstances.');
-        }
-
-        if (requestParameters.size === null || requestParameters.size === undefined) {
-            throw new runtime.RequiredError('size','Required parameter requestParameters.size was null or undefined when calling getPublicAppNamespaceInstances.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.page !== undefined) {
-            queryParameters['page'] = requestParameters.page;
-        }
-
-        if (requestParameters.size !== undefined) {
-            queryParameters['size'] = requestParameters.size;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"publicNamespaceName"}}`, encodeURIComponent(String(requestParameters.publicNamespaceName))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenNamespaceDTOFromJSON));
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
-     * 获取公共AppNamespace的所有实例 (new added)
-     */
-    async getPublicAppNamespaceInstances(requestParameters: GetPublicAppNamespaceInstancesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenNamespaceDTO>> {
-        const response = await this.getPublicAppNamespaceInstancesRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association
-     * 获取关联的公共Namespace (new added)
-     */
-    async getPublicNamespaceAssociationRaw(requestParameters: GetPublicNamespaceAssociationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenNamespaceDTO>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getPublicNamespaceAssociation.');
-        }
-
-        if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling getPublicNamespaceAssociation.');
-        }
-
-        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
-            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling getPublicNamespaceAssociation.');
-        }
-
-        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling getPublicNamespaceAssociation.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenNamespaceDTOFromJSON(jsonValue));
-    }
-
-    /**
-     * GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association
-     * 获取关联的公共Namespace (new added)
-     */
-    async getPublicNamespaceAssociation(requestParameters: GetPublicNamespaceAssociationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenNamespaceDTO> {
-        const response = await this.getPublicNamespaceAssociationRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
-     * 获取指定的Namespace (original openapi)
-     */
-    async loadNamespaceRaw(requestParameters: LoadNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenNamespaceDTO>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling loadNamespace.');
-        }
-
-        if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling loadNamespace.');
-        }
-
-        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
-            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling loadNamespace.');
-        }
-
-        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling loadNamespace.');
-        }
-
-        if (requestParameters.fillItemDetail === null || requestParameters.fillItemDetail === undefined) {
-            throw new runtime.RequiredError('fillItemDetail','Required parameter requestParameters.fillItemDetail was null or undefined when calling loadNamespace.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.fillItemDetail !== undefined) {
-            queryParameters['fillItemDetail'] = requestParameters.fillItemDetail;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenNamespaceDTOFromJSON(jsonValue));
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
-     * 获取指定的Namespace (original openapi)
-     */
-    async loadNamespace(requestParameters: LoadNamespaceRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenNamespaceDTO> {
-        const response = await this.loadNamespaceRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

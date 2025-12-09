@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import org.openapitools.client.model.OpenItemDTO;
+import org.openapitools.client.model.OpenNamespaceExtendDTO;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -98,6 +99,10 @@ public class OpenNamespaceDTO {
   public static final String SERIALIZED_NAME_ITEMS = "items";
   @SerializedName(SERIALIZED_NAME_ITEMS)
   private List<OpenItemDTO> items;
+
+  public static final String SERIALIZED_NAME_EXTEND_INFO = "extendInfo";
+  @SerializedName(SERIALIZED_NAME_EXTEND_INFO)
+  private OpenNamespaceExtendDTO extendInfo;
 
   public OpenNamespaceDTO() {
   }
@@ -341,6 +346,27 @@ public class OpenNamespaceDTO {
   }
 
 
+  public OpenNamespaceDTO extendInfo(OpenNamespaceExtendDTO extendInfo) {
+
+    this.extendInfo = extendInfo;
+    return this;
+  }
+
+   /**
+   * Get extendInfo
+   * @return extendInfo
+  **/
+  @javax.annotation.Nullable
+  public OpenNamespaceExtendDTO getExtendInfo() {
+    return extendInfo;
+  }
+
+
+  public void setExtendInfo(OpenNamespaceExtendDTO extendInfo) {
+    this.extendInfo = extendInfo;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -361,12 +387,13 @@ public class OpenNamespaceDTO {
         Objects.equals(this.comment, openNamespaceDTO.comment) &&
         Objects.equals(this.format, openNamespaceDTO.format) &&
         Objects.equals(this.isPublic, openNamespaceDTO.isPublic) &&
-        Objects.equals(this.items, openNamespaceDTO.items);
+        Objects.equals(this.items, openNamespaceDTO.items) &&
+        Objects.equals(this.extendInfo, openNamespaceDTO.extendInfo);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, appId, clusterName, namespaceName, comment, format, isPublic, items);
+    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, appId, clusterName, namespaceName, comment, format, isPublic, items, extendInfo);
   }
 
   @Override
@@ -384,6 +411,7 @@ public class OpenNamespaceDTO {
     sb.append("    format: ").append(toIndentedString(format)).append("\n");
     sb.append("    isPublic: ").append(toIndentedString(isPublic)).append("\n");
     sb.append("    items: ").append(toIndentedString(items)).append("\n");
+    sb.append("    extendInfo: ").append(toIndentedString(extendInfo)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -417,6 +445,7 @@ public class OpenNamespaceDTO {
     openapiFields.add("format");
     openapiFields.add("isPublic");
     openapiFields.add("items");
+    openapiFields.add("extendInfo");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
@@ -482,6 +511,10 @@ public class OpenNamespaceDTO {
             OpenItemDTO.validateJsonObject(jsonArrayitems.get(i).getAsJsonObject());
           };
         }
+      }
+      // validate the optional field `extendInfo`
+      if (jsonObj.get("extendInfo") != null && !jsonObj.get("extendInfo").isJsonNull()) {
+        OpenNamespaceExtendDTO.validateJsonObject(jsonObj.getAsJsonObject("extendInfo"));
       }
   }
 

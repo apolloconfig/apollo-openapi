@@ -21,8 +21,8 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,11 +60,11 @@ public class OpenGrayReleaseRuleItemDTO {
 
   public static final String SERIALIZED_NAME_CLIENT_IP_LIST = "clientIpList";
   @SerializedName(SERIALIZED_NAME_CLIENT_IP_LIST)
-  private List<String> clientIpList;
+  private Set<String> clientIpList;
 
   public static final String SERIALIZED_NAME_CLIENT_LABEL_LIST = "clientLabelList";
   @SerializedName(SERIALIZED_NAME_CLIENT_LABEL_LIST)
-  private List<String> clientLabelList;
+  private Set<String> clientLabelList;
 
   public OpenGrayReleaseRuleItemDTO() {
   }
@@ -90,7 +90,7 @@ public class OpenGrayReleaseRuleItemDTO {
   }
 
 
-  public OpenGrayReleaseRuleItemDTO clientIpList(List<String> clientIpList) {
+  public OpenGrayReleaseRuleItemDTO clientIpList(Set<String> clientIpList) {
 
     this.clientIpList = clientIpList;
     return this;
@@ -98,7 +98,7 @@ public class OpenGrayReleaseRuleItemDTO {
 
   public OpenGrayReleaseRuleItemDTO addClientIpListItem(String clientIpListItem) {
     if (this.clientIpList == null) {
-      this.clientIpList = new ArrayList<>();
+      this.clientIpList = new LinkedHashSet<>();
     }
     this.clientIpList.add(clientIpListItem);
     return this;
@@ -109,17 +109,17 @@ public class OpenGrayReleaseRuleItemDTO {
    * @return clientIpList
   **/
   @javax.annotation.Nullable
-  public List<String> getClientIpList() {
+  public Set<String> getClientIpList() {
     return clientIpList;
   }
 
 
-  public void setClientIpList(List<String> clientIpList) {
+  public void setClientIpList(Set<String> clientIpList) {
     this.clientIpList = clientIpList;
   }
 
 
-  public OpenGrayReleaseRuleItemDTO clientLabelList(List<String> clientLabelList) {
+  public OpenGrayReleaseRuleItemDTO clientLabelList(Set<String> clientLabelList) {
 
     this.clientLabelList = clientLabelList;
     return this;
@@ -127,7 +127,7 @@ public class OpenGrayReleaseRuleItemDTO {
 
   public OpenGrayReleaseRuleItemDTO addClientLabelListItem(String clientLabelListItem) {
     if (this.clientLabelList == null) {
-      this.clientLabelList = new ArrayList<>();
+      this.clientLabelList = new LinkedHashSet<>();
     }
     this.clientLabelList.add(clientLabelListItem);
     return this;
@@ -138,12 +138,12 @@ public class OpenGrayReleaseRuleItemDTO {
    * @return clientLabelList
   **/
   @javax.annotation.Nullable
-  public List<String> getClientLabelList() {
+  public Set<String> getClientLabelList() {
     return clientLabelList;
   }
 
 
-  public void setClientLabelList(List<String> clientLabelList) {
+  public void setClientLabelList(Set<String> clientLabelList) {
     this.clientLabelList = clientLabelList;
   }
 

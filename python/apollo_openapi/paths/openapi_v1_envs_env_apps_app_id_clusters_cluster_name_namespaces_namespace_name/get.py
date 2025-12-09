@@ -31,6 +31,7 @@ from . import path
 
 # Query params
 FillItemDetailSchema = schemas.BoolSchema
+ExtendInfoSchema = schemas.BoolSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
     'RequestRequiredQueryParams',
     {
@@ -40,6 +41,7 @@ RequestRequiredQueryParams = typing_extensions.TypedDict(
 RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
+        'extendInfo': typing.Union[ExtendInfoSchema, bool, ],
     },
     total=False
 )
@@ -54,6 +56,12 @@ request_query_fill_item_detail = api_client.QueryParameter(
     style=api_client.ParameterStyle.FORM,
     schema=FillItemDetailSchema,
     required=True,
+    explode=True,
+)
+request_query_extend_info = api_client.QueryParameter(
+    name="extendInfo",
+    style=api_client.ParameterStyle.FORM,
+    schema=ExtendInfoSchema,
     explode=True,
 )
 # Path params
@@ -138,7 +146,7 @@ _all_accept_content_types = (
 
 class BaseApi(api_client.Api):
     @typing.overload
-    def _load_namespace_oapg(
+    def _find_namespace_oapg(
         self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -151,7 +159,7 @@ class BaseApi(api_client.Api):
     ]: ...
 
     @typing.overload
-    def _load_namespace_oapg(
+    def _find_namespace_oapg(
         self,
         skip_deserialization: typing_extensions.Literal[True],
         query_params: RequestQueryParams = frozendict.frozendict(),
@@ -162,7 +170,7 @@ class BaseApi(api_client.Api):
     ) -> api_client.ApiResponseWithoutDeserialization: ...
 
     @typing.overload
-    def _load_namespace_oapg(
+    def _find_namespace_oapg(
         self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -175,7 +183,7 @@ class BaseApi(api_client.Api):
         api_client.ApiResponseWithoutDeserialization,
     ]: ...
 
-    def _load_namespace_oapg(
+    def _find_namespace_oapg(
         self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -213,6 +221,7 @@ class BaseApi(api_client.Api):
         prefix_separator_iterator = None
         for parameter in (
             request_query_fill_item_detail,
+            request_query_extend_info,
         ):
             parameter_data = query_params.get(parameter.name, schemas.unset)
             if parameter_data is schemas.unset:
@@ -257,11 +266,11 @@ class BaseApi(api_client.Api):
         return api_response
 
 
-class LoadNamespace(BaseApi):
+class FindNamespace(BaseApi):
     # this class is used by api classes that refer to endpoints with operationId fn names
 
     @typing.overload
-    def load_namespace(
+    def find_namespace(
         self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -274,7 +283,7 @@ class LoadNamespace(BaseApi):
     ]: ...
 
     @typing.overload
-    def load_namespace(
+    def find_namespace(
         self,
         skip_deserialization: typing_extensions.Literal[True],
         query_params: RequestQueryParams = frozendict.frozendict(),
@@ -285,7 +294,7 @@ class LoadNamespace(BaseApi):
     ) -> api_client.ApiResponseWithoutDeserialization: ...
 
     @typing.overload
-    def load_namespace(
+    def find_namespace(
         self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -298,7 +307,7 @@ class LoadNamespace(BaseApi):
         api_client.ApiResponseWithoutDeserialization,
     ]: ...
 
-    def load_namespace(
+    def find_namespace(
         self,
         query_params: RequestQueryParams = frozendict.frozendict(),
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -307,7 +316,7 @@ class LoadNamespace(BaseApi):
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
-        return self._load_namespace_oapg(
+        return self._find_namespace_oapg(
             query_params=query_params,
             path_params=path_params,
             accept_content_types=accept_content_types,
@@ -367,7 +376,7 @@ class ApiForget(BaseApi):
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
-        return self._load_namespace_oapg(
+        return self._find_namespace_oapg(
             query_params=query_params,
             path_params=path_params,
             accept_content_types=accept_content_types,

@@ -5,27 +5,473 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**check_namespace_integrity**](#check_namespace_integrity) | **get** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check | 检查缺失的Namespace (new added)
-[**create_namespace**](#create_namespace) | **post** /openapi/v1/apps/{appId}/appnamespaces | 创建AppNamespace (original openapi)
-[**delete_app_namespace**](#delete_app_namespace) | **delete** /openapi/v1/apps/{appId}/appnamespaces/{namespaceName} | 删除AppNamespace (new added)
-[**delete_namespace_links**](#delete_namespace_links) | **delete** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links | 删除关联的Namespace (new added)
+[**create_missing_namespaces**](#create_missing_namespaces) | **post** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces | 创建缺失的Namespace (new added)
+[**create_namespaces**](#create_namespaces) | **post** /openapi/v1/namespaces | 创建Namespace (new added)
+[**delete_namespace**](#delete_namespace) | **delete** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName} | 删除指定的Namespace (new added)
+[**find_missing_namespaces**](#find_missing_namespaces) | **get** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces | 查找缺失的Namespace (new added)
+[**find_namespace**](#find_namespace) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName} | 获取指定的Namespace (original openapi)
+[**find_namespace_usage**](#find_namespace_usage) | **get** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage | 查询namespace使用情况(new added)
 [**find_namespaces**](#find_namespaces) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces | 获取指定集群下的所有Namespace (original openapi)
-[**get_app_namespace**](#get_app_namespace) | **get** /openapi/v1/apps/{appId}/appnamespaces/{namespaceName} | 获取指定的AppNamespace (new added)
-[**get_app_namespaces**](#get_app_namespaces) | **get** /openapi/v1/appnamespaces | 获取所有公共AppNamespace (new added)
-[**get_app_namespaces_by_app**](#get_app_namespaces_by_app) | **get** /openapi/v1/apps/{appId}/appnamespaces | 获取指定应用的AppNamespace (new added)
-[**get_namespace_lock**](#get_namespace_lock) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock | 获取Namespace的锁状态 (original openapi)
+[**find_public_namespace_for_associated_namespace**](#find_public_namespace_for_associated_namespace) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace | 查询关联Namespace对应的公共Namespace详情 (new added)
 [**get_namespaces_release_status**](#get_namespaces_release_status) | **get** /openapi/v1/apps/{appId}/namespaces/releases/status | 获取应用下所有Namespace的发布状态 (new added)
-[**get_public_app_namespace_instances**](#get_public_app_namespace_instances) | **get** /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances | 获取公共AppNamespace的所有实例 (new added)
-[**get_public_namespace_association**](#get_public_namespace_association) | **get** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association | 获取关联的公共Namespace (new added)
-[**load_namespace**](#load_namespace) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName} | 获取指定的Namespace (original openapi)
 
-# **check_namespace_integrity**
-<a id="check_namespace_integrity"></a>
-> [str] check_namespace_integrity(app_idenvcluster_name)
+# **create_missing_namespaces**
+<a id="create_missing_namespaces"></a>
+> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} create_missing_namespaces(app_idenvcluster_name)
 
-检查缺失的Namespace (new added)
+创建缺失的Namespace (new added)
 
-GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check
+POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+```python
+import apollo_openapi
+from apollo_openapi.apis.tags import namespace_management_api
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = apollo_openapi.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Enter a context with an instance of the API client
+with apollo_openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = namespace_management_api.NamespaceManagementApi(api_client)
+
+    # example passing only required values which don't have defaults set
+    path_params = {
+        'appId': "appId_example",
+        'env': "env_example",
+        'clusterName': "clusterName_example",
+    }
+    query_params = {
+    }
+    try:
+        # 创建缺失的Namespace (new added)
+        api_response = api_instance.create_missing_namespaces(
+            path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling NamespaceManagementApi->create_missing_namespaces: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'appId': "appId_example",
+        'env': "env_example",
+        'clusterName': "clusterName_example",
+    }
+    query_params = {
+        'operator': "operator_example",
+    }
+    try:
+        # 创建缺失的Namespace (new added)
+        api_response = api_instance.create_missing_namespaces(
+            path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling NamespaceManagementApi->create_missing_namespaces: %s\n" % e)
+```
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
+path_params | RequestPathParams | |
+accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
+stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
+timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
+skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+operator | OperatorSchema | | optional
+
+
+# OperatorSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+### path_params
+#### RequestPathParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+appId | AppIdSchema | |
+env | EnvSchema | |
+clusterName | ClusterNameSchema | |
+
+# AppIdSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+# EnvSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+# ClusterNameSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+### Return Types, Responses
+
+Code | Class | Description
+------------- | ------------- | -------------
+n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
+200 | [ApiResponseFor200](#create_missing_namespaces.ApiResponseFor200) | 缺失的命名空间创建成功
+
+#### create_missing_namespaces.ApiResponseFor200
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+response | urllib3.HTTPResponse | Raw response |
+body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
+headers | Unset | headers were not defined |
+
+# SchemaFor200ResponseBodyApplicationJson
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
+
+### Authorization
+
+[ApiKeyAuth](../../../README.md#ApiKeyAuth)
+
+[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
+
+# **create_namespaces**
+<a id="create_namespaces"></a>
+> create_namespaces(open_create_namespace_dto)
+
+创建Namespace (new added)
+
+POST /openapi/v1/apps/{appId}/namespaces
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+```python
+import apollo_openapi
+from apollo_openapi.apis.tags import namespace_management_api
+from apollo_openapi.model.open_create_namespace_dto import OpenCreateNamespaceDTO
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = apollo_openapi.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Enter a context with an instance of the API client
+with apollo_openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = namespace_management_api.NamespaceManagementApi(api_client)
+
+    # example passing only required values which don't have defaults set
+    query_params = {
+    }
+    body = [
+        OpenCreateNamespaceDTO(
+            app_id="app_id_example",
+            env="env_example",
+            cluster_name="cluster_name_example",
+            app_namespace_name="app_namespace_name_example",
+        )
+    ]
+    try:
+        # 创建Namespace (new added)
+        api_response = api_instance.create_namespaces(
+            query_params=query_params,
+            body=body,
+        )
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling NamespaceManagementApi->create_namespaces: %s\n" % e)
+
+    # example passing only optional values
+    query_params = {
+        'operator': "operator_example",
+    }
+    body = [
+        OpenCreateNamespaceDTO(
+            app_id="app_id_example",
+            env="env_example",
+            cluster_name="cluster_name_example",
+            app_namespace_name="app_namespace_name_example",
+        )
+    ]
+    try:
+        # 创建Namespace (new added)
+        api_response = api_instance.create_namespaces(
+            query_params=query_params,
+            body=body,
+        )
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling NamespaceManagementApi->create_namespaces: %s\n" % e)
+```
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+body | typing.Union[SchemaForRequestBodyApplicationJson] | required |
+query_params | RequestQueryParams | |
+content_type | str | optional, default is 'application/json' | Selects the schema and serialization of the request body
+stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
+timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
+skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### body
+
+# SchemaForRequestBodyApplicationJson
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+list, tuple,  | tuple,  |  |
+
+### Tuple Items
+Class Name | Input Type | Accessed Type | Description | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+[**OpenCreateNamespaceDTO**]({{complexTypePrefix}}OpenCreateNamespaceDTO.md) | [**OpenCreateNamespaceDTO**]({{complexTypePrefix}}OpenCreateNamespaceDTO.md) | [**OpenCreateNamespaceDTO**]({{complexTypePrefix}}OpenCreateNamespaceDTO.md) |  |
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+operator | OperatorSchema | | optional
+
+
+# OperatorSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+### Return Types, Responses
+
+Code | Class | Description
+------------- | ------------- | -------------
+n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
+200 | [ApiResponseFor200](#create_namespaces.ApiResponseFor200) | Namespace创建成功
+
+#### create_namespaces.ApiResponseFor200
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+response | urllib3.HTTPResponse | Raw response |
+body | Unset | body was not defined |
+headers | Unset | headers were not defined |
+
+### Authorization
+
+[ApiKeyAuth](../../../README.md#ApiKeyAuth)
+
+[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
+
+# **delete_namespace**
+<a id="delete_namespace"></a>
+> delete_namespace(app_idenvcluster_namenamespace_name)
+
+删除指定的Namespace (new added)
+
+DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+```python
+import apollo_openapi
+from apollo_openapi.apis.tags import namespace_management_api
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = apollo_openapi.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Enter a context with an instance of the API client
+with apollo_openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = namespace_management_api.NamespaceManagementApi(api_client)
+
+    # example passing only required values which don't have defaults set
+    path_params = {
+        'appId': "appId_example",
+        'env': "env_example",
+        'clusterName': "clusterName_example",
+        'namespaceName': "namespaceName_example",
+    }
+    query_params = {
+    }
+    try:
+        # 删除指定的Namespace (new added)
+        api_response = api_instance.delete_namespace(
+            path_params=path_params,
+            query_params=query_params,
+        )
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling NamespaceManagementApi->delete_namespace: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'appId': "appId_example",
+        'env': "env_example",
+        'clusterName': "clusterName_example",
+        'namespaceName': "namespaceName_example",
+    }
+    query_params = {
+        'operator': "operator_example",
+    }
+    try:
+        # 删除指定的Namespace (new added)
+        api_response = api_instance.delete_namespace(
+            path_params=path_params,
+            query_params=query_params,
+        )
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling NamespaceManagementApi->delete_namespace: %s\n" % e)
+```
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
+path_params | RequestPathParams | |
+stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
+timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
+skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+operator | OperatorSchema | | optional
+
+
+# OperatorSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+### path_params
+#### RequestPathParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+appId | AppIdSchema | |
+env | EnvSchema | |
+clusterName | ClusterNameSchema | |
+namespaceName | NamespaceNameSchema | |
+
+# AppIdSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+# EnvSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+# ClusterNameSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+# NamespaceNameSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+### Return Types, Responses
+
+Code | Class | Description
+------------- | ------------- | -------------
+n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
+200 | [ApiResponseFor200](#delete_namespace.ApiResponseFor200) | 解除关联成功
+
+#### delete_namespace.ApiResponseFor200
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+response | urllib3.HTTPResponse | Raw response |
+body | Unset | body was not defined |
+headers | Unset | headers were not defined |
+
+### Authorization
+
+[ApiKeyAuth](../../../README.md#ApiKeyAuth)
+
+[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
+
+# **find_missing_namespaces**
+<a id="find_missing_namespaces"></a>
+> [str] find_missing_namespaces(app_idenvcluster_name)
+
+查找缺失的Namespace (new added)
+
+GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
 
 ### Example
 
@@ -62,13 +508,13 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         'clusterName': "clusterName_example",
     }
     try:
-        # 检查缺失的Namespace (new added)
-        api_response = api_instance.check_namespace_integrity(
+        # 查找缺失的Namespace (new added)
+        api_response = api_instance.find_missing_namespaces(
             path_params=path_params,
         )
         pprint(api_response)
     except apollo_openapi.ApiException as e:
-        print("Exception when calling NamespaceManagementApi->check_namespace_integrity: %s\n" % e)
+        print("Exception when calling NamespaceManagementApi->find_missing_namespaces: %s\n" % e)
 ```
 ### Parameters
 
@@ -115,9 +561,9 @@ str,  | str,  |  |
 Code | Class | Description
 ------------- | ------------- | -------------
 n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#check_namespace_integrity.ApiResponseFor200) | 缺失的命名空间名称列表
+200 | [ApiResponseFor200](#find_missing_namespaces.ApiResponseFor200) | 缺失的命名空间名称列表
 
-#### check_namespace_integrity.ApiResponseFor200
+#### find_missing_namespaces.ApiResponseFor200
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -142,165 +588,13 @@ items | str,  | str,  |  |
 
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
-# **create_namespace**
-<a id="create_namespace"></a>
-> OpenAppNamespaceDTO create_namespace(app_idopen_app_namespace_dto)
+# **find_namespace**
+<a id="find_namespace"></a>
+> OpenNamespaceDTO find_namespace(app_idenvcluster_namenamespace_name)
 
-创建AppNamespace (original openapi)
+获取指定的Namespace (original openapi)
 
-POST /openapi/v1/apps/{appId}/appnamespaces
-
-### Example
-
-* Api Key Authentication (ApiKeyAuth):
-```python
-import apollo_openapi
-from apollo_openapi.apis.tags import namespace_management_api
-from apollo_openapi.model.open_app_namespace_dto import OpenAppNamespaceDTO
-from apollo_openapi.model.exception_response import ExceptionResponse
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = apollo_openapi.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
-# Enter a context with an instance of the API client
-with apollo_openapi.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = namespace_management_api.NamespaceManagementApi(api_client)
-
-    # example passing only required values which don't have defaults set
-    path_params = {
-        'appId': "appId_example",
-    }
-    body = OpenAppNamespaceDTO(
-        data_change_created_by="data_change_created_by_example",
-        data_change_last_modified_by="data_change_last_modified_by_example",
-        data_change_created_time="2025-09-29T12:34:56Z",
-        data_change_last_modified_time="2025-09-29T12:34:56Z",
-        name="name_example",
-        app_id="app_id_example",
-        format="format_example",
-        is_public=True,
-        append_namespace_prefix=True,
-        comment="comment_example",
-    )
-    try:
-        # 创建AppNamespace (original openapi)
-        api_response = api_instance.create_namespace(
-            path_params=path_params,
-            body=body,
-        )
-        pprint(api_response)
-    except apollo_openapi.ApiException as e:
-        print("Exception when calling NamespaceManagementApi->create_namespace: %s\n" % e)
-```
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-body | typing.Union[SchemaForRequestBodyApplicationJson] | required |
-path_params | RequestPathParams | |
-content_type | str | optional, default is 'application/json' | Selects the schema and serialization of the request body
-accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
-stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
-timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
-skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
-
-### body
-
-# SchemaForRequestBodyApplicationJson
-Type | Description  | Notes
-------------- | ------------- | -------------
-[**OpenAppNamespaceDTO**](../../models/OpenAppNamespaceDTO.md) |  |
-
-
-### path_params
-#### RequestPathParams
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-appId | AppIdSchema | |
-
-# AppIdSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-### Return Types, Responses
-
-Code | Class | Description
-------------- | ------------- | -------------
-n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#create_namespace.ApiResponseFor200) | AppNamespace创建成功
-400 | [ApiResponseFor400](#create_namespace.ApiResponseFor400) | 请求参数错误
-403 | [ApiResponseFor403](#create_namespace.ApiResponseFor403) | 权限不足
-
-#### create_namespace.ApiResponseFor200
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-Type | Description  | Notes
-------------- | ------------- | -------------
-[**OpenAppNamespaceDTO**](../../models/OpenAppNamespaceDTO.md) |  |
-
-
-#### create_namespace.ApiResponseFor400
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor400ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor400ResponseBodyApplicationJson
-Type | Description  | Notes
-------------- | ------------- | -------------
-[**ExceptionResponse**](../../models/ExceptionResponse.md) |  |
-
-
-#### create_namespace.ApiResponseFor403
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor403ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor403ResponseBodyApplicationJson
-Type | Description  | Notes
-------------- | ------------- | -------------
-[**ExceptionResponse**](../../models/ExceptionResponse.md) |  |
-
-
-### Authorization
-
-[ApiKeyAuth](../../../README.md#ApiKeyAuth)
-
-[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
-
-# **delete_app_namespace**
-<a id="delete_app_namespace"></a>
-> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} delete_app_namespace(app_idnamespace_nameoperator)
-
-删除AppNamespace (new added)
-
-DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
+GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
 
 ### Example
 
@@ -308,135 +602,7 @@ DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
 ```python
 import apollo_openapi
 from apollo_openapi.apis.tags import namespace_management_api
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = apollo_openapi.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
-# Enter a context with an instance of the API client
-with apollo_openapi.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = namespace_management_api.NamespaceManagementApi(api_client)
-
-    # example passing only required values which don't have defaults set
-    path_params = {
-        'appId': "appId_example",
-        'namespaceName': "namespaceName_example",
-    }
-    query_params = {
-        'operator': "operator_example",
-    }
-    try:
-        # 删除AppNamespace (new added)
-        api_response = api_instance.delete_app_namespace(
-            path_params=path_params,
-            query_params=query_params,
-        )
-        pprint(api_response)
-    except apollo_openapi.ApiException as e:
-        print("Exception when calling NamespaceManagementApi->delete_app_namespace: %s\n" % e)
-```
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-query_params | RequestQueryParams | |
-path_params | RequestPathParams | |
-accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
-stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
-timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
-skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
-
-### query_params
-#### RequestQueryParams
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-operator | OperatorSchema | |
-
-
-# OperatorSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-### path_params
-#### RequestPathParams
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-appId | AppIdSchema | |
-namespaceName | NamespaceNameSchema | |
-
-# AppIdSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-# NamespaceNameSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-### Return Types, Responses
-
-Code | Class | Description
-------------- | ------------- | -------------
-n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#delete_app_namespace.ApiResponseFor200) | AppNamespace删除成功
-
-#### delete_app_namespace.ApiResponseFor200
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
-
-### Authorization
-
-[ApiKeyAuth](../../../README.md#ApiKeyAuth)
-
-[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
-
-# **delete_namespace_links**
-<a id="delete_namespace_links"></a>
-> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} delete_namespace_links(app_idenvcluster_namenamespace_nameoperator)
-
-删除关联的Namespace (new added)
-
-DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links
-
-### Example
-
-* Api Key Authentication (ApiKeyAuth):
-```python
-import apollo_openapi
-from apollo_openapi.apis.tags import namespace_management_api
+from apollo_openapi.model.open_namespace_dto import OpenNamespaceDTO
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -467,17 +633,38 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         'namespaceName': "namespaceName_example",
     }
     query_params = {
-        'operator': "operator_example",
+        'fillItemDetail': True,
     }
     try:
-        # 删除关联的Namespace (new added)
-        api_response = api_instance.delete_namespace_links(
+        # 获取指定的Namespace (original openapi)
+        api_response = api_instance.find_namespace(
             path_params=path_params,
             query_params=query_params,
         )
         pprint(api_response)
     except apollo_openapi.ApiException as e:
-        print("Exception when calling NamespaceManagementApi->delete_namespace_links: %s\n" % e)
+        print("Exception when calling NamespaceManagementApi->find_namespace: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'appId': "appId_example",
+        'env': "env_example",
+        'clusterName': "clusterName_example",
+        'namespaceName': "namespaceName_example",
+    }
+    query_params = {
+        'fillItemDetail': True,
+        'extendInfo': False,
+    }
+    try:
+        # 获取指定的Namespace (original openapi)
+        api_response = api_instance.find_namespace(
+            path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling NamespaceManagementApi->find_namespace: %s\n" % e)
 ```
 ### Parameters
 
@@ -495,15 +682,23 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-operator | OperatorSchema | |
+fillItemDetail | FillItemDetailSchema | |
+extendInfo | ExtendInfoSchema | | optional
 
 
-# OperatorSchema
+# FillItemDetailSchema
 
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-str,  | str,  |  |
+bool,  | BoolClass,  |  | if omitted the server will use the default value of True
+
+# ExtendInfoSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+bool,  | BoolClass,  |  | if omitted the server will use the default value of False
 
 ### path_params
 #### RequestPathParams
@@ -548,9 +743,136 @@ str,  | str,  |  |
 Code | Class | Description
 ------------- | ------------- | -------------
 n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#delete_namespace_links.ApiResponseFor200) | 解除关联成功
+200 | [ApiResponseFor200](#find_namespace.ApiResponseFor200) |
 
-#### delete_namespace_links.ApiResponseFor200
+#### find_namespace.ApiResponseFor200
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+response | urllib3.HTTPResponse | Raw response |
+body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
+headers | Unset | headers were not defined |
+
+# SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**OpenNamespaceDTO**](../../models/OpenNamespaceDTO.md) |  |
+
+
+### Authorization
+
+[ApiKeyAuth](../../../README.md#ApiKeyAuth)
+
+[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
+
+# **find_namespace_usage**
+<a id="find_namespace_usage"></a>
+> [OpenNamespaceUsageDTO] find_namespace_usage(app_idenvcluster_namenamespace_name)
+
+查询namespace使用情况(new added)
+
+GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage
+
+### Example
+
+* Api Key Authentication (ApiKeyAuth):
+```python
+import apollo_openapi
+from apollo_openapi.apis.tags import namespace_management_api
+from apollo_openapi.model.open_namespace_usage_dto import OpenNamespaceUsageDTO
+from pprint import pprint
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = apollo_openapi.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: ApiKeyAuth
+configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
+# Enter a context with an instance of the API client
+with apollo_openapi.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = namespace_management_api.NamespaceManagementApi(api_client)
+
+    # example passing only required values which don't have defaults set
+    path_params = {
+        'appId': "appId_example",
+        'env': "env_example",
+        'clusterName': "clusterName_example",
+        'namespaceName': "namespaceName_example",
+    }
+    try:
+        # 查询namespace使用情况(new added)
+        api_response = api_instance.find_namespace_usage(
+            path_params=path_params,
+        )
+        pprint(api_response)
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling NamespaceManagementApi->find_namespace_usage: %s\n" % e)
+```
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+path_params | RequestPathParams | |
+accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
+stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
+timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
+skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### path_params
+#### RequestPathParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+appId | AppIdSchema | |
+env | EnvSchema | |
+clusterName | ClusterNameSchema | |
+namespaceName | NamespaceNameSchema | |
+
+# AppIdSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+# EnvSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+# ClusterNameSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+# NamespaceNameSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
+
+### Return Types, Responses
+
+Code | Class | Description
+------------- | ------------- | -------------
+n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
+200 | [ApiResponseFor200](#find_namespace_usage.ApiResponseFor200) | NamespaceUsage查询成功
+
+#### find_namespace_usage.ApiResponseFor200
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -562,7 +884,12 @@ headers | Unset | headers were not defined |
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
+list, tuple,  | tuple,  |  |
+
+### Tuple Items
+Class Name | Input Type | Accessed Type | Description | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+[**OpenNamespaceUsageDTO**]({{complexTypePrefix}}OpenNamespaceUsageDTO.md) | [**OpenNamespaceUsageDTO**]({{complexTypePrefix}}OpenNamespaceUsageDTO.md) | [**OpenNamespaceUsageDTO**]({{complexTypePrefix}}OpenNamespaceUsageDTO.md) |  |
 
 ### Authorization
 
@@ -625,6 +952,26 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         pprint(api_response)
     except apollo_openapi.ApiException as e:
         print("Exception when calling NamespaceManagementApi->find_namespaces: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'appId': "appId_example",
+        'env': "env_example",
+        'clusterName': "clusterName_example",
+    }
+    query_params = {
+        'fillItemDetail': True,
+        'extendInfo': False,
+    }
+    try:
+        # 获取指定集群下的所有Namespace (original openapi)
+        api_response = api_instance.find_namespaces(
+            path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling NamespaceManagementApi->find_namespaces: %s\n" % e)
 ```
 ### Parameters
 
@@ -643,6 +990,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 fillItemDetail | FillItemDetailSchema | |
+extendInfo | ExtendInfoSchema | | optional
 
 
 # FillItemDetailSchema
@@ -651,6 +999,13 @@ fillItemDetail | FillItemDetailSchema | |
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 bool,  | BoolClass,  |  | if omitted the server will use the default value of True
+
+# ExtendInfoSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+bool,  | BoolClass,  |  | if omitted the server will use the default value of False
 
 ### path_params
 #### RequestPathParams
@@ -714,13 +1069,13 @@ Class Name | Input Type | Accessed Type | Description | Notes
 
 [[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
 
-# **get_app_namespace**
-<a id="get_app_namespace"></a>
-> OpenAppNamespaceDTO get_app_namespace(app_idnamespace_name)
+# **find_public_namespace_for_associated_namespace**
+<a id="find_public_namespace_for_associated_namespace"></a>
+> OpenNamespaceDTO find_public_namespace_for_associated_namespace(envapp_idcluster_namenamespace_name)
 
-获取指定的AppNamespace (new added)
+查询关联Namespace对应的公共Namespace详情 (new added)
 
-GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
+GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace
 
 ### Example
 
@@ -728,7 +1083,7 @@ GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}
 ```python
 import apollo_openapi
 from apollo_openapi.apis.tags import namespace_management_api
-from apollo_openapi.model.open_app_namespace_dto import OpenAppNamespaceDTO
+from apollo_openapi.model.open_namespace_dto import OpenNamespaceDTO
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -753,131 +1108,49 @@ with apollo_openapi.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     path_params = {
+        'env': "env_example",
         'appId': "appId_example",
+        'clusterName': "clusterName_example",
         'namespaceName': "namespaceName_example",
     }
-    try:
-        # 获取指定的AppNamespace (new added)
-        api_response = api_instance.get_app_namespace(
-            path_params=path_params,
-        )
-        pprint(api_response)
-    except apollo_openapi.ApiException as e:
-        print("Exception when calling NamespaceManagementApi->get_app_namespace: %s\n" % e)
-```
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-path_params | RequestPathParams | |
-accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
-stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
-timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
-skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
-
-### path_params
-#### RequestPathParams
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-appId | AppIdSchema | |
-namespaceName | NamespaceNameSchema | |
-
-# AppIdSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-# NamespaceNameSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-### Return Types, Responses
-
-Code | Class | Description
-------------- | ------------- | -------------
-n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#get_app_namespace.ApiResponseFor200) | 成功获取AppNamespace
-
-#### get_app_namespace.ApiResponseFor200
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-Type | Description  | Notes
-------------- | ------------- | -------------
-[**OpenAppNamespaceDTO**](../../models/OpenAppNamespaceDTO.md) |  |
-
-
-### Authorization
-
-[ApiKeyAuth](../../../README.md#ApiKeyAuth)
-
-[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
-
-# **get_app_namespaces**
-<a id="get_app_namespaces"></a>
-> [OpenAppNamespaceDTO] get_app_namespaces(public_only)
-
-获取所有公共AppNamespace (new added)
-
-GET /openapi/v1/appnamespaces?public=true
-
-### Example
-
-* Api Key Authentication (ApiKeyAuth):
-```python
-import apollo_openapi
-from apollo_openapi.apis.tags import namespace_management_api
-from apollo_openapi.model.open_app_namespace_dto import OpenAppNamespaceDTO
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = apollo_openapi.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
-# Enter a context with an instance of the API client
-with apollo_openapi.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = namespace_management_api.NamespaceManagementApi(api_client)
-
-    # example passing only required values which don't have defaults set
     query_params = {
-        'publicOnly': False,
     }
     try:
-        # 获取所有公共AppNamespace (new added)
-        api_response = api_instance.get_app_namespaces(
+        # 查询关联Namespace对应的公共Namespace详情 (new added)
+        api_response = api_instance.find_public_namespace_for_associated_namespace(
+            path_params=path_params,
             query_params=query_params,
         )
         pprint(api_response)
     except apollo_openapi.ApiException as e:
-        print("Exception when calling NamespaceManagementApi->get_app_namespaces: %s\n" % e)
+        print("Exception when calling NamespaceManagementApi->find_public_namespace_for_associated_namespace: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'env': "env_example",
+        'appId': "appId_example",
+        'clusterName': "clusterName_example",
+        'namespaceName': "namespaceName_example",
+    }
+    query_params = {
+        'extendInfo': False,
+    }
+    try:
+        # 查询关联Namespace对应的公共Namespace详情 (new added)
+        api_response = api_instance.find_public_namespace_for_associated_namespace(
+            path_params=path_params,
+            query_params=query_params,
+        )
+        pprint(api_response)
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling NamespaceManagementApi->find_public_namespace_for_associated_namespace: %s\n" % e)
 ```
 ### Parameters
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 query_params | RequestQueryParams | |
+path_params | RequestPathParams | |
 accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
 timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
@@ -888,235 +1161,34 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-publicOnly | PublicOnlySchema | |
+extendInfo | ExtendInfoSchema | | optional
 
 
-# PublicOnlySchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-bool,  | BoolClass,  |  |
-
-### Return Types, Responses
-
-Code | Class | Description
-------------- | ------------- | -------------
-n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#get_app_namespaces.ApiResponseFor200) |
-
-#### get_app_namespaces.ApiResponseFor200
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
+# ExtendInfoSchema
 
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-list, tuple,  | tuple,  |  |
-
-### Tuple Items
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[**OpenAppNamespaceDTO**]({{complexTypePrefix}}OpenAppNamespaceDTO.md) | [**OpenAppNamespaceDTO**]({{complexTypePrefix}}OpenAppNamespaceDTO.md) | [**OpenAppNamespaceDTO**]({{complexTypePrefix}}OpenAppNamespaceDTO.md) |  |
-
-### Authorization
-
-[ApiKeyAuth](../../../README.md#ApiKeyAuth)
-
-[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
-
-# **get_app_namespaces_by_app**
-<a id="get_app_namespaces_by_app"></a>
-> [OpenAppNamespaceDTO] get_app_namespaces_by_app(app_id)
-
-获取指定应用的AppNamespace (new added)
-
-GET /openapi/v1/apps/{appId}/appnamespaces
-
-### Example
-
-* Api Key Authentication (ApiKeyAuth):
-```python
-import apollo_openapi
-from apollo_openapi.apis.tags import namespace_management_api
-from apollo_openapi.model.open_app_namespace_dto import OpenAppNamespaceDTO
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = apollo_openapi.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
-# Enter a context with an instance of the API client
-with apollo_openapi.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = namespace_management_api.NamespaceManagementApi(api_client)
-
-    # example passing only required values which don't have defaults set
-    path_params = {
-        'appId': "appId_example",
-    }
-    try:
-        # 获取指定应用的AppNamespace (new added)
-        api_response = api_instance.get_app_namespaces_by_app(
-            path_params=path_params,
-        )
-        pprint(api_response)
-    except apollo_openapi.ApiException as e:
-        print("Exception when calling NamespaceManagementApi->get_app_namespaces_by_app: %s\n" % e)
-```
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-path_params | RequestPathParams | |
-accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
-stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
-timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
-skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+bool,  | BoolClass,  |  | if omitted the server will use the default value of False
 
 ### path_params
 #### RequestPathParams
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-appId | AppIdSchema | |
-
-# AppIdSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-### Return Types, Responses
-
-Code | Class | Description
-------------- | ------------- | -------------
-n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#get_app_namespaces_by_app.ApiResponseFor200) |
-
-#### get_app_namespaces_by_app.ApiResponseFor200
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-list, tuple,  | tuple,  |  |
-
-### Tuple Items
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[**OpenAppNamespaceDTO**]({{complexTypePrefix}}OpenAppNamespaceDTO.md) | [**OpenAppNamespaceDTO**]({{complexTypePrefix}}OpenAppNamespaceDTO.md) | [**OpenAppNamespaceDTO**]({{complexTypePrefix}}OpenAppNamespaceDTO.md) |  |
-
-### Authorization
-
-[ApiKeyAuth](../../../README.md#ApiKeyAuth)
-
-[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
-
-# **get_namespace_lock**
-<a id="get_namespace_lock"></a>
-> OpenNamespaceLockDTO get_namespace_lock(app_idenvcluster_namenamespace_name)
-
-获取Namespace的锁状态 (original openapi)
-
-GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock
-
-### Example
-
-* Api Key Authentication (ApiKeyAuth):
-```python
-import apollo_openapi
-from apollo_openapi.apis.tags import namespace_management_api
-from apollo_openapi.model.open_namespace_lock_dto import OpenNamespaceLockDTO
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = apollo_openapi.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
-# Enter a context with an instance of the API client
-with apollo_openapi.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = namespace_management_api.NamespaceManagementApi(api_client)
-
-    # example passing only required values which don't have defaults set
-    path_params = {
-        'appId': "appId_example",
-        'env': "env_example",
-        'clusterName': "clusterName_example",
-        'namespaceName': "namespaceName_example",
-    }
-    try:
-        # 获取Namespace的锁状态 (original openapi)
-        api_response = api_instance.get_namespace_lock(
-            path_params=path_params,
-        )
-        pprint(api_response)
-    except apollo_openapi.ApiException as e:
-        print("Exception when calling NamespaceManagementApi->get_namespace_lock: %s\n" % e)
-```
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-path_params | RequestPathParams | |
-accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
-stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
-timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
-skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
-
-### path_params
-#### RequestPathParams
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-appId | AppIdSchema | |
 env | EnvSchema | |
+appId | AppIdSchema | |
 clusterName | ClusterNameSchema | |
 namespaceName | NamespaceNameSchema | |
 
-# AppIdSchema
+# EnvSchema
 
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 str,  | str,  |  |
 
-# EnvSchema
+# AppIdSchema
 
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
@@ -1142,9 +1214,9 @@ str,  | str,  |  |
 Code | Class | Description
 ------------- | ------------- | -------------
 n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#get_namespace_lock.ApiResponseFor200) |
+200 | [ApiResponseFor200](#find_public_namespace_for_associated_namespace.ApiResponseFor200) | 成功获取关联的公共Namespace详情
 
-#### get_namespace_lock.ApiResponseFor200
+#### find_public_namespace_for_associated_namespace.ApiResponseFor200
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
@@ -1154,7 +1226,7 @@ headers | Unset | headers were not defined |
 # SchemaFor200ResponseBodyApplicationJson
 Type | Description  | Notes
 ------------- | ------------- | -------------
-[**OpenNamespaceLockDTO**](../../models/OpenNamespaceLockDTO.md) |  |
+[**OpenNamespaceDTO**](../../models/OpenNamespaceDTO.md) |  |
 
 
 ### Authorization
@@ -1255,424 +1327,6 @@ headers | Unset | headers were not defined |
 Type | Description  | Notes
 ------------- | ------------- | -------------
 [**StringToStringBoolMap**](../../models/StringToStringBoolMap.md) |  |
-
-
-### Authorization
-
-[ApiKeyAuth](../../../README.md#ApiKeyAuth)
-
-[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
-
-# **get_public_app_namespace_instances**
-<a id="get_public_app_namespace_instances"></a>
-> [OpenNamespaceDTO] get_public_app_namespace_instances(envpublic_namespace_namepagesize)
-
-获取公共AppNamespace的所有实例 (new added)
-
-GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
-
-### Example
-
-* Api Key Authentication (ApiKeyAuth):
-```python
-import apollo_openapi
-from apollo_openapi.apis.tags import namespace_management_api
-from apollo_openapi.model.open_namespace_dto import OpenNamespaceDTO
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = apollo_openapi.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
-# Enter a context with an instance of the API client
-with apollo_openapi.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = namespace_management_api.NamespaceManagementApi(api_client)
-
-    # example passing only required values which don't have defaults set
-    path_params = {
-        'env': "env_example",
-        'publicNamespaceName': "publicNamespaceName_example",
-    }
-    query_params = {
-        'page': 0,
-        'size': 10,
-    }
-    try:
-        # 获取公共AppNamespace的所有实例 (new added)
-        api_response = api_instance.get_public_app_namespace_instances(
-            path_params=path_params,
-            query_params=query_params,
-        )
-        pprint(api_response)
-    except apollo_openapi.ApiException as e:
-        print("Exception when calling NamespaceManagementApi->get_public_app_namespace_instances: %s\n" % e)
-```
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-query_params | RequestQueryParams | |
-path_params | RequestPathParams | |
-accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
-stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
-timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
-skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
-
-### query_params
-#### RequestQueryParams
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-page | PageSchema | |
-size | SizeSchema | |
-
-
-# PageSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-decimal.Decimal, int,  | decimal.Decimal,  |  |
-
-# SizeSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-decimal.Decimal, int,  | decimal.Decimal,  |  |
-
-### path_params
-#### RequestPathParams
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-env | EnvSchema | |
-publicNamespaceName | PublicNamespaceNameSchema | |
-
-# EnvSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-# PublicNamespaceNameSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-### Return Types, Responses
-
-Code | Class | Description
-------------- | ------------- | -------------
-n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#get_public_app_namespace_instances.ApiResponseFor200) | 成功获取实例列表
-
-#### get_public_app_namespace_instances.ApiResponseFor200
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-list, tuple,  | tuple,  |  |
-
-### Tuple Items
-Class Name | Input Type | Accessed Type | Description | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-[**OpenNamespaceDTO**]({{complexTypePrefix}}OpenNamespaceDTO.md) | [**OpenNamespaceDTO**]({{complexTypePrefix}}OpenNamespaceDTO.md) | [**OpenNamespaceDTO**]({{complexTypePrefix}}OpenNamespaceDTO.md) |  |
-
-### Authorization
-
-[ApiKeyAuth](../../../README.md#ApiKeyAuth)
-
-[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
-
-# **get_public_namespace_association**
-<a id="get_public_namespace_association"></a>
-> OpenNamespaceDTO get_public_namespace_association(app_idenvcluster_namenamespace_name)
-
-获取关联的公共Namespace (new added)
-
-GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association
-
-### Example
-
-* Api Key Authentication (ApiKeyAuth):
-```python
-import apollo_openapi
-from apollo_openapi.apis.tags import namespace_management_api
-from apollo_openapi.model.open_namespace_dto import OpenNamespaceDTO
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = apollo_openapi.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
-# Enter a context with an instance of the API client
-with apollo_openapi.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = namespace_management_api.NamespaceManagementApi(api_client)
-
-    # example passing only required values which don't have defaults set
-    path_params = {
-        'appId': "appId_example",
-        'env': "env_example",
-        'clusterName': "clusterName_example",
-        'namespaceName': "namespaceName_example",
-    }
-    try:
-        # 获取关联的公共Namespace (new added)
-        api_response = api_instance.get_public_namespace_association(
-            path_params=path_params,
-        )
-        pprint(api_response)
-    except apollo_openapi.ApiException as e:
-        print("Exception when calling NamespaceManagementApi->get_public_namespace_association: %s\n" % e)
-```
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-path_params | RequestPathParams | |
-accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
-stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
-timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
-skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
-
-### path_params
-#### RequestPathParams
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-appId | AppIdSchema | |
-env | EnvSchema | |
-clusterName | ClusterNameSchema | |
-namespaceName | NamespaceNameSchema | |
-
-# AppIdSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-# EnvSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-# ClusterNameSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-# NamespaceNameSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-### Return Types, Responses
-
-Code | Class | Description
-------------- | ------------- | -------------
-n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#get_public_namespace_association.ApiResponseFor200) | 成功获取关联的公共Namespace
-
-#### get_public_namespace_association.ApiResponseFor200
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-Type | Description  | Notes
-------------- | ------------- | -------------
-[**OpenNamespaceDTO**](../../models/OpenNamespaceDTO.md) |  |
-
-
-### Authorization
-
-[ApiKeyAuth](../../../README.md#ApiKeyAuth)
-
-[[Back to top]](#__pageTop) [[Back to API list]](../../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../../README.md#documentation-for-models) [[Back to README]](../../../README.md)
-
-# **load_namespace**
-<a id="load_namespace"></a>
-> OpenNamespaceDTO load_namespace(app_idenvcluster_namenamespace_name)
-
-获取指定的Namespace (original openapi)
-
-GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
-
-### Example
-
-* Api Key Authentication (ApiKeyAuth):
-```python
-import apollo_openapi
-from apollo_openapi.apis.tags import namespace_management_api
-from apollo_openapi.model.open_namespace_dto import OpenNamespaceDTO
-from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = apollo_openapi.Configuration(
-    host = "http://localhost"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure API key authorization: ApiKeyAuth
-configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
-
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['ApiKeyAuth'] = 'Bearer'
-# Enter a context with an instance of the API client
-with apollo_openapi.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = namespace_management_api.NamespaceManagementApi(api_client)
-
-    # example passing only required values which don't have defaults set
-    path_params = {
-        'appId': "appId_example",
-        'env': "env_example",
-        'clusterName': "clusterName_example",
-        'namespaceName': "namespaceName_example",
-    }
-    query_params = {
-        'fillItemDetail': True,
-    }
-    try:
-        # 获取指定的Namespace (original openapi)
-        api_response = api_instance.load_namespace(
-            path_params=path_params,
-            query_params=query_params,
-        )
-        pprint(api_response)
-    except apollo_openapi.ApiException as e:
-        print("Exception when calling NamespaceManagementApi->load_namespace: %s\n" % e)
-```
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-query_params | RequestQueryParams | |
-path_params | RequestPathParams | |
-accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
-stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
-timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
-skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
-
-### query_params
-#### RequestQueryParams
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-fillItemDetail | FillItemDetailSchema | |
-
-
-# FillItemDetailSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-bool,  | BoolClass,  |  | if omitted the server will use the default value of True
-
-### path_params
-#### RequestPathParams
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-appId | AppIdSchema | |
-env | EnvSchema | |
-clusterName | ClusterNameSchema | |
-namespaceName | NamespaceNameSchema | |
-
-# AppIdSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-# EnvSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-# ClusterNameSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-# NamespaceNameSchema
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-str,  | str,  |  |
-
-### Return Types, Responses
-
-Code | Class | Description
-------------- | ------------- | -------------
-n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
-200 | [ApiResponseFor200](#load_namespace.ApiResponseFor200) |
-
-#### load_namespace.ApiResponseFor200
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
-headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-Type | Description  | Notes
-------------- | ------------- | -------------
-[**OpenNamespaceDTO**](../../models/OpenNamespaceDTO.md) |  |
 
 
 ### Authorization

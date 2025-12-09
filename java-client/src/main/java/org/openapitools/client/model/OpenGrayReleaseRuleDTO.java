@@ -21,8 +21,8 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import org.openapitools.client.model.OpenGrayReleaseRuleItemDTO;
 
 import com.google.gson.Gson;
@@ -89,7 +89,7 @@ public class OpenGrayReleaseRuleDTO {
 
   public static final String SERIALIZED_NAME_RULE_ITEMS = "ruleItems";
   @SerializedName(SERIALIZED_NAME_RULE_ITEMS)
-  private List<OpenGrayReleaseRuleItemDTO> ruleItems;
+  private Set<OpenGrayReleaseRuleItemDTO> ruleItems;
 
   public OpenGrayReleaseRuleDTO() {
   }
@@ -262,7 +262,7 @@ public class OpenGrayReleaseRuleDTO {
   }
 
 
-  public OpenGrayReleaseRuleDTO ruleItems(List<OpenGrayReleaseRuleItemDTO> ruleItems) {
+  public OpenGrayReleaseRuleDTO ruleItems(Set<OpenGrayReleaseRuleItemDTO> ruleItems) {
 
     this.ruleItems = ruleItems;
     return this;
@@ -270,7 +270,7 @@ public class OpenGrayReleaseRuleDTO {
 
   public OpenGrayReleaseRuleDTO addRuleItemsItem(OpenGrayReleaseRuleItemDTO ruleItemsItem) {
     if (this.ruleItems == null) {
-      this.ruleItems = new ArrayList<>();
+      this.ruleItems = new LinkedHashSet<>();
     }
     this.ruleItems.add(ruleItemsItem);
     return this;
@@ -281,12 +281,12 @@ public class OpenGrayReleaseRuleDTO {
    * @return ruleItems
   **/
   @javax.annotation.Nullable
-  public List<OpenGrayReleaseRuleItemDTO> getRuleItems() {
+  public Set<OpenGrayReleaseRuleItemDTO> getRuleItems() {
     return ruleItems;
   }
 
 
-  public void setRuleItems(List<OpenGrayReleaseRuleItemDTO> ruleItems) {
+  public void setRuleItems(Set<OpenGrayReleaseRuleItemDTO> ruleItems) {
     this.ruleItems = ruleItems;
   }
 
