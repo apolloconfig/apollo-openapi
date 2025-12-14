@@ -17,3 +17,5 @@ class TagValues(str, enum.Enum):
     INSTANCE_MANAGEMENT = "Instance Management"
     ORGANIZATION_MANAGEMENT = "Organization Management"
     ENVIRONMENT_MANAGEMENT = "Environment Management"
+    PERMISSION_MANAGEMENT = "Permission Management"
+    ACCESS_KEY_MANAGEMENT = "AccessKey Management"

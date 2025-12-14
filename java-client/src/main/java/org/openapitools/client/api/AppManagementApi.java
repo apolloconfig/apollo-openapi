@@ -297,7 +297,6 @@ public class AppManagementApi {
      * @param env 环境标识，例如 DEV、FAT、UAT、PROD (required)
      * @param openAppDTO  (required)
      * @param operator 操作人用户名 (optional)
-     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -307,9 +306,8 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public Object createAppInEnv(String env, OpenAppDTO openAppDTO, String operator) throws ApiException {
-        ApiResponse<Object> localVarResp = createAppInEnvWithHttpInfo(env, openAppDTO, operator);
-        return localVarResp.getData();
+    public void createAppInEnv(String env, OpenAppDTO openAppDTO, String operator) throws ApiException {
+        createAppInEnvWithHttpInfo(env, openAppDTO, operator);
     }
 
     /**
@@ -318,7 +316,7 @@ public class AppManagementApi {
      * @param env 环境标识，例如 DEV、FAT、UAT、PROD (required)
      * @param openAppDTO  (required)
      * @param operator 操作人用户名 (optional)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -328,10 +326,9 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> createAppInEnvWithHttpInfo(String env, OpenAppDTO openAppDTO, String operator) throws ApiException {
+    public ApiResponse<Void> createAppInEnvWithHttpInfo(String env, OpenAppDTO openAppDTO, String operator) throws ApiException {
         okhttp3.Call localVarCall = createAppInEnvValidateBeforeCall(env, openAppDTO, operator, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -351,11 +348,10 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createAppInEnvAsync(String env, OpenAppDTO openAppDTO, String operator, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call createAppInEnvAsync(String env, OpenAppDTO openAppDTO, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = createAppInEnvValidateBeforeCall(env, openAppDTO, operator, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**
@@ -438,7 +434,6 @@ public class AppManagementApi {
      * DELETE /openapi/v1/apps/{appId}
      * @param appId 应用ID (required)
      * @param operator 操作人用户名 (optional)
-     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -448,9 +443,8 @@ public class AppManagementApi {
         <tr><td> 404 </td><td> 应用不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public Object deleteApp(String appId, String operator) throws ApiException {
-        ApiResponse<Object> localVarResp = deleteAppWithHttpInfo(appId, operator);
-        return localVarResp.getData();
+    public void deleteApp(String appId, String operator) throws ApiException {
+        deleteAppWithHttpInfo(appId, operator);
     }
 
     /**
@@ -458,7 +452,7 @@ public class AppManagementApi {
      * DELETE /openapi/v1/apps/{appId}
      * @param appId 应用ID (required)
      * @param operator 操作人用户名 (optional)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -468,10 +462,9 @@ public class AppManagementApi {
         <tr><td> 404 </td><td> 应用不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> deleteAppWithHttpInfo(String appId, String operator) throws ApiException {
+    public ApiResponse<Void> deleteAppWithHttpInfo(String appId, String operator) throws ApiException {
         okhttp3.Call localVarCall = deleteAppValidateBeforeCall(appId, operator, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -490,11 +483,10 @@ public class AppManagementApi {
         <tr><td> 404 </td><td> 应用不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteAppAsync(String appId, String operator, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call deleteAppAsync(String appId, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = deleteAppValidateBeforeCall(appId, operator, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**
@@ -1474,7 +1466,6 @@ public class AppManagementApi {
      * @param appId 应用ID (required)
      * @param openAppDTO  (required)
      * @param operator 操作人用户名 (optional)
-     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1484,9 +1475,8 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public Object updateApp(String appId, OpenAppDTO openAppDTO, String operator) throws ApiException {
-        ApiResponse<Object> localVarResp = updateAppWithHttpInfo(appId, openAppDTO, operator);
-        return localVarResp.getData();
+    public void updateApp(String appId, OpenAppDTO openAppDTO, String operator) throws ApiException {
+        updateAppWithHttpInfo(appId, openAppDTO, operator);
     }
 
     /**
@@ -1495,7 +1485,7 @@ public class AppManagementApi {
      * @param appId 应用ID (required)
      * @param openAppDTO  (required)
      * @param operator 操作人用户名 (optional)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1505,10 +1495,9 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> updateAppWithHttpInfo(String appId, OpenAppDTO openAppDTO, String operator) throws ApiException {
+    public ApiResponse<Void> updateAppWithHttpInfo(String appId, OpenAppDTO openAppDTO, String operator) throws ApiException {
         okhttp3.Call localVarCall = updateAppValidateBeforeCall(appId, openAppDTO, operator, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -1528,11 +1517,10 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateAppAsync(String appId, OpenAppDTO openAppDTO, String operator, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call updateAppAsync(String appId, OpenAppDTO openAppDTO, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = updateAppValidateBeforeCall(appId, openAppDTO, operator, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
 }

@@ -44,6 +44,8 @@ tags:
     description: 组织管理相关接口，包括组织信息查询等功能
   - name: Environment Management
     description: 环境管理相关接口，包括环境查询等功能
+  - name: Permission Management
+    description: 权限管理相关接口，包括权限查询等功能
 paths:
   /openapi/v1/apps:
     post:
@@ -288,11 +290,6 @@ paths:
       responses:
         '200':
           description: '应用更新成功'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessEmptyResponse'
-          headers: {}
         '400':
           description: '请求参数错误'
           content:
@@ -328,10 +325,6 @@ paths:
       responses:
         '200':
           description: '应用删除成功'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessEmptyResponse'
         '403':
           description: '权限不足，需要超级管理员权限'
           content:
@@ -476,10 +469,6 @@ paths:
       responses:
         '200':
           description: '应用在指定环境创建成功'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessEmptyResponse'
         '400':
           description: '请求参数错误'
           content:
@@ -1563,10 +1552,6 @@ paths:
       responses:
         '200':
           description: '集群删除成功'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessEmptyResponse'
         '400':
           description: '删除失败，集群可能包含配置'
           content:
@@ -1670,6 +1655,12 @@ paths:
           in: path
           description: 命名空间名称
           required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
           schema:
             type: string
       requestBody:
@@ -1903,6 +1894,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -1969,6 +1966,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -2027,11 +2030,6 @@ paths:
       responses:
         '200':
           description: '发布回滚成功'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessEmptyResponse'
-          headers: {}
   /openapi/v1/envs/{env}/releases/{releaseId}:
     get:
       summary: 获取发布详情 (new added)
@@ -2073,85 +2071,6 @@ paths:
                 configurations:
                   '': ''
                 comment: ''
-          headers: {}
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all:
-    get:
-      summary: 获取所有发布（分页） (new added)
-      operationId: findAllReleases
-      deprecated: false
-      description: >-
-        GET
-        /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all
-      tags:
-        - Release Management
-      parameters:
-        - name: appId
-          in: path
-          description: '应用ID'
-          required: true
-          schema:
-            type: string
-        - name: env
-          in: path
-          description: '环境标识'
-          required: true
-          schema:
-            type: string
-        - name: clusterName
-          in: path
-          description: '集群名称'
-          required: true
-          schema:
-            type: string
-        - name: namespaceName
-          in: path
-          description: '命名空间名称'
-          required: true
-          schema:
-            type: string
-        - name: page
-          in: query
-          description: '页码，从0开始'
-          required: true
-          example: 0
-          schema:
-            type: integer
-        - name: size
-          in: query
-          description: '每页数量'
-          required: true
-          example: 5
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: '成功获取发布列表'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/OpenReleaseBO'
-              example:
-                - baseInfo:
-                    dataChangeCreatedBy: ''
-                    dataChangeLastModifiedBy: ''
-                    dataChangeCreatedByDisplayName: ''
-                    dataChangeLastModifiedByDisplayName: ''
-                    dataChangeCreatedTime: ''
-                    dataChangeLastModifiedTime: ''
-                    id: 0
-                    releaseKey: ''
-                    name: ''
-                    appId: ''
-                    clusterName: ''
-                    namespaceName: ''
-                    configurations: ''
-                    comment: ''
-                    isAbandoned: false
-                  items:
-                    - key: ''
-                      value: ''
           headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/active:
     get:
@@ -2225,6 +2144,41 @@ paths:
                     '': ''
                   comment: ''
           headers: {}
+  /openapi/v1/envs/{env}/releases/comparison:
+    get:
+      tags:
+        - Release Management
+      summary: Compare two releases
+      description: Get the configuration differences between two releases.
+      operationId: compareRelease
+      parameters:
+        - name: env
+          in: path
+          description: Environment
+          required: true
+          schema:
+            type: string
+        - name: baseReleaseId
+          in: query
+          description: The base release ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: toCompareReleaseId
+          in: query
+          description: The release ID to compare against
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful comparison
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenReleaseDiffDTO'
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances:
     get:
       summary: 获取命名空间下的实例数量 (original openapi)
@@ -2460,7 +2414,7 @@ paths:
         - name: releaseIds
           in: query
           description: '排除的发布ID列表，用逗号分隔'
-          required: false
+          required: true
           schema:
             type: string
       responses:
@@ -3225,11 +3179,6 @@ paths:
       responses:
         '200':
           description: '缺失的命名空间创建成功'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessEmptyResponse'
-          headers: {}
   /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}:
     delete:
       summary: 删除指定的Namespace (new added)
@@ -3719,6 +3668,1164 @@ paths:
                 - 'UAT'
                 - 'PRO'
           headers: {}
+  /openapi/v1/apps/{appId}/namespaces/{namespaceName}/permission-init:
+    post:
+      summary: 初始化应用权限 (new added)
+      operationId: initAppPermission
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: '初始化成功'
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/permission-init:
+    post:
+      summary: 初始化集群Namespace权限 (new added)
+      operationId: initClusterNamespacePermission
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: clusterName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /openapi/v1/apps/{appId}/permissions/{permissionType}:
+    get:
+      summary: 校验应用权限 (new added)
+      operationId: hasAppPermission
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: permissionType
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenPermissionConditionDTO'
+              example:
+                hasPermission: false
+  /openapi/v1/apps/{appId}/namespaces/{namespaceName}/permissions/{permissionType}:
+    get:
+      summary: 校验Namespace权限 (new added)
+      operationId: hasNamespacePermission
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: permissionType
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenPermissionConditionDTO'
+              example:
+                hasPermission: false
+  /openapi/v1/apps/{appId}/envs/{env}/namespaces/{namespaceName}/permissions/{permissionType}:
+    get:
+      summary: 校验环境Namespace权限 (new added)
+      operationId: hasEnvNamespacePermission
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: permissionType
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenPermissionConditionDTO'
+              example:
+                hasPermission: false
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/permissions/{permissionType}:
+    get:
+      summary: 校验集群Namespace权限 (new added)
+      operationId: hasClusterNamespacePermission
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: clusterName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: permissionType
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenPermissionConditionDTO'
+              example:
+                hasPermission: false
+  /openapi/v1/permissions/root:
+    get:
+      summary: 校验Root权限 (new added)
+      operationId: hasRootPermission
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: userId
+          in: query
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenPermissionConditionDTO'
+              example:
+                hasPermission: false
+  /openapi/v1/apps/{appId}/envs/{env}/namespaces/{namespaceName}/role-users:
+    get:
+      summary: 获取环境Namespace用户 (new added)
+      operationId: getNamespaceEnvRoleUsers
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenEnvNamespaceRoleUserDTO'
+                description:
+              example:
+                appId: ''
+                namespaceName: ''
+                modifyRoleUsers:
+                  - userId: ''
+                    name: ''
+                    email: ''
+                    enabled: 0
+                releaseRoleUsers:
+                  - userId: ''
+                    name: ''
+                    email: ''
+                    enabled: 0
+                env: ''
+  /openapi/v1/apps/{appId}/envs/{env}/namespaces/{namespaceName}/roles/{roleType}:
+    post:
+      summary: 分配环境Namespace角色 (new added)
+      operationId: assignNamespaceEnvRoleToUser
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: roleType
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 'the user which role assigned to'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+    delete:
+      summary: 移除环境Namespace角色 (new added)
+      operationId: removeNamespaceEnvRoleFromUser
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: roleType
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 'the user which role removed from'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/role-users:
+    get:
+      summary: 获取集群Namespace用户 (new added)
+      operationId: getClusterNamespaceRoles
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: clusterName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenClusterNamespaceRoleUserDTO'
+                description:
+              example:
+                appId: ''
+                env: ''
+                cluster: ''
+                modifyRoleUsers:
+                  - userId: ''
+                    name: ''
+                    email: ''
+                    enabled: 0
+                releaseRoleUsers:
+                  - userId: ''
+                    name: ''
+                    email: ''
+                    enabled: 0
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/roles/{roleType}:
+    post:
+      summary: 分配集群Namespace角色 (new added)
+      operationId: assignClusterNamespaceRoleToUser
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: clusterName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: roleType
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 'the user which role assigned to'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+    delete:
+      summary: 移除集群Namespace角色 (new added)
+      operationId: removeClusterNamespaceRoleFromUser
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: clusterName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: roleType
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 'the user which role removed from'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /openapi/v1/apps/{appId}/namespaces/{namespaceName}/role-users:
+    get:
+      summary: 获取Namespace用户 (new added)
+      operationId: getNamespaceRoles
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenNamespaceRoleUserDTO'
+                description:
+              example:
+                appId: ''
+                namespaceName: ''
+                modifyRoleUsers:
+                  - userId: ''
+                    name: ''
+                    email: ''
+                    enabled: 0
+                releaseRoleUsers:
+                  - userId: ''
+                    name: ''
+                    email: ''
+                    enabled: 0
+  /openapi/v1/apps/{appId}/namespaces/{namespaceName}/roles/{roleType}:
+    post:
+      summary: 分配Namespace角色 (new added)
+      operationId: assignNamespaceRoleToUser
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: roleType
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 'the user which role assigned to'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+    delete:
+      summary: 移除Namespace角色 (new added)
+      operationId: removeNamespaceRoleFromUser
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: roleType
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 'the user which role removed from'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /openapi/v1/apps/{appId}/role-users:
+    get:
+      summary: 获取应用角色用户 (new added)
+      operationId: getAppRoles
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAppRoleUserDTO'
+                description:
+              example:
+                appId: ''
+                masterUsers:
+                  - userId: ''
+                    name: ''
+                    email: ''
+                    enabled: 0
+  /openapi/v1/apps/{appId}/roles/{roleType}:
+    post:
+      summary: 分配应用角色 (new added)
+      operationId: assignAppRoleToUser
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: roleType
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 'the user which role removed from'
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+              description: ''
+      responses:
+        '200':
+          description: ''
+    delete:
+      summary: 移除应用角色 (new added)
+      operationId: removeAppRoleFromUser
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: roleType
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 'the user which role removed from'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /openapi/v1/system/roles/create-application:
+    post:
+      summary: 分配建应用角色 (new added)
+      operationId: addCreateApplicationRoleToUsers
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: userIds
+              type: array
+              items:
+                type: string
+              description: ''
+      responses:
+        '200':
+          description: ''
+    delete:
+      summary: 移除建应用角色 (new added)
+      operationId: deleteCreateApplicationRoleFromUser
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+    get:
+      summary: 校验建应用权限 (new added)
+      operationId: hasCreateApplicationPermission
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: userId
+          in: query
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: boolean
+              example:
+                members:
+                  '': {}
+  /openapi/v1/system/roles/create-application/role-users:
+    get:
+      summary: 获取建应用用户 (new added)
+      operationId: getCreateApplicationRoleUsers
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+              example:
+                - ''
+  /openapi/v1/apps/{appId}/roles/master:
+    post:
+      summary: 分配AppMaster (new added)
+      operationId: addManageAppMasterRoleToUser
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 'the user which role assign to'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+    delete:
+      summary: 移除AppMaster (new added)
+      operationId: removeManageAppMasterRoleFromUser
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+        - name: userId
+          in: query
+          description: 'the user which role removed from'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /openapi/v1/system/role/manage-app-master:
+    get:
+      summary: 校验AppMaster开关 (new added)
+      operationId: isManageAppMasterPermissionEnabled
+      deprecated: false
+      description: ''
+      tags:
+        - Permission Management
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: boolean
+              example:
+                members:
+                  '': {}
+  /openapi/v1/apps/{appId}/envs/{env}/accesskeys:
+    post:
+      summary: 创建AccessKey
+      operationId: createAccessKey
+      deprecated: false
+      description: ''
+      tags:
+        - AccessKey Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAccessKeyDTO'
+                description: com.ctrip.framework.apollo.common.dto.AccessKeyDTO
+              example:
+                dataChangeCreatedBy: ''
+                dataChangeLastModifiedBy: ''
+                dataChangeCreatedByDisplayName: ''
+                dataChangeLastModifiedByDisplayName: ''
+                dataChangeCreatedTime: ''
+                dataChangeLastModifiedTime: ''
+                id: 0
+                secret: ''
+                appId: ''
+                mode: 0
+                enabled: false
+          headers: {}
+    get:
+      summary: 查找AccessKey
+      operationId: findAccessKeys
+      deprecated: false
+      description: ''
+      tags:
+        - AccessKey Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OpenAccessKeyDTO'
+                  description: com.ctrip.framework.apollo.common.dto.AccessKeyDTO
+              example:
+                - dataChangeCreatedBy: ''
+                  dataChangeLastModifiedBy: ''
+                  dataChangeCreatedByDisplayName: ''
+                  dataChangeLastModifiedByDisplayName: ''
+                  dataChangeCreatedTime: ''
+                  dataChangeLastModifiedTime: ''
+                  id: 0
+                  secret: ''
+                  appId: ''
+                  mode: 0
+                  enabled: false
+          headers: {}
+  /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}:
+    delete:
+      summary: 删除AccessKey
+      operationId: deleteAccessKey
+      deprecated: false
+      description: ''
+      tags:
+        - AccessKey Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: accessKeyId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: operator
+          in: query
+          description: ''
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/activation:
+    put:
+      summary: 启用AccessKey
+      operationId: enableAccessKey
+      deprecated: false
+      description: ''
+      tags:
+        - AccessKey Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: accessKeyId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: mode
+          in: query
+          description: ''
+          required: false
+          example: 0
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: ''
+  /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/deactivation:
+    put:
+      summary: 禁用AccessKey
+      operationId: disableAccessKey
+      deprecated: false
+      description: ''
+      tags:
+        - AccessKey Management
+      parameters:
+        - name: appId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+        - name: accessKeyId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: ''
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -4379,24 +5486,6 @@ components:
         # operation:
         #   type: string
         #   enum: [update, delete, create]
-    KVEntity:
-      type: object
-      properties:
-        key:
-          type: string
-          description: 键
-        value:
-          type: string
-          description: 值
-    OpenReleaseBO:
-      type: object
-      properties:
-        baseInfo:
-          $ref: '#/components/schemas/OpenReleaseDTO'
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/KVEntity'
     OpenInstanceConfigDTO:
       type: object
       properties:
@@ -4468,9 +5557,169 @@ components:
         message: "Resource not found"
         timestamp: "2025-09-29T12:34:56Z"
         exception: "NotFoundException"
-    SuccessEmptyResponse: # 对应 ResponseEntity<Void> 是一个通用的空返回数据模型，不带任何信息，用于成功时的返回
+    OpenPermissionConditionDTO:
       type: object
-      properties: {}
+      properties:
+        hasPermission:
+          type: boolean
+          description: ''
+    OpenUserInfoDTO:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: ''
+        name:
+          type: string
+          description: ''
+        email:
+          type: string
+          description: ''
+        enabled:
+          type: integer
+          description: ''
+    OpenEnvNamespaceRoleUserDTO:
+      type: object
+      properties:
+        appId:
+          type: string
+          description: ''
+        namespaceName:
+          type: string
+          description: ''
+        modifyRoleUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+            description:
+          description: ''
+        releaseRoleUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+            description:
+          description: ''
+        env:
+          type: string
+          description: ''
+    OpenClusterNamespaceRoleUserDTO:
+      type: object
+      properties:
+        appId:
+          type: string
+          description: ''
+        env:
+          type: string
+          description: ''
+        cluster:
+          type: string
+          description: ''
+        modifyRoleUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+            description:
+          description: ''
+        releaseRoleUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+            description:
+          description: ''
+    OpenNamespaceRoleUserDTO:
+      type: object
+      properties:
+        appId:
+          type: string
+          description: ''
+        namespaceName:
+          type: string
+          description: ''
+        modifyRoleUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+            description:
+          description: ''
+        releaseRoleUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+            description:
+          description: ''
+    OpenAppRoleUserDTO:
+      type: object
+      properties:
+        appId:
+          type: string
+          description: ''
+        masterUsers:
+          type: array
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+            description:
+          description: ''
+    OpenReleaseDiffDTO:
+      type: object
+      properties:
+        changes:
+          type: array
+          description: A list of changes, ensuring order if necessary.
+          items:
+            $ref: '#/components/schemas/OpenReleaseChangeDTO'
+            description: Map containing a single key-value pair of the changed item.
+    OpenReleaseChangeDTO:
+      type: object
+      properties:
+        changeType:
+          type: string
+          description: '修改类型'
+        key:
+          type: string
+          description: 'key'
+        newValue:
+          type: string
+          description: 'new value'
+        oldValue:
+          type: string
+          description: 'old value'
+    OpenAccessKeyDTO:
+      type: object
+      properties:
+        dataChangeCreatedBy:
+          type: string
+          description: ''
+        dataChangeLastModifiedBy:
+          type: string
+          description: ''
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: ''
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: ''
+        dataChangeCreatedTime:
+          type: string
+          description: ''
+        dataChangeLastModifiedTime:
+          type: string
+          description: ''
+        id:
+          type: integer
+          description: ''
+          format: int64
+        secret:
+          type: string
+          description: ''
+        appId:
+          type: string
+          description: ''
+        mode:
+          type: integer
+          description: ''
+        enabled:
+          type: boolean
+          description: ''
     StringToStringBoolMap: # Map<String, Map<String, Boolean>>
       type: object
       additionalProperties:

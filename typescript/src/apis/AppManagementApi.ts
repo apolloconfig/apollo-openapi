@@ -131,7 +131,7 @@ export class AppManagementApi extends runtime.BaseAPI {
      * POST /openapi/v1/apps/envs/{env}
      * 在指定环境创建应用(new added)
      */
-    async createAppInEnvRaw(requestParameters: CreateAppInEnvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async createAppInEnvRaw(requestParameters: CreateAppInEnvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.env === null || requestParameters.env === undefined) {
             throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling createAppInEnv.');
         }
@@ -162,23 +162,22 @@ export class AppManagementApi extends runtime.BaseAPI {
             body: OpenAppDTOToJSON(requestParameters.openAppDTO),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * POST /openapi/v1/apps/envs/{env}
      * 在指定环境创建应用(new added)
      */
-    async createAppInEnv(requestParameters: CreateAppInEnvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.createAppInEnvRaw(requestParameters, initOverrides);
-        return await response.value();
+    async createAppInEnv(requestParameters: CreateAppInEnvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.createAppInEnvRaw(requestParameters, initOverrides);
     }
 
     /**
      * DELETE /openapi/v1/apps/{appId}
      * 删除应用(new added)
      */
-    async deleteAppRaw(requestParameters: DeleteAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async deleteAppRaw(requestParameters: DeleteAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling deleteApp.');
         }
@@ -202,16 +201,15 @@ export class AppManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * DELETE /openapi/v1/apps/{appId}
      * 删除应用(new added)
      */
-    async deleteApp(requestParameters: DeleteAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.deleteAppRaw(requestParameters, initOverrides);
-        return await response.value();
+    async deleteApp(requestParameters: DeleteAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteAppRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -478,7 +476,7 @@ export class AppManagementApi extends runtime.BaseAPI {
      * PUT /openapi/v1/apps/{appId}
      * 更新应用(new added)
      */
-    async updateAppRaw(requestParameters: UpdateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async updateAppRaw(requestParameters: UpdateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling updateApp.');
         }
@@ -509,16 +507,15 @@ export class AppManagementApi extends runtime.BaseAPI {
             body: OpenAppDTOToJSON(requestParameters.openAppDTO),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * PUT /openapi/v1/apps/{appId}
      * 更新应用(new added)
      */
-    async updateApp(requestParameters: UpdateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.updateAppRaw(requestParameters, initOverrides);
-        return await response.value();
+    async updateApp(requestParameters: UpdateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.updateAppRaw(requestParameters, initOverrides);
     }
 
 }

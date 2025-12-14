@@ -438,7 +438,7 @@ public class InstanceManagementApi {
      * @param appId 应用ID (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param releaseIds 排除的发布ID列表，用逗号分隔 (optional)
+     * @param releaseIds 排除的发布ID列表，用逗号分隔 (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -531,6 +531,11 @@ public class InstanceManagementApi {
             throw new ApiException("Missing the required parameter 'namespaceName' when calling getByReleasesAndNamespaceNotIn(Async)");
         }
 
+        // verify the required parameter 'releaseIds' is set
+        if (releaseIds == null) {
+            throw new ApiException("Missing the required parameter 'releaseIds' when calling getByReleasesAndNamespaceNotIn(Async)");
+        }
+
         return getByReleasesAndNamespaceNotInCall(env, appId, clusterName, namespaceName, releaseIds, _callback);
 
     }
@@ -542,7 +547,7 @@ public class InstanceManagementApi {
      * @param appId 应用ID (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param releaseIds 排除的发布ID列表，用逗号分隔 (optional)
+     * @param releaseIds 排除的发布ID列表，用逗号分隔 (required)
      * @return List&lt;OpenInstanceDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -563,7 +568,7 @@ public class InstanceManagementApi {
      * @param appId 应用ID (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param releaseIds 排除的发布ID列表，用逗号分隔 (optional)
+     * @param releaseIds 排除的发布ID列表，用逗号分隔 (required)
      * @return ApiResponse&lt;List&lt;OpenInstanceDTO&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -585,7 +590,7 @@ public class InstanceManagementApi {
      * @param appId 应用ID (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param releaseIds 排除的发布ID列表，用逗号分隔 (optional)
+     * @param releaseIds 排除的发布ID列表，用逗号分隔 (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object

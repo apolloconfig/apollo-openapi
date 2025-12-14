@@ -86,7 +86,7 @@ public class Example {
 
 <a id="deleteCluster"></a>
 # **deleteCluster**
-> Object deleteCluster(env, appId, clusterName, operator)
+> deleteCluster(env, appId, clusterName, operator)
 
 删除集群 (new added)
 
@@ -119,8 +119,7 @@ public class Example {
     String clusterName = "clusterName_example"; // String |
     String operator = "operator_example"; // String | 操作人用户名，openapi外部调用时需传入
     try {
-      Object result = apiInstance.deleteCluster(env, appId, clusterName, operator);
-      System.out.println(result);
+      apiInstance.deleteCluster(env, appId, clusterName, operator);
     } catch (ApiException e) {
       System.err.println("Exception when calling ClusterManagementApi#deleteCluster");
       System.err.println("Status code: " + e.getCode());
@@ -143,7 +142,7 @@ public class Example {
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

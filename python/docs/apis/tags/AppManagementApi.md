@@ -160,7 +160,7 @@ Type | Description  | Notes
 
 # **create_app_in_env**
 <a id="create_app_in_env"></a>
-> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} create_app_in_env(envopen_app_dto)
+> create_app_in_env(envopen_app_dto)
 
 在指定环境创建应用(new added)
 
@@ -222,7 +222,6 @@ with apollo_openapi.ApiClient(configuration) as api_client:
             query_params=query_params,
             body=body,
         )
-        pprint(api_response)
     except apollo_openapi.ApiException as e:
         print("Exception when calling AppManagementApi->create_app_in_env: %s\n" % e)
 
@@ -253,7 +252,6 @@ with apollo_openapi.ApiClient(configuration) as api_client:
             query_params=query_params,
             body=body,
         )
-        pprint(api_response)
     except apollo_openapi.ApiException as e:
         print("Exception when calling AppManagementApi->create_app_in_env: %s\n" % e)
 ```
@@ -320,15 +318,8 @@ n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
+body | Unset | body was not defined |
 headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 
 #### create_app_in_env.ApiResponseFor400
 Name | Type | Description  | Notes
@@ -364,7 +355,7 @@ Type | Description  | Notes
 
 # **delete_app**
 <a id="delete_app"></a>
-> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} delete_app(app_id)
+> delete_app(app_id)
 
 删除应用(new added)
 
@@ -411,7 +402,6 @@ with apollo_openapi.ApiClient(configuration) as api_client:
             path_params=path_params,
             query_params=query_params,
         )
-        pprint(api_response)
     except apollo_openapi.ApiException as e:
         print("Exception when calling AppManagementApi->delete_app: %s\n" % e)
 
@@ -428,7 +418,6 @@ with apollo_openapi.ApiClient(configuration) as api_client:
             path_params=path_params,
             query_params=query_params,
         )
-        pprint(api_response)
     except apollo_openapi.ApiException as e:
         print("Exception when calling AppManagementApi->delete_app: %s\n" % e)
 ```
@@ -485,15 +474,8 @@ n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
+body | Unset | body was not defined |
 headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 
 #### delete_app.ApiResponseFor403
 Name | Type | Description  | Notes
@@ -1340,7 +1322,7 @@ Type | Description  | Notes
 
 # **update_app**
 <a id="update_app"></a>
-> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} update_app(app_idopen_app_dto)
+> update_app(app_idopen_app_dto)
 
 更新应用(new added)
 
@@ -1402,7 +1384,6 @@ with apollo_openapi.ApiClient(configuration) as api_client:
             query_params=query_params,
             body=body,
         )
-        pprint(api_response)
     except apollo_openapi.ApiException as e:
         print("Exception when calling AppManagementApi->update_app: %s\n" % e)
 
@@ -1433,7 +1414,6 @@ with apollo_openapi.ApiClient(configuration) as api_client:
             query_params=query_params,
             body=body,
         )
-        pprint(api_response)
     except apollo_openapi.ApiException as e:
         print("Exception when calling AppManagementApi->update_app: %s\n" % e)
 ```
@@ -1500,15 +1480,8 @@ n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
+body | Unset | body was not defined |
 headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 
 #### update_app.ApiResponseFor400
 Name | Type | Description  | Notes

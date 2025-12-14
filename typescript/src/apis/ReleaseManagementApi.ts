@@ -18,8 +18,8 @@ import type {
   ExceptionResponse,
   NamespaceGrayDelReleaseDTO,
   NamespaceReleaseDTO,
-  OpenReleaseBO,
   OpenReleaseDTO,
+  OpenReleaseDiffDTO,
 } from '../models';
 import {
     ExceptionResponseFromJSON,
@@ -28,11 +28,17 @@ import {
     NamespaceGrayDelReleaseDTOToJSON,
     NamespaceReleaseDTOFromJSON,
     NamespaceReleaseDTOToJSON,
-    OpenReleaseBOFromJSON,
-    OpenReleaseBOToJSON,
     OpenReleaseDTOFromJSON,
     OpenReleaseDTOToJSON,
+    OpenReleaseDiffDTOFromJSON,
+    OpenReleaseDiffDTOToJSON,
 } from '../models';
+
+export interface CompareReleaseRequest {
+    env: string;
+    baseReleaseId: number;
+    toCompareReleaseId: number;
+}
 
 export interface CreateGrayDelReleaseRequest {
     appId: string;
@@ -41,6 +47,7 @@ export interface CreateGrayDelReleaseRequest {
     namespaceName: string;
     branchName: string;
     namespaceGrayDelReleaseDTO: NamespaceGrayDelReleaseDTO;
+    operator?: string;
 }
 
 export interface CreateGrayReleaseRequest {
@@ -50,6 +57,7 @@ export interface CreateGrayReleaseRequest {
     namespaceName: string;
     branchName: string;
     namespaceReleaseDTO: NamespaceReleaseDTO;
+    operator?: string;
 }
 
 export interface CreateReleaseRequest {
@@ -58,18 +66,10 @@ export interface CreateReleaseRequest {
     clusterName: string;
     namespaceName: string;
     namespaceReleaseDTO: NamespaceReleaseDTO;
+    operator?: string;
 }
 
 export interface FindActiveReleasesRequest {
-    appId: string;
-    env: string;
-    clusterName: string;
-    namespaceName: string;
-    page: number;
-    size: number;
-}
-
-export interface FindAllReleasesRequest {
     appId: string;
     env: string;
     clusterName: string;
@@ -102,6 +102,58 @@ export interface RollbackRequest {
 export class ReleaseManagementApi extends runtime.BaseAPI {
 
     /**
+     * Get the configuration differences between two releases.
+     * Compare two releases
+     */
+    async compareReleaseRaw(requestParameters: CompareReleaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenReleaseDiffDTO>> {
+        if (requestParameters.env === null || requestParameters.env === undefined) {
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling compareRelease.');
+        }
+
+        if (requestParameters.baseReleaseId === null || requestParameters.baseReleaseId === undefined) {
+            throw new runtime.RequiredError('baseReleaseId','Required parameter requestParameters.baseReleaseId was null or undefined when calling compareRelease.');
+        }
+
+        if (requestParameters.toCompareReleaseId === null || requestParameters.toCompareReleaseId === undefined) {
+            throw new runtime.RequiredError('toCompareReleaseId','Required parameter requestParameters.toCompareReleaseId was null or undefined when calling compareRelease.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.baseReleaseId !== undefined) {
+            queryParameters['baseReleaseId'] = requestParameters.baseReleaseId;
+        }
+
+        if (requestParameters.toCompareReleaseId !== undefined) {
+            queryParameters['toCompareReleaseId'] = requestParameters.toCompareReleaseId;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/openapi/v1/envs/{env}/releases/comparison`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpenReleaseDiffDTOFromJSON(jsonValue));
+    }
+
+    /**
+     * Get the configuration differences between two releases.
+     * Compare two releases
+     */
+    async compareRelease(requestParameters: CompareReleaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenReleaseDiffDTO> {
+        const response = await this.compareReleaseRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      *
      * 创建灰度删除发布 (original openapi)
      */
@@ -131,6 +183,10 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -191,6 +247,10 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
@@ -245,6 +305,10 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -335,70 +399,6 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
      */
     async findActiveReleases(requestParameters: FindActiveReleasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenReleaseDTO>> {
         const response = await this.findActiveReleasesRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all
-     * 获取所有发布（分页） (new added)
-     */
-    async findAllReleasesRaw(requestParameters: FindAllReleasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenReleaseBO>>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling findAllReleases.');
-        }
-
-        if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling findAllReleases.');
-        }
-
-        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
-            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling findAllReleases.');
-        }
-
-        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling findAllReleases.');
-        }
-
-        if (requestParameters.page === null || requestParameters.page === undefined) {
-            throw new runtime.RequiredError('page','Required parameter requestParameters.page was null or undefined when calling findAllReleases.');
-        }
-
-        if (requestParameters.size === null || requestParameters.size === undefined) {
-            throw new runtime.RequiredError('size','Required parameter requestParameters.size was null or undefined when calling findAllReleases.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.page !== undefined) {
-            queryParameters['page'] = requestParameters.page;
-        }
-
-        if (requestParameters.size !== undefined) {
-            queryParameters['size'] = requestParameters.size;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenReleaseBOFromJSON));
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all
-     * 获取所有发布（分页） (new added)
-     */
-    async findAllReleases(requestParameters: FindAllReleasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenReleaseBO>> {
-        const response = await this.findAllReleasesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -494,7 +494,7 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
      * 回滚到指定的发布版本
      * 回滚发布 (original openapi)
      */
-    async rollbackRaw(requestParameters: RollbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async rollbackRaw(requestParameters: RollbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.env === null || requestParameters.env === undefined) {
             throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling rollback.');
         }
@@ -522,16 +522,15 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * 回滚到指定的发布版本
      * 回滚发布 (original openapi)
      */
-    async rollback(requestParameters: RollbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.rollbackRaw(requestParameters, initOverrides);
-        return await response.value();
+    async rollback(requestParameters: RollbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.rollbackRaw(requestParameters, initOverrides);
     }
 
 }

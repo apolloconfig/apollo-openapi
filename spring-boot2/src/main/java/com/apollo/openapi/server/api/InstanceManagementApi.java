@@ -127,7 +127,7 @@ public interface InstanceManagementApi {
      * @param appId 应用ID (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param releaseIds 排除的发布ID列表，用逗号分隔 (optional)
+     * @param releaseIds 排除的发布ID列表，用逗号分隔 (required)
      * @return  (status code 200)
      */
     @Operation(
@@ -153,7 +153,7 @@ public interface InstanceManagementApi {
         @NotNull @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "appId", required = true) String appId,
         @NotNull @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "clusterName", required = true) String clusterName,
         @NotNull @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "namespaceName", required = true) String namespaceName,
-        @Parameter(name = "releaseIds", description = "排除的发布ID列表，用逗号分隔", in = ParameterIn.QUERY) @Valid @RequestParam(value = "releaseIds", required = false) String releaseIds
+        @NotNull @Parameter(name = "releaseIds", description = "排除的发布ID列表，用逗号分隔", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "releaseIds", required = true) String releaseIds
     ) {
         return getDelegate().getByReleasesAndNamespaceNotIn(env, appId, clusterName, namespaceName, releaseIds);
     }

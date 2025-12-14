@@ -90,7 +90,7 @@ public class Example {
 
 <a id="createAppInEnv"></a>
 # **createAppInEnv**
-> Object createAppInEnv(env, openAppDTO, operator)
+> createAppInEnv(env, openAppDTO, operator)
 
 在指定环境创建应用(new added)
 
@@ -122,8 +122,7 @@ public class Example {
     OpenAppDTO openAppDTO = new OpenAppDTO(); // OpenAppDTO |
     String operator = "operator_example"; // String | 操作人用户名
     try {
-      Object result = apiInstance.createAppInEnv(env, openAppDTO, operator);
-      System.out.println(result);
+      apiInstance.createAppInEnv(env, openAppDTO, operator);
     } catch (ApiException e) {
       System.err.println("Exception when calling AppManagementApi#createAppInEnv");
       System.err.println("Status code: " + e.getCode());
@@ -145,7 +144,7 @@ public class Example {
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -165,7 +164,7 @@ public class Example {
 
 <a id="deleteApp"></a>
 # **deleteApp**
-> Object deleteApp(appId, operator)
+> deleteApp(appId, operator)
 
 删除应用(new added)
 
@@ -196,8 +195,7 @@ public class Example {
     String appId = "appId_example"; // String | 应用ID
     String operator = "operator_example"; // String | 操作人用户名
     try {
-      Object result = apiInstance.deleteApp(appId, operator);
-      System.out.println(result);
+      apiInstance.deleteApp(appId, operator);
     } catch (ApiException e) {
       System.err.println("Exception when calling AppManagementApi#deleteApp");
       System.err.println("Status code: " + e.getCode());
@@ -218,7 +216,7 @@ public class Example {
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -725,7 +723,7 @@ public class Example {
 
 <a id="updateApp"></a>
 # **updateApp**
-> Object updateApp(appId, openAppDTO, operator)
+> updateApp(appId, openAppDTO, operator)
 
 更新应用(new added)
 
@@ -757,8 +755,7 @@ public class Example {
     OpenAppDTO openAppDTO = new OpenAppDTO(); // OpenAppDTO |
     String operator = "operator_example"; // String | 操作人用户名
     try {
-      Object result = apiInstance.updateApp(appId, openAppDTO, operator);
-      System.out.println(result);
+      apiInstance.updateApp(appId, openAppDTO, operator);
     } catch (ApiException e) {
       System.err.println("Exception when calling AppManagementApi#updateApp");
       System.err.println("Status code: " + e.getCode());
@@ -780,7 +777,7 @@ public class Example {
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 

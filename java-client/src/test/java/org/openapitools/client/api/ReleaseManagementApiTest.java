@@ -17,8 +17,8 @@ import org.openapitools.client.ApiException;
 import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.NamespaceGrayDelReleaseDTO;
 import org.openapitools.client.model.NamespaceReleaseDTO;
-import org.openapitools.client.model.OpenReleaseBO;
 import org.openapitools.client.model.OpenReleaseDTO;
+import org.openapitools.client.model.OpenReleaseDiffDTO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +36,22 @@ public class ReleaseManagementApiTest {
     private final ReleaseManagementApi api = new ReleaseManagementApi();
 
     /**
+     * Compare two releases
+     *
+     * Get the configuration differences between two releases.
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void compareReleaseTest() throws ApiException {
+        String env = null;
+        Long baseReleaseId = null;
+        Long toCompareReleaseId = null;
+        OpenReleaseDiffDTO response = api.compareRelease(env, baseReleaseId, toCompareReleaseId);
+        // TODO: test validations
+    }
+
+    /**
      * 创建灰度删除发布 (original openapi)
      *
      *
@@ -50,7 +66,8 @@ public class ReleaseManagementApiTest {
         String namespaceName = null;
         String branchName = null;
         NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO = null;
-        OpenReleaseDTO response = api.createGrayDelRelease(appId, env, clusterName, namespaceName, branchName, namespaceGrayDelReleaseDTO);
+        String operator = null;
+        OpenReleaseDTO response = api.createGrayDelRelease(appId, env, clusterName, namespaceName, branchName, namespaceGrayDelReleaseDTO, operator);
         // TODO: test validations
     }
 
@@ -69,7 +86,8 @@ public class ReleaseManagementApiTest {
         String namespaceName = null;
         String branchName = null;
         NamespaceReleaseDTO namespaceReleaseDTO = null;
-        OpenReleaseDTO response = api.createGrayRelease(appId, env, clusterName, namespaceName, branchName, namespaceReleaseDTO);
+        String operator = null;
+        OpenReleaseDTO response = api.createGrayRelease(appId, env, clusterName, namespaceName, branchName, namespaceReleaseDTO, operator);
         // TODO: test validations
     }
 
@@ -87,7 +105,8 @@ public class ReleaseManagementApiTest {
         String clusterName = null;
         String namespaceName = null;
         NamespaceReleaseDTO namespaceReleaseDTO = null;
-        OpenReleaseDTO response = api.createRelease(appId, env, clusterName, namespaceName, namespaceReleaseDTO);
+        String operator = null;
+        OpenReleaseDTO response = api.createRelease(appId, env, clusterName, namespaceName, namespaceReleaseDTO, operator);
         // TODO: test validations
     }
 
@@ -107,25 +126,6 @@ public class ReleaseManagementApiTest {
         Integer page = null;
         Integer size = null;
         List<OpenReleaseDTO> response = api.findActiveReleases(appId, env, clusterName, namespaceName, page, size);
-        // TODO: test validations
-    }
-
-    /**
-     * 获取所有发布（分页） (new added)
-     *
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all
-     *
-     * @throws ApiException if the Api call fails
-     */
-    @Test
-    public void findAllReleasesTest() throws ApiException {
-        String appId = null;
-        String env = null;
-        String clusterName = null;
-        String namespaceName = null;
-        Integer page = null;
-        Integer size = null;
-        List<OpenReleaseBO> response = api.findAllReleases(appId, env, clusterName, namespaceName, page, size);
         // TODO: test validations
     }
 
@@ -173,7 +173,7 @@ public class ReleaseManagementApiTest {
         String env = null;
         Long releaseId = null;
         String operator = null;
-        Object response = api.rollback(env, releaseId, operator);
+        api.rollback(env, releaseId, operator);
         // TODO: test validations
     }
 

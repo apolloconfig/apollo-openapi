@@ -123,7 +123,6 @@ public class NamespaceManagementApi {
         }
 
         final String[] localVarAccepts = {
-            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -169,7 +168,6 @@ public class NamespaceManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param operator 操作人用户名 (optional)
-     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -177,9 +175,8 @@ public class NamespaceManagementApi {
         <tr><td> 200 </td><td> 缺失的命名空间创建成功 </td><td>  -  </td></tr>
      </table>
      */
-    public Object createMissingNamespaces(String appId, String env, String clusterName, String operator) throws ApiException {
-        ApiResponse<Object> localVarResp = createMissingNamespacesWithHttpInfo(appId, env, clusterName, operator);
-        return localVarResp.getData();
+    public void createMissingNamespaces(String appId, String env, String clusterName, String operator) throws ApiException {
+        createMissingNamespacesWithHttpInfo(appId, env, clusterName, operator);
     }
 
     /**
@@ -189,7 +186,7 @@ public class NamespaceManagementApi {
      * @param env 环境标识 (required)
      * @param clusterName 集群名称 (required)
      * @param operator 操作人用户名 (optional)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -197,10 +194,9 @@ public class NamespaceManagementApi {
         <tr><td> 200 </td><td> 缺失的命名空间创建成功 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> createMissingNamespacesWithHttpInfo(String appId, String env, String clusterName, String operator) throws ApiException {
+    public ApiResponse<Void> createMissingNamespacesWithHttpInfo(String appId, String env, String clusterName, String operator) throws ApiException {
         okhttp3.Call localVarCall = createMissingNamespacesValidateBeforeCall(appId, env, clusterName, operator, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -219,11 +215,10 @@ public class NamespaceManagementApi {
         <tr><td> 200 </td><td> 缺失的命名空间创建成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createMissingNamespacesAsync(String appId, String env, String clusterName, String operator, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call createMissingNamespacesAsync(String appId, String env, String clusterName, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = createMissingNamespacesValidateBeforeCall(appId, env, clusterName, operator, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**

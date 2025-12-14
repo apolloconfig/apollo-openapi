@@ -38,12 +38,12 @@ RequestRequiredQueryParams = typing_extensions.TypedDict(
         'appId': typing.Union[AppIdSchema, str, ],
         'clusterName': typing.Union[ClusterNameSchema, str, ],
         'namespaceName': typing.Union[NamespaceNameSchema, str, ],
+        'releaseIds': typing.Union[ReleaseIdsSchema, str, ],
     }
 )
 RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
-        'releaseIds': typing.Union[ReleaseIdsSchema, str, ],
     },
     total=False
 )
@@ -78,6 +78,7 @@ request_query_release_ids = api_client.QueryParameter(
     name="releaseIds",
     style=api_client.ParameterStyle.FORM,
     schema=ReleaseIdsSchema,
+    required=True,
     explode=True,
 )
 # Path params

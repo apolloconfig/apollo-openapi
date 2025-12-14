@@ -3,8 +3,8 @@ package com.apollo.openapi.server.api;
 import com.apollo.openapi.server.model.ExceptionResponse;
 import com.apollo.openapi.server.model.NamespaceGrayDelReleaseDTO;
 import com.apollo.openapi.server.model.NamespaceReleaseDTO;
-import com.apollo.openapi.server.model.OpenReleaseBO;
 import com.apollo.openapi.server.model.OpenReleaseDTO;
+import com.apollo.openapi.server.model.OpenReleaseDiffDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +28,32 @@ public interface ReleaseManagementApiDelegate {
     }
 
     /**
+     * GET /openapi/v1/envs/{env}/releases/comparison : Compare two releases
+     * Get the configuration differences between two releases.
+     *
+     * @param env Environment (required)
+     * @param baseReleaseId The base release ID (required)
+     * @param toCompareReleaseId The release ID to compare against (required)
+     * @return Successful comparison (status code 200)
+     * @see ReleaseManagementApi#compareRelease
+     */
+    default ResponseEntity<OpenReleaseDiffDTO> compareRelease(String env,
+        Long baseReleaseId,
+        Long toCompareReleaseId) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"changes\" : [ { \"newValue\" : \"newValue\", \"changeType\" : \"changeType\", \"oldValue\" : \"oldValue\", \"key\" : \"key\" }, { \"newValue\" : \"newValue\", \"changeType\" : \"changeType\", \"oldValue\" : \"oldValue\", \"key\" : \"key\" } ] }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
      * POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-del-releases : 创建灰度删除发布 (original openapi)
      *
      *
@@ -37,6 +63,7 @@ public interface ReleaseManagementApiDelegate {
      * @param namespaceName  (required)
      * @param branchName  (required)
      * @param namespaceGrayDelReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return  (status code 200)
      * @see ReleaseManagementApi#createGrayDelRelease
      */
@@ -45,7 +72,8 @@ public interface ReleaseManagementApiDelegate {
         String clusterName,
         String namespaceName,
         String branchName,
-        NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO) {
+        NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO,
+        String operator) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
@@ -69,6 +97,7 @@ public interface ReleaseManagementApiDelegate {
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return 灰度发布创建成功 (status code 200)
      * @see ReleaseManagementApi#createGrayRelease
      */
@@ -77,7 +106,8 @@ public interface ReleaseManagementApiDelegate {
         String clusterName,
         String namespaceName,
         String branchName,
-        NamespaceReleaseDTO namespaceReleaseDTO) {
+        NamespaceReleaseDTO namespaceReleaseDTO,
+        String operator) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
@@ -100,6 +130,7 @@ public interface ReleaseManagementApiDelegate {
      * @param clusterName  (required)
      * @param namespaceName 命名空间名称 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return 发布创建成功 (status code 200)
      *         or 发布参数错误 (status code 400)
      *         or 权限不足 (status code 403)
@@ -109,7 +140,8 @@ public interface ReleaseManagementApiDelegate {
         String env,
         String clusterName,
         String namespaceName,
-        NamespaceReleaseDTO namespaceReleaseDTO) {
+        NamespaceReleaseDTO namespaceReleaseDTO,
+        String operator) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
@@ -146,38 +178,6 @@ public interface ReleaseManagementApiDelegate {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
                     String exampleString = "[ { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" } ]";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all : 获取所有发布（分页） (new added)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all
-     *
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param page 页码，从0开始 (required)
-     * @param size 每页数量 (required)
-     * @return 成功获取发布列表 (status code 200)
-     * @see ReleaseManagementApi#findAllReleases
-     */
-    default ResponseEntity<List<OpenReleaseBO>> findAllReleases(String appId,
-        String env,
-        String clusterName,
-        String namespaceName,
-        Integer page,
-        Integer size) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"baseInfo\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"items\" : [ { \"value\" : \"value\", \"key\" : \"key\" }, { \"value\" : \"value\", \"key\" : \"key\" } ] }, { \"baseInfo\" : { \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }, \"items\" : [ { \"value\" : \"value\", \"key\" : \"key\" }, { \"value\" : \"value\", \"key\" : \"key\" } ] } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -250,7 +250,7 @@ public interface ReleaseManagementApiDelegate {
      * @return 发布回滚成功 (status code 200)
      * @see ReleaseManagementApi#rollback
      */
-    default ResponseEntity<Object> rollback(String env,
+    default ResponseEntity<Void> rollback(String env,
         Long releaseId,
         String operator) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);

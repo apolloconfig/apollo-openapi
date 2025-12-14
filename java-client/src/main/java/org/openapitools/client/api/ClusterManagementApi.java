@@ -322,7 +322,6 @@ public class ClusterManagementApi {
      * @param appId  (required)
      * @param clusterName  (required)
      * @param operator 操作人用户名，openapi外部调用时需传入 (optional)
-     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -333,9 +332,8 @@ public class ClusterManagementApi {
         <tr><td> 404 </td><td> 集群不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public Object deleteCluster(String env, String appId, String clusterName, String operator) throws ApiException {
-        ApiResponse<Object> localVarResp = deleteClusterWithHttpInfo(env, appId, clusterName, operator);
-        return localVarResp.getData();
+    public void deleteCluster(String env, String appId, String clusterName, String operator) throws ApiException {
+        deleteClusterWithHttpInfo(env, appId, clusterName, operator);
     }
 
     /**
@@ -345,7 +343,7 @@ public class ClusterManagementApi {
      * @param appId  (required)
      * @param clusterName  (required)
      * @param operator 操作人用户名，openapi外部调用时需传入 (optional)
-     * @return ApiResponse&lt;Object&gt;
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -356,10 +354,9 @@ public class ClusterManagementApi {
         <tr><td> 404 </td><td> 集群不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> deleteClusterWithHttpInfo(String env, String appId, String clusterName, String operator) throws ApiException {
+    public ApiResponse<Void> deleteClusterWithHttpInfo(String env, String appId, String clusterName, String operator) throws ApiException {
         okhttp3.Call localVarCall = deleteClusterValidateBeforeCall(env, appId, clusterName, operator, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -381,11 +378,10 @@ public class ClusterManagementApi {
         <tr><td> 404 </td><td> 集群不存在 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call deleteClusterAsync(String env, String appId, String clusterName, String operator, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call deleteClusterAsync(String env, String appId, String clusterName, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = deleteClusterValidateBeforeCall(env, appId, clusterName, operator, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**

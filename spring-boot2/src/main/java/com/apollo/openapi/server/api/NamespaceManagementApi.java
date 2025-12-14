@@ -56,9 +56,7 @@ public interface NamespaceManagementApi {
         description = "POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces",
         tags = { "Namespace Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "缺失的命名空间创建成功", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            })
+            @ApiResponse(responseCode = "200", description = "缺失的命名空间创建成功")
         },
         security = {
             @SecurityRequirement(name = "ApiKeyAuth")
@@ -66,10 +64,9 @@ public interface NamespaceManagementApi {
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = "/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces",
-        produces = { "application/json" }
+        value = "/openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces"
     )
-    default ResponseEntity<Object> createMissingNamespaces(
+    default ResponseEntity<Void> createMissingNamespaces(
         @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,

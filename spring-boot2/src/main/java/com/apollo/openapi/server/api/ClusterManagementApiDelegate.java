@@ -66,7 +66,7 @@ public interface ClusterManagementApiDelegate {
      *         or 集群不存在 (status code 404)
      * @see ClusterManagementApi#deleteCluster
      */
-    default ResponseEntity<Object> deleteCluster(String env,
+    default ResponseEntity<Void> deleteCluster(String env,
         String appId,
         String clusterName,
         String operator) {

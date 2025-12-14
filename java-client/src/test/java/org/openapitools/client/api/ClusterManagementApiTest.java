@@ -61,7 +61,7 @@ public class ClusterManagementApiTest {
         String appId = null;
         String clusterName = null;
         String operator = null;
-        Object response = api.deleteCluster(env, appId, clusterName, operator);
+        api.deleteCluster(env, appId, clusterName, operator);
         // TODO: test validations
     }
 

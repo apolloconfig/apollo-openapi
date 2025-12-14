@@ -92,7 +92,7 @@ public interface InstanceManagementApiDelegate {
      * @param appId 应用ID (required)
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
-     * @param releaseIds 排除的发布ID列表，用逗号分隔 (optional)
+     * @param releaseIds 排除的发布ID列表，用逗号分隔 (required)
      * @return  (status code 200)
      * @see InstanceManagementApi#getByReleasesAndNamespaceNotIn
      */

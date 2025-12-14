@@ -47,7 +47,7 @@ export interface GetByReleasesAndNamespaceNotInRequest {
     appId: string;
     clusterName: string;
     namespaceName: string;
-    releaseIds?: string;
+    releaseIds: string;
 }
 
 export interface GetInstanceCountByNamespaceRequest {
@@ -218,6 +218,10 @@ export class InstanceManagementApi extends runtime.BaseAPI {
 
         if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
             throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling getByReleasesAndNamespaceNotIn.');
+        }
+
+        if (requestParameters.releaseIds === null || requestParameters.releaseIds === undefined) {
+            throw new runtime.RequiredError('releaseIds','Required parameter requestParameters.releaseIds was null or undefined when calling getByReleasesAndNamespaceNotIn.');
         }
 
         const queryParameters: any = {};

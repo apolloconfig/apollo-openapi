@@ -155,13 +155,8 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import time
 import apollo_openapi
 from pprint import pprint
-from apollo_openapi.apis.tags import app_management_api
-from apollo_openapi.model.exception_response import ExceptionResponse
-from apollo_openapi.model.open_app_dto import OpenAppDTO
-from apollo_openapi.model.open_create_app_dto import OpenCreateAppDTO
-from apollo_openapi.model.open_env_cluster_dto import OpenEnvClusterDTO
-from apollo_openapi.model.open_env_cluster_info import OpenEnvClusterInfo
-from apollo_openapi.model.open_miss_env_dto import OpenMissEnvDTO
+from apollo_openapi.apis.tags import access_key_management_api
+from apollo_openapi.model.open_access_key_dto import OpenAccessKeyDTO
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
 configuration = apollo_openapi.Configuration(
@@ -182,33 +177,17 @@ configuration.api_key['ApiKeyAuth'] = 'YOUR_API_KEY'
 # Enter a context with an instance of the API client
 with apollo_openapi.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = app_management_api.AppManagementApi(api_client)
-    open_create_app_dto = OpenCreateAppDTO(
-        assign_app_role_to_self=True,
-        admins=[
-            "admins_example"
-        ],
-        app=OpenAppDTO(
-            data_change_created_by="data_change_created_by_example",
-            data_change_last_modified_by="data_change_last_modified_by_example",
-            data_change_created_time="2025-09-29T12:34:56Z",
-            data_change_last_modified_time="2025-09-29T12:34:56Z",
-            name="name_example",
-            app_id="app_id_example",
-            org_id="org_id_example",
-            org_name="org_name_example",
-            owner_name="owner_name_example",
-            owner_email="owner_email_example",
-            owner_display_name="owner_display_name_example",
-        ),
-    ) # OpenCreateAppDTO |
+    api_instance = access_key_management_api.AccessKeyManagementApi(api_client)
+    app_id = "appId_example" # str |
+env = "env_example" # str |
+operator = "operator_example" # str |  (optional)
 
     try:
-        # 创建应用 (original openapi)
-        api_response = api_instance.create_app(open_create_app_dto)
+        # 创建AccessKey
+        api_response = api_instance.create_access_key(app_idenvoperator=operator)
         pprint(api_response)
     except apollo_openapi.ApiException as e:
-        print("Exception when calling AppManagementApi->create_app: %s\n" % e)
+        print("Exception when calling AccessKeyManagementApi->create_access_key: %s\n" % e)
 ```
 
 ## Documentation for API Endpoints
@@ -217,6 +196,11 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AccessKeyManagementApi* | [**create_access_key**](docs/apis/tags/AccessKeyManagementApi.md#create_access_key) | **post** /openapi/v1/apps/{appId}/envs/{env}/accesskeys | 创建AccessKey
+*AccessKeyManagementApi* | [**delete_access_key**](docs/apis/tags/AccessKeyManagementApi.md#delete_access_key) | **delete** /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId} | 删除AccessKey
+*AccessKeyManagementApi* | [**disable_access_key**](docs/apis/tags/AccessKeyManagementApi.md#disable_access_key) | **put** /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/deactivation | 禁用AccessKey
+*AccessKeyManagementApi* | [**enable_access_key**](docs/apis/tags/AccessKeyManagementApi.md#enable_access_key) | **put** /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/activation | 启用AccessKey
+*AccessKeyManagementApi* | [**find_access_keys**](docs/apis/tags/AccessKeyManagementApi.md#find_access_keys) | **get** /openapi/v1/apps/{appId}/envs/{env}/accesskeys | 查找AccessKey
 *AppManagementApi* | [**create_app**](docs/apis/tags/AppManagementApi.md#create_app) | **post** /openapi/v1/apps | 创建应用 (original openapi)
 *AppManagementApi* | [**create_app_in_env**](docs/apis/tags/AppManagementApi.md#create_app_in_env) | **post** /openapi/v1/apps/envs/{env} | 在指定环境创建应用(new added)
 *AppManagementApi* | [**delete_app**](docs/apis/tags/AppManagementApi.md#delete_app) | **delete** /openapi/v1/apps/{appId} | 删除应用(new added)
@@ -275,11 +259,37 @@ Class | Method | HTTP request | Description
 *NamespaceManagementApi* | [**find_public_namespace_for_associated_namespace**](docs/apis/tags/NamespaceManagementApi.md#find_public_namespace_for_associated_namespace) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace | 查询关联Namespace对应的公共Namespace详情 (new added)
 *NamespaceManagementApi* | [**get_namespaces_release_status**](docs/apis/tags/NamespaceManagementApi.md#get_namespaces_release_status) | **get** /openapi/v1/apps/{appId}/namespaces/releases/status | 获取应用下所有Namespace的发布状态 (new added)
 *OrganizationManagementApi* | [**get_organization**](docs/apis/tags/OrganizationManagementApi.md#get_organization) | **get** /openapi/v1/organizations | 获取所有组织信息 (original openapi)
+*PermissionManagementApi* | [**add_create_application_role_to_users**](docs/apis/tags/PermissionManagementApi.md#add_create_application_role_to_users) | **post** /openapi/v1/system/roles/create-application | 分配建应用角色 (new added)
+*PermissionManagementApi* | [**add_manage_app_master_role_to_user**](docs/apis/tags/PermissionManagementApi.md#add_manage_app_master_role_to_user) | **post** /openapi/v1/apps/{appId}/roles/master | 分配AppMaster (new added)
+*PermissionManagementApi* | [**assign_app_role_to_user**](docs/apis/tags/PermissionManagementApi.md#assign_app_role_to_user) | **post** /openapi/v1/apps/{appId}/roles/{roleType} | 分配应用角色 (new added)
+*PermissionManagementApi* | [**assign_cluster_namespace_role_to_user**](docs/apis/tags/PermissionManagementApi.md#assign_cluster_namespace_role_to_user) | **post** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/roles/{roleType} | 分配集群Namespace角色 (new added)
+*PermissionManagementApi* | [**assign_namespace_env_role_to_user**](docs/apis/tags/PermissionManagementApi.md#assign_namespace_env_role_to_user) | **post** /openapi/v1/apps/{appId}/envs/{env}/namespaces/{namespaceName}/roles/{roleType} | 分配环境Namespace角色 (new added)
+*PermissionManagementApi* | [**assign_namespace_role_to_user**](docs/apis/tags/PermissionManagementApi.md#assign_namespace_role_to_user) | **post** /openapi/v1/apps/{appId}/namespaces/{namespaceName}/roles/{roleType} | 分配Namespace角色 (new added)
+*PermissionManagementApi* | [**delete_create_application_role_from_user**](docs/apis/tags/PermissionManagementApi.md#delete_create_application_role_from_user) | **delete** /openapi/v1/system/roles/create-application | 移除建应用角色 (new added)
+*PermissionManagementApi* | [**get_app_roles**](docs/apis/tags/PermissionManagementApi.md#get_app_roles) | **get** /openapi/v1/apps/{appId}/role-users | 获取应用角色用户 (new added)
+*PermissionManagementApi* | [**get_cluster_namespace_roles**](docs/apis/tags/PermissionManagementApi.md#get_cluster_namespace_roles) | **get** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/role-users | 获取集群Namespace用户 (new added)
+*PermissionManagementApi* | [**get_create_application_role_users**](docs/apis/tags/PermissionManagementApi.md#get_create_application_role_users) | **get** /openapi/v1/system/roles/create-application/role-users | 获取建应用用户 (new added)
+*PermissionManagementApi* | [**get_namespace_env_role_users**](docs/apis/tags/PermissionManagementApi.md#get_namespace_env_role_users) | **get** /openapi/v1/apps/{appId}/envs/{env}/namespaces/{namespaceName}/role-users | 获取环境Namespace用户 (new added)
+*PermissionManagementApi* | [**get_namespace_roles**](docs/apis/tags/PermissionManagementApi.md#get_namespace_roles) | **get** /openapi/v1/apps/{appId}/namespaces/{namespaceName}/role-users | 获取Namespace用户 (new added)
+*PermissionManagementApi* | [**has_app_permission**](docs/apis/tags/PermissionManagementApi.md#has_app_permission) | **get** /openapi/v1/apps/{appId}/permissions/{permissionType} | 校验应用权限 (new added)
+*PermissionManagementApi* | [**has_cluster_namespace_permission**](docs/apis/tags/PermissionManagementApi.md#has_cluster_namespace_permission) | **get** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/permissions/{permissionType} | 校验集群Namespace权限 (new added)
+*PermissionManagementApi* | [**has_create_application_permission**](docs/apis/tags/PermissionManagementApi.md#has_create_application_permission) | **get** /openapi/v1/system/roles/create-application | 校验建应用权限 (new added)
+*PermissionManagementApi* | [**has_env_namespace_permission**](docs/apis/tags/PermissionManagementApi.md#has_env_namespace_permission) | **get** /openapi/v1/apps/{appId}/envs/{env}/namespaces/{namespaceName}/permissions/{permissionType} | 校验环境Namespace权限 (new added)
+*PermissionManagementApi* | [**has_namespace_permission**](docs/apis/tags/PermissionManagementApi.md#has_namespace_permission) | **get** /openapi/v1/apps/{appId}/namespaces/{namespaceName}/permissions/{permissionType} | 校验Namespace权限 (new added)
+*PermissionManagementApi* | [**has_root_permission**](docs/apis/tags/PermissionManagementApi.md#has_root_permission) | **get** /openapi/v1/permissions/root | 校验Root权限 (new added)
+*PermissionManagementApi* | [**init_app_permission**](docs/apis/tags/PermissionManagementApi.md#init_app_permission) | **post** /openapi/v1/apps/{appId}/namespaces/{namespaceName}/permission-init | 初始化应用权限 (new added)
+*PermissionManagementApi* | [**init_cluster_namespace_permission**](docs/apis/tags/PermissionManagementApi.md#init_cluster_namespace_permission) | **post** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/permission-init | 初始化集群Namespace权限 (new added)
+*PermissionManagementApi* | [**is_manage_app_master_permission_enabled**](docs/apis/tags/PermissionManagementApi.md#is_manage_app_master_permission_enabled) | **get** /openapi/v1/system/role/manage-app-master | 校验AppMaster开关 (new added)
+*PermissionManagementApi* | [**remove_app_role_from_user**](docs/apis/tags/PermissionManagementApi.md#remove_app_role_from_user) | **delete** /openapi/v1/apps/{appId}/roles/{roleType} | 移除应用角色 (new added)
+*PermissionManagementApi* | [**remove_cluster_namespace_role_from_user**](docs/apis/tags/PermissionManagementApi.md#remove_cluster_namespace_role_from_user) | **delete** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/roles/{roleType} | 移除集群Namespace角色 (new added)
+*PermissionManagementApi* | [**remove_manage_app_master_role_from_user**](docs/apis/tags/PermissionManagementApi.md#remove_manage_app_master_role_from_user) | **delete** /openapi/v1/apps/{appId}/roles/master | 移除AppMaster (new added)
+*PermissionManagementApi* | [**remove_namespace_env_role_from_user**](docs/apis/tags/PermissionManagementApi.md#remove_namespace_env_role_from_user) | **delete** /openapi/v1/apps/{appId}/envs/{env}/namespaces/{namespaceName}/roles/{roleType} | 移除环境Namespace角色 (new added)
+*PermissionManagementApi* | [**remove_namespace_role_from_user**](docs/apis/tags/PermissionManagementApi.md#remove_namespace_role_from_user) | **delete** /openapi/v1/apps/{appId}/namespaces/{namespaceName}/roles/{roleType} | 移除Namespace角色 (new added)
+*ReleaseManagementApi* | [**compare_release**](docs/apis/tags/ReleaseManagementApi.md#compare_release) | **get** /openapi/v1/envs/{env}/releases/comparison | Compare two releases
 *ReleaseManagementApi* | [**create_gray_del_release**](docs/apis/tags/ReleaseManagementApi.md#create_gray_del_release) | **post** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-del-releases | 创建灰度删除发布 (original openapi)
 *ReleaseManagementApi* | [**create_gray_release**](docs/apis/tags/ReleaseManagementApi.md#create_gray_release) | **post** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/releases | 创建灰度发布 (original openapi)
 *ReleaseManagementApi* | [**create_release**](docs/apis/tags/ReleaseManagementApi.md#create_release) | **post** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases | 创建发布 (original openapi)
 *ReleaseManagementApi* | [**find_active_releases**](docs/apis/tags/ReleaseManagementApi.md#find_active_releases) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/active | 获取活跃发布（分页） (new added)
-*ReleaseManagementApi* | [**find_all_releases**](docs/apis/tags/ReleaseManagementApi.md#find_all_releases) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all | 获取所有发布（分页） (new added)
 *ReleaseManagementApi* | [**get_release_by_id**](docs/apis/tags/ReleaseManagementApi.md#get_release_by_id) | **get** /openapi/v1/envs/{env}/releases/{releaseId} | 获取发布详情 (new added)
 *ReleaseManagementApi* | [**load_latest_active_release**](docs/apis/tags/ReleaseManagementApi.md#load_latest_active_release) | **get** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/latest | 获取最新活跃发布 (original openapi)
 *ReleaseManagementApi* | [**rollback**](docs/apis/tags/ReleaseManagementApi.md#rollback) | **put** /openapi/v1/envs/{env}/releases/{releaseId}/rollback | 回滚发布 (original openapi)
@@ -287,18 +297,21 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [ExceptionResponse](docs/models/ExceptionResponse.md)
- - [KVEntity](docs/models/KVEntity.md)
  - [MapString](docs/models/MapString.md)
  - [NamespaceGrayDelReleaseDTO](docs/models/NamespaceGrayDelReleaseDTO.md)
  - [NamespaceReleaseDTO](docs/models/NamespaceReleaseDTO.md)
+ - [OpenAccessKeyDTO](docs/models/OpenAccessKeyDTO.md)
  - [OpenAppDTO](docs/models/OpenAppDTO.md)
  - [OpenAppNamespaceDTO](docs/models/OpenAppNamespaceDTO.md)
+ - [OpenAppRoleUserDTO](docs/models/OpenAppRoleUserDTO.md)
  - [OpenClusterDTO](docs/models/OpenClusterDTO.md)
+ - [OpenClusterNamespaceRoleUserDTO](docs/models/OpenClusterNamespaceRoleUserDTO.md)
  - [OpenCreateAppDTO](docs/models/OpenCreateAppDTO.md)
  - [OpenCreateItemDTO](docs/models/OpenCreateItemDTO.md)
  - [OpenCreateNamespaceDTO](docs/models/OpenCreateNamespaceDTO.md)
  - [OpenEnvClusterDTO](docs/models/OpenEnvClusterDTO.md)
  - [OpenEnvClusterInfo](docs/models/OpenEnvClusterInfo.md)
+ - [OpenEnvNamespaceRoleUserDTO](docs/models/OpenEnvNamespaceRoleUserDTO.md)
  - [OpenGrayReleaseRuleDTO](docs/models/OpenGrayReleaseRuleDTO.md)
  - [OpenGrayReleaseRuleItemDTO](docs/models/OpenGrayReleaseRuleItemDTO.md)
  - [OpenInstanceConfigDTO](docs/models/OpenInstanceConfigDTO.md)
@@ -314,12 +327,16 @@ Class | Method | HTTP request | Description
  - [OpenNamespaceExtendDTO](docs/models/OpenNamespaceExtendDTO.md)
  - [OpenNamespaceIdentifier](docs/models/OpenNamespaceIdentifier.md)
  - [OpenNamespaceLockDTO](docs/models/OpenNamespaceLockDTO.md)
+ - [OpenNamespaceRoleUserDTO](docs/models/OpenNamespaceRoleUserDTO.md)
  - [OpenNamespaceSyncDTO](docs/models/OpenNamespaceSyncDTO.md)
  - [OpenNamespaceTextModel](docs/models/OpenNamespaceTextModel.md)
  - [OpenNamespaceUsageDTO](docs/models/OpenNamespaceUsageDTO.md)
  - [OpenOrganizationDto](docs/models/OpenOrganizationDto.md)
- - [OpenReleaseBO](docs/models/OpenReleaseBO.md)
+ - [OpenPermissionConditionDTO](docs/models/OpenPermissionConditionDTO.md)
+ - [OpenReleaseChangeDTO](docs/models/OpenReleaseChangeDTO.md)
  - [OpenReleaseDTO](docs/models/OpenReleaseDTO.md)
+ - [OpenReleaseDiffDTO](docs/models/OpenReleaseDiffDTO.md)
+ - [OpenUserInfoDTO](docs/models/OpenUserInfoDTO.md)
  - [StringToStringBoolMap](docs/models/StringToStringBoolMap.md)
 
 ## Documentation For Authorization
@@ -334,6 +351,8 @@ Authentication schemes defined for the API:
 
 
 ## Author
+
+
 
 
 

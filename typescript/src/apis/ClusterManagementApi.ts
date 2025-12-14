@@ -100,7 +100,7 @@ export class ClusterManagementApi extends runtime.BaseAPI {
      * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}
      * 删除集群 (new added)
      */
-    async deleteClusterRaw(requestParameters: DeleteClusterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async deleteClusterRaw(requestParameters: DeleteClusterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.env === null || requestParameters.env === undefined) {
             throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling deleteCluster.');
         }
@@ -132,16 +132,15 @@ export class ClusterManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * DELETE /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}
      * 删除集群 (new added)
      */
-    async deleteCluster(requestParameters: DeleteClusterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.deleteClusterRaw(requestParameters, initOverrides);
-        return await response.value();
+    async deleteCluster(requestParameters: DeleteClusterRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteClusterRaw(requestParameters, initOverrides);
     }
 
     /**

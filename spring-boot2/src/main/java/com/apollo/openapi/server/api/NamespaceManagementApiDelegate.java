@@ -37,7 +37,7 @@ public interface NamespaceManagementApiDelegate {
      * @return 缺失的命名空间创建成功 (status code 200)
      * @see NamespaceManagementApi#createMissingNamespaces
      */
-    default ResponseEntity<Object> createMissingNamespaces(String appId,
+    default ResponseEntity<Void> createMissingNamespaces(String appId,
         String env,
         String clusterName,
         String operator) {

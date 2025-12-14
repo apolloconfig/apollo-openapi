@@ -334,7 +334,7 @@ Type | Description  | Notes
 
 # **get_by_releases_and_namespace_not_in**
 <a id="get_by_releases_and_namespace_not_in"></a>
-> [OpenInstanceDTO] get_by_releases_and_namespace_not_in(envapp_idcluster_namenamespace_name)
+> [OpenInstanceDTO] get_by_releases_and_namespace_not_in(envapp_idcluster_namenamespace_namerelease_ids)
 
 查询不在指定发布版本中的实例 (new added)
 
@@ -375,25 +375,6 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         'appId': "appId_example",
         'clusterName': "clusterName_example",
         'namespaceName': "namespaceName_example",
-    }
-    try:
-        # 查询不在指定发布版本中的实例 (new added)
-        api_response = api_instance.get_by_releases_and_namespace_not_in(
-            path_params=path_params,
-            query_params=query_params,
-        )
-        pprint(api_response)
-    except apollo_openapi.ApiException as e:
-        print("Exception when calling InstanceManagementApi->get_by_releases_and_namespace_not_in: %s\n" % e)
-
-    # example passing only optional values
-    path_params = {
-        'env': "env_example",
-    }
-    query_params = {
-        'appId': "appId_example",
-        'clusterName': "clusterName_example",
-        'namespaceName': "namespaceName_example",
         'releaseIds': "releaseIds_example",
     }
     try:
@@ -425,7 +406,7 @@ Name | Type | Description  | Notes
 appId | AppIdSchema | |
 clusterName | ClusterNameSchema | |
 namespaceName | NamespaceNameSchema | |
-releaseIds | ReleaseIdsSchema | | optional
+releaseIds | ReleaseIdsSchema | |
 
 
 # AppIdSchema

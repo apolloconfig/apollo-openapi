@@ -62,7 +62,7 @@ public class AppManagementApiTest {
         String env = null;
         OpenAppDTO openAppDTO = null;
         String operator = null;
-        Object response = api.createAppInEnv(env, openAppDTO, operator);
+        api.createAppInEnv(env, openAppDTO, operator);
         // TODO: test validations
     }
 
@@ -77,7 +77,7 @@ public class AppManagementApiTest {
     public void deleteAppTest() throws ApiException {
         String appId = null;
         String operator = null;
-        Object response = api.deleteApp(appId, operator);
+        api.deleteApp(appId, operator);
         // TODO: test validations
     }
 
@@ -191,7 +191,7 @@ public class AppManagementApiTest {
         String appId = null;
         OpenAppDTO openAppDTO = null;
         String operator = null;
-        Object response = api.updateApp(appId, openAppDTO, operator);
+        api.updateApp(appId, openAppDTO, operator);
         // TODO: test validations
     }
 

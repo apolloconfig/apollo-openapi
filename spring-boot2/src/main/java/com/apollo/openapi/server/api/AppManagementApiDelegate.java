@@ -64,7 +64,7 @@ public interface AppManagementApiDelegate {
      *         or 权限不足 (status code 403)
      * @see AppManagementApi#createAppInEnv
      */
-    default ResponseEntity<Object> createAppInEnv(String env,
+    default ResponseEntity<Void> createAppInEnv(String env,
         OpenAppDTO openAppDTO,
         String operator) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
@@ -82,7 +82,7 @@ public interface AppManagementApiDelegate {
      *         or 应用不存在 (status code 404)
      * @see AppManagementApi#deleteApp
      */
-    default ResponseEntity<Object> deleteApp(String appId,
+    default ResponseEntity<Void> deleteApp(String appId,
         String operator) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
@@ -261,7 +261,7 @@ public interface AppManagementApiDelegate {
      *         or 权限不足 (status code 403)
      * @see AppManagementApi#updateApp
      */
-    default ResponseEntity<Object> updateApp(String appId,
+    default ResponseEntity<Void> updateApp(String appId,
         OpenAppDTO openAppDTO,
         String operator) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);

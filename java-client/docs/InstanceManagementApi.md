@@ -219,7 +219,7 @@ public class Example {
 | **appId** | **String**| 应用ID | |
 | **clusterName** | **String**| 集群名称 | |
 | **namespaceName** | **String**| 命名空间名称 | |
-| **releaseIds** | **String**| 排除的发布ID列表，用逗号分隔 | [optional] |
+| **releaseIds** | **String**| 排除的发布ID列表，用逗号分隔 | |
 
 ### Return type
 

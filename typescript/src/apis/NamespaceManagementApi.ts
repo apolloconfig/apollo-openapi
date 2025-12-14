@@ -99,7 +99,7 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
      * POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
      * 创建缺失的Namespace (new added)
      */
-    async createMissingNamespacesRaw(requestParameters: CreateMissingNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async createMissingNamespacesRaw(requestParameters: CreateMissingNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling createMissingNamespaces.');
         }
@@ -131,16 +131,15 @@ export class NamespaceManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces
      * 创建缺失的Namespace (new added)
      */
-    async createMissingNamespaces(requestParameters: CreateMissingNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.createMissingNamespacesRaw(requestParameters, initOverrides);
-        return await response.value();
+    async createMissingNamespaces(requestParameters: CreateMissingNamespacesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.createMissingNamespacesRaw(requestParameters, initOverrides);
     }
 
     /**

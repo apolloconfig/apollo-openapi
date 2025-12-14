@@ -101,9 +101,7 @@ public interface AppManagementApi {
         description = "POST /openapi/v1/apps/envs/{env}",
         tags = { "App Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "应用在指定环境创建成功", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            }),
+            @ApiResponse(responseCode = "200", description = "应用在指定环境创建成功"),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
@@ -121,7 +119,7 @@ public interface AppManagementApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Object> createAppInEnv(
+    default ResponseEntity<Void> createAppInEnv(
         @Parameter(name = "env", description = "环境标识，例如 DEV、FAT、UAT、PROD", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "OpenAppDTO", description = "", required = true) @Valid @RequestBody OpenAppDTO openAppDTO,
         @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
@@ -146,9 +144,7 @@ public interface AppManagementApi {
         description = "DELETE /openapi/v1/apps/{appId}",
         tags = { "App Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "应用删除成功", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            }),
+            @ApiResponse(responseCode = "200", description = "应用删除成功"),
             @ApiResponse(responseCode = "403", description = "权限不足，需要超级管理员权限", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
@@ -165,7 +161,7 @@ public interface AppManagementApi {
         value = "/openapi/v1/apps/{appId}",
         produces = { "application/json" }
     )
-    default ResponseEntity<Object> deleteApp(
+    default ResponseEntity<Void> deleteApp(
         @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
@@ -446,9 +442,7 @@ public interface AppManagementApi {
         description = "PUT /openapi/v1/apps/{appId}",
         tags = { "App Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "应用更新成功", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
-            }),
+            @ApiResponse(responseCode = "200", description = "应用更新成功"),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
@@ -466,7 +460,7 @@ public interface AppManagementApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Object> updateApp(
+    default ResponseEntity<Void> updateApp(
         @Parameter(name = "appId", description = "应用ID", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "OpenAppDTO", description = "", required = true) @Valid @RequestBody OpenAppDTO openAppDTO,
         @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator

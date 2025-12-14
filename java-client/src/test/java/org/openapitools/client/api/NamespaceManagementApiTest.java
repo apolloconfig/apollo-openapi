@@ -46,7 +46,7 @@ public class NamespaceManagementApiTest {
         String env = null;
         String clusterName = null;
         String operator = null;
-        Object response = api.createMissingNamespaces(appId, env, clusterName, operator);
+        api.createMissingNamespaces(appId, env, clusterName, operator);
         // TODO: test validations
     }
 

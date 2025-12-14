@@ -17,7 +17,7 @@ All URIs are relative to *http://localhost*
 
 <a id="createMissingNamespaces"></a>
 # **createMissingNamespaces**
-> Object createMissingNamespaces(appId, env, clusterName, operator)
+> createMissingNamespaces(appId, env, clusterName, operator)
 
 创建缺失的Namespace (new added)
 
@@ -50,8 +50,7 @@ public class Example {
     String clusterName = "clusterName_example"; // String | 集群名称
     String operator = "operator_example"; // String | 操作人用户名
     try {
-      Object result = apiInstance.createMissingNamespaces(appId, env, clusterName, operator);
-      System.out.println(result);
+      apiInstance.createMissingNamespaces(appId, env, clusterName, operator);
     } catch (ApiException e) {
       System.err.println("Exception when calling NamespaceManagementApi#createMissingNamespaces");
       System.err.println("Status code: " + e.getCode());
@@ -74,7 +73,7 @@ public class Example {
 
 ### Return type
 
-**Object**
+null (empty response body)
 
 ### Authorization
 
@@ -83,7 +82,7 @@ public class Example {
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 ### HTTP response details
 | Status code | Description | Response headers |

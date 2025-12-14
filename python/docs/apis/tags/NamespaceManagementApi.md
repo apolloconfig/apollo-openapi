@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 # **create_missing_namespaces**
 <a id="create_missing_namespaces"></a>
-> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} create_missing_namespaces(app_idenvcluster_name)
+> create_missing_namespaces(app_idenvcluster_name)
 
 创建缺失的Namespace (new added)
 
@@ -65,7 +65,6 @@ with apollo_openapi.ApiClient(configuration) as api_client:
             path_params=path_params,
             query_params=query_params,
         )
-        pprint(api_response)
     except apollo_openapi.ApiException as e:
         print("Exception when calling NamespaceManagementApi->create_missing_namespaces: %s\n" % e)
 
@@ -84,7 +83,6 @@ with apollo_openapi.ApiClient(configuration) as api_client:
             path_params=path_params,
             query_params=query_params,
         )
-        pprint(api_response)
     except apollo_openapi.ApiException as e:
         print("Exception when calling NamespaceManagementApi->create_missing_namespaces: %s\n" % e)
 ```
@@ -94,7 +92,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 query_params | RequestQueryParams | |
 path_params | RequestPathParams | |
-accept_content_types | typing.Tuple[str] | default is ('application/json', ) | Tells the server the content type(s) that are accepted by the client
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
 timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
 skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
@@ -155,15 +152,8 @@ n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
+body | Unset | body was not defined |
 headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 
 ### Authorization
 
