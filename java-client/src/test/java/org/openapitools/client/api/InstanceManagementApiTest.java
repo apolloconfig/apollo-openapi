@@ -15,7 +15,7 @@ package org.openapitools.client.api;
 
 import org.openapitools.client.ApiException;
 import org.openapitools.client.model.OpenInstanceDTO;
-import org.openapitools.client.model.OpenPageDTOOpenInstanceDTO;
+import org.openapitools.client.model.OpenInstancePageDTO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -33,37 +33,53 @@ public class InstanceManagementApiTest {
     private final InstanceManagementApi api = new InstanceManagementApi();
 
     /**
+     * 根据namespaceName查询实例（new added）
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void getByNamespaceTest() throws ApiException {
+        String env = null;
+        String appId = null;
+        String clusterName = null;
+        String namespaceName = null;
+        Integer page = null;
+        Integer size = null;
+        String instanceAppId = null;
+        OpenInstancePageDTO response = api.getByNamespace(env, appId, clusterName, namespaceName, page, size, instanceAppId);
+        // TODO: test validations
+    }
+
+    /**
      * 根据发布版本查询实例（支持分页） (new added)
      *
-     * GET /openapi/v1/envs/{env}/releases/{releaseId}/instances
+     * GET /openapi/v1/envs/{env}/instances/by-release
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void getByReleaseTest() throws ApiException {
         String env = null;
-        Integer releaseId = null;
+        Long releaseId = null;
         Integer page = null;
         Integer size = null;
-        OpenPageDTOOpenInstanceDTO response = api.getByRelease(env, releaseId, page, size);
+        OpenInstancePageDTO response = api.getByRelease(env, releaseId, page, size);
         // TODO: test validations
     }
 
     /**
      * 查询不在指定发布版本中的实例 (new added)
      *
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases&#x3D;1,2,3
-     *
      * @throws ApiException if the Api call fails
      */
     @Test
-    public void getByReleasesNotInTest() throws ApiException {
+    public void getByReleasesAndNamespaceNotInTest() throws ApiException {
         String env = null;
         String appId = null;
         String clusterName = null;
         String namespaceName = null;
-        String excludeReleases = null;
-        List<OpenInstanceDTO> response = api.getByReleasesNotIn(env, appId, clusterName, namespaceName, excludeReleases);
+        String releaseIds = null;
+        List<OpenInstanceDTO> response = api.getByReleasesAndNamespaceNotIn(env, appId, clusterName, namespaceName, releaseIds);
         // TODO: test validations
     }
 

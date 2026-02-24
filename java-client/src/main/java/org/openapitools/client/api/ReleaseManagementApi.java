@@ -27,10 +27,11 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.NamespaceGrayDelReleaseDTO;
 import org.openapitools.client.model.NamespaceReleaseDTO;
-import org.openapitools.client.model.OpenReleaseBO;
 import org.openapitools.client.model.OpenReleaseDTO;
+import org.openapitools.client.model.OpenReleaseDiffDTO;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -77,6 +78,155 @@ public class ReleaseManagementApi {
     }
 
     /**
+     * Build call for compareRelease
+     * @param env Environment (required)
+     * @param baseReleaseId The base release ID (required)
+     * @param toCompareReleaseId The release ID to compare against (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Successful comparison </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call compareReleaseCall(String env, Long baseReleaseId, Long toCompareReleaseId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/openapi/v1/envs/{env}/releases/comparison"
+            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (baseReleaseId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("baseReleaseId", baseReleaseId));
+        }
+
+        if (toCompareReleaseId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("toCompareReleaseId", toCompareReleaseId));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call compareReleaseValidateBeforeCall(String env, Long baseReleaseId, Long toCompareReleaseId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'env' is set
+        if (env == null) {
+            throw new ApiException("Missing the required parameter 'env' when calling compareRelease(Async)");
+        }
+
+        // verify the required parameter 'baseReleaseId' is set
+        if (baseReleaseId == null) {
+            throw new ApiException("Missing the required parameter 'baseReleaseId' when calling compareRelease(Async)");
+        }
+
+        // verify the required parameter 'toCompareReleaseId' is set
+        if (toCompareReleaseId == null) {
+            throw new ApiException("Missing the required parameter 'toCompareReleaseId' when calling compareRelease(Async)");
+        }
+
+        return compareReleaseCall(env, baseReleaseId, toCompareReleaseId, _callback);
+
+    }
+
+    /**
+     * Compare two releases
+     * Get the configuration differences between two releases.
+     * @param env Environment (required)
+     * @param baseReleaseId The base release ID (required)
+     * @param toCompareReleaseId The release ID to compare against (required)
+     * @return OpenReleaseDiffDTO
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Successful comparison </td><td>  -  </td></tr>
+     </table>
+     */
+    public OpenReleaseDiffDTO compareRelease(String env, Long baseReleaseId, Long toCompareReleaseId) throws ApiException {
+        ApiResponse<OpenReleaseDiffDTO> localVarResp = compareReleaseWithHttpInfo(env, baseReleaseId, toCompareReleaseId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Compare two releases
+     * Get the configuration differences between two releases.
+     * @param env Environment (required)
+     * @param baseReleaseId The base release ID (required)
+     * @param toCompareReleaseId The release ID to compare against (required)
+     * @return ApiResponse&lt;OpenReleaseDiffDTO&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Successful comparison </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<OpenReleaseDiffDTO> compareReleaseWithHttpInfo(String env, Long baseReleaseId, Long toCompareReleaseId) throws ApiException {
+        okhttp3.Call localVarCall = compareReleaseValidateBeforeCall(env, baseReleaseId, toCompareReleaseId, null);
+        Type localVarReturnType = new TypeToken<OpenReleaseDiffDTO>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Compare two releases (asynchronously)
+     * Get the configuration differences between two releases.
+     * @param env Environment (required)
+     * @param baseReleaseId The base release ID (required)
+     * @param toCompareReleaseId The release ID to compare against (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Successful comparison </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call compareReleaseAsync(String env, Long baseReleaseId, Long toCompareReleaseId, final ApiCallback<OpenReleaseDiffDTO> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = compareReleaseValidateBeforeCall(env, baseReleaseId, toCompareReleaseId, _callback);
+        Type localVarReturnType = new TypeToken<OpenReleaseDiffDTO>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for createGrayDelRelease
      * @param appId  (required)
      * @param env  (required)
@@ -84,6 +234,7 @@ public class ReleaseManagementApi {
      * @param namespaceName  (required)
      * @param branchName  (required)
      * @param namespaceGrayDelReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -93,7 +244,7 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createGrayDelReleaseCall(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call createGrayDelReleaseCall(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -123,6 +274,10 @@ public class ReleaseManagementApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (operator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -144,7 +299,7 @@ public class ReleaseManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createGrayDelReleaseValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createGrayDelReleaseValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling createGrayDelRelease(Async)");
@@ -175,7 +330,7 @@ public class ReleaseManagementApi {
             throw new ApiException("Missing the required parameter 'namespaceGrayDelReleaseDTO' when calling createGrayDelRelease(Async)");
         }
 
-        return createGrayDelReleaseCall(appId, env, clusterName, namespaceName, branchName, namespaceGrayDelReleaseDTO, _callback);
+        return createGrayDelReleaseCall(appId, env, clusterName, namespaceName, branchName, namespaceGrayDelReleaseDTO, operator, _callback);
 
     }
 
@@ -188,6 +343,7 @@ public class ReleaseManagementApi {
      * @param namespaceName  (required)
      * @param branchName  (required)
      * @param namespaceGrayDelReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return OpenReleaseDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -196,8 +352,8 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public OpenReleaseDTO createGrayDelRelease(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO) throws ApiException {
-        ApiResponse<OpenReleaseDTO> localVarResp = createGrayDelReleaseWithHttpInfo(appId, env, clusterName, namespaceName, branchName, namespaceGrayDelReleaseDTO);
+    public OpenReleaseDTO createGrayDelRelease(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO, String operator) throws ApiException {
+        ApiResponse<OpenReleaseDTO> localVarResp = createGrayDelReleaseWithHttpInfo(appId, env, clusterName, namespaceName, branchName, namespaceGrayDelReleaseDTO, operator);
         return localVarResp.getData();
     }
 
@@ -210,6 +366,7 @@ public class ReleaseManagementApi {
      * @param namespaceName  (required)
      * @param branchName  (required)
      * @param namespaceGrayDelReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return ApiResponse&lt;OpenReleaseDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -218,8 +375,8 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenReleaseDTO> createGrayDelReleaseWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO) throws ApiException {
-        okhttp3.Call localVarCall = createGrayDelReleaseValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, namespaceGrayDelReleaseDTO, null);
+    public ApiResponse<OpenReleaseDTO> createGrayDelReleaseWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = createGrayDelReleaseValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, namespaceGrayDelReleaseDTO, operator, null);
         Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -233,6 +390,7 @@ public class ReleaseManagementApi {
      * @param namespaceName  (required)
      * @param branchName  (required)
      * @param namespaceGrayDelReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -242,9 +400,9 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createGrayDelReleaseAsync(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO, final ApiCallback<OpenReleaseDTO> _callback) throws ApiException {
+    public okhttp3.Call createGrayDelReleaseAsync(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceGrayDelReleaseDTO namespaceGrayDelReleaseDTO, String operator, final ApiCallback<OpenReleaseDTO> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createGrayDelReleaseValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, namespaceGrayDelReleaseDTO, _callback);
+        okhttp3.Call localVarCall = createGrayDelReleaseValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, namespaceGrayDelReleaseDTO, operator, _callback);
         Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -257,6 +415,7 @@ public class ReleaseManagementApi {
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -266,7 +425,7 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td> 灰度发布创建成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createGrayReleaseCall(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call createGrayReleaseCall(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceReleaseDTO namespaceReleaseDTO, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -296,6 +455,10 @@ public class ReleaseManagementApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (operator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -317,7 +480,7 @@ public class ReleaseManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createGrayReleaseValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createGrayReleaseValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceReleaseDTO namespaceReleaseDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling createGrayRelease(Async)");
@@ -348,7 +511,7 @@ public class ReleaseManagementApi {
             throw new ApiException("Missing the required parameter 'namespaceReleaseDTO' when calling createGrayRelease(Async)");
         }
 
-        return createGrayReleaseCall(appId, env, clusterName, namespaceName, branchName, namespaceReleaseDTO, _callback);
+        return createGrayReleaseCall(appId, env, clusterName, namespaceName, branchName, namespaceReleaseDTO, operator, _callback);
 
     }
 
@@ -361,6 +524,7 @@ public class ReleaseManagementApi {
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return OpenReleaseDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -369,8 +533,8 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td> 灰度发布创建成功 </td><td>  -  </td></tr>
      </table>
      */
-    public OpenReleaseDTO createGrayRelease(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceReleaseDTO namespaceReleaseDTO) throws ApiException {
-        ApiResponse<OpenReleaseDTO> localVarResp = createGrayReleaseWithHttpInfo(appId, env, clusterName, namespaceName, branchName, namespaceReleaseDTO);
+    public OpenReleaseDTO createGrayRelease(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceReleaseDTO namespaceReleaseDTO, String operator) throws ApiException {
+        ApiResponse<OpenReleaseDTO> localVarResp = createGrayReleaseWithHttpInfo(appId, env, clusterName, namespaceName, branchName, namespaceReleaseDTO, operator);
         return localVarResp.getData();
     }
 
@@ -383,6 +547,7 @@ public class ReleaseManagementApi {
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return ApiResponse&lt;OpenReleaseDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -391,8 +556,8 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td> 灰度发布创建成功 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenReleaseDTO> createGrayReleaseWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceReleaseDTO namespaceReleaseDTO) throws ApiException {
-        okhttp3.Call localVarCall = createGrayReleaseValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, namespaceReleaseDTO, null);
+    public ApiResponse<OpenReleaseDTO> createGrayReleaseWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceReleaseDTO namespaceReleaseDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = createGrayReleaseValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, namespaceReleaseDTO, operator, null);
         Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -406,6 +571,7 @@ public class ReleaseManagementApi {
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -415,9 +581,9 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td> 灰度发布创建成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createGrayReleaseAsync(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback<OpenReleaseDTO> _callback) throws ApiException {
+    public okhttp3.Call createGrayReleaseAsync(String appId, String env, String clusterName, String namespaceName, String branchName, NamespaceReleaseDTO namespaceReleaseDTO, String operator, final ApiCallback<OpenReleaseDTO> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createGrayReleaseValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, namespaceReleaseDTO, _callback);
+        okhttp3.Call localVarCall = createGrayReleaseValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, namespaceReleaseDTO, operator, _callback);
         Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -429,6 +595,7 @@ public class ReleaseManagementApi {
      * @param clusterName  (required)
      * @param namespaceName 命名空间名称 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -440,7 +607,7 @@ public class ReleaseManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createReleaseCall(String appId, String env, String clusterName, String namespaceName, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call createReleaseCall(String appId, String env, String clusterName, String namespaceName, NamespaceReleaseDTO namespaceReleaseDTO, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -469,6 +636,10 @@ public class ReleaseManagementApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (operator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -490,7 +661,7 @@ public class ReleaseManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createReleaseValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createReleaseValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, NamespaceReleaseDTO namespaceReleaseDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling createRelease(Async)");
@@ -516,7 +687,7 @@ public class ReleaseManagementApi {
             throw new ApiException("Missing the required parameter 'namespaceReleaseDTO' when calling createRelease(Async)");
         }
 
-        return createReleaseCall(appId, env, clusterName, namespaceName, namespaceReleaseDTO, _callback);
+        return createReleaseCall(appId, env, clusterName, namespaceName, namespaceReleaseDTO, operator, _callback);
 
     }
 
@@ -528,6 +699,7 @@ public class ReleaseManagementApi {
      * @param clusterName  (required)
      * @param namespaceName 命名空间名称 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return OpenReleaseDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -538,8 +710,8 @@ public class ReleaseManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public OpenReleaseDTO createRelease(String appId, String env, String clusterName, String namespaceName, NamespaceReleaseDTO namespaceReleaseDTO) throws ApiException {
-        ApiResponse<OpenReleaseDTO> localVarResp = createReleaseWithHttpInfo(appId, env, clusterName, namespaceName, namespaceReleaseDTO);
+    public OpenReleaseDTO createRelease(String appId, String env, String clusterName, String namespaceName, NamespaceReleaseDTO namespaceReleaseDTO, String operator) throws ApiException {
+        ApiResponse<OpenReleaseDTO> localVarResp = createReleaseWithHttpInfo(appId, env, clusterName, namespaceName, namespaceReleaseDTO, operator);
         return localVarResp.getData();
     }
 
@@ -551,6 +723,7 @@ public class ReleaseManagementApi {
      * @param clusterName  (required)
      * @param namespaceName 命名空间名称 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return ApiResponse&lt;OpenReleaseDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -561,8 +734,8 @@ public class ReleaseManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenReleaseDTO> createReleaseWithHttpInfo(String appId, String env, String clusterName, String namespaceName, NamespaceReleaseDTO namespaceReleaseDTO) throws ApiException {
-        okhttp3.Call localVarCall = createReleaseValidateBeforeCall(appId, env, clusterName, namespaceName, namespaceReleaseDTO, null);
+    public ApiResponse<OpenReleaseDTO> createReleaseWithHttpInfo(String appId, String env, String clusterName, String namespaceName, NamespaceReleaseDTO namespaceReleaseDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = createReleaseValidateBeforeCall(appId, env, clusterName, namespaceName, namespaceReleaseDTO, operator, null);
         Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -575,6 +748,7 @@ public class ReleaseManagementApi {
      * @param clusterName  (required)
      * @param namespaceName 命名空间名称 (required)
      * @param namespaceReleaseDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -586,9 +760,9 @@ public class ReleaseManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createReleaseAsync(String appId, String env, String clusterName, String namespaceName, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback<OpenReleaseDTO> _callback) throws ApiException {
+    public okhttp3.Call createReleaseAsync(String appId, String env, String clusterName, String namespaceName, NamespaceReleaseDTO namespaceReleaseDTO, String operator, final ApiCallback<OpenReleaseDTO> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createReleaseValidateBeforeCall(appId, env, clusterName, namespaceName, namespaceReleaseDTO, _callback);
+        okhttp3.Call localVarCall = createReleaseValidateBeforeCall(appId, env, clusterName, namespaceName, namespaceReleaseDTO, operator, _callback);
         Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -769,185 +943,6 @@ public class ReleaseManagementApi {
 
         okhttp3.Call localVarCall = findActiveReleasesValidateBeforeCall(appId, env, clusterName, namespaceName, page, size, _callback);
         Type localVarReturnType = new TypeToken<List<OpenReleaseDTO>>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for findAllReleases
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param page 页码，从0开始 (required)
-     * @param size 每页数量 (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取发布列表 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call findAllReleasesCall(String appId, String env, String clusterName, String namespaceName, Integer page, Integer size, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
-            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
-            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
-            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (page != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("page", page));
-        }
-
-        if (size != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("size", size));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call findAllReleasesValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, Integer page, Integer size, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling findAllReleases(Async)");
-        }
-
-        // verify the required parameter 'env' is set
-        if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling findAllReleases(Async)");
-        }
-
-        // verify the required parameter 'clusterName' is set
-        if (clusterName == null) {
-            throw new ApiException("Missing the required parameter 'clusterName' when calling findAllReleases(Async)");
-        }
-
-        // verify the required parameter 'namespaceName' is set
-        if (namespaceName == null) {
-            throw new ApiException("Missing the required parameter 'namespaceName' when calling findAllReleases(Async)");
-        }
-
-        // verify the required parameter 'page' is set
-        if (page == null) {
-            throw new ApiException("Missing the required parameter 'page' when calling findAllReleases(Async)");
-        }
-
-        // verify the required parameter 'size' is set
-        if (size == null) {
-            throw new ApiException("Missing the required parameter 'size' when calling findAllReleases(Async)");
-        }
-
-        return findAllReleasesCall(appId, env, clusterName, namespaceName, page, size, _callback);
-
-    }
-
-    /**
-     * 获取所有发布（分页） (new added)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param page 页码，从0开始 (required)
-     * @param size 每页数量 (required)
-     * @return List&lt;OpenReleaseBO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取发布列表 </td><td>  -  </td></tr>
-     </table>
-     */
-    public List<OpenReleaseBO> findAllReleases(String appId, String env, String clusterName, String namespaceName, Integer page, Integer size) throws ApiException {
-        ApiResponse<List<OpenReleaseBO>> localVarResp = findAllReleasesWithHttpInfo(appId, env, clusterName, namespaceName, page, size);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 获取所有发布（分页） (new added)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param page 页码，从0开始 (required)
-     * @param size 每页数量 (required)
-     * @return ApiResponse&lt;List&lt;OpenReleaseBO&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取发布列表 </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<List<OpenReleaseBO>> findAllReleasesWithHttpInfo(String appId, String env, String clusterName, String namespaceName, Integer page, Integer size) throws ApiException {
-        okhttp3.Call localVarCall = findAllReleasesValidateBeforeCall(appId, env, clusterName, namespaceName, page, size, null);
-        Type localVarReturnType = new TypeToken<List<OpenReleaseBO>>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 获取所有发布（分页） (new added) (asynchronously)
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param page 页码，从0开始 (required)
-     * @param size 每页数量 (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 成功获取发布列表 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call findAllReleasesAsync(String appId, String env, String clusterName, String namespaceName, Integer page, Integer size, final ApiCallback<List<OpenReleaseBO>> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = findAllReleasesValidateBeforeCall(appId, env, clusterName, namespaceName, page, size, _callback);
-        Type localVarReturnType = new TypeToken<List<OpenReleaseBO>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -1242,204 +1237,10 @@ public class ReleaseManagementApi {
         return localVarCall;
     }
     /**
-     * Build call for merge
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param namespaceReleaseDTO  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 合并参数错误 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call mergeCall(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = namespaceReleaseDTO;
-
-        // create path and map variables
-        String localVarPath = "/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge"
-            .replace("{" + "appId" + "}", localVarApiClient.escapeString(appId.toString()))
-            .replace("{" + "env" + "}", localVarApiClient.escapeString(env.toString()))
-            .replace("{" + "clusterName" + "}", localVarApiClient.escapeString(clusterName.toString()))
-            .replace("{" + "namespaceName" + "}", localVarApiClient.escapeString(namespaceName.toString()))
-            .replace("{" + "branchName" + "}", localVarApiClient.escapeString(branchName.toString()));
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (deleteBranch != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("deleteBranch", deleteBranch));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call mergeValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'appId' is set
-        if (appId == null) {
-            throw new ApiException("Missing the required parameter 'appId' when calling merge(Async)");
-        }
-
-        // verify the required parameter 'env' is set
-        if (env == null) {
-            throw new ApiException("Missing the required parameter 'env' when calling merge(Async)");
-        }
-
-        // verify the required parameter 'clusterName' is set
-        if (clusterName == null) {
-            throw new ApiException("Missing the required parameter 'clusterName' when calling merge(Async)");
-        }
-
-        // verify the required parameter 'namespaceName' is set
-        if (namespaceName == null) {
-            throw new ApiException("Missing the required parameter 'namespaceName' when calling merge(Async)");
-        }
-
-        // verify the required parameter 'branchName' is set
-        if (branchName == null) {
-            throw new ApiException("Missing the required parameter 'branchName' when calling merge(Async)");
-        }
-
-        // verify the required parameter 'deleteBranch' is set
-        if (deleteBranch == null) {
-            throw new ApiException("Missing the required parameter 'deleteBranch' when calling merge(Async)");
-        }
-
-        // verify the required parameter 'namespaceReleaseDTO' is set
-        if (namespaceReleaseDTO == null) {
-            throw new ApiException("Missing the required parameter 'namespaceReleaseDTO' when calling merge(Async)");
-        }
-
-        return mergeCall(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, _callback);
-
-    }
-
-    /**
-     * 合并分支 (original openapi)
-     * 合并灰度分支并可选择删除分支
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param namespaceReleaseDTO  (required)
-     * @return OpenReleaseDTO
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 合并参数错误 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
-     </table>
-     */
-    public OpenReleaseDTO merge(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO) throws ApiException {
-        ApiResponse<OpenReleaseDTO> localVarResp = mergeWithHttpInfo(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO);
-        return localVarResp.getData();
-    }
-
-    /**
-     * 合并分支 (original openapi)
-     * 合并灰度分支并可选择删除分支
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param namespaceReleaseDTO  (required)
-     * @return ApiResponse&lt;OpenReleaseDTO&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 合并参数错误 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<OpenReleaseDTO> mergeWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO) throws ApiException {
-        okhttp3.Call localVarCall = mergeValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, null);
-        Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 合并分支 (original openapi) (asynchronously)
-     * 合并灰度分支并可选择删除分支
-     * @param appId 应用ID (required)
-     * @param env 环境标识 (required)
-     * @param clusterName 集群名称 (required)
-     * @param namespaceName 命名空间名称 (required)
-     * @param branchName 分支名称 (required)
-     * @param deleteBranch 合并后是否删除分支（true/false） (required)
-     * @param namespaceReleaseDTO  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> 分支合并成功 </td><td>  -  </td></tr>
-        <tr><td> 400 </td><td> 合并参数错误 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call mergeAsync(String appId, String env, String clusterName, String namespaceName, String branchName, Boolean deleteBranch, NamespaceReleaseDTO namespaceReleaseDTO, final ApiCallback<OpenReleaseDTO> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = mergeValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, deleteBranch, namespaceReleaseDTO, _callback);
-        Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
      * Build call for rollback
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1481,7 +1282,6 @@ public class ReleaseManagementApi {
         }
 
         final String[] localVarAccepts = {
-            "application/json"
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
         if (localVarAccept != null) {
@@ -1511,11 +1311,6 @@ public class ReleaseManagementApi {
             throw new ApiException("Missing the required parameter 'releaseId' when calling rollback(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling rollback(Async)");
-        }
-
         return rollbackCall(env, releaseId, operator, _callback);
 
     }
@@ -1525,8 +1320,7 @@ public class ReleaseManagementApi {
      * 回滚到指定的发布版本
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
-     * @param operator 操作人用户名 (required)
-     * @return Object
+     * @param operator 操作人用户名 (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1534,9 +1328,8 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td> 发布回滚成功 </td><td>  -  </td></tr>
      </table>
      */
-    public Object rollback(String env, Long releaseId, String operator) throws ApiException {
-        ApiResponse<Object> localVarResp = rollbackWithHttpInfo(env, releaseId, operator);
-        return localVarResp.getData();
+    public void rollback(String env, Long releaseId, String operator) throws ApiException {
+        rollbackWithHttpInfo(env, releaseId, operator);
     }
 
     /**
@@ -1544,8 +1337,8 @@ public class ReleaseManagementApi {
      * 回滚到指定的发布版本
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
-     * @param operator 操作人用户名 (required)
-     * @return ApiResponse&lt;Object&gt;
+     * @param operator 操作人用户名 (optional)
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1553,10 +1346,9 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td> 发布回滚成功 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Object> rollbackWithHttpInfo(String env, Long releaseId, String operator) throws ApiException {
+    public ApiResponse<Void> rollbackWithHttpInfo(String env, Long releaseId, String operator) throws ApiException {
         okhttp3.Call localVarCall = rollbackValidateBeforeCall(env, releaseId, operator, null);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -1564,7 +1356,7 @@ public class ReleaseManagementApi {
      * 回滚到指定的发布版本
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1574,11 +1366,10 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td> 发布回滚成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call rollbackAsync(String env, Long releaseId, String operator, final ApiCallback<Object> _callback) throws ApiException {
+    public okhttp3.Call rollbackAsync(String env, Long releaseId, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = rollbackValidateBeforeCall(env, releaseId, operator, _callback);
-        Type localVarReturnType = new TypeToken<Object>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
 }

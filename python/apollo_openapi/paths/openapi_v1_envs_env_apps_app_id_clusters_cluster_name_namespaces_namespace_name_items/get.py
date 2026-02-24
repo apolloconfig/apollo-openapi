@@ -25,7 +25,7 @@ import frozendict  # noqa: F401
 
 from apollo_openapi import schemas  # noqa: F401
 
-from apollo_openapi.model.open_page_dto_open_item_dto import OpenPageDTOOpenItemDTO
+from apollo_openapi.model.open_item_page_dto import OpenItemPageDTO
 from apollo_openapi.model.exception_response import ExceptionResponse
 
 from . import path
@@ -135,7 +135,7 @@ request_path_namespace_name = api_client.PathParameter(
 _auth = [
     'ApiKeyAuth',
 ]
-SchemaFor200ResponseBodyApplicationJson = OpenPageDTOOpenItemDTO
+SchemaFor200ResponseBodyApplicationJson = OpenItemPageDTO
 
 
 @dataclass
@@ -154,43 +154,7 @@ _response_for_200 = api_client.OpenApiResponse(
             schema=SchemaFor200ResponseBodyApplicationJson),
     },
 )
-
-
-class SchemaFor404ResponseBodyApplicationJson(
-    schemas.ComposedBase,
-    schemas.DictSchema
-):
-
-
-    class MetaOapg:
-
-        @classmethod
-        @functools.lru_cache()
-        def all_of(cls):
-            # we need this here to make our import statements work
-            # we must store _composed_schemas in here so the code is only run
-            # when we invoke this method. If we kept this at the class
-            # level we would get an error because the class level
-            # code would be run when this module is imported, and these composed
-            # classes don't exist yet because their module has not finished
-            # loading
-            return [
-                ExceptionResponse,
-            ]
-
-
-    def __new__(
-        cls,
-        *_args: typing.Union[dict, frozendict.frozendict, ],
-        _configuration: typing.Optional[schemas.Configuration] = None,
-        **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
-    ) -> 'SchemaFor404ResponseBodyApplicationJson':
-        return super().__new__(
-            cls,
-            *_args,
-            _configuration=_configuration,
-            **kwargs,
-        )
+SchemaFor404ResponseBodyApplicationJson = ExceptionResponse
 
 
 @dataclass

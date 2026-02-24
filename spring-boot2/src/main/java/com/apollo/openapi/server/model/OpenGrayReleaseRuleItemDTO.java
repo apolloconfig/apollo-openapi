@@ -4,8 +4,9 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -27,10 +28,10 @@ public class OpenGrayReleaseRuleItemDTO {
   private String clientAppId;
 
   @Valid
-  private List<String> clientIpList;
+  private Set<String> clientIpList;
 
   @Valid
-  private List<String> clientLabelList;
+  private Set<String> clientLabelList;
 
   public OpenGrayReleaseRuleItemDTO clientAppId(String clientAppId) {
     this.clientAppId = clientAppId;
@@ -52,14 +53,14 @@ public class OpenGrayReleaseRuleItemDTO {
     this.clientAppId = clientAppId;
   }
 
-  public OpenGrayReleaseRuleItemDTO clientIpList(List<String> clientIpList) {
+  public OpenGrayReleaseRuleItemDTO clientIpList(Set<String> clientIpList) {
     this.clientIpList = clientIpList;
     return this;
   }
 
   public OpenGrayReleaseRuleItemDTO addClientIpListItem(String clientIpListItem) {
     if (this.clientIpList == null) {
-      this.clientIpList = new ArrayList<>();
+      this.clientIpList = new LinkedHashSet<>();
     }
     this.clientIpList.add(clientIpListItem);
     return this;
@@ -72,22 +73,23 @@ public class OpenGrayReleaseRuleItemDTO {
 
   @Schema(name = "clientIpList", description = "客户端IP地址列表，指定哪些IP地址可以获取灰度配置", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clientIpList")
-  public List<String> getClientIpList() {
+  public Set<String> getClientIpList() {
     return clientIpList;
   }
 
-  public void setClientIpList(List<String> clientIpList) {
+  @JsonDeserialize(as = LinkedHashSet.class)
+  public void setClientIpList(Set<String> clientIpList) {
     this.clientIpList = clientIpList;
   }
 
-  public OpenGrayReleaseRuleItemDTO clientLabelList(List<String> clientLabelList) {
+  public OpenGrayReleaseRuleItemDTO clientLabelList(Set<String> clientLabelList) {
     this.clientLabelList = clientLabelList;
     return this;
   }
 
   public OpenGrayReleaseRuleItemDTO addClientLabelListItem(String clientLabelListItem) {
     if (this.clientLabelList == null) {
-      this.clientLabelList = new ArrayList<>();
+      this.clientLabelList = new LinkedHashSet<>();
     }
     this.clientLabelList.add(clientLabelListItem);
     return this;
@@ -100,11 +102,12 @@ public class OpenGrayReleaseRuleItemDTO {
 
   @Schema(name = "clientLabelList", description = "客户端标签列表，通过标签来识别可以获取灰度配置的客户端", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("clientLabelList")
-  public List<String> getClientLabelList() {
+  public Set<String> getClientLabelList() {
     return clientLabelList;
   }
 
-  public void setClientLabelList(List<String> clientLabelList) {
+  @JsonDeserialize(as = LinkedHashSet.class)
+  public void setClientLabelList(Set<String> clientLabelList) {
     this.clientLabelList = clientLabelList;
   }
 

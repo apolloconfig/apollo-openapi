@@ -16,4 +16,4 @@ Apollo灰度发布规则数据传输对象，表示完整的灰度发布规则�
 |**clusterName** | **String** | 所属集群的名称 |  [optional] |
 |**namespaceName** | **String** | 所属命名空间的名称 |  [optional] |
 |**branchName** | **String** | 灰度分支名称，标识灰度发布的分支 |  [optional] |
-|**ruleItems** | [**List&lt;OpenGrayReleaseRuleItemDTO&gt;**](OpenGrayReleaseRuleItemDTO.md) | 灰度发布规则项列表，包含具体的灰度规则条件 |  [optional] |
+|**ruleItems** | [**Set&lt;OpenGrayReleaseRuleItemDTO&gt;**](OpenGrayReleaseRuleItemDTO.md) | 灰度发布规则项列表，包含具体的灰度规则条件 |  [optional] |

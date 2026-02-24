@@ -27,6 +27,18 @@ import {
  */
 export interface OpenEnvClusterInfo {
     /**
+     * 查询状态码
+     * @type {number}
+     * @memberof OpenEnvClusterInfo
+     */
+    code?: number;
+    /**
+     * 相关信息
+     * @type {string}
+     * @memberof OpenEnvClusterInfo
+     */
+    message?: string;
+    /**
      * 环境标识
      * @type {string}
      * @memberof OpenEnvClusterInfo
@@ -59,6 +71,8 @@ export function OpenEnvClusterInfoFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
 
+        'code': !exists(json, 'code') ? undefined : json['code'],
+        'message': !exists(json, 'message') ? undefined : json['message'],
         'env': !exists(json, 'env') ? undefined : json['env'],
         'clusters': !exists(json, 'clusters') ? undefined : ((json['clusters'] as Array<any>).map(OpenClusterDTOFromJSON)),
     };
@@ -73,6 +87,8 @@ export function OpenEnvClusterInfoToJSON(value?: OpenEnvClusterInfo | null): any
     }
     return {
 
+        'code': value.code,
+        'message': value.message,
         'env': value.env,
         'clusters': value.clusters === undefined ? undefined : ((value.clusters as Array<any>).map(OpenClusterDTOToJSON)),
     };

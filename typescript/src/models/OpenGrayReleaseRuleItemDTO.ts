@@ -27,16 +27,16 @@ export interface OpenGrayReleaseRuleItemDTO {
     clientAppId?: string;
     /**
      * 客户端IP地址列表，指定哪些IP地址可以获取灰度配置
-     * @type {Array<string>}
+     * @type {Set<string>}
      * @memberof OpenGrayReleaseRuleItemDTO
      */
-    clientIpList?: Array<string>;
+    clientIpList?: Set<string>;
     /**
      * 客户端标签列表，通过标签来识别可以获取灰度配置的客户端
-     * @type {Array<string>}
+     * @type {Set<string>}
      * @memberof OpenGrayReleaseRuleItemDTO
      */
-    clientLabelList?: Array<string>;
+    clientLabelList?: Set<string>;
 }
 
 /**
@@ -74,7 +74,7 @@ export function OpenGrayReleaseRuleItemDTOToJSON(value?: OpenGrayReleaseRuleItem
     return {
 
         'clientAppId': value.clientAppId,
-        'clientIpList': value.clientIpList,
-        'clientLabelList': value.clientLabelList,
+        'clientIpList': value.clientIpList === undefined ? undefined : Array.from(value.clientIpList as Set<any>),
+        'clientLabelList': value.clientLabelList === undefined ? undefined : Array.from(value.clientLabelList as Set<any>),
     };
 }

@@ -24,10 +24,54 @@ import javax.annotation.Generated;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
 public class OpenEnvClusterInfo {
 
+  private Integer code;
+
+  private String message;
+
   private String env;
 
   @Valid
   private List<@Valid OpenClusterDTO> clusters;
+
+  public OpenEnvClusterInfo code(Integer code) {
+    this.code = code;
+    return this;
+  }
+
+  /**
+   * 查询状态码
+   * @return code
+  */
+
+  @Schema(name = "code", description = "查询状态码", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("code")
+  public Integer getCode() {
+    return code;
+  }
+
+  public void setCode(Integer code) {
+    this.code = code;
+  }
+
+  public OpenEnvClusterInfo message(String message) {
+    this.message = message;
+    return this;
+  }
+
+  /**
+   * 相关信息
+   * @return message
+  */
+
+  @Schema(name = "message", description = "相关信息", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("message")
+  public String getMessage() {
+    return message;
+  }
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
 
   public OpenEnvClusterInfo env(String env) {
     this.env = env;
@@ -86,19 +130,23 @@ public class OpenEnvClusterInfo {
       return false;
     }
     OpenEnvClusterInfo openEnvClusterInfo = (OpenEnvClusterInfo) o;
-    return Objects.equals(this.env, openEnvClusterInfo.env) &&
+    return Objects.equals(this.code, openEnvClusterInfo.code) &&
+        Objects.equals(this.message, openEnvClusterInfo.message) &&
+        Objects.equals(this.env, openEnvClusterInfo.env) &&
         Objects.equals(this.clusters, openEnvClusterInfo.clusters);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(env, clusters);
+    return Objects.hash(code, message, env, clusters);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OpenEnvClusterInfo {\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    env: ").append(toIndentedString(env)).append("\n");
     sb.append("    clusters: ").append(toIndentedString(clusters)).append("\n");
     sb.append("}");

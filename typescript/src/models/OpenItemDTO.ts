@@ -13,12 +13,49 @@
  */
 
 import { exists, mapValues } from '../runtime';
+import type { OpenItemExtendDTO } from './OpenItemExtendDTO';
+import {
+    OpenItemExtendDTOFromJSON,
+    OpenItemExtendDTOFromJSONTyped,
+    OpenItemExtendDTOToJSON,
+} from './OpenItemExtendDTO';
+
 /**
- * Apollo配置项数据传输对象，表示一个具体的配置键值对及其元数据
+ * Apollo配置项核心数据对象，仅包含键值及基础审计信息
  * @export
  * @interface OpenItemDTO
  */
 export interface OpenItemDTO {
+    /**
+     * 配置项的键名，在同一命名空间内唯一标识一个配置项
+     * @type {string}
+     * @memberof OpenItemDTO
+     */
+    key?: string;
+    /**
+     * 配置项的值，可以是字符串、数字、JSON等格式
+     * @type {string}
+     * @memberof OpenItemDTO
+     */
+    value?: string;
+    /**
+     * 配置项类型
+     * @type {number}
+     * @memberof OpenItemDTO
+     */
+    type?: number;
+    /**
+     * 配置项的注释说明，用于描述配置项的用途和含义
+     * @type {string}
+     * @memberof OpenItemDTO
+     */
+    comment?: string;
+    /**
+     *
+     * @type {OpenItemExtendDTO}
+     * @memberof OpenItemDTO
+     */
+    extendInfo?: OpenItemExtendDTO;
     /**
      * 配置项创建者用户名，记录是谁创建了这个配置项
      * @type {string}
@@ -43,30 +80,6 @@ export interface OpenItemDTO {
      * @memberof OpenItemDTO
      */
     dataChangeLastModifiedTime?: string;
-    /**
-     * 配置项的键名，在同一命名空间内唯一标识一个配置项
-     * @type {string}
-     * @memberof OpenItemDTO
-     */
-    key?: string;
-    /**
-     * 配置项类型，0表示普通配置项，1表示文件类型配置项
-     * @type {number}
-     * @memberof OpenItemDTO
-     */
-    type?: number;
-    /**
-     * 配置项的值，可以是字符串、数字、JSON等格式
-     * @type {string}
-     * @memberof OpenItemDTO
-     */
-    value?: string;
-    /**
-     * 配置项的注释说明，用于描述配置项的用途和含义
-     * @type {string}
-     * @memberof OpenItemDTO
-     */
-    comment?: string;
 }
 
 /**
@@ -88,14 +101,15 @@ export function OpenItemDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean
     }
     return {
 
+        'key': !exists(json, 'key') ? undefined : json['key'],
+        'value': !exists(json, 'value') ? undefined : json['value'],
+        'type': !exists(json, 'type') ? undefined : json['type'],
+        'comment': !exists(json, 'comment') ? undefined : json['comment'],
+        'extendInfo': !exists(json, 'extendInfo') ? undefined : OpenItemExtendDTOFromJSON(json['extendInfo']),
         'dataChangeCreatedBy': !exists(json, 'dataChangeCreatedBy') ? undefined : json['dataChangeCreatedBy'],
         'dataChangeLastModifiedBy': !exists(json, 'dataChangeLastModifiedBy') ? undefined : json['dataChangeLastModifiedBy'],
         'dataChangeCreatedTime': !exists(json, 'dataChangeCreatedTime') ? undefined : json['dataChangeCreatedTime'],
         'dataChangeLastModifiedTime': !exists(json, 'dataChangeLastModifiedTime') ? undefined : json['dataChangeLastModifiedTime'],
-        'key': !exists(json, 'key') ? undefined : json['key'],
-        'type': !exists(json, 'type') ? undefined : json['type'],
-        'value': !exists(json, 'value') ? undefined : json['value'],
-        'comment': !exists(json, 'comment') ? undefined : json['comment'],
     };
 }
 
@@ -108,13 +122,14 @@ export function OpenItemDTOToJSON(value?: OpenItemDTO | null): any {
     }
     return {
 
+        'key': value.key,
+        'value': value.value,
+        'type': value.type,
+        'comment': value.comment,
+        'extendInfo': OpenItemExtendDTOToJSON(value.extendInfo),
         'dataChangeCreatedBy': value.dataChangeCreatedBy,
         'dataChangeLastModifiedBy': value.dataChangeLastModifiedBy,
         'dataChangeCreatedTime': value.dataChangeCreatedTime,
         'dataChangeLastModifiedTime': value.dataChangeLastModifiedTime,
-        'key': value.key,
-        'type': value.type,
-        'value': value.value,
-        'comment': value.comment,
     };
 }

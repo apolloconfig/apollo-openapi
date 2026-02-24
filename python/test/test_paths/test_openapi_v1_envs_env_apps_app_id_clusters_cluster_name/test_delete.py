@@ -33,8 +33,7 @@ class TestOpenapiV1EnvsEnvAppsAppIdClustersClusterName(ApiTestMixin, unittest.Te
         pass
 
     response_status = 200
-
-
+    response_body = ''
 
 
 if __name__ == '__main__':

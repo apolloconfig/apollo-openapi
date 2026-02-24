@@ -8,6 +8,8 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 ### Dictionary Keys
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
+**code** | decimal.Decimal, int,  | decimal.Decimal,  | 查询状态码 | [optional]
+**message** | str,  | str,  | 相关信息 | [optional]
 **env** | str,  | str,  | 环境标识 | [optional]
 **[clusters](#clusters)** | list, tuple,  | tuple,  | 集群信息列表 | [optional]
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]

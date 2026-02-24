@@ -117,4 +117,12 @@ public class OpenAppDTOTest {
         // TODO: test ownerEmail
     }
 
+    /**
+     * Test the property 'ownerDisplayName'
+     */
+    @Test
+    public void ownerDisplayNameTest() {
+        // TODO: test ownerDisplayName
+    }
+
 }

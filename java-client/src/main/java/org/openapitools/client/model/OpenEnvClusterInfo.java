@@ -55,6 +55,14 @@ import org.openapitools.client.JSON;
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class OpenEnvClusterInfo {
+  public static final String SERIALIZED_NAME_CODE = "code";
+  @SerializedName(SERIALIZED_NAME_CODE)
+  private Integer code;
+
+  public static final String SERIALIZED_NAME_MESSAGE = "message";
+  @SerializedName(SERIALIZED_NAME_MESSAGE)
+  private String message;
+
   public static final String SERIALIZED_NAME_ENV = "env";
   @SerializedName(SERIALIZED_NAME_ENV)
   private String env;
@@ -65,6 +73,48 @@ public class OpenEnvClusterInfo {
 
   public OpenEnvClusterInfo() {
   }
+
+  public OpenEnvClusterInfo code(Integer code) {
+
+    this.code = code;
+    return this;
+  }
+
+   /**
+   * 查询状态码
+   * @return code
+  **/
+  @javax.annotation.Nullable
+  public Integer getCode() {
+    return code;
+  }
+
+
+  public void setCode(Integer code) {
+    this.code = code;
+  }
+
+
+  public OpenEnvClusterInfo message(String message) {
+
+    this.message = message;
+    return this;
+  }
+
+   /**
+   * 相关信息
+   * @return message
+  **/
+  @javax.annotation.Nullable
+  public String getMessage() {
+    return message;
+  }
+
+
+  public void setMessage(String message) {
+    this.message = message;
+  }
+
 
   public OpenEnvClusterInfo env(String env) {
 
@@ -126,19 +176,23 @@ public class OpenEnvClusterInfo {
       return false;
     }
     OpenEnvClusterInfo openEnvClusterInfo = (OpenEnvClusterInfo) o;
-    return Objects.equals(this.env, openEnvClusterInfo.env) &&
+    return Objects.equals(this.code, openEnvClusterInfo.code) &&
+        Objects.equals(this.message, openEnvClusterInfo.message) &&
+        Objects.equals(this.env, openEnvClusterInfo.env) &&
         Objects.equals(this.clusters, openEnvClusterInfo.clusters);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(env, clusters);
+    return Objects.hash(code, message, env, clusters);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OpenEnvClusterInfo {\n");
+    sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    message: ").append(toIndentedString(message)).append("\n");
     sb.append("    env: ").append(toIndentedString(env)).append("\n");
     sb.append("    clusters: ").append(toIndentedString(clusters)).append("\n");
     sb.append("}");
@@ -163,6 +217,8 @@ public class OpenEnvClusterInfo {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
+    openapiFields.add("code");
+    openapiFields.add("message");
     openapiFields.add("env");
     openapiFields.add("clusters");
 
@@ -189,6 +245,9 @@ public class OpenEnvClusterInfo {
         if (!OpenEnvClusterInfo.openapiFields.contains(entry.getKey())) {
           throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `OpenEnvClusterInfo` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
         }
+      }
+      if ((jsonObj.get("message") != null && !jsonObj.get("message").isJsonNull()) && !jsonObj.get("message").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `message` to be a primitive type in the JSON string but got `%s`", jsonObj.get("message").toString()));
       }
       if ((jsonObj.get("env") != null && !jsonObj.get("env").isJsonNull()) && !jsonObj.get("env").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `env` to be a primitive type in the JSON string but got `%s`", jsonObj.get("env").toString()));

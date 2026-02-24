@@ -19,6 +19,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import org.openapitools.client.model.OpenItemExtendDTO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -35,6 +36,46 @@ public class OpenItemDTOTest {
     @Test
     public void testOpenItemDTO() {
         // TODO: test OpenItemDTO
+    }
+
+    /**
+     * Test the property 'key'
+     */
+    @Test
+    public void keyTest() {
+        // TODO: test key
+    }
+
+    /**
+     * Test the property 'value'
+     */
+    @Test
+    public void valueTest() {
+        // TODO: test value
+    }
+
+    /**
+     * Test the property 'type'
+     */
+    @Test
+    public void typeTest() {
+        // TODO: test type
+    }
+
+    /**
+     * Test the property 'comment'
+     */
+    @Test
+    public void commentTest() {
+        // TODO: test comment
+    }
+
+    /**
+     * Test the property 'extendInfo'
+     */
+    @Test
+    public void extendInfoTest() {
+        // TODO: test extendInfo
     }
 
     /**
@@ -67,38 +108,6 @@ public class OpenItemDTOTest {
     @Test
     public void dataChangeLastModifiedTimeTest() {
         // TODO: test dataChangeLastModifiedTime
-    }
-
-    /**
-     * Test the property 'key'
-     */
-    @Test
-    public void keyTest() {
-        // TODO: test key
-    }
-
-    /**
-     * Test the property 'type'
-     */
-    @Test
-    public void typeTest() {
-        // TODO: test type
-    }
-
-    /**
-     * Test the property 'value'
-     */
-    @Test
-    public void valueTest() {
-        // TODO: test value
-    }
-
-    /**
-     * Test the property 'comment'
-     */
-    @Test
-    public void commentTest() {
-        // TODO: test comment
     }
 
 }

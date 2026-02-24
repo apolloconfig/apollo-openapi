@@ -42,6 +42,8 @@ public class OpenAppDTO {
 
   private String ownerEmail;
 
+  private String ownerDisplayName;
+
   public OpenAppDTO dataChangeCreatedBy(String dataChangeCreatedBy) {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
     return this;
@@ -242,6 +244,26 @@ public class OpenAppDTO {
     this.ownerEmail = ownerEmail;
   }
 
+  public OpenAppDTO ownerDisplayName(String ownerDisplayName) {
+    this.ownerDisplayName = ownerDisplayName;
+    return this;
+  }
+
+  /**
+   * Get ownerDisplayName
+   * @return ownerDisplayName
+  */
+
+  @Schema(name = "ownerDisplayName", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("ownerDisplayName")
+  public String getOwnerDisplayName() {
+    return ownerDisplayName;
+  }
+
+  public void setOwnerDisplayName(String ownerDisplayName) {
+    this.ownerDisplayName = ownerDisplayName;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -260,12 +282,13 @@ public class OpenAppDTO {
         Objects.equals(this.orgId, openAppDTO.orgId) &&
         Objects.equals(this.orgName, openAppDTO.orgName) &&
         Objects.equals(this.ownerName, openAppDTO.ownerName) &&
-        Objects.equals(this.ownerEmail, openAppDTO.ownerEmail);
+        Objects.equals(this.ownerEmail, openAppDTO.ownerEmail) &&
+        Objects.equals(this.ownerDisplayName, openAppDTO.ownerDisplayName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, name, appId, orgId, orgName, ownerName, ownerEmail);
+    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, name, appId, orgId, orgName, ownerName, ownerEmail, ownerDisplayName);
   }
 
   @Override
@@ -282,6 +305,7 @@ public class OpenAppDTO {
     sb.append("    orgName: ").append(toIndentedString(orgName)).append("\n");
     sb.append("    ownerName: ").append(toIndentedString(ownerName)).append("\n");
     sb.append("    ownerEmail: ").append(toIndentedString(ownerEmail)).append("\n");
+    sb.append("    ownerDisplayName: ").append(toIndentedString(ownerDisplayName)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1,6 +1,6 @@
 package com.apollo.openapi.server.api;
 
-import java.util.Map;
+import com.apollo.openapi.server.model.ExceptionResponse;
 import com.apollo.openapi.server.model.OpenOrganizationDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

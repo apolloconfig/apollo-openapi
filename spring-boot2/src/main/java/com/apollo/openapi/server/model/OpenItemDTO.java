@@ -2,6 +2,7 @@ package com.apollo.openapi.server.model;
 
 import java.net.URI;
 import java.util.Objects;
+import com.apollo.openapi.server.model.OpenItemExtendDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -15,12 +16,22 @@ import java.util.*;
 import javax.annotation.Generated;
 
 /**
- * Apollo配置项数据传输对象，表示一个具体的配置键值对及其元数据
+ * Apollo配置项核心数据对象，仅包含键值及基础审计信息
  */
 
-@Schema(name = "OpenItemDTO", description = "Apollo配置项数据传输对象，表示一个具体的配置键值对及其元数据")
+@Schema(name = "OpenItemDTO", description = "Apollo配置项核心数据对象，仅包含键值及基础审计信息")
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
 public class OpenItemDTO {
+
+  private String key;
+
+  private String value;
+
+  private Integer type;
+
+  private String comment;
+
+  private OpenItemExtendDTO extendInfo;
 
   private String dataChangeCreatedBy;
 
@@ -30,13 +41,105 @@ public class OpenItemDTO {
 
   private String dataChangeLastModifiedTime;
 
-  private String key;
+  public OpenItemDTO key(String key) {
+    this.key = key;
+    return this;
+  }
 
-  private Integer type;
+  /**
+   * 配置项的键名，在同一命名空间内唯一标识一个配置项
+   * @return key
+  */
 
-  private String value;
+  @Schema(name = "key", description = "配置项的键名，在同一命名空间内唯一标识一个配置项", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("key")
+  public String getKey() {
+    return key;
+  }
 
-  private String comment;
+  public void setKey(String key) {
+    this.key = key;
+  }
+
+  public OpenItemDTO value(String value) {
+    this.value = value;
+    return this;
+  }
+
+  /**
+   * 配置项的值，可以是字符串、数字、JSON等格式
+   * @return value
+  */
+
+  @Schema(name = "value", description = "配置项的值，可以是字符串、数字、JSON等格式", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("value")
+  public String getValue() {
+    return value;
+  }
+
+  public void setValue(String value) {
+    this.value = value;
+  }
+
+  public OpenItemDTO type(Integer type) {
+    this.type = type;
+    return this;
+  }
+
+  /**
+   * 配置项类型
+   * @return type
+  */
+
+  @Schema(name = "type", description = "配置项类型", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("type")
+  public Integer getType() {
+    return type;
+  }
+
+  public void setType(Integer type) {
+    this.type = type;
+  }
+
+  public OpenItemDTO comment(String comment) {
+    this.comment = comment;
+    return this;
+  }
+
+  /**
+   * 配置项的注释说明，用于描述配置项的用途和含义
+   * @return comment
+  */
+
+  @Schema(name = "comment", description = "配置项的注释说明，用于描述配置项的用途和含义", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("comment")
+  public String getComment() {
+    return comment;
+  }
+
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
+
+  public OpenItemDTO extendInfo(OpenItemExtendDTO extendInfo) {
+    this.extendInfo = extendInfo;
+    return this;
+  }
+
+  /**
+   * Get extendInfo
+   * @return extendInfo
+  */
+  @Valid
+  @Schema(name = "extendInfo", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("extendInfo")
+  public OpenItemExtendDTO getExtendInfo() {
+    return extendInfo;
+  }
+
+  public void setExtendInfo(OpenItemExtendDTO extendInfo) {
+    this.extendInfo = extendInfo;
+  }
 
   public OpenItemDTO dataChangeCreatedBy(String dataChangeCreatedBy) {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
@@ -118,86 +221,6 @@ public class OpenItemDTO {
     this.dataChangeLastModifiedTime = dataChangeLastModifiedTime;
   }
 
-  public OpenItemDTO key(String key) {
-    this.key = key;
-    return this;
-  }
-
-  /**
-   * 配置项的键名，在同一命名空间内唯一标识一个配置项
-   * @return key
-  */
-
-  @Schema(name = "key", description = "配置项的键名，在同一命名空间内唯一标识一个配置项", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("key")
-  public String getKey() {
-    return key;
-  }
-
-  public void setKey(String key) {
-    this.key = key;
-  }
-
-  public OpenItemDTO type(Integer type) {
-    this.type = type;
-    return this;
-  }
-
-  /**
-   * 配置项类型，0表示普通配置项，1表示文件类型配置项
-   * @return type
-  */
-
-  @Schema(name = "type", description = "配置项类型，0表示普通配置项，1表示文件类型配置项", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("type")
-  public Integer getType() {
-    return type;
-  }
-
-  public void setType(Integer type) {
-    this.type = type;
-  }
-
-  public OpenItemDTO value(String value) {
-    this.value = value;
-    return this;
-  }
-
-  /**
-   * 配置项的值，可以是字符串、数字、JSON等格式
-   * @return value
-  */
-
-  @Schema(name = "value", description = "配置项的值，可以是字符串、数字、JSON等格式", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("value")
-  public String getValue() {
-    return value;
-  }
-
-  public void setValue(String value) {
-    this.value = value;
-  }
-
-  public OpenItemDTO comment(String comment) {
-    this.comment = comment;
-    return this;
-  }
-
-  /**
-   * 配置项的注释说明，用于描述配置项的用途和含义
-   * @return comment
-  */
-
-  @Schema(name = "comment", description = "配置项的注释说明，用于描述配置项的用途和含义", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("comment")
-  public String getComment() {
-    return comment;
-  }
-
-  public void setComment(String comment) {
-    this.comment = comment;
-  }
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -207,33 +230,35 @@ public class OpenItemDTO {
       return false;
     }
     OpenItemDTO openItemDTO = (OpenItemDTO) o;
-    return Objects.equals(this.dataChangeCreatedBy, openItemDTO.dataChangeCreatedBy) &&
+    return Objects.equals(this.key, openItemDTO.key) &&
+        Objects.equals(this.value, openItemDTO.value) &&
+        Objects.equals(this.type, openItemDTO.type) &&
+        Objects.equals(this.comment, openItemDTO.comment) &&
+        Objects.equals(this.extendInfo, openItemDTO.extendInfo) &&
+        Objects.equals(this.dataChangeCreatedBy, openItemDTO.dataChangeCreatedBy) &&
         Objects.equals(this.dataChangeLastModifiedBy, openItemDTO.dataChangeLastModifiedBy) &&
         Objects.equals(this.dataChangeCreatedTime, openItemDTO.dataChangeCreatedTime) &&
-        Objects.equals(this.dataChangeLastModifiedTime, openItemDTO.dataChangeLastModifiedTime) &&
-        Objects.equals(this.key, openItemDTO.key) &&
-        Objects.equals(this.type, openItemDTO.type) &&
-        Objects.equals(this.value, openItemDTO.value) &&
-        Objects.equals(this.comment, openItemDTO.comment);
+        Objects.equals(this.dataChangeLastModifiedTime, openItemDTO.dataChangeLastModifiedTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, key, type, value, comment);
+    return Objects.hash(key, value, type, comment, extendInfo, dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OpenItemDTO {\n");
+    sb.append("    key: ").append(toIndentedString(key)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+    sb.append("    comment: ").append(toIndentedString(comment)).append("\n");
+    sb.append("    extendInfo: ").append(toIndentedString(extendInfo)).append("\n");
     sb.append("    dataChangeCreatedBy: ").append(toIndentedString(dataChangeCreatedBy)).append("\n");
     sb.append("    dataChangeLastModifiedBy: ").append(toIndentedString(dataChangeLastModifiedBy)).append("\n");
     sb.append("    dataChangeCreatedTime: ").append(toIndentedString(dataChangeCreatedTime)).append("\n");
     sb.append("    dataChangeLastModifiedTime: ").append(toIndentedString(dataChangeLastModifiedTime)).append("\n");
-    sb.append("    key: ").append(toIndentedString(key)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("    value: ").append(toIndentedString(value)).append("\n");
-    sb.append("    comment: ").append(toIndentedString(comment)).append("\n");
     sb.append("}");
     return sb.toString();
   }

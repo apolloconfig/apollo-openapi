@@ -61,4 +61,12 @@ public class OpenNamespaceLockDTOTest {
         // TODO: test lockedBy
     }
 
+    /**
+     * Test the property 'isEmergencyPublishAllowed'
+     */
+    @Test
+    public void isEmergencyPublishAllowedTest() {
+        // TODO: test isEmergencyPublishAllowed
+    }
+
 }

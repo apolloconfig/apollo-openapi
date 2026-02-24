@@ -15,5 +15,6 @@ Name | Type | Description | Notes
 **format** | Option<**String**> | 命名空间格式类型，如properties、xml、json、yml等 | [optional]
 **is_public** | Option<**bool**> | 是否为公共命名空间，公共命名空间可以被其他应用关联使用 | [optional]
 **items** | Option<[**Vec<crate::models::OpenItemDto>**](OpenItemDTO.md)> | 命名空间包含的配置项列表 | [optional]
+**extend_info** | Option<[**crate::models::OpenNamespaceExtendDto**](OpenNamespaceExtendDTO.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

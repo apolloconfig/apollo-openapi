@@ -33,14 +33,20 @@ tags:
   name: Cluster Management
 - description: 命名空间管理相关接口，包括命名空间的创建、查询、配置等操作
   name: Namespace Management
+- description: AppNamespace管理相关接口，包括创建、查询、删除等操作
+  name: AppNamespace Management
+- description: 命名空间锁管理相关接口
+  name: Namespace Lock Management
 - description: 命名空间分支管理相关接口，包括分支创建、合并、灰度发布等功能
-  name: Namespace Namespace Branch Management
+  name: Namespace Branch Management
 - description: 实例管理相关接口，包括实例查询、配置生效状态等功能
   name: Instance Management
 - description: 组织管理相关接口，包括组织信息查询等功能
   name: Organization Management
 - description: 环境管理相关接口，包括环境查询等功能
   name: Environment Management
+- description: 权限管理相关接口，包括权限查询等功能
+  name: Permission Management
 paths:
   /openapi/v1/apps:
     get:
@@ -91,9 +97,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 未授权访问
       summary: 查找应用 (original openapi)
       tags:
@@ -114,23 +118,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessEmptyResponse'
+                $ref: '#/components/schemas/OpenAppDTO'
           description: 应用创建成功
         "400":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 请求参数错误
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
       summary: 创建应用 (original openapi)
       tags:
@@ -176,9 +176,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 未授权访问
       summary: 获取当前Consumer授权的应用列表 (original openapi)
       tags:
@@ -188,7 +186,7 @@ paths:
     get:
       deprecated: false
       description: "GET /openapi/v1/apps/{appId}/envclusters"
-      operationId: getEnvClusterInfo
+      operationId: getEnvClusters
       parameters:
       - description: 应用ID
         explode: false
@@ -223,9 +221,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 应用不存在
       summary: 获取应用的环境集群信息 (original openapi)
       tags:
@@ -249,34 +245,24 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 应用删除成功
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足，需要超级管理员权限
         "404":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 应用不存在
       summary: 删除应用(new added)
       tags:
@@ -317,9 +303,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 应用不存在
       summary: 获取单个应用信息(new added)
       tags:
@@ -342,7 +326,7 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -354,37 +338,18 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              example:
-                dataChangeCreatedBy: apollo
-                dataChangeLastModifiedBy: dev-user
-                dataChangeCreatedTime: 2024-01-15T10:30:00.000Z
-                dataChangeLastModifiedTime: 2024-01-20T16:45:00.000Z
-                name: Updated Sample Application
-                appId: sample-app
-                orgId: default
-                orgName: Default Organization
-                ownerName: Apollo Admin
-                ownerEmail: admin@apollo.com
-              schema:
-                $ref: '#/components/schemas/OpenAppDTO'
           description: 应用更新成功
         "400":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 请求参数错误
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
       summary: 更新应用(new added)
       tags:
@@ -449,19 +414,17 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 未授权访问
-      summary: 获取当前Consumer的应用列表（分页）(new added)
+      summary: 获取当前Consumer/User的应用列表（分页）(new added)
       tags:
       - App Management
       x-accepts: application/json
-  /openapi/v1/apps/{appId}/navtree:
+  /openapi/v1/apps/{appId}/env-cluster-info:
     get:
       deprecated: false
-      description: "GET /openapi/v1/apps/{appId}/navtree"
-      operationId: getAppNavTree
+      description: "/openapi/v1/apps/{appId}/env-cluster-info"
+      operationId: getEnvClusterInfo
       parameters:
       - description: 应用ID
         explode: false
@@ -477,6 +440,7 @@ paths:
             application/json:
               example:
               - env: DEV
+                code: "200"
                 clusters:
                 - dataChangeCreatedBy: apollo
                   dataChangeLastModifiedBy: apollo
@@ -489,10 +453,13 @@ paths:
                   appId: sample-app
                   parentClusterId: 0
                   comment: Default cluster
+                message: "load env: DEV cluster error"
               schema:
-                $ref: '#/components/schemas/MultiResponseEntity'
-          description: 成功获取应用导航树
-      summary: 获取应用导航树(new added)
+                items:
+                  $ref: '#/components/schemas/OpenEnvClusterInfo'
+                type: array
+          description: 成功获取应用环境集群详情
+      summary: 获取应用环境集群详情(new added)
       tags:
       - App Management
       x-accepts: application/json
@@ -514,7 +481,7 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -526,38 +493,28 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 应用在指定环境创建成功
         "400":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 请求参数错误
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
       summary: 在指定环境创建应用(new added)
       tags:
       - App Management
       x-content-type: application/json
       x-accepts: application/json
-  /openapi/v1/apps/{appId}/miss_envs:
+  /openapi/v1/apps/{appId}/miss-envs:
     get:
       deprecated: false
-      description: "GET /openapi/v1/apps/{appId}/miss_envs"
+      description: "GET /openapi/v1/apps/{appId}/miss-envs"
       operationId: findMissEnvs
       parameters:
       - description: 应用ID
@@ -572,16 +529,22 @@ paths:
         "200":
           content:
             application/json:
+              example:
+              - code: "200"
+                message: test_NOT_FOUND
+              - code: "500"
+                message: load appId:xx from env test_INTERNAL_ERROR error. test ERROR
+                  MESSAGE
               schema:
-                $ref: '#/components/schemas/MultiResponseEntity'
+                items:
+                  $ref: '#/components/schemas/OpenMissEnvDTO'
+                type: array
           description: 成功获取应用缺失的环境列表
         "404":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 应用不存在
       summary: 查找缺失的环境(new added)
       tags:
@@ -637,18 +600,12 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 配置项删除成功
       summary: 删除配置项 (original openapi)
       tags:
@@ -719,9 +676,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 配置项不存在
       summary: 获取单个配置项 (original openapi)
       tags:
@@ -782,6 +737,14 @@ paths:
           default: false
           type: boolean
         style: form
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
       requestBody:
         content:
           application/json:
@@ -790,36 +753,24 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 配置项更新成功
         "400":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 请求参数错误
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
         "404":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 配置项不存在
       summary: 更新配置项 (original openapi)
       tags:
@@ -918,15 +869,13 @@ paths:
                   value: INFO
                   comment: 日志级别配置
               schema:
-                $ref: '#/components/schemas/OpenPageDTOOpenItemDTO'
+                $ref: '#/components/schemas/OpenItemPageDTO'
           description: 成功获取配置项列表
         "404":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 命名空间不存在
       summary: 获取命名空间下的配置项列表 (original openapi)
       tags:
@@ -973,7 +922,7 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -1003,19 +952,80 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 请求参数错误
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
       summary: 创建新的配置项 (original openapi)
+      tags:
+      - Item Management
+      x-content-type: application/json
+      x-accepts: application/json
+    put:
+      deprecated: false
+      description: "PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items:"
+      operationId: batchUpdateItemsByText
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpenNamespaceTextModel'
+        required: true
+      responses:
+        "200":
+          description: 批量更新配置项成功
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 权限不足
+      summary: 通过文本批量修改配置项 (new added)
       tags:
       - Item Management
       x-content-type: application/json
@@ -1076,12 +1086,6 @@ paths:
         style: form
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: ""
       summary: 通过编码的key删除配置项 (original openapi)
       tags:
@@ -1152,9 +1156,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 配置项不存在
       summary: 通过查询参数获取配置项（支持编码的key） (original openapi)
       tags:
@@ -1215,6 +1217,14 @@ paths:
           default: false
           type: boolean
         style: form
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
       requestBody:
         content:
           application/json:
@@ -1223,112 +1233,26 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 配置项更新成功（编码key）
         "400":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 请求参数错误
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
         "404":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 配置项不存在
       summary: 通过编码的key更新配置项 (original openapi)
-      tags:
-      - Item Management
-      x-content-type: application/json
-      x-accepts: application/json
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate:
-    put:
-      deprecated: false
-      description: "PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batchUpdate:"
-      operationId: batchUpdateItemsByText
-      parameters:
-      - description: ""
-        explode: false
-        in: path
-        name: appId
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: ""
-        explode: false
-        in: path
-        name: env
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: ""
-        explode: false
-        in: path
-        name: clusterName
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: ""
-        explode: false
-        in: path
-        name: namespaceName
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: 操作人用户名
-        explode: true
-        in: query
-        name: operator
-        required: true
-        schema:
-          type: string
-        style: form
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OpenNamespaceTextModel'
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
-          description: 批量更新配置项成功
-        "403":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
-          description: 权限不足
-      summary: 通过文本批量修改配置项 (new added)
       tags:
       - Item Management
       x-content-type: application/json
@@ -1337,7 +1261,7 @@ paths:
     get:
       deprecated: false
       description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:"
-      operationId: getBranchItems
+      operationId: findBranchItems
       parameters:
       - description: 应用ID
         explode: false
@@ -1409,18 +1333,16 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 分支不存在
       summary: 获取分支下的配置项 (new added)
       tags:
       - Item Management
       x-accepts: application/json
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare:
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/diff:
     post:
       deprecated: false
-      description: "POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/compare"
+      description: "POST /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/diff"
       operationId: compareItems
       parameters:
       - description: 应用ID
@@ -1459,7 +1381,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OpenNamespaceSyncModel'
+              $ref: '#/components/schemas/OpenNamespaceSyncDTO'
         required: true
       responses:
         "200":
@@ -1523,7 +1445,7 @@ paths:
                 extInfo: ""
               schema:
                 items:
-                  $ref: '#/components/schemas/OpenItemDiffs'
+                  $ref: '#/components/schemas/OpenItemDiffDTO'
                 type: array
           description: 成功对比命名空间配置差异
       summary: 对比命名空间配置差异 (new added)
@@ -1531,10 +1453,10 @@ paths:
       - Item Management
       x-content-type: application/json
       x-accepts: application/json
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync:
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/synchronize:
     post:
       deprecated: false
-      description: "POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/sync:"
+      description: "POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/synchronize:"
       operationId: syncItems
       parameters:
       - description: 应用ID
@@ -1573,7 +1495,7 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -1581,43 +1503,33 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OpenNamespaceSyncModel'
+              $ref: '#/components/schemas/OpenNamespaceSyncDTO'
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 配置项同步成功
         "400":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 请求参数错误
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
       summary: 同步配置项到多个命名空间 (new added)
       tags:
       - Item Management
       x-content-type: application/json
       x-accepts: application/json
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate:
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validation:
     post:
       deprecated: false
-      description: "POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validate"
-      operationId: validateItems
+      description: "POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validation"
+      operationId: syntaxCheck
       parameters:
       - description: ""
         explode: false
@@ -1659,30 +1571,22 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 配置文本语法验证通过
         "400":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 配置文本语法错误
       summary: 验证配置文本语法 (new added)
       tags:
       - Item Management
       x-content-type: application/json
       x-accepts: application/json
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert:
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revocation:
     post:
       deprecated: false
-      description: "POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revert"
+      description: "POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revocation"
       operationId: revertItems
       parameters:
       - description: ""
@@ -1721,34 +1625,24 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 配置项更改撤销成功
         "400":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 请求参数错误
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
       summary: 撤销配置项更改 (new added)
       tags:
@@ -1794,36 +1688,24 @@ paths:
         style: form
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 集群删除成功
         "400":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 删除失败，集群可能包含配置
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
         "404":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 集群不存在
       summary: 删除集群 (new added)
       tags:
@@ -1876,9 +1758,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 集群不存在
       summary: 获取指定集群信息 (original openapi)
       tags:
@@ -1929,17 +1809,13 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 请求参数错误
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
       summary: 创建集群 (original openapi)
       tags:
@@ -1984,6 +1860,14 @@ paths:
         schema:
           type: string
         style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
       requestBody:
         content:
           application/json:
@@ -2016,17 +1900,13 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 发布参数错误
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
       summary: 创建发布 (original openapi)
       tags:
@@ -2098,9 +1978,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 未找到活跃发布
       summary: 获取最新活跃发布 (original openapi)
       tags:
@@ -2194,21 +2072,17 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 合并参数错误
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
       summary: 合并分支 (original openapi)
       tags:
-      - Release Management
+      - Namespace Branch Management
       x-content-type: application/json
       x-accepts: application/json
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/releases:
@@ -2257,6 +2131,14 @@ paths:
         schema:
           type: string
         style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
       requestBody:
         content:
           application/json:
@@ -2335,6 +2217,14 @@ paths:
         schema:
           type: string
         style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
       requestBody:
         content:
           application/json:
@@ -2394,18 +2284,12 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 发布回滚成功
       summary: 回滚发布 (original openapi)
       tags:
@@ -2455,95 +2339,6 @@ paths:
                 $ref: '#/components/schemas/OpenReleaseDTO'
           description: 成功获取发布详情
       summary: 获取发布详情 (new added)
-      tags:
-      - Release Management
-      x-accepts: application/json
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all:
-    get:
-      deprecated: false
-      description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all"
-      operationId: findAllReleases
-      parameters:
-      - description: 应用ID
-        explode: false
-        in: path
-        name: appId
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: 环境标识
-        explode: false
-        in: path
-        name: env
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: 集群名称
-        explode: false
-        in: path
-        name: clusterName
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: 命名空间名称
-        explode: false
-        in: path
-        name: namespaceName
-        required: true
-        schema:
-          type: string
-        style: simple
-      - description: 页码，从0开始
-        example: 0
-        explode: true
-        in: query
-        name: page
-        required: true
-        schema:
-          type: integer
-        style: form
-      - description: 每页数量
-        example: 5
-        explode: true
-        in: query
-        name: size
-        required: true
-        schema:
-          type: integer
-        style: form
-      responses:
-        "200":
-          content:
-            application/json:
-              example:
-              - baseInfo:
-                  dataChangeCreatedBy: ""
-                  dataChangeLastModifiedBy: ""
-                  dataChangeCreatedByDisplayName: ""
-                  dataChangeLastModifiedByDisplayName: ""
-                  dataChangeCreatedTime: ""
-                  dataChangeLastModifiedTime: ""
-                  id: 0
-                  releaseKey: ""
-                  name: ""
-                  appId: ""
-                  clusterName: ""
-                  namespaceName: ""
-                  configurations: ""
-                  comment: ""
-                  isAbandoned: false
-                items:
-                - key: ""
-                  value: ""
-              schema:
-                items:
-                  $ref: '#/components/schemas/OpenReleaseBO'
-                type: array
-          description: 成功获取发布列表
-      summary: 获取所有发布（分页） (new added)
       tags:
       - Release Management
       x-accepts: application/json
@@ -2630,6 +2425,48 @@ paths:
       tags:
       - Release Management
       x-accepts: application/json
+  /openapi/v1/envs/{env}/releases/comparison:
+    get:
+      description: Get the configuration differences between two releases.
+      operationId: compareRelease
+      parameters:
+      - description: Environment
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The base release ID
+        explode: true
+        in: query
+        name: baseReleaseId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: The release ID to compare against
+        explode: true
+        in: query
+        name: toCompareReleaseId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenReleaseDiffDTO'
+          description: Successful comparison
+      summary: Compare two releases
+      tags:
+      - Release Management
+      x-accepts: application/json
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances:
     get:
       deprecated: false
@@ -2678,10 +2515,10 @@ paths:
       tags:
       - Instance Management
       x-accepts: application/json
-  /openapi/v1/envs/{env}/releases/{releaseId}/instances:
+  /openapi/v1/envs/{env}/instances/by-release:
     get:
       deprecated: false
-      description: "GET /openapi/v1/envs/{env}/releases/{releaseId}/instances"
+      description: "GET /openapi/v1/envs/{env}/instances/by-release"
       operationId: getByRelease
       parameters:
       - description: ""
@@ -2693,13 +2530,14 @@ paths:
           type: string
         style: simple
       - description: ""
-        explode: false
-        in: path
+        explode: true
+        in: query
         name: releaseId
         required: true
         schema:
+          format: int64
           type: integer
-        style: simple
+        style: form
       - description: ""
         example: 0
         explode: true
@@ -2726,7 +2564,7 @@ paths:
                 page: 0
                 size: 0
                 total: 0
-                content:
+                instances:
                 - id: 0
                   appId: ""
                   clusterName: ""
@@ -2751,17 +2589,16 @@ paths:
                     dataChangeLastModifiedTime: ""
                   dataChangeCreatedTime: ""
               schema:
-                $ref: '#/components/schemas/OpenPageDTOOpenInstanceDTO'
+                $ref: '#/components/schemas/OpenInstancePageDTO'
           description: ""
       summary: 根据发布版本查询实例（支持分页） (new added)
       tags:
       - Instance Management
       x-accepts: application/json
-  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances_not_in:
+  /openapi/v1/envs/{env}/instances/by-namespace:
     get:
       deprecated: false
-      description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/instances?excludeReleases=1,2,3"
-      operationId: getByReleasesNotIn
+      operationId: getByNamespace
       parameters:
       - description: 环境标识
         explode: false
@@ -2772,34 +2609,138 @@ paths:
           type: string
         style: simple
       - description: 应用ID
-        explode: false
-        in: path
+        explode: true
+        in: query
         name: appId
         required: true
         schema:
           type: string
-        style: simple
+        style: form
       - description: 集群名称
-        explode: false
-        in: path
+        explode: true
+        in: query
         name: clusterName
         required: true
         schema:
           type: string
-        style: simple
+        style: form
       - description: 命名空间名称
-        explode: false
-        in: path
+        explode: true
+        in: query
         name: namespaceName
         required: true
         schema:
           type: string
+        style: form
+      - description: Instance表中的AppID
+        explode: true
+        in: query
+        name: instanceAppId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: 页数
+        explode: true
+        in: query
+        name: page
+        required: true
+        schema:
+          default: 0
+          minimum: 0
+          type: integer
+        style: form
+      - description: 页大小
+        explode: true
+        in: query
+        name: size
+        required: true
+        schema:
+          default: 0
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                page: 0
+                size: 0
+                total: 0
+                instances:
+                - id: 0
+                  appId: ""
+                  clusterName: ""
+                  dataCenter: ""
+                  ip: ""
+                  configs:
+                  - release:
+                      dataChangeCreatedBy: ""
+                      dataChangeLastModifiedBy: ""
+                      dataChangeCreatedTime: ""
+                      dataChangeLastModifiedTime: ""
+                      id: 0
+                      appId: ""
+                      clusterName: ""
+                      namespaceName: ""
+                      name: ""
+                      configurations:
+                        ? ""
+                        : ""
+                      comment: ""
+                    releaseDeliveryTime: ""
+                    dataChangeLastModifiedTime: ""
+                  dataChangeCreatedTime: ""
+              schema:
+                $ref: '#/components/schemas/OpenInstancePageDTO'
+          description: ""
+      summary: 根据namespaceName查询实例（new added）
+      tags:
+      - Instance Management
+      x-accepts: application/json
+  /openapi/v1/envs/{env}/instances/by-namespace-and-releases-not-in:
+    get:
+      deprecated: false
+      operationId: getByReleasesAndNamespaceNotIn
+      parameters:
+      - description: 环境标识
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
         style: simple
+      - description: 应用ID
+        explode: true
+        in: query
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: 集群名称
+        explode: true
+        in: query
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: 命名空间名称
+        explode: true
+        in: query
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: form
       - description: 排除的发布ID列表，用逗号分隔
         explode: true
         in: query
-        name: excludeReleases
-        required: false
+        name: releaseIds
+        required: true
         schema:
           type: string
         style: form
@@ -2840,11 +2781,76 @@ paths:
       tags:
       - Instance Management
       x-accepts: application/json
+  /openapi/v1/namespaces:
+    post:
+      deprecated: false
+      description: "POST /openapi/v1/apps/{appId}/namespaces"
+      operationId: createNamespaces
+      parameters:
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/OpenCreateNamespaceDTO'
+              type: array
+        required: true
+      responses:
+        "200":
+          description: Namespace创建成功
+      summary: 创建Namespace (new added)
+      tags:
+      - Namespace Management
+      x-content-type: application/json
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}/usage:
+    get:
+      deprecated: false
+      description: "GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}/usage"
+      operationId: findAppNamespaceUsage
+      parameters:
+      - description: 应用ID
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 命名空间名称
+        explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OpenNamespaceUsageDTO'
+                type: array
+          description: AppNamespaceUsage查询成功
+      summary: 查询appnamespace使用情况(new added)
+      tags:
+      - AppNamespace Management
+      x-accepts: application/json
   /openapi/v1/apps/{appId}/appnamespaces:
     get:
       deprecated: false
       description: "GET /openapi/v1/apps/{appId}/appnamespaces"
-      operationId: getAppNamespacesByApp
+      operationId: getAppNamespacesByAppId
       parameters:
       - description: ""
         explode: false
@@ -2876,12 +2882,12 @@ paths:
           description: ""
       summary: 获取指定应用的AppNamespace (new added)
       tags:
-      - Namespace Management
+      - AppNamespace Management
       x-accepts: application/json
     post:
       deprecated: false
       description: "POST /openapi/v1/apps/{appId}/appnamespaces"
-      operationId: createNamespace
+      operationId: createAppNamespace
       parameters:
       - description: ""
         explode: false
@@ -2891,6 +2897,14 @@ paths:
         schema:
           type: string
         style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
       requestBody:
         content:
           application/json:
@@ -2919,21 +2933,17 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 请求参数错误
         "403":
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
       summary: 创建AppNamespace (original openapi)
       tags:
-      - Namespace Management
+      - AppNamespace Management
       x-content-type: application/json
       x-accepts: application/json
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces:
@@ -2976,6 +2986,15 @@ paths:
           default: true
           type: boolean
         style: form
+      - description: ""
+        explode: true
+        in: query
+        name: extendInfo
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
       responses:
         "200":
           content:
@@ -3013,7 +3032,7 @@ paths:
     get:
       deprecated: false
       description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}"
-      operationId: loadNamespace
+      operationId: findNamespace
       parameters:
       - description: ""
         explode: false
@@ -3057,6 +3076,15 @@ paths:
           default: true
           type: boolean
         style: form
+      - description: ""
+        explode: true
+        in: query
+        name: extendInfo
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
       responses:
         "200":
           content:
@@ -3085,6 +3113,83 @@ paths:
                 $ref: '#/components/schemas/OpenNamespaceDTO'
           description: ""
       summary: 获取指定的Namespace (original openapi)
+      tags:
+      - Namespace Management
+      x-accepts: application/json
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace:
+    get:
+      deprecated: false
+      description: "GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace"
+      operationId: findPublicNamespaceForAssociatedNamespace
+      parameters:
+      - description: 环境标识
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 应用ID
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 集群名称
+        explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 关联Namespace名称
+        explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: true
+        in: query
+        name: extendInfo
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                dataChangeCreatedBy: apollo
+                dataChangeLastModifiedBy: apollo
+                dataChangeCreatedTime: 2024-01-15T10:30:00.000Z
+                dataChangeLastModifiedTime: 2024-01-20T11:00:00.000Z
+                appId: public-owner-app
+                clusterName: default
+                namespaceName: public.namespace
+                comment: 公共 namespace 示例
+                format: properties
+                isPublic: true
+                parentAppId: public-owner-app
+                isConfigHidden: false
+                itemModifiedCnt: 0
+                items:
+                - key: k1
+                  value: v1
+                - key: k2
+                  value: v2
+              schema:
+                $ref: '#/components/schemas/OpenNamespaceDTO'
+          description: 成功获取关联的公共Namespace详情
+      summary: 查询关联Namespace对应的公共Namespace详情 (new added)
       tags:
       - Namespace Management
       x-accepts: application/json
@@ -3139,23 +3244,13 @@ paths:
           description: ""
       summary: 获取Namespace的锁状态 (original openapi)
       tags:
-      - Namespace Management
+      - Namespace Lock Management
       x-accepts: application/json
   /openapi/v1/appnamespaces:
     get:
       deprecated: false
-      description: GET /openapi/v1/appnamespaces?public=true
+      description: GET /openapi/v1/appnamespaces/public
       operationId: getAppNamespaces
-      parameters:
-      - description: ""
-        example: "false"
-        explode: true
-        in: query
-        name: publicOnly
-        required: true
-        schema:
-          type: boolean
-        style: form
       responses:
         "200":
           content:
@@ -3178,7 +3273,7 @@ paths:
           description: ""
       summary: 获取所有公共AppNamespace (new added)
       tags:
-      - Namespace Management
+      - AppNamespace Management
       x-accepts: application/json
   /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}:
     delete:
@@ -3206,27 +3301,21 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: AppNamespace删除成功
       summary: 删除AppNamespace (new added)
       tags:
-      - Namespace Management
+      - AppNamespace Management
       x-accepts: application/json
     get:
       deprecated: false
       description: "GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}"
-      operationId: getAppNamespace
+      operationId: findAppNamespace
       parameters:
       - description: 应用ID
         explode: false
@@ -3244,6 +3333,15 @@ paths:
         schema:
           type: string
         style: simple
+      - description: ""
+        explode: true
+        in: query
+        name: extendInfo
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
       responses:
         "200":
           content:
@@ -3264,7 +3362,7 @@ paths:
           description: 成功获取AppNamespace
       summary: 获取指定的AppNamespace (new added)
       tags:
-      - Namespace Management
+      - AppNamespace Management
       x-accepts: application/json
   /openapi/v1/apps/{appId}/namespaces/releases/status:
     get:
@@ -3362,13 +3460,13 @@ paths:
           description: 成功获取实例列表
       summary: 获取公共AppNamespace的所有实例 (new added)
       tags:
-      - Namespace Management
+      - AppNamespace Management
       x-accepts: application/json
-  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association:
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage:
     get:
       deprecated: false
-      description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/public-association"
-      operationId: getPublicNamespaceAssociation
+      description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage"
+      operationId: findNamespaceUsage
       parameters:
       - description: 应用ID
         explode: false
@@ -3406,38 +3504,20 @@ paths:
         "200":
           content:
             application/json:
-              example:
-                dataChangeCreatedBy: ""
-                dataChangeLastModifiedBy: ""
-                dataChangeCreatedTime: ""
-                dataChangeLastModifiedTime: ""
-                appId: ""
-                clusterName: ""
-                namespaceName: ""
-                comment: ""
-                format: ""
-                isPublic: false
-                items:
-                - dataChangeCreatedBy: ""
-                  dataChangeLastModifiedBy: ""
-                  dataChangeCreatedTime: ""
-                  dataChangeLastModifiedTime: ""
-                  key: ""
-                  type: 0
-                  value: ""
-                  comment: ""
               schema:
-                $ref: '#/components/schemas/OpenNamespaceDTO'
-          description: 成功获取关联的公共Namespace
-      summary: 获取关联的公共Namespace (new added)
+                items:
+                  $ref: '#/components/schemas/OpenNamespaceUsageDTO'
+                type: array
+          description: NamespaceUsage查询成功
+      summary: 查询namespace使用情况(new added)
       tags:
       - Namespace Management
       x-accepts: application/json
-  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check:
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces:
     get:
       deprecated: false
-      description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/integrity-check"
-      operationId: checkNamespaceIntegrity
+      description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces"
+      operationId: findMissingNamespaces
       parameters:
       - description: 应用ID
         explode: false
@@ -3474,15 +3554,59 @@ paths:
                   type: string
                 type: array
           description: 缺失的命名空间名称列表
-      summary: 检查缺失的Namespace (new added)
+      summary: 查找缺失的Namespace (new added)
       tags:
       - Namespace Management
       x-accepts: application/json
-  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links:
+    post:
+      deprecated: false
+      description: "POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces"
+      operationId: createMissingNamespaces
+      parameters:
+      - description: 应用ID
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 环境标识
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 集群名称
+        explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: 缺失的命名空间创建成功
+      summary: 创建缺失的Namespace (new added)
+      tags:
+      - Namespace Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}:
     delete:
       deprecated: false
-      description: "DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/links"
-      operationId: deleteNamespaceLinks
+      description: "DELETE /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}"
+      operationId: deleteNamespace
       parameters:
       - description: 应用ID
         explode: false
@@ -3520,20 +3644,14 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 解除关联成功
-      summary: 删除关联的Namespace (new added)
+      summary: 删除指定的Namespace (new added)
       tags:
       - Namespace Management
       x-accepts: application/json
@@ -3563,9 +3681,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 未授权访问
       summary: 获取所有组织信息 (original openapi)
       tags:
@@ -3609,6 +3725,15 @@ paths:
         schema:
           type: string
         style: simple
+      - description: ""
+        explode: true
+        in: query
+        name: extendInfo
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
       responses:
         "200":
           content:
@@ -3648,9 +3773,7 @@ paths:
           content:
             application/json:
               schema:
-                allOf:
-                - $ref: '#/components/schemas/ExceptionResponse'
-                type: object
+                $ref: '#/components/schemas/ExceptionResponse'
           description: 分支不存在
       summary: 获取命名空间分支信息 (original openapi)
       tags:
@@ -3697,7 +3820,7 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -3788,23 +3911,14 @@ paths:
         style: form
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 分支删除成功
       summary: 删除命名空间分支 (original openapi)
       tags:
       - Namespace Branch Management
       x-accepts: application/json
-    patch:
+    post:
       deprecated: false
-      description: |-
-        PATCH /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}
-
-        使用 PATCH 方法表示部分更新操作（将分支状态从"独立"更新为"合并"）
+      description: "POST /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}"
       operationId: mergeBranch
       parameters:
       - description: 环境标识
@@ -3860,7 +3974,7 @@ paths:
         explode: true
         in: query
         name: operator
-        required: true
+        required: false
         schema:
           type: string
         style: form
@@ -4029,12 +4143,6 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                allOf:
-                - $ref: '#/components/schemas/SuccessEmptyResponse'
-                type: object
           description: 灰度规则更新成功
       summary: 更新分支灰度发布规则 (original openapi)
       tags:
@@ -4064,6 +4172,1395 @@ paths:
       tags:
       - Environment Management
       x-accepts: application/json
+  /openapi/v1/apps/{appId}/namespaces/{namespaceName}/permission-init:
+    post:
+      deprecated: false
+      description: ""
+      operationId: initAppPermission
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: 初始化成功
+      summary: 初始化应用权限 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/permission-init:
+    post:
+      deprecated: false
+      description: ""
+      operationId: initClusterNamespacePermission
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 初始化集群Namespace权限 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/permissions/{permissionType}:
+    get:
+      deprecated: false
+      description: ""
+      operationId: hasAppPermission
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: permissionType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                hasPermission: false
+              schema:
+                $ref: '#/components/schemas/OpenPermissionConditionDTO'
+          description: ""
+      summary: 校验应用权限 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/namespaces/{namespaceName}/permissions/{permissionType}:
+    get:
+      deprecated: false
+      description: ""
+      operationId: hasNamespacePermission
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: permissionType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                hasPermission: false
+              schema:
+                $ref: '#/components/schemas/OpenPermissionConditionDTO'
+          description: ""
+      summary: 校验Namespace权限 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/namespaces/{namespaceName}/permissions/{permissionType}:
+    get:
+      deprecated: false
+      description: ""
+      operationId: hasEnvNamespacePermission
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: permissionType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                hasPermission: false
+              schema:
+                $ref: '#/components/schemas/OpenPermissionConditionDTO'
+          description: ""
+      summary: 校验环境Namespace权限 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/permissions/{permissionType}:
+    get:
+      deprecated: false
+      description: ""
+      operationId: hasClusterNamespacePermission
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: permissionType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                hasPermission: false
+              schema:
+                $ref: '#/components/schemas/OpenPermissionConditionDTO'
+          description: ""
+      summary: 校验集群Namespace权限 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/permissions/root:
+    get:
+      deprecated: false
+      description: ""
+      operationId: hasRootPermission
+      parameters:
+      - description: ""
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                hasPermission: false
+              schema:
+                $ref: '#/components/schemas/OpenPermissionConditionDTO'
+          description: ""
+      summary: 校验Root权限 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/namespaces/{namespaceName}/role-users:
+    get:
+      deprecated: false
+      description: ""
+      operationId: getNamespaceEnvRoleUsers
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                appId: ""
+                namespaceName: ""
+                modifyRoleUsers:
+                - userId: ""
+                  name: ""
+                  email: ""
+                  enabled: 0
+                releaseRoleUsers:
+                - userId: ""
+                  name: ""
+                  email: ""
+                  enabled: 0
+                env: ""
+              schema:
+                $ref: '#/components/schemas/OpenEnvNamespaceRoleUserDTO'
+          description: ""
+      summary: 获取环境Namespace用户 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/namespaces/{namespaceName}/roles/{roleType}:
+    delete:
+      deprecated: false
+      description: ""
+      operationId: removeNamespaceEnvRoleFromUser
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: roleType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: the user which role removed from
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 移除环境Namespace角色 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+    post:
+      deprecated: false
+      description: ""
+      operationId: assignNamespaceEnvRoleToUser
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: roleType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: the user which role assigned to
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 分配环境Namespace角色 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/role-users:
+    get:
+      deprecated: false
+      description: ""
+      operationId: getClusterNamespaceRoles
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                appId: ""
+                env: ""
+                cluster: ""
+                modifyRoleUsers:
+                - userId: ""
+                  name: ""
+                  email: ""
+                  enabled: 0
+                releaseRoleUsers:
+                - userId: ""
+                  name: ""
+                  email: ""
+                  enabled: 0
+              schema:
+                $ref: '#/components/schemas/OpenClusterNamespaceRoleUserDTO'
+          description: ""
+      summary: 获取集群Namespace用户 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/roles/{roleType}:
+    delete:
+      deprecated: false
+      description: ""
+      operationId: removeClusterNamespaceRoleFromUser
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: roleType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: the user which role removed from
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 移除集群Namespace角色 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+    post:
+      deprecated: false
+      description: ""
+      operationId: assignClusterNamespaceRoleToUser
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: roleType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: the user which role assigned to
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 分配集群Namespace角色 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/namespaces/{namespaceName}/role-users:
+    get:
+      deprecated: false
+      description: ""
+      operationId: getNamespaceRoles
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                appId: ""
+                namespaceName: ""
+                modifyRoleUsers:
+                - userId: ""
+                  name: ""
+                  email: ""
+                  enabled: 0
+                releaseRoleUsers:
+                - userId: ""
+                  name: ""
+                  email: ""
+                  enabled: 0
+              schema:
+                $ref: '#/components/schemas/OpenNamespaceRoleUserDTO'
+          description: ""
+      summary: 获取Namespace用户 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/namespaces/{namespaceName}/roles/{roleType}:
+    delete:
+      deprecated: false
+      description: ""
+      operationId: removeNamespaceRoleFromUser
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: roleType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: the user which role removed from
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 移除Namespace角色 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+    post:
+      deprecated: false
+      description: ""
+      operationId: assignNamespaceRoleToUser
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: roleType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: the user which role assigned to
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 分配Namespace角色 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/role-users:
+    get:
+      deprecated: false
+      description: ""
+      operationId: getAppRoles
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                appId: ""
+                masterUsers:
+                - userId: ""
+                  name: ""
+                  email: ""
+                  enabled: 0
+              schema:
+                $ref: '#/components/schemas/OpenAppRoleUserDTO'
+          description: ""
+      summary: 获取应用角色用户 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/roles/{roleType}:
+    delete:
+      deprecated: false
+      description: ""
+      operationId: removeAppRoleFromUser
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: roleType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: the user which role removed from
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 移除应用角色 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+    post:
+      deprecated: false
+      description: ""
+      operationId: assignAppRoleToUser
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: roleType
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: the user which role removed from
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ""
+              type: string
+      responses:
+        "200":
+          description: ""
+      summary: 分配应用角色 (new added)
+      tags:
+      - Permission Management
+      x-content-type: application/json
+      x-accepts: application/json
+  /openapi/v1/system/roles/create-application:
+    delete:
+      deprecated: false
+      description: ""
+      operationId: deleteCreateApplicationRoleFromUser
+      parameters:
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: ""
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 移除建应用角色 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+    get:
+      deprecated: false
+      description: ""
+      operationId: hasCreateApplicationPermission
+      parameters:
+      - description: ""
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                members:
+                  ? ""
+                  : {}
+              schema:
+                additionalProperties:
+                  type: boolean
+                type: object
+          description: ""
+      summary: 校验建应用权限 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+    post:
+      deprecated: false
+      description: ""
+      operationId: addCreateApplicationRoleToUsers
+      parameters:
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: ""
+              items:
+                type: string
+              title: userIds
+              type: array
+      responses:
+        "200":
+          description: ""
+      summary: 分配建应用角色 (new added)
+      tags:
+      - Permission Management
+      x-content-type: application/json
+      x-accepts: application/json
+  /openapi/v1/system/roles/create-application/role-users:
+    get:
+      deprecated: false
+      description: ""
+      operationId: getCreateApplicationRoleUsers
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - ""
+              schema:
+                items:
+                  type: string
+                type: array
+          description: ""
+      summary: 获取建应用用户 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/roles/master:
+    delete:
+      deprecated: false
+      description: ""
+      operationId: removeManageAppMasterRoleFromUser
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: the user which role removed from
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 移除AppMaster (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+    post:
+      deprecated: false
+      description: ""
+      operationId: addManageAppMasterRoleToUser
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: the user which role assign to
+        explode: true
+        in: query
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 分配AppMaster (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/system/role/manage-app-master:
+    get:
+      deprecated: false
+      description: ""
+      operationId: isManageAppMasterPermissionEnabled
+      parameters: []
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                members:
+                  ? ""
+                  : {}
+              schema:
+                additionalProperties:
+                  type: boolean
+                type: object
+          description: ""
+      summary: 校验AppMaster开关 (new added)
+      tags:
+      - Permission Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/accesskeys:
+    get:
+      deprecated: false
+      description: ""
+      operationId: findAccessKeys
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+              - dataChangeCreatedBy: ""
+                dataChangeLastModifiedBy: ""
+                dataChangeCreatedByDisplayName: ""
+                dataChangeLastModifiedByDisplayName: ""
+                dataChangeCreatedTime: ""
+                dataChangeLastModifiedTime: ""
+                id: 0
+                secret: ""
+                appId: ""
+                mode: 0
+                enabled: false
+              schema:
+                items:
+                  $ref: '#/components/schemas/OpenAccessKeyDTO'
+                type: array
+          description: ""
+      summary: 查找AccessKey
+      tags:
+      - AccessKey Management
+      x-accepts: application/json
+    post:
+      deprecated: false
+      description: ""
+      operationId: createAccessKey
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                dataChangeCreatedBy: ""
+                dataChangeLastModifiedBy: ""
+                dataChangeCreatedByDisplayName: ""
+                dataChangeLastModifiedByDisplayName: ""
+                dataChangeCreatedTime: ""
+                dataChangeLastModifiedTime: ""
+                id: 0
+                secret: ""
+                appId: ""
+                mode: 0
+                enabled: false
+              schema:
+                $ref: '#/components/schemas/OpenAccessKeyDTO'
+          description: ""
+      summary: 创建AccessKey
+      tags:
+      - AccessKey Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}:
+    delete:
+      deprecated: false
+      description: ""
+      operationId: deleteAccessKey
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: accessKeyId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      - description: ""
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 删除AccessKey
+      tags:
+      - AccessKey Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/activation:
+    put:
+      deprecated: false
+      description: ""
+      operationId: enableAccessKey
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: accessKeyId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      - description: ""
+        example: 0
+        explode: true
+        in: query
+        name: mode
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      responses:
+        "200":
+          description: ""
+      summary: 启用AccessKey
+      tags:
+      - AccessKey Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/deactivation:
+    put:
+      deprecated: false
+      description: ""
+      operationId: disableAccessKey
+      parameters:
+      - description: ""
+        explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: ""
+        explode: false
+        in: path
+        name: accessKeyId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: ""
+      summary: 禁用AccessKey
+      tags:
+      - AccessKey Management
+      x-accepts: application/json
 components:
   schemas:
     OpenAppDTO:
@@ -4073,6 +5570,7 @@ components:
         orgName: orgName
         dataChangeLastModifiedBy: dataChangeLastModifiedBy
         ownerName: ownerName
+        ownerDisplayName: ownerDisplayName
         appId: appId
         dataChangeCreatedBy: dataChangeCreatedBy
         name: name
@@ -4112,6 +5610,8 @@ components:
         ownerEmail:
           description: 应用负责人邮箱地址，用于接收应用相关通知
           type: string
+        ownerDisplayName:
+          type: string
       type: object
     OpenCreateAppDTO:
       description: 创建Apollo应用的请求数据传输对象，包含创建应用所需的所有信息
@@ -4121,6 +5621,7 @@ components:
           orgName: orgName
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           ownerName: ownerName
+          ownerDisplayName: ownerDisplayName
           appId: appId
           dataChangeCreatedBy: dataChangeCreatedBy
           name: name
@@ -4140,21 +5641,43 @@ components:
           items:
             type: string
           type: array
+          uniqueItems: true
         app:
           $ref: '#/components/schemas/OpenAppDTO'
       type: object
     OpenItemDTO:
-      description: Apollo配置项数据传输对象，表示一个具体的配置键值对及其元数据
+      description: Apollo配置项核心数据对象，仅包含键值及基础审计信息
       example:
         dataChangeCreatedTime: 2025-09-29T12:34:56Z
         dataChangeLastModifiedBy: dataChangeLastModifiedBy
         dataChangeCreatedBy: dataChangeCreatedBy
         comment: comment
         type: 0
+        extendInfo:
+          newValue: newValue
+          isModified: true
+          isDeleted: true
+          namespaceId: 6
+          oldValue: oldValue
+          isNewlyAdded: true
         value: value
-        dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         key: key
+        dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
       properties:
+        key:
+          description: 配置项的键名，在同一命名空间内唯一标识一个配置项
+          type: string
+        value:
+          description: 配置项的值，可以是字符串、数字、JSON等格式
+          type: string
+        type:
+          description: 配置项类型
+          type: integer
+        comment:
+          description: 配置项的注释说明，用于描述配置项的用途和含义
+          type: string
+        extendInfo:
+          $ref: '#/components/schemas/OpenItemExtendDTO'
         dataChangeCreatedBy:
           description: 配置项创建者用户名，记录是谁创建了这个配置项
           type: string
@@ -4169,6 +5692,39 @@ components:
           description: 配置项最后修改时间，ISO 8601格式的时间戳
           example: 2025-09-29T12:34:56Z
           type: string
+      type: object
+    OpenItemExtendDTO:
+      description: Apollo配置项扩展信息，包含状态、类型、归属及变更对比信息
+      example:
+        newValue: newValue
+        isModified: true
+        isDeleted: true
+        namespaceId: 6
+        oldValue: oldValue
+        isNewlyAdded: true
+      properties:
+        namespaceId:
+          description: 所属命名空间的ID
+          format: int64
+          type: integer
+        isModified:
+          description: 是否有未发布的修改
+          type: boolean
+        isDeleted:
+          description: 是否被标记为删除（未发布）
+          type: boolean
+        isNewlyAdded:
+          description: 是否为新添加的配置项（未发布）
+          type: boolean
+        newValue:
+          description: 新的值
+          type: string
+        oldValue:
+          description: 上一次发布的值，用于对比变更
+          type: string
+      type: object
+    OpenCreateItemDTO:
+      properties:
         key:
           description: 配置项的键名，在同一命名空间内唯一标识一个配置项
           type: string
@@ -4182,7 +5738,7 @@ components:
           description: 配置项的注释说明，用于描述配置项的用途和含义
           type: string
       type: object
-    OpenPageDTOOpenItemDTO:
+    OpenItemPageDTO:
       description: 分页配置项数据传输对象，用于返回分页查询的配置项列表结果
       example:
         total: 1
@@ -4194,17 +5750,31 @@ components:
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
           type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
           value: value
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
           key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         - dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
           type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
           value: value
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
           key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
       properties:
         page:
           description: 当前页码，从0开始计数
@@ -4230,9 +5800,9 @@ components:
         appId: appId
         dataChangeCreatedBy: dataChangeCreatedBy
         name: name
-        parentClusterId: 6
+        parentClusterId: 1
         comment: comment
-        id: 0
+        id: 6
         dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
       properties:
         dataChangeCreatedBy:
@@ -4423,6 +5993,39 @@ components:
           description: 命名空间备注说明，描述命名空间的用途和包含的配置类型
           type: string
       type: object
+    OpenNamespaceUsageDTO:
+      description: 命名空间使用情况数据传输对象，统计各环境和集群下的使用指标
+      example:
+        branchInstanceCount: 6
+        envName: envName
+        instanceCount: 0
+        appId: appId
+        clusterName: clusterName
+        linkedNamespaceCount: 1
+        namespaceName: namespaceName
+      properties:
+        namespaceName:
+          description: 命名空间名称
+          type: string
+        appId:
+          description: 所属应用的唯一标识符
+          type: string
+        clusterName:
+          description: 所属集群名称
+          type: string
+        envName:
+          description: 环境名称
+          type: string
+        instanceCount:
+          description: 该命名空间关联的实例数量
+          type: integer
+        branchInstanceCount:
+          description: 分支命名空间关联的实例数量
+          type: integer
+        linkedNamespaceCount:
+          description: 关联到该公共命名空间的命名空间数量
+          type: integer
+      type: object
     OpenGrayReleaseRuleItemDTO:
       description: Apollo灰度发布规则项数据传输对象，表示灰度发布的具体规则条件
       example:
@@ -4442,11 +6045,13 @@ components:
           items:
             type: string
           type: array
+          uniqueItems: true
         clientLabelList:
           description: 客户端标签列表，通过标签来识别可以获取灰度配置的客户端
           items:
             type: string
           type: array
+          uniqueItems: true
       type: object
     OpenGrayReleaseRuleDTO:
       description: Apollo灰度发布规则数据传输对象，表示完整的灰度发布规则配置
@@ -4506,6 +6111,28 @@ components:
           items:
             $ref: '#/components/schemas/OpenGrayReleaseRuleItemDTO'
           type: array
+          uniqueItems: true
+      type: object
+    OpenCreateNamespaceDTO:
+      description: Apollo命名空间数据传输对象，表示一个完整的命名空间及其配置项
+      example:
+        appNamespaceName: appNamespaceName
+        appId: appId
+        clusterName: clusterName
+        env: env
+      properties:
+        appId:
+          description: 所属应用的唯一标识符
+          type: string
+        env:
+          description: 所在那个环境创建
+          type: string
+        clusterName:
+          description: 所属集群的名称
+          type: string
+        appNamespaceName:
+          description: 根据已创建的appnamespace来实例化namespace
+          type: string
       type: object
     OpenNamespaceDTO:
       description: Apollo命名空间数据传输对象，表示一个完整的命名空间及其配置项
@@ -4518,23 +6145,41 @@ components:
         format: format
         isPublic: true
         comment: comment
+        extendInfo:
+          parentAppId: parentAppId
+          isConfigHidden: true
+          itemModifiedCnt: 0
         items:
         - dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
           type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
           value: value
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
           key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         - dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
           type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
           value: value
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
           key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         namespaceName: namespaceName
       properties:
@@ -4575,6 +6220,24 @@ components:
           items:
             $ref: '#/components/schemas/OpenItemDTO'
           type: array
+        extendInfo:
+          $ref: '#/components/schemas/OpenNamespaceExtendDTO'
+      type: object
+    OpenNamespaceExtendDTO:
+      example:
+        parentAppId: parentAppId
+        isConfigHidden: true
+        itemModifiedCnt: 0
+      properties:
+        isConfigHidden:
+          description: 当当前用户无权限查看配置时置为 true
+          type: boolean
+        parentAppId:
+          description: 公共命名空间的归属应用 AppId，用于判断是否关联公共 namespace 并提供跳转
+          type: string
+        itemModifiedCnt:
+          description: 未发布变更数
+          type: integer
       type: object
     OpenNamespaceLockDTO:
       description: Apollo命名空间锁状态数据传输对象
@@ -4582,6 +6245,7 @@ components:
         lockedBy: lockedBy
         isLocked: true
         namespaceName: namespaceName
+        isEmergencyPublishAllowed: true
       properties:
         namespaceName:
           description: 命名空间名称
@@ -4592,88 +6256,91 @@ components:
         lockedBy:
           description: 锁定者用户名
           type: string
+        isEmergencyPublishAllowed:
+          description: 是否允许紧急发布
+          type: boolean
       type: object
-    OpenPageDTOOpenInstanceDTO:
+    OpenInstancePageDTO:
       description: 分页实例数据传输对象，用于返回分页查询的实例列表结果
       example:
         total: 1
         size: 6
+        instances:
+        - configs:
+          - releaseDeliveryTime: 2025-09-29T12:34:56Z
+            release:
+              dataChangeCreatedTime: 2025-09-29T12:34:56Z
+              dataChangeLastModifiedBy: dataChangeLastModifiedBy
+              configurations:
+                key: configurations
+              appId: appId
+              clusterName: clusterName
+              dataChangeCreatedBy: dataChangeCreatedBy
+              name: name
+              comment: comment
+              id: 0
+              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+              namespaceName: namespaceName
+            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+          - releaseDeliveryTime: 2025-09-29T12:34:56Z
+            release:
+              dataChangeCreatedTime: 2025-09-29T12:34:56Z
+              dataChangeLastModifiedBy: dataChangeLastModifiedBy
+              configurations:
+                key: configurations
+              appId: appId
+              clusterName: clusterName
+              dataChangeCreatedBy: dataChangeCreatedBy
+              name: name
+              comment: comment
+              id: 0
+              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+              namespaceName: namespaceName
+            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
+          dataCenter: dataCenter
+          appId: appId
+          clusterName: clusterName
+          ip: ip
+          id: 5
+        - configs:
+          - releaseDeliveryTime: 2025-09-29T12:34:56Z
+            release:
+              dataChangeCreatedTime: 2025-09-29T12:34:56Z
+              dataChangeLastModifiedBy: dataChangeLastModifiedBy
+              configurations:
+                key: configurations
+              appId: appId
+              clusterName: clusterName
+              dataChangeCreatedBy: dataChangeCreatedBy
+              name: name
+              comment: comment
+              id: 0
+              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+              namespaceName: namespaceName
+            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+          - releaseDeliveryTime: 2025-09-29T12:34:56Z
+            release:
+              dataChangeCreatedTime: 2025-09-29T12:34:56Z
+              dataChangeLastModifiedBy: dataChangeLastModifiedBy
+              configurations:
+                key: configurations
+              appId: appId
+              clusterName: clusterName
+              dataChangeCreatedBy: dataChangeCreatedBy
+              name: name
+              comment: comment
+              id: 0
+              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+              namespaceName: namespaceName
+            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
+          dataCenter: dataCenter
+          appId: appId
+          clusterName: clusterName
+          ip: ip
+          id: 5
         page: 0
-        content:
-        - configs:
-          - releaseDeliveryTime: 2025-09-29T12:34:56Z
-            release:
-              dataChangeCreatedTime: 2025-09-29T12:34:56Z
-              dataChangeLastModifiedBy: dataChangeLastModifiedBy
-              configurations:
-                key: configurations
-              appId: appId
-              clusterName: clusterName
-              dataChangeCreatedBy: dataChangeCreatedBy
-              name: name
-              comment: comment
-              id: 0
-              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-              namespaceName: namespaceName
-            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-          - releaseDeliveryTime: 2025-09-29T12:34:56Z
-            release:
-              dataChangeCreatedTime: 2025-09-29T12:34:56Z
-              dataChangeLastModifiedBy: dataChangeLastModifiedBy
-              configurations:
-                key: configurations
-              appId: appId
-              clusterName: clusterName
-              dataChangeCreatedBy: dataChangeCreatedBy
-              name: name
-              comment: comment
-              id: 0
-              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-              namespaceName: namespaceName
-            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-          dataChangeCreatedTime: 2025-09-29T12:34:56Z
-          dataCenter: dataCenter
-          appId: appId
-          clusterName: clusterName
-          ip: ip
-          id: 5
-        - configs:
-          - releaseDeliveryTime: 2025-09-29T12:34:56Z
-            release:
-              dataChangeCreatedTime: 2025-09-29T12:34:56Z
-              dataChangeLastModifiedBy: dataChangeLastModifiedBy
-              configurations:
-                key: configurations
-              appId: appId
-              clusterName: clusterName
-              dataChangeCreatedBy: dataChangeCreatedBy
-              name: name
-              comment: comment
-              id: 0
-              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-              namespaceName: namespaceName
-            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-          - releaseDeliveryTime: 2025-09-29T12:34:56Z
-            release:
-              dataChangeCreatedTime: 2025-09-29T12:34:56Z
-              dataChangeLastModifiedBy: dataChangeLastModifiedBy
-              configurations:
-                key: configurations
-              appId: appId
-              clusterName: clusterName
-              dataChangeCreatedBy: dataChangeCreatedBy
-              name: name
-              comment: comment
-              id: 0
-              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-              namespaceName: namespaceName
-            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-          dataChangeCreatedTime: 2025-09-29T12:34:56Z
-          dataCenter: dataCenter
-          appId: appId
-          clusterName: clusterName
-          ip: ip
-          id: 5
       properties:
         page:
           description: 当前页码，从0开始计数
@@ -4685,7 +6352,7 @@ components:
           description: 总记录数，符合查询条件的实例总数量
           format: int64
           type: integer
-        content:
+        instances:
           description: 当前页的实例列表，包含具体的实例数据
           items:
             $ref: '#/components/schemas/OpenInstanceDTO'
@@ -4708,7 +6375,36 @@ components:
           type: array
       type: object
     OpenEnvClusterInfo:
+      example:
+        code: 0
+        message: message
+        env: env
+        clusters:
+        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+          dataChangeLastModifiedBy: dataChangeLastModifiedBy
+          appId: appId
+          dataChangeCreatedBy: dataChangeCreatedBy
+          name: name
+          parentClusterId: 1
+          comment: comment
+          id: 6
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+          dataChangeLastModifiedBy: dataChangeLastModifiedBy
+          appId: appId
+          dataChangeCreatedBy: dataChangeCreatedBy
+          name: name
+          parentClusterId: 1
+          comment: comment
+          id: 6
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
       properties:
+        code:
+          description: 查询状态码
+          type: integer
+        message:
+          description: 相关信息
+          type: string
         env:
           description: 环境标识
           type: string
@@ -4717,6 +6413,17 @@ components:
           items:
             $ref: '#/components/schemas/OpenClusterDTO'
           type: array
+      type: object
+    OpenMissEnvDTO:
+      example:
+        code: 0
+        message: message
+      properties:
+        code:
+          description: 查询状态码
+          type: integer
+        message:
+          type: string
       type: object
     OpenNamespaceTextModel:
       example:
@@ -4776,64 +6483,6 @@ components:
           type: string
       type: object
     OpenItemChangeSets:
-      example:
-        dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-        dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
-        dataChangeCreatedTime: 2025-09-29T12:34:56Z
-        dataChangeLastModifiedBy: dataChangeLastModifiedBy
-        dataChangeCreatedBy: dataChangeCreatedBy
-        deleteItems:
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-          dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          dataChangeCreatedBy: dataChangeCreatedBy
-          comment: comment
-          type: 0
-          value: value
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-          key: key
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-          dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          dataChangeCreatedBy: dataChangeCreatedBy
-          comment: comment
-          type: 0
-          value: value
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-          key: key
-        createItems:
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-          dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          dataChangeCreatedBy: dataChangeCreatedBy
-          comment: comment
-          type: 0
-          value: value
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-          key: key
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-          dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          dataChangeCreatedBy: dataChangeCreatedBy
-          comment: comment
-          type: 0
-          value: value
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-          key: key
-        updateItems:
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-          dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          dataChangeCreatedBy: dataChangeCreatedBy
-          comment: comment
-          type: 0
-          value: value
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-          key: key
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-          dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          dataChangeCreatedBy: dataChangeCreatedBy
-          comment: comment
-          type: 0
-          value: value
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-          key: key
-        dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
       properties:
         dataChangeCreatedBy:
           description: 变更集合创建者用户名
@@ -4874,82 +6523,131 @@ components:
             $ref: '#/components/schemas/OpenItemDTO'
           type: array
       type: object
-    OpenItemDiffs:
+    OpenItemDiffDTO:
       example:
+        code: 0
         namespace:
           appId: appId
           clusterName: clusterName
           env: env
           namespaceName: namespaceName
-        diffs:
-          dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
-          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
-          dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        deleteItems:
+        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
-          deleteItems:
-          - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-            dataChangeLastModifiedBy: dataChangeLastModifiedBy
-            dataChangeCreatedBy: dataChangeCreatedBy
-            comment: comment
-            type: 0
-            value: value
-            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-            key: key
-          - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-            dataChangeLastModifiedBy: dataChangeLastModifiedBy
-            dataChangeCreatedBy: dataChangeCreatedBy
-            comment: comment
-            type: 0
-            value: value
-            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-            key: key
-          createItems:
-          - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-            dataChangeLastModifiedBy: dataChangeLastModifiedBy
-            dataChangeCreatedBy: dataChangeCreatedBy
-            comment: comment
-            type: 0
-            value: value
-            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-            key: key
-          - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-            dataChangeLastModifiedBy: dataChangeLastModifiedBy
-            dataChangeCreatedBy: dataChangeCreatedBy
-            comment: comment
-            type: 0
-            value: value
-            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-            key: key
-          updateItems:
-          - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-            dataChangeLastModifiedBy: dataChangeLastModifiedBy
-            dataChangeCreatedBy: dataChangeCreatedBy
-            comment: comment
-            type: 0
-            value: value
-            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-            key: key
-          - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-            dataChangeLastModifiedBy: dataChangeLastModifiedBy
-            dataChangeCreatedBy: dataChangeCreatedBy
-            comment: comment
-            type: 0
-            value: value
-            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-            key: key
+          comment: comment
+          type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
+          value: value
+          key: key
           dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-        extInfo: extInfo
+        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+          dataChangeLastModifiedBy: dataChangeLastModifiedBy
+          dataChangeCreatedBy: dataChangeCreatedBy
+          comment: comment
+          type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
+          value: value
+          key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+        createItems:
+        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+          dataChangeLastModifiedBy: dataChangeLastModifiedBy
+          dataChangeCreatedBy: dataChangeCreatedBy
+          comment: comment
+          type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
+          value: value
+          key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+          dataChangeLastModifiedBy: dataChangeLastModifiedBy
+          dataChangeCreatedBy: dataChangeCreatedBy
+          comment: comment
+          type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
+          value: value
+          key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+        message: message
+        updateItems:
+        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+          dataChangeLastModifiedBy: dataChangeLastModifiedBy
+          dataChangeCreatedBy: dataChangeCreatedBy
+          comment: comment
+          type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
+          value: value
+          key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+          dataChangeLastModifiedBy: dataChangeLastModifiedBy
+          dataChangeCreatedBy: dataChangeCreatedBy
+          comment: comment
+          type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
+          value: value
+          key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
       properties:
+        code:
+          description: 查找结果
+          type: integer
+        message:
+          description: 查找结果信息
+          type: string
         namespace:
           $ref: '#/components/schemas/OpenNamespaceIdentifier'
-        diffs:
-          $ref: '#/components/schemas/OpenItemChangeSets'
-        extInfo:
-          description: 扩展信息
-          type: string
+        createItems:
+          items:
+            $ref: '#/components/schemas/OpenItemDTO'
+          type: array
+        deleteItems:
+          items:
+            $ref: '#/components/schemas/OpenItemDTO'
+          type: array
+        updateItems:
+          items:
+            $ref: '#/components/schemas/OpenItemDTO'
+          type: array
       type: object
-    OpenNamespaceSyncModel:
+    OpenNamespaceSyncDTO:
       example:
         syncItems:
         - dataChangeCreatedTime: 2025-09-29T12:34:56Z
@@ -4957,17 +6655,31 @@ components:
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
           type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
           value: value
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
           key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         - dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
           type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
           value: value
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
           key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         syncToNamespaces:
         - appId: appId
           clusterName: clusterName
@@ -4984,49 +6696,9 @@ components:
             $ref: '#/components/schemas/OpenNamespaceIdentifier'
           type: array
         syncItems:
-          description: 需要同步的配置项列表
+          description: 需要修改的配置项列表
           items:
             $ref: '#/components/schemas/OpenItemDTO'
-          type: array
-      type: object
-    KVEntity:
-      example:
-        value: value
-        key: key
-      properties:
-        key:
-          description: 键
-          type: string
-        value:
-          description: 值
-          type: string
-      type: object
-    OpenReleaseBO:
-      example:
-        baseInfo:
-          dataChangeCreatedTime: 2025-09-29T12:34:56Z
-          dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          configurations:
-            key: configurations
-          appId: appId
-          clusterName: clusterName
-          dataChangeCreatedBy: dataChangeCreatedBy
-          name: name
-          comment: comment
-          id: 0
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-          namespaceName: namespaceName
-        items:
-        - value: value
-          key: key
-        - value: value
-          key: key
-      properties:
-        baseInfo:
-          $ref: '#/components/schemas/OpenReleaseDTO'
-        items:
-          items:
-            $ref: '#/components/schemas/KVEntity'
           type: array
       type: object
     OpenInstanceConfigDTO:
@@ -5137,17 +6809,290 @@ components:
           type: string
       type: object
     ExceptionResponse:
-      additionalProperties: true
-      description: |
-        错误响应对象，表示为 Map<String,Object>。 字段包括： - status: HTTP 状态码 (integer) - message: 错误信息 (string) - timestamp: 出错时间戳 (string) - exception: 异常类名或标识 (string)
       example:
         status: 404
         message: Resource not found
         timestamp: 2025-09-29T12:34:56Z
         exception: NotFoundException
+      properties:
+        status:
+          description: HTTP 状态码
+          type: integer
+        message:
+          description: 错误信息
+          type: string
+        timestamp:
+          description: 时间戳
+          format: date-time
+          type: string
+        exception:
+          description: 错误类名
+          type: string
       type: object
-    SuccessEmptyResponse:
-      properties: {}
+    OpenPermissionConditionDTO:
+      example:
+        hasPermission: true
+      properties:
+        hasPermission:
+          description: ""
+          type: boolean
+      type: object
+    OpenUserInfoDTO:
+      example:
+        name: name
+        userId: userId
+        email: email
+        enabled: 0
+      properties:
+        userId:
+          description: ""
+          type: string
+        name:
+          description: ""
+          type: string
+        email:
+          description: ""
+          type: string
+        enabled:
+          description: ""
+          type: integer
+      type: object
+    OpenEnvNamespaceRoleUserDTO:
+      example:
+        releaseRoleUsers:
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        appId: appId
+        modifyRoleUsers:
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        env: env
+        namespaceName: namespaceName
+      properties:
+        appId:
+          description: ""
+          type: string
+        namespaceName:
+          description: ""
+          type: string
+        modifyRoleUsers:
+          description: ""
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+          type: array
+        releaseRoleUsers:
+          description: ""
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+          type: array
+        env:
+          description: ""
+          type: string
+      type: object
+    OpenClusterNamespaceRoleUserDTO:
+      example:
+        cluster: cluster
+        releaseRoleUsers:
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        appId: appId
+        modifyRoleUsers:
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        env: env
+      properties:
+        appId:
+          description: ""
+          type: string
+        env:
+          description: ""
+          type: string
+        cluster:
+          description: ""
+          type: string
+        modifyRoleUsers:
+          description: ""
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+          type: array
+        releaseRoleUsers:
+          description: ""
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+          type: array
+      type: object
+    OpenNamespaceRoleUserDTO:
+      example:
+        releaseRoleUsers:
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        appId: appId
+        modifyRoleUsers:
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        namespaceName: namespaceName
+      properties:
+        appId:
+          description: ""
+          type: string
+        namespaceName:
+          description: ""
+          type: string
+        modifyRoleUsers:
+          description: ""
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+          type: array
+        releaseRoleUsers:
+          description: ""
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+          type: array
+      type: object
+    OpenAppRoleUserDTO:
+      example:
+        appId: appId
+        masterUsers:
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+        - name: name
+          userId: userId
+          email: email
+          enabled: 0
+      properties:
+        appId:
+          description: ""
+          type: string
+        masterUsers:
+          description: ""
+          items:
+            $ref: '#/components/schemas/OpenUserInfoDTO'
+          type: array
+      type: object
+    OpenReleaseDiffDTO:
+      example:
+        changes:
+        - newValue: newValue
+          changeType: changeType
+          oldValue: oldValue
+          key: key
+        - newValue: newValue
+          changeType: changeType
+          oldValue: oldValue
+          key: key
+      properties:
+        changes:
+          description: "A list of changes, ensuring order if necessary."
+          items:
+            $ref: '#/components/schemas/OpenReleaseChangeDTO'
+          type: array
+      type: object
+    OpenReleaseChangeDTO:
+      example:
+        newValue: newValue
+        changeType: changeType
+        oldValue: oldValue
+        key: key
+      properties:
+        changeType:
+          description: 修改类型
+          type: string
+        key:
+          description: key
+          type: string
+        newValue:
+          description: new value
+          type: string
+        oldValue:
+          description: old value
+          type: string
+      type: object
+    OpenAccessKeyDTO:
+      example:
+        mode: 6
+        dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+        dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+        dataChangeCreatedTime: dataChangeCreatedTime
+        dataChangeLastModifiedBy: dataChangeLastModifiedBy
+        appId: appId
+        dataChangeCreatedBy: dataChangeCreatedBy
+        id: 0
+        secret: secret
+        dataChangeLastModifiedTime: dataChangeLastModifiedTime
+        enabled: true
+      properties:
+        dataChangeCreatedBy:
+          description: ""
+          type: string
+        dataChangeLastModifiedBy:
+          description: ""
+          type: string
+        dataChangeCreatedByDisplayName:
+          description: ""
+          type: string
+        dataChangeLastModifiedByDisplayName:
+          description: ""
+          type: string
+        dataChangeCreatedTime:
+          description: ""
+          type: string
+        dataChangeLastModifiedTime:
+          description: ""
+          type: string
+        id:
+          description: ""
+          format: int64
+          type: integer
+        secret:
+          description: ""
+          type: string
+        appId:
+          description: ""
+          type: string
+        mode:
+          description: ""
+          type: integer
+        enabled:
+          description: ""
+          type: boolean
       type: object
     StringToStringBoolMap:
       additionalProperties:
@@ -5160,54 +7105,6 @@ components:
           featureY: false
         projectB:
           darkMode: true
-      type: object
-    MultiResponseEntity:
-      description: A response container holding multiple RichResponseEntity objects
-      example:
-        code: 200
-        entities:
-        - code: 200
-          message: OK
-          body: "{}"
-        - code: 200
-          message: OK
-          body: "{}"
-      properties:
-        code:
-          description: Overall HTTP status code
-          example: 200
-          type: integer
-        entities:
-          description: List of rich response entities
-          items:
-            $ref: '#/components/schemas/RichResponseEntity'
-          type: array
-      required:
-      - code
-      - entities
-      type: object
-    RichResponseEntity:
-      description: "A wrapper for a single response entity with code, message, and\
-        \ body"
-      example:
-        code: 200
-        message: OK
-        body: "{}"
-      properties:
-        code:
-          description: HTTP status code
-          example: 200
-          type: integer
-        message:
-          description: Response message (can be string or object)
-          example: OK
-          type: object
-        body:
-          description: Response payload (generic type T)
-          type: object
-      required:
-      - code
-      - message
       type: object
   securitySchemes:
     ApiKeyAuth:

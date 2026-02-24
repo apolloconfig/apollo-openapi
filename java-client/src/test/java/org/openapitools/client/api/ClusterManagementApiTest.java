@@ -14,6 +14,7 @@
 package org.openapitools.client.api;
 
 import org.openapitools.client.ApiException;
+import org.openapitools.client.model.ExceptionResponse;
 import org.openapitools.client.model.OpenClusterDTO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -60,7 +61,7 @@ public class ClusterManagementApiTest {
         String appId = null;
         String clusterName = null;
         String operator = null;
-        Object response = api.deleteCluster(env, appId, clusterName, operator);
+        api.deleteCluster(env, appId, clusterName, operator);
         // TODO: test validations
     }
 

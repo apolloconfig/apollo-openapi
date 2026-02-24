@@ -15,21 +15,30 @@
 
 import * as runtime from '../runtime';
 import type {
+  ExceptionResponse,
   NamespaceGrayDelReleaseDTO,
   NamespaceReleaseDTO,
-  OpenReleaseBO,
   OpenReleaseDTO,
+  OpenReleaseDiffDTO,
 } from '../models';
 import {
+    ExceptionResponseFromJSON,
+    ExceptionResponseToJSON,
     NamespaceGrayDelReleaseDTOFromJSON,
     NamespaceGrayDelReleaseDTOToJSON,
     NamespaceReleaseDTOFromJSON,
     NamespaceReleaseDTOToJSON,
-    OpenReleaseBOFromJSON,
-    OpenReleaseBOToJSON,
     OpenReleaseDTOFromJSON,
     OpenReleaseDTOToJSON,
+    OpenReleaseDiffDTOFromJSON,
+    OpenReleaseDiffDTOToJSON,
 } from '../models';
+
+export interface CompareReleaseRequest {
+    env: string;
+    baseReleaseId: number;
+    toCompareReleaseId: number;
+}
 
 export interface CreateGrayDelReleaseRequest {
     appId: string;
@@ -38,6 +47,7 @@ export interface CreateGrayDelReleaseRequest {
     namespaceName: string;
     branchName: string;
     namespaceGrayDelReleaseDTO: NamespaceGrayDelReleaseDTO;
+    operator?: string;
 }
 
 export interface CreateGrayReleaseRequest {
@@ -47,6 +57,7 @@ export interface CreateGrayReleaseRequest {
     namespaceName: string;
     branchName: string;
     namespaceReleaseDTO: NamespaceReleaseDTO;
+    operator?: string;
 }
 
 export interface CreateReleaseRequest {
@@ -55,18 +66,10 @@ export interface CreateReleaseRequest {
     clusterName: string;
     namespaceName: string;
     namespaceReleaseDTO: NamespaceReleaseDTO;
+    operator?: string;
 }
 
 export interface FindActiveReleasesRequest {
-    appId: string;
-    env: string;
-    clusterName: string;
-    namespaceName: string;
-    page: number;
-    size: number;
-}
-
-export interface FindAllReleasesRequest {
     appId: string;
     env: string;
     clusterName: string;
@@ -87,26 +90,68 @@ export interface LoadLatestActiveReleaseRequest {
     namespaceName: string;
 }
 
-export interface MergeRequest {
-    appId: string;
-    env: string;
-    clusterName: string;
-    namespaceName: string;
-    branchName: string;
-    deleteBranch: boolean;
-    namespaceReleaseDTO: NamespaceReleaseDTO;
-}
-
 export interface RollbackRequest {
     env: string;
     releaseId: number;
-    operator: string;
+    operator?: string;
 }
 
 /**
  *
  */
 export class ReleaseManagementApi extends runtime.BaseAPI {
+
+    /**
+     * Get the configuration differences between two releases.
+     * Compare two releases
+     */
+    async compareReleaseRaw(requestParameters: CompareReleaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenReleaseDiffDTO>> {
+        if (requestParameters.env === null || requestParameters.env === undefined) {
+            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling compareRelease.');
+        }
+
+        if (requestParameters.baseReleaseId === null || requestParameters.baseReleaseId === undefined) {
+            throw new runtime.RequiredError('baseReleaseId','Required parameter requestParameters.baseReleaseId was null or undefined when calling compareRelease.');
+        }
+
+        if (requestParameters.toCompareReleaseId === null || requestParameters.toCompareReleaseId === undefined) {
+            throw new runtime.RequiredError('toCompareReleaseId','Required parameter requestParameters.toCompareReleaseId was null or undefined when calling compareRelease.');
+        }
+
+        const queryParameters: any = {};
+
+        if (requestParameters.baseReleaseId !== undefined) {
+            queryParameters['baseReleaseId'] = requestParameters.baseReleaseId;
+        }
+
+        if (requestParameters.toCompareReleaseId !== undefined) {
+            queryParameters['toCompareReleaseId'] = requestParameters.toCompareReleaseId;
+        }
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/openapi/v1/envs/{env}/releases/comparison`.replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpenReleaseDiffDTOFromJSON(jsonValue));
+    }
+
+    /**
+     * Get the configuration differences between two releases.
+     * Compare two releases
+     */
+    async compareRelease(requestParameters: CompareReleaseRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenReleaseDiffDTO> {
+        const response = await this.compareReleaseRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      *
@@ -138,6 +183,10 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -198,6 +247,10 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
@@ -252,6 +305,10 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -346,70 +403,6 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all
-     * 获取所有发布（分页） (new added)
-     */
-    async findAllReleasesRaw(requestParameters: FindAllReleasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenReleaseBO>>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling findAllReleases.');
-        }
-
-        if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling findAllReleases.');
-        }
-
-        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
-            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling findAllReleases.');
-        }
-
-        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling findAllReleases.');
-        }
-
-        if (requestParameters.page === null || requestParameters.page === undefined) {
-            throw new runtime.RequiredError('page','Required parameter requestParameters.page was null or undefined when calling findAllReleases.');
-        }
-
-        if (requestParameters.size === null || requestParameters.size === undefined) {
-            throw new runtime.RequiredError('size','Required parameter requestParameters.size was null or undefined when calling findAllReleases.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.page !== undefined) {
-            queryParameters['page'] = requestParameters.page;
-        }
-
-        if (requestParameters.size !== undefined) {
-            queryParameters['size'] = requestParameters.size;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenReleaseBOFromJSON));
-    }
-
-    /**
-     * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/all
-     * 获取所有发布（分页） (new added)
-     */
-    async findAllReleases(requestParameters: FindAllReleasesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenReleaseBO>> {
-        const response = await this.findAllReleasesRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * GET /openapi/v1/envs/{env}/releases/{releaseId}
      * 获取发布详情 (new added)
      */
@@ -498,87 +491,16 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * 合并灰度分支并可选择删除分支
-     * 合并分支 (original openapi)
-     */
-    async mergeRaw(requestParameters: MergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenReleaseDTO>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling merge.');
-        }
-
-        if (requestParameters.env === null || requestParameters.env === undefined) {
-            throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling merge.');
-        }
-
-        if (requestParameters.clusterName === null || requestParameters.clusterName === undefined) {
-            throw new runtime.RequiredError('clusterName','Required parameter requestParameters.clusterName was null or undefined when calling merge.');
-        }
-
-        if (requestParameters.namespaceName === null || requestParameters.namespaceName === undefined) {
-            throw new runtime.RequiredError('namespaceName','Required parameter requestParameters.namespaceName was null or undefined when calling merge.');
-        }
-
-        if (requestParameters.branchName === null || requestParameters.branchName === undefined) {
-            throw new runtime.RequiredError('branchName','Required parameter requestParameters.branchName was null or undefined when calling merge.');
-        }
-
-        if (requestParameters.deleteBranch === null || requestParameters.deleteBranch === undefined) {
-            throw new runtime.RequiredError('deleteBranch','Required parameter requestParameters.deleteBranch was null or undefined when calling merge.');
-        }
-
-        if (requestParameters.namespaceReleaseDTO === null || requestParameters.namespaceReleaseDTO === undefined) {
-            throw new runtime.RequiredError('namespaceReleaseDTO','Required parameter requestParameters.namespaceReleaseDTO was null or undefined when calling merge.');
-        }
-
-        const queryParameters: any = {};
-
-        if (requestParameters.deleteBranch !== undefined) {
-            queryParameters['deleteBranch'] = requestParameters.deleteBranch;
-        }
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/merge`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))).replace(`{${"env"}}`, encodeURIComponent(String(requestParameters.env))).replace(`{${"clusterName"}}`, encodeURIComponent(String(requestParameters.clusterName))).replace(`{${"namespaceName"}}`, encodeURIComponent(String(requestParameters.namespaceName))).replace(`{${"branchName"}}`, encodeURIComponent(String(requestParameters.branchName))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: NamespaceReleaseDTOToJSON(requestParameters.namespaceReleaseDTO),
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenReleaseDTOFromJSON(jsonValue));
-    }
-
-    /**
-     * 合并灰度分支并可选择删除分支
-     * 合并分支 (original openapi)
-     */
-    async merge(requestParameters: MergeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenReleaseDTO> {
-        const response = await this.mergeRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * 回滚到指定的发布版本
      * 回滚发布 (original openapi)
      */
-    async rollbackRaw(requestParameters: RollbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async rollbackRaw(requestParameters: RollbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.env === null || requestParameters.env === undefined) {
             throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling rollback.');
         }
 
         if (requestParameters.releaseId === null || requestParameters.releaseId === undefined) {
             throw new runtime.RequiredError('releaseId','Required parameter requestParameters.releaseId was null or undefined when calling rollback.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling rollback.');
         }
 
         const queryParameters: any = {};
@@ -600,16 +522,15 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * 回滚到指定的发布版本
      * 回滚发布 (original openapi)
      */
-    async rollback(requestParameters: RollbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.rollbackRaw(requestParameters, initOverrides);
-        return await response.value();
+    async rollback(requestParameters: RollbackRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.rollbackRaw(requestParameters, initOverrides);
     }
 
 }

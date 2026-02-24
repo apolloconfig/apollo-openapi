@@ -15,20 +15,26 @@
 
 import * as runtime from '../runtime';
 import type {
-  MultiResponseEntity,
+  ExceptionResponse,
   OpenAppDTO,
   OpenCreateAppDTO,
   OpenEnvClusterDTO,
+  OpenEnvClusterInfo,
+  OpenMissEnvDTO,
 } from '../models';
 import {
-    MultiResponseEntityFromJSON,
-    MultiResponseEntityToJSON,
+    ExceptionResponseFromJSON,
+    ExceptionResponseToJSON,
     OpenAppDTOFromJSON,
     OpenAppDTOToJSON,
     OpenCreateAppDTOFromJSON,
     OpenCreateAppDTOToJSON,
     OpenEnvClusterDTOFromJSON,
     OpenEnvClusterDTOToJSON,
+    OpenEnvClusterInfoFromJSON,
+    OpenEnvClusterInfoToJSON,
+    OpenMissEnvDTOFromJSON,
+    OpenMissEnvDTOToJSON,
 } from '../models';
 
 export interface CreateAppRequest {
@@ -37,13 +43,13 @@ export interface CreateAppRequest {
 
 export interface CreateAppInEnvRequest {
     env: string;
-    operator: string;
     openAppDTO: OpenAppDTO;
+    operator?: string;
 }
 
 export interface DeleteAppRequest {
     appId: string;
-    operator: string;
+    operator?: string;
 }
 
 export interface FindAppsRequest {
@@ -58,10 +64,6 @@ export interface GetAppRequest {
     appId: string;
 }
 
-export interface GetAppNavTreeRequest {
-    appId: string;
-}
-
 export interface GetAppsBySelfRequest {
     page: number;
     size: number;
@@ -71,10 +73,14 @@ export interface GetEnvClusterInfoRequest {
     appId: string;
 }
 
+export interface GetEnvClustersRequest {
+    appId: string;
+}
+
 export interface UpdateAppRequest {
     appId: string;
-    operator: string;
     openAppDTO: OpenAppDTO;
+    operator?: string;
 }
 
 /**
@@ -86,7 +92,7 @@ export class AppManagementApi extends runtime.BaseAPI {
      * POST /openapi/v1/apps
      * 创建应用 (original openapi)
      */
-    async createAppRaw(requestParameters: CreateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async createAppRaw(requestParameters: CreateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenAppDTO>> {
         if (requestParameters.openCreateAppDTO === null || requestParameters.openCreateAppDTO === undefined) {
             throw new runtime.RequiredError('openCreateAppDTO','Required parameter requestParameters.openCreateAppDTO was null or undefined when calling createApp.');
         }
@@ -109,14 +115,14 @@ export class AppManagementApi extends runtime.BaseAPI {
             body: OpenCreateAppDTOToJSON(requestParameters.openCreateAppDTO),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpenAppDTOFromJSON(jsonValue));
     }
 
     /**
      * POST /openapi/v1/apps
      * 创建应用 (original openapi)
      */
-    async createApp(requestParameters: CreateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
+    async createApp(requestParameters: CreateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenAppDTO> {
         const response = await this.createAppRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -125,13 +131,9 @@ export class AppManagementApi extends runtime.BaseAPI {
      * POST /openapi/v1/apps/envs/{env}
      * 在指定环境创建应用(new added)
      */
-    async createAppInEnvRaw(requestParameters: CreateAppInEnvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async createAppInEnvRaw(requestParameters: CreateAppInEnvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.env === null || requestParameters.env === undefined) {
             throw new runtime.RequiredError('env','Required parameter requestParameters.env was null or undefined when calling createAppInEnv.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling createAppInEnv.');
         }
 
         if (requestParameters.openAppDTO === null || requestParameters.openAppDTO === undefined) {
@@ -160,29 +162,24 @@ export class AppManagementApi extends runtime.BaseAPI {
             body: OpenAppDTOToJSON(requestParameters.openAppDTO),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * POST /openapi/v1/apps/envs/{env}
      * 在指定环境创建应用(new added)
      */
-    async createAppInEnv(requestParameters: CreateAppInEnvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.createAppInEnvRaw(requestParameters, initOverrides);
-        return await response.value();
+    async createAppInEnv(requestParameters: CreateAppInEnvRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.createAppInEnvRaw(requestParameters, initOverrides);
     }
 
     /**
      * DELETE /openapi/v1/apps/{appId}
      * 删除应用(new added)
      */
-    async deleteAppRaw(requestParameters: DeleteAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+    async deleteAppRaw(requestParameters: DeleteAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling deleteApp.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling deleteApp.');
         }
 
         const queryParameters: any = {};
@@ -204,16 +201,15 @@ export class AppManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse<any>(response);
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * DELETE /openapi/v1/apps/{appId}
      * 删除应用(new added)
      */
-    async deleteApp(requestParameters: DeleteAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
-        const response = await this.deleteAppRaw(requestParameters, initOverrides);
-        return await response.value();
+    async deleteApp(requestParameters: DeleteAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteAppRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -285,10 +281,10 @@ export class AppManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * GET /openapi/v1/apps/{appId}/miss_envs
+     * GET /openapi/v1/apps/{appId}/miss-envs
      * 查找缺失的环境(new added)
      */
-    async findMissEnvsRaw(requestParameters: FindMissEnvsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiResponseEntity>> {
+    async findMissEnvsRaw(requestParameters: FindMissEnvsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenMissEnvDTO>>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling findMissEnvs.');
         }
@@ -302,20 +298,20 @@ export class AppManagementApi extends runtime.BaseAPI {
         }
 
         const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/miss_envs`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))),
+            path: `/openapi/v1/apps/{appId}/miss-envs`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))),
             method: 'GET',
             headers: headerParameters,
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => MultiResponseEntityFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenMissEnvDTOFromJSON));
     }
 
     /**
-     * GET /openapi/v1/apps/{appId}/miss_envs
+     * GET /openapi/v1/apps/{appId}/miss-envs
      * 查找缺失的环境(new added)
      */
-    async findMissEnvs(requestParameters: FindMissEnvsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiResponseEntity> {
+    async findMissEnvs(requestParameters: FindMissEnvsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenMissEnvDTO>> {
         const response = await this.findMissEnvsRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -357,44 +353,8 @@ export class AppManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * GET /openapi/v1/apps/{appId}/navtree
-     * 获取应用导航树(new added)
-     */
-    async getAppNavTreeRaw(requestParameters: GetAppNavTreeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<MultiResponseEntity>> {
-        if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getAppNavTree.');
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        if (this.configuration && this.configuration.apiKey) {
-            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
-        }
-
-        const response = await this.request({
-            path: `/openapi/v1/apps/{appId}/navtree`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))),
-            method: 'GET',
-            headers: headerParameters,
-            query: queryParameters,
-        }, initOverrides);
-
-        return new runtime.JSONApiResponse(response, (jsonValue) => MultiResponseEntityFromJSON(jsonValue));
-    }
-
-    /**
-     * GET /openapi/v1/apps/{appId}/navtree
-     * 获取应用导航树(new added)
-     */
-    async getAppNavTree(requestParameters: GetAppNavTreeRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<MultiResponseEntity> {
-        const response = await this.getAppNavTreeRaw(requestParameters, initOverrides);
-        return await response.value();
-    }
-
-    /**
      * GET /openapi/v1/apps/by-self
-     * 获取当前Consumer的应用列表（分页）(new added)
+     * 获取当前Consumer/User的应用列表（分页）(new added)
      */
     async getAppsBySelfRaw(requestParameters: GetAppsBySelfRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenAppDTO>>> {
         if (requestParameters.page === null || requestParameters.page === undefined) {
@@ -433,7 +393,7 @@ export class AppManagementApi extends runtime.BaseAPI {
 
     /**
      * GET /openapi/v1/apps/by-self
-     * 获取当前Consumer的应用列表（分页）(new added)
+     * 获取当前Consumer/User的应用列表（分页）(new added)
      */
     async getAppsBySelf(requestParameters: GetAppsBySelfRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenAppDTO>> {
         const response = await this.getAppsBySelfRaw(requestParameters, initOverrides);
@@ -441,12 +401,48 @@ export class AppManagementApi extends runtime.BaseAPI {
     }
 
     /**
+     * /openapi/v1/apps/{appId}/env-cluster-info
+     * 获取应用环境集群详情(new added)
+     */
+    async getEnvClusterInfoRaw(requestParameters: GetEnvClusterInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenEnvClusterInfo>>> {
+        if (requestParameters.appId === null || requestParameters.appId === undefined) {
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getEnvClusterInfo.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/openapi/v1/apps/{appId}/env-cluster-info`.replace(`{${"appId"}}`, encodeURIComponent(String(requestParameters.appId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenEnvClusterInfoFromJSON));
+    }
+
+    /**
+     * /openapi/v1/apps/{appId}/env-cluster-info
+     * 获取应用环境集群详情(new added)
+     */
+    async getEnvClusterInfo(requestParameters: GetEnvClusterInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenEnvClusterInfo>> {
+        const response = await this.getEnvClusterInfoRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * GET /openapi/v1/apps/{appId}/envclusters
      * 获取应用的环境集群信息 (original openapi)
      */
-    async getEnvClusterInfoRaw(requestParameters: GetEnvClusterInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenEnvClusterDTO>>> {
+    async getEnvClustersRaw(requestParameters: GetEnvClustersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenEnvClusterDTO>>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
-            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getEnvClusterInfo.');
+            throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getEnvClusters.');
         }
 
         const queryParameters: any = {};
@@ -471,8 +467,8 @@ export class AppManagementApi extends runtime.BaseAPI {
      * GET /openapi/v1/apps/{appId}/envclusters
      * 获取应用的环境集群信息 (original openapi)
      */
-    async getEnvClusterInfo(requestParameters: GetEnvClusterInfoRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenEnvClusterDTO>> {
-        const response = await this.getEnvClusterInfoRaw(requestParameters, initOverrides);
+    async getEnvClusters(requestParameters: GetEnvClustersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenEnvClusterDTO>> {
+        const response = await this.getEnvClustersRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -480,13 +476,9 @@ export class AppManagementApi extends runtime.BaseAPI {
      * PUT /openapi/v1/apps/{appId}
      * 更新应用(new added)
      */
-    async updateAppRaw(requestParameters: UpdateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenAppDTO>> {
+    async updateAppRaw(requestParameters: UpdateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling updateApp.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling updateApp.');
         }
 
         if (requestParameters.openAppDTO === null || requestParameters.openAppDTO === undefined) {
@@ -515,16 +507,15 @@ export class AppManagementApi extends runtime.BaseAPI {
             body: OpenAppDTOToJSON(requestParameters.openAppDTO),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenAppDTOFromJSON(jsonValue));
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * PUT /openapi/v1/apps/{appId}
      * 更新应用(new added)
      */
-    async updateApp(requestParameters: UpdateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenAppDTO> {
-        const response = await this.updateAppRaw(requestParameters, initOverrides);
-        return await response.value();
+    async updateApp(requestParameters: UpdateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.updateAppRaw(requestParameters, initOverrides);
     }
 
 }

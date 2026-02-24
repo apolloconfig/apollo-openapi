@@ -5,8 +5,9 @@ import java.util.Objects;
 import com.apollo.openapi.server.model.OpenAppDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -28,7 +29,7 @@ public class OpenCreateAppDTO {
   private Boolean assignAppRoleToSelf;
 
   @Valid
-  private List<String> admins;
+  private Set<String> admins;
 
   private OpenAppDTO app;
 
@@ -52,14 +53,14 @@ public class OpenCreateAppDTO {
     this.assignAppRoleToSelf = assignAppRoleToSelf;
   }
 
-  public OpenCreateAppDTO admins(List<String> admins) {
+  public OpenCreateAppDTO admins(Set<String> admins) {
     this.admins = admins;
     return this;
   }
 
   public OpenCreateAppDTO addAdminsItem(String adminsItem) {
     if (this.admins == null) {
-      this.admins = new ArrayList<>();
+      this.admins = new LinkedHashSet<>();
     }
     this.admins.add(adminsItem);
     return this;
@@ -72,11 +73,12 @@ public class OpenCreateAppDTO {
 
   @Schema(name = "admins", description = "应用管理员用户名列表。应用负责人默认具有项目管理员权限。管理员可以创建命名空间、集群并分配用户权限", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("admins")
-  public List<String> getAdmins() {
+  public Set<String> getAdmins() {
     return admins;
   }
 
-  public void setAdmins(List<String> admins) {
+  @JsonDeserialize(as = LinkedHashSet.class)
+  public void setAdmins(Set<String> admins) {
     this.admins = admins;
   }
 

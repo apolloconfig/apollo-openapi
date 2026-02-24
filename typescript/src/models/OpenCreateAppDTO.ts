@@ -34,10 +34,10 @@ export interface OpenCreateAppDTO {
     assignAppRoleToSelf?: boolean;
     /**
      * 应用管理员用户名列表。应用负责人默认具有项目管理员权限。管理员可以创建命名空间、集群并分配用户权限
-     * @type {Array<string>}
+     * @type {Set<string>}
      * @memberof OpenCreateAppDTO
      */
-    admins?: Array<string>;
+    admins?: Set<string>;
     /**
      *
      * @type {OpenAppDTO}
@@ -81,7 +81,7 @@ export function OpenCreateAppDTOToJSON(value?: OpenCreateAppDTO | null): any {
     return {
 
         'assignAppRoleToSelf': value.assignAppRoleToSelf,
-        'admins': value.admins,
+        'admins': value.admins === undefined ? undefined : Array.from(value.admins as Set<any>),
         'app': OpenAppDTOToJSON(value.app),
     };
 }

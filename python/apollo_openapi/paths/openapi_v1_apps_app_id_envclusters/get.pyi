@@ -98,43 +98,7 @@ _response_for_200 = api_client.OpenApiResponse(
             schema=SchemaFor200ResponseBodyApplicationJson),
     },
 )
-
-
-class SchemaFor404ResponseBodyApplicationJson(
-    schemas.ComposedBase,
-    schemas.DictSchema
-):
-
-
-    class MetaOapg:
-
-        @classmethod
-        @functools.lru_cache()
-        def all_of(cls):
-            # we need this here to make our import statements work
-            # we must store _composed_schemas in here so the code is only run
-            # when we invoke this method. If we kept this at the class
-            # level we would get an error because the class level
-            # code would be run when this module is imported, and these composed
-            # classes don't exist yet because their module has not finished
-            # loading
-            return [
-                ExceptionResponse,
-            ]
-
-
-    def __new__(
-        cls,
-        *_args: typing.Union[dict, frozendict.frozendict, ],
-        _configuration: typing.Optional[schemas.Configuration] = None,
-        **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
-    ) -> 'SchemaFor404ResponseBodyApplicationJson':
-        return super().__new__(
-            cls,
-            *_args,
-            _configuration=_configuration,
-            **kwargs,
-        )
+SchemaFor404ResponseBodyApplicationJson = ExceptionResponse
 
 
 @dataclass
@@ -160,7 +124,7 @@ _all_accept_content_types = (
 
 class BaseApi(api_client.Api):
     @typing.overload
-    def _get_env_cluster_info_oapg(
+    def _get_env_clusters_oapg(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -172,7 +136,7 @@ class BaseApi(api_client.Api):
     ]: ...
 
     @typing.overload
-    def _get_env_cluster_info_oapg(
+    def _get_env_clusters_oapg(
         self,
         skip_deserialization: typing_extensions.Literal[True],
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -182,7 +146,7 @@ class BaseApi(api_client.Api):
     ) -> api_client.ApiResponseWithoutDeserialization: ...
 
     @typing.overload
-    def _get_env_cluster_info_oapg(
+    def _get_env_clusters_oapg(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -194,7 +158,7 @@ class BaseApi(api_client.Api):
         api_client.ApiResponseWithoutDeserialization,
     ]: ...
 
-    def _get_env_cluster_info_oapg(
+    def _get_env_clusters_oapg(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -258,11 +222,11 @@ class BaseApi(api_client.Api):
         return api_response
 
 
-class GetEnvClusterInfo(BaseApi):
+class GetEnvClusters(BaseApi):
     # this class is used by api classes that refer to endpoints with operationId fn names
 
     @typing.overload
-    def get_env_cluster_info(
+    def get_env_clusters(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -274,7 +238,7 @@ class GetEnvClusterInfo(BaseApi):
     ]: ...
 
     @typing.overload
-    def get_env_cluster_info(
+    def get_env_clusters(
         self,
         skip_deserialization: typing_extensions.Literal[True],
         path_params: RequestPathParams = frozendict.frozendict(),
@@ -284,7 +248,7 @@ class GetEnvClusterInfo(BaseApi):
     ) -> api_client.ApiResponseWithoutDeserialization: ...
 
     @typing.overload
-    def get_env_cluster_info(
+    def get_env_clusters(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -296,7 +260,7 @@ class GetEnvClusterInfo(BaseApi):
         api_client.ApiResponseWithoutDeserialization,
     ]: ...
 
-    def get_env_cluster_info(
+    def get_env_clusters(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -304,7 +268,7 @@ class GetEnvClusterInfo(BaseApi):
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
-        return self._get_env_cluster_info_oapg(
+        return self._get_env_clusters_oapg(
             path_params=path_params,
             accept_content_types=accept_content_types,
             stream=stream,
@@ -359,7 +323,7 @@ class ApiForget(BaseApi):
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
-        return self._get_env_cluster_info_oapg(
+        return self._get_env_clusters_oapg(
             path_params=path_params,
             accept_content_types=accept_content_types,
             stream=stream,

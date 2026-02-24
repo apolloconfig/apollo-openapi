@@ -41,6 +41,22 @@ public class OpenEnvClusterInfoTest {
     }
 
     /**
+     * Test the property 'code'
+     */
+    @Test
+    public void codeTest() {
+        // TODO: test code
+    }
+
+    /**
+     * Test the property 'message'
+     */
+    @Test
+    public void messageTest() {
+        // TODO: test message
+    }
+
+    /**
      * Test the property 'env'
      */
     @Test

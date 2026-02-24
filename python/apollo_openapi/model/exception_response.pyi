@@ -30,31 +30,79 @@ class ExceptionResponse(
     Ref: https://openapi-generator.tech
 
     Do not edit the class manually.
-
-    错误响应对象，表示为 Map<String,Object>。 字段包括： - status: HTTP 状态码 (integer) - message: 错误信息 (string) - timestamp: 出错时间戳 (string) - exception: 异常类名或标识 (string)
-
     """
 
 
     class MetaOapg:
-        additional_properties = schemas.AnyTypeSchema
 
-    def __getitem__(self, name: typing.Union[str, ]) -> MetaOapg.additional_properties:
+        class properties:
+            status = schemas.IntSchema
+            message = schemas.StrSchema
+            timestamp = schemas.DateTimeSchema
+            exception = schemas.StrSchema
+            __annotations__ = {
+                "status": status,
+                "message": message,
+                "timestamp": timestamp,
+                "exception": exception,
+            }
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["status"]) -> MetaOapg.properties.status: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["message"]) -> MetaOapg.properties.message: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["timestamp"]) -> MetaOapg.properties.timestamp: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["exception"]) -> MetaOapg.properties.exception: ...
+
+    @typing.overload
+    def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
+
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["status", "message", "timestamp", "exception", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
 
-    def get_item_oapg(self, name: typing.Union[str, ]) -> MetaOapg.additional_properties:
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["status"]) -> typing.Union[MetaOapg.properties.status, schemas.Unset]: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["message"]) -> typing.Union[MetaOapg.properties.message, schemas.Unset]: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["timestamp"]) -> typing.Union[MetaOapg.properties.timestamp, schemas.Unset]: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["exception"]) -> typing.Union[MetaOapg.properties.exception, schemas.Unset]: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
+
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["status", "message", "timestamp", "exception", ], str]):
         return super().get_item_oapg(name)
+
 
     def __new__(
         cls,
         *_args: typing.Union[dict, frozendict.frozendict, ],
+        status: typing.Union[MetaOapg.properties.status, decimal.Decimal, int, schemas.Unset] = schemas.unset,
+        message: typing.Union[MetaOapg.properties.message, str, schemas.Unset] = schemas.unset,
+        timestamp: typing.Union[MetaOapg.properties.timestamp, str, datetime, schemas.Unset] = schemas.unset,
+        exception: typing.Union[MetaOapg.properties.exception, str, schemas.Unset] = schemas.unset,
         _configuration: typing.Optional[schemas.Configuration] = None,
-        **kwargs: typing.Union[MetaOapg.additional_properties, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, bool, None, list, tuple, bytes, io.FileIO, io.BufferedReader, ],
+        **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
     ) -> 'ExceptionResponse':
         return super().__new__(
             cls,
             *_args,
+            status=status,
+            message=message,
+            timestamp=timestamp,
+            exception=exception,
             _configuration=_configuration,
             **kwargs,
         )
