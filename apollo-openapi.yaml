@@ -20,7 +20,7 @@ info:
 
   version: 1.0.0
 security:
-  - ApiKeyAuth: [ ]
+  - ApiKeyAuth: []
 tags:
   - name: App Management
     description: 应用管理相关接口，包括应用的创建、查询、更新、删除等操作
@@ -70,7 +70,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OpenAppDTO'
-          headers: { }
+          headers: {}
         '400':
           description: '请求参数错误'
           content:
@@ -128,7 +128,7 @@ paths:
                   orgName: 'Microservices Team'
                   ownerName: 'Dev Team'
                   ownerEmail: 'dev@company.com'
-          headers: { }
+          headers: {}
         '401':
           description: '未授权访问'
           content:
@@ -173,7 +173,7 @@ paths:
                   orgName: 'Microservices Team'
                   ownerName: 'Dev Team'
                   ownerEmail: 'dev@company.com'
-          headers: { }
+          headers: {}
         '401':
           description: '未授权访问'
           content:
@@ -216,7 +216,7 @@ paths:
                   clusters:
                     - 'default'
                     - 'backup'
-          headers: { }
+          headers: {}
         '404':
           description: '应用不存在'
           content:
@@ -256,7 +256,7 @@ paths:
                 orgName: 'Default Organization'
                 ownerName: 'Apollo Admin'
                 ownerEmail: 'admin@apollo.com'
-          headers: { }
+          headers: {}
         '404':
           description: '应用不存在'
           content:
@@ -339,7 +339,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-          headers: { }
+          headers: {}
   /openapi/v1/apps/by-self:
     get:
       summary: 获取当前Consumer/User的应用列表（分页）(new added)
@@ -393,7 +393,7 @@ paths:
                   orgName: 'Business Team'
                   ownerName: 'Business Team'
                   ownerEmail: 'business@company.com'
-          headers: { }
+          headers: {}
         '401':
           description: '未授权访问'
           content:
@@ -440,7 +440,7 @@ paths:
                       parentClusterId: 0
                       comment: 'Default cluster'
                   message: 'load env: DEV cluster error'
-          headers: { }
+          headers: {}
   /openapi/v1/apps/envs/{env}:
     post:
       summary: 在指定环境创建应用(new added)
@@ -483,7 +483,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-          headers: { }
+          headers: {}
   /openapi/v1/apps/{appId}/miss-envs:
     get:
       summary: 查找缺失的环境(new added)
@@ -574,7 +574,7 @@ paths:
                 type: 0
                 value: '8080'
                 comment: '服务器端口配置'
-          headers: { }
+          headers: {}
         '404':
           description: '配置项不存在'
           content:
@@ -660,7 +660,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-          headers: { }
+          headers: {}
     delete:
       summary: 删除配置项 (original openapi)
       operationId: deleteItem
@@ -793,7 +793,7 @@ paths:
                     type: 0
                     value: 'INFO'
                     comment: '日志级别配置'
-          headers: { }
+          headers: {}
         '404':
           description: '命名空间不存在'
           content:
@@ -860,7 +860,7 @@ paths:
                 type: 0
                 value: '8080'
                 comment: '服务器端口配置'
-          headers: { }
+          headers: {}
         '400':
           description: '请求参数错误'
           content:
@@ -928,7 +928,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}:
     get:
       summary: 通过查询参数获取配置项（支持编码的key） (original openapi)
@@ -984,7 +984,7 @@ paths:
                 type: 0
                 value: 'jdbc:mysql://localhost:3306/apollo?useUnicode=true&characterEncoding=utf8'
                 comment: '数据库连接地址，包含特殊字符'
-          headers: { }
+          headers: {}
         '404':
           description: '配置项不存在'
           content:
@@ -1070,7 +1070,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-          headers: { }
+          headers: {}
     delete:
       summary: 通过编码的key删除配置项 (original openapi)
       operationId: deleteItemByEncodedKey
@@ -1118,7 +1118,7 @@ paths:
       responses:
         '200':
           description: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
     get:
       summary: 获取分支下的配置项 (new added)
@@ -1186,7 +1186,7 @@ paths:
                   type: 0
                   value: 'verbose'
                   comment: '测试调试级别'
-          headers: { }
+          headers: {}
         '404':
           description: '分支不存在'
           content:
@@ -1299,7 +1299,7 @@ paths:
                         comment: ''
                         lineNum: 0
                   extInfo: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/synchronize:
     post:
       summary: 同步配置项到多个命名空间 (new added)
@@ -1362,7 +1362,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/validation:
     post:
       summary: 验证配置文本语法 (new added)
@@ -1413,7 +1413,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/revocation:
     post:
       summary: 撤销配置项更改 (new added)
@@ -1470,7 +1470,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}:
     get:
       summary: 获取指定集群信息 (original openapi)
@@ -1512,7 +1512,7 @@ paths:
                 dataChangeLastModifiedTime: '2024-01-18T09:15:00.000Z'
                 name: production
                 appId: sample-app
-          headers: { }
+          headers: {}
         '404':
           description: 集群不存在
           content:
@@ -1572,7 +1572,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters:
     post:
       summary: 创建集群 (original openapi)
@@ -1613,7 +1613,7 @@ paths:
                 dataChangeLastModifiedTime: '2024-01-15T10:30:00.000Z'
                 name: test-cluster
                 appId: sample-app
-          headers: { }
+          headers: {}
         '400':
           description: 请求参数错误
           content:
@@ -1693,7 +1693,7 @@ paths:
                   'spring.datasource.url': 'jdbc:mysql://localhost:3306/apollo'
                   'logging.level.root': 'INFO'
                 comment: '首次发布，包含基础配置'
-          headers: { }
+          headers: {}
         '400':
           description: '发布参数错误'
           content:
@@ -1762,7 +1762,7 @@ paths:
                   'logging.level.root': 'INFO'
                   'app.version': '1.2.0'
                 comment: '最新生产发布版本，包含性能优化'
-          headers: { }
+          headers: {}
         '404':
           description: '未找到活跃发布'
           content:
@@ -1844,7 +1844,7 @@ paths:
                   'logging.level.root': 'INFO'
                   'feature.new-feature': 'enabled'
                 comment: '合并功能分支到主分支，包含新功能配置'
-          headers: { }
+          headers: {}
         '400':
           description: '合并参数错误'
           content:
@@ -1928,7 +1928,7 @@ paths:
                 configurations:
                   '': ''
                 comment: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-del-releases:
     post:
       summary: 创建灰度删除发布 (original openapi)
@@ -2000,7 +2000,7 @@ paths:
                 configurations:
                   '': ''
                 comment: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/releases/{releaseId}/rollback:
     put:
       summary: 回滚发布 (original openapi)
@@ -2073,7 +2073,7 @@ paths:
                 configurations:
                   '': ''
                 comment: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/active:
     get:
       summary: 获取活跃发布（分页） (new added)
@@ -2145,7 +2145,7 @@ paths:
                   configurations:
                     '': ''
                   comment: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/releases/comparison:
     get:
       tags:
@@ -2220,7 +2220,7 @@ paths:
             application/json:
               schema:
                 type: integer
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/instances/by-release:
     get:
       summary: 根据发布版本查询实例（支持分页） (new added)
@@ -2291,7 +2291,7 @@ paths:
                         releaseDeliveryTime: ''
                         dataChangeLastModifiedTime: ''
                     dataChangeCreatedTime: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/instances/by-namespace:
     get:
       summary: 根据namespaceName查询实例（new added）
@@ -2380,7 +2380,7 @@ paths:
                         releaseDeliveryTime: ''
                         dataChangeLastModifiedTime: ''
                     dataChangeCreatedTime: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/instances/by-namespace-and-releases-not-in: # avoidng confliction with other server endpoint
     get:
       summary: 查询不在指定发布版本中的实例 (new added)
@@ -2451,7 +2451,7 @@ paths:
                       releaseDeliveryTime: ''
                       dataChangeLastModifiedTime: ''
                   dataChangeCreatedTime: ''
-          headers: { }
+          headers: {}
   /openapi/v1/namespaces:
     post:
       summary: 创建Namespace (new added)
@@ -2508,7 +2508,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/OpenNamespaceUsageDTO'
-          headers: { }
+          headers: {}
   /openapi/v1/apps/{appId}/appnamespaces:
     post:
       summary: 创建AppNamespace (original openapi)
@@ -2554,7 +2554,7 @@ paths:
                 isPublic: false
                 appendNamespacePrefix: true
                 comment: '数据库相关配置命名空间'
-          headers: { }
+          headers: {}
         '400':
           description: '请求参数错误'
           content:
@@ -2601,7 +2601,7 @@ paths:
                   isPublic: false
                   appendNamespacePrefix: false
                   comment: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces:
     get:
       summary: 获取指定集群下的所有Namespace (original openapi)
@@ -2673,7 +2673,7 @@ paths:
                       type: 0
                       value: ''
                       comment: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}:
     get:
       summary: 获取指定的Namespace (original openapi)
@@ -2749,7 +2749,7 @@ paths:
                     type: 0
                     value: ''
                     comment: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace:
     get:
       summary: 查询关联Namespace对应的公共Namespace详情 (new added)
@@ -2818,7 +2818,7 @@ paths:
                     value: 'v1'
                   - key: 'k2'
                     value: 'v2'
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock:
     get:
       summary: 获取Namespace的锁状态 (original openapi)
@@ -2863,7 +2863,7 @@ paths:
                 namespaceName: ''
                 isLocked: false
                 lockedBy: ''
-          headers: { }
+          headers: {}
   /openapi/v1/appnamespaces:
     get:
       summary: 获取所有公共AppNamespace (new added)
@@ -2892,7 +2892,7 @@ paths:
                   isPublic: false
                   appendNamespacePrefix: false
                   comment: ''
-          headers: { }
+          headers: {}
   /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}:
     get:
       summary: 获取指定的AppNamespace (new added)
@@ -2939,7 +2939,7 @@ paths:
                 isPublic: false
                 appendNamespacePrefix: false
                 comment: ''
-          headers: { }
+          headers: {}
     delete:
       summary: 删除AppNamespace (new added)
       operationId: deleteAppNamespace
@@ -2969,7 +2969,7 @@ paths:
       responses:
         '200':
           description: 'AppNamespace删除成功'
-          headers: { }
+          headers: {}
   /openapi/v1/apps/{appId}/namespaces/releases/status:
     get:
       summary: 获取应用下所有Namespace的发布状态 (new added)
@@ -2992,7 +2992,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StringToStringBoolMap'
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances:
     get:
       summary: 获取公共AppNamespace的所有实例 (new added)
@@ -3057,7 +3057,7 @@ paths:
                       type: 0
                       value: ''
                       comment: ''
-          headers: { }
+          headers: {}
   /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage:
     get:
       summary: 查询namespace使用情况(new added)
@@ -3102,7 +3102,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/OpenNamespaceUsageDTO'
-          headers: { }
+          headers: {}
   /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces:
     get:
       summary: 查找缺失的Namespace (new added)
@@ -3143,7 +3143,7 @@ paths:
                   type: string
               example:
                 - ''
-          headers: { }
+          headers: {}
     post:
       summary: 创建缺失的Namespace (new added)
       operationId: createMissingNamespaces
@@ -3250,7 +3250,7 @@ paths:
                   orgName: 'Microservices Team'
                 - orgId: 'infrastructure'
                   orgName: 'Infrastructure Team'
-          headers: { }
+          headers: {}
         '401':
           description: '未授权访问'
           content:
@@ -3332,7 +3332,7 @@ paths:
                     type: 0
                     value: 'debug'
                     comment: '测试模式配置'
-          headers: { }
+          headers: {}
         '404':
           description: '分支不存在'
           content:
@@ -3404,7 +3404,7 @@ paths:
                     type: 0
                     value: ''
                     comment: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}:
     delete:
       summary: 删除命名空间分支 (original openapi)
@@ -3531,7 +3531,7 @@ paths:
                 configurations:
                   '': ''
                 comment: ''
-          headers: { }
+          headers: {}
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules:
     get:
       summary: 获取分支灰度发布规则 (original openapi)
@@ -3593,7 +3593,7 @@ paths:
                       - ''
                     clientLabelList:
                       - ''
-          headers: { }
+          headers: {}
     put:
       summary: 更新分支灰度发布规则 (original openapi)
       operationId: updateBranchRules
@@ -3647,7 +3647,7 @@ paths:
       responses:
         '200':
           description: '灰度规则更新成功'
-          headers: { }
+          headers: {}
   /openapi/v1/users:
     post:
       summary: 创建用户
@@ -3680,7 +3680,7 @@ paths:
                 name: "New User"
                 email: "new-user@example.com"
                 enabled: 1
-          headers: { }
+          headers: {}
         '400':
           description: 请求参数错误（用户名/密码/邮箱为空，或密码强度不足）
           content:
@@ -3770,7 +3770,7 @@ paths:
                   name: "Dev User"
                   email: "dev@example.com"
                   enabled: 1
-          headers: { }
+          headers: {}
         '400':
           description: 请求参数错误（offset或limit超出范围）
           content:
@@ -3814,7 +3814,7 @@ paths:
                 name: "Apollo Admin"
                 email: "apollo@example.com"
                 enabled: 1
-          headers: { }
+          headers: {}
         '404':
           description: 用户不存在
           content:
@@ -3853,7 +3853,7 @@ paths:
                 - 'FAT'
                 - 'UAT'
                 - 'PRO'
-          headers: { }
+          headers: {}
   /openapi/v1/apps/{appId}/namespaces/{namespaceName}/permission-init:
     post:
       summary: 初始化应用权限 (new added)
@@ -4713,7 +4713,7 @@ paths:
                   type: boolean
               example:
                 members:
-                  '': { }
+                  '': {}
   /openapi/v1/system/roles/create-application/role-users:
     get:
       summary: 获取建应用用户 (new added)
@@ -4722,7 +4722,7 @@ paths:
       description: ''
       tags:
         - Permission Management
-      parameters: [ ]
+      parameters: []
       responses:
         '200':
           description: ''
@@ -4801,7 +4801,7 @@ paths:
       description: ''
       tags:
         - Permission Management
-      parameters: [ ]
+      parameters: []
       responses:
         '200':
           description: ''
@@ -4813,7 +4813,7 @@ paths:
                   type: boolean
               example:
                 members:
-                  '': { }
+                  '': {}
   /openapi/v1/apps/{appId}/envs/{env}/accesskeys:
     post:
       summary: 创建AccessKey
@@ -4861,7 +4861,7 @@ paths:
                 appId: ''
                 mode: 0
                 enabled: false
-          headers: { }
+          headers: {}
     get:
       summary: 查找AccessKey
       operationId: findAccessKeys
@@ -4904,7 +4904,7 @@ paths:
                   appId: ''
                   mode: 0
                   enabled: false
-          headers: { }
+          headers: {}
   /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}:
     delete:
       summary: 删除AccessKey
@@ -5620,19 +5620,19 @@ components:
           items:
             $ref: '#/components/schemas/OpenItemDTO'
           description: '待创建的配置项列表'
-          default: [ ]
+          default: []
         updateItems:
           type: array
           items:
             $ref: '#/components/schemas/OpenItemDTO'
           description: '待更新的配置项列表'
-          default: [ ]
+          default: []
         deleteItems:
           type: array
           items:
             $ref: '#/components/schemas/OpenItemDTO'
           description: '待删除的配置项列表'
-          default: [ ]
+          default: []
     OpenItemDiffDTO:
       type: object
       properties:
@@ -5769,7 +5769,7 @@ components:
         enabled:
           type: integer
           description: 用户状态：1-启用，0-停用
-          enum: [ 0, 1 ]
+          enum: [0, 1]
           example: 1
     OpenEnvNamespaceRoleUserDTO:
       type: object
@@ -5988,7 +5988,7 @@ components:
         enabled:
           type: integer
           description: 用户状态：1-启用，0-停用，默认为1
-          enum: [ 0, 1 ]
+          enum: [0, 1]
           default: 1
           example: 1
       required:
@@ -5997,4 +5997,4 @@ components:
         - email
 
 
-servers: [ ]
+servers: []
