@@ -46,6 +46,8 @@ tags:
     description: 环境管理相关接口，包括环境查询等功能
   - name: Permission Management
     description: 权限管理相关接口，包括权限查询等功能
+  - name: User Management
+    description: Operations related to user accounts
 paths:
   /openapi/v1/apps:
     post:
@@ -3645,6 +3647,190 @@ paths:
       responses:
         '200':
           description: '灰度规则更新成功'
+          headers: {}
+  /openapi/v1/users:
+    post:
+      summary: 创建用户
+      operationId: createUser
+      deprecated: false
+      description: POST /openapi/v1/users
+      tags:
+        - User Management
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpenUserDTO'
+            example:
+              username: "new-user"
+              userDisplayName: "New User"
+              password: "P@ssw0rd123"
+              email: "new-user@example.com"
+              enabled: 1
+      responses:
+        '200':
+          description: 成功创建用户，返回创建的用户信息
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenUserInfoDTO'
+              example:
+                userId: "new-user"
+                name: "New User"
+                email: "new-user@example.com"
+                enabled: 1
+          headers: {}
+        '400':
+          description: 请求参数错误（用户名/密码/邮箱为空，或密码强度不足）
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: 未授权访问
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 权限不足或当前用户服务不支持创建用户
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/ExceptionResponse'
+        '409':
+          description: 用户名已存在（重复）
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/ExceptionResponse'
+    get:
+      summary: 搜索用户列表
+      operationId: searchUsers
+      deprecated: false
+      description: GET /openapi/v1/users
+      tags:
+        - User Management
+      parameters:
+        - name: keyword
+          in: query
+          description: 搜索关键字（匹配用户名或显示名称），为空时返回所有用户
+          required: false
+          schema:
+            type: string
+            default: ""
+        - name: includeInactiveUsers
+          in: query
+          description: 是否包含已停用的用户
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: offset
+          in: query
+          description: 分页偏移量，从0开始
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: limit
+          in: query
+          description: 分页大小，取值范围 1~100
+          required: false
+          schema:
+            type: integer
+            default: 10
+            minimum: 1
+            maximum: 100
+      responses:
+        '200':
+          description: 成功获取用户列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OpenUserInfoDTO'
+              example:
+                - userId: "apollo"
+                  name: "Apollo Admin"
+                  email: "apollo@example.com"
+                  enabled: 1
+                - userId: "dev-user"
+                  name: "Dev User"
+                  email: "dev@example.com"
+                  enabled: 1
+          headers: {}
+        '400':
+          description: 请求参数错误（offset或limit超出范围）
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: 未授权访问
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/users/{userId}:
+    get:
+      summary: 根据用户ID获取用户信息
+      operationId: getUserByUserId
+      deprecated: false
+      description: GET /openapi/v1/users/{userId}
+      tags:
+        - User Management
+      parameters:
+        - name: userId
+          in: path
+          description: 用户ID（用户名）
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功获取用户信息
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenUserInfoDTO'
+              example:
+                userId: "apollo"
+                name: "Apollo Admin"
+                email: "apollo@example.com"
+                enabled: 1
+          headers: {}
+        '404':
+          description: 用户不存在
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: 未授权访问
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                  - $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/envs:
     get:
       summary: 获取所有环境
@@ -5565,19 +5751,26 @@ components:
           description: ''
     OpenUserInfoDTO:
       type: object
+      description: 用户信息
       properties:
         userId:
           type: string
-          description: ''
+          description: 用户ID（即用户名）
+          example: "apollo"
         name:
           type: string
-          description: ''
+          description: 用户显示名称
+          example: "Apollo Admin"
         email:
           type: string
-          description: ''
+          description: 用户邮箱
+          format: email
+          example: "apollo@example.com"
         enabled:
           type: integer
-          description: ''
+          description: 用户状态：1-启用，0-停用
+          enum: [0, 1]
+          example: 1
     OpenEnvNamespaceRoleUserDTO:
       type: object
       properties:
@@ -5732,5 +5925,76 @@ components:
           featureY: false
         projectB:
           darkMode: true
+
+    MultiResponseEntity:
+      type: object
+      description: "Reserved for endpoints that return multiple RichResponseEntity items. A response container holding multiple RichResponseEntity objects (intended future use)."
+      properties:
+        code:
+          type: integer
+          description: Overall HTTP status code
+          example: 200
+        entities:
+          type: array
+          description: List of rich response entities
+          items:
+            $ref: '#/components/schemas/RichResponseEntity'
+      required:
+        - code
+        - entities
+
+    RichResponseEntity:
+      type: object
+      description: "Reserved for future use as a wrapper for a single response entity with code, message, and body."
+      properties:
+        code:
+          type: integer
+          description: HTTP status code
+          example: 200
+        message:
+          type: object
+          description: Response message (can be string or object)
+          example: "OK"
+        body:
+          type: object
+          description: Response payload (generic type T)
+      required:
+        - code
+        - message
+
+    OpenUserDTO:
+      type: object
+      description: 用于创建用户的请求体 DTO
+      properties:
+        username:
+          type: string
+          description: 用户名（登录账号），创建时必填
+          example: "new-user"
+        userDisplayName:
+          type: string
+          description: 用户显示名称，若不填则默认使用 username
+          example: "New User"
+        password:
+          type: string
+          description: 用户密码，创建时必填，需满足密码强度要求
+          format: password
+          writeOnly: true
+          example: "P@ssw0rd123"
+        email:
+          type: string
+          description: 用户邮箱，创建时必填
+          format: email
+          example: "new-user@example.com"
+        enabled:
+          type: integer
+          description: 用户状态：1-启用，0-停用，默认为1
+          enum: [0, 1]
+          default: 1
+          example: 1
+      required:
+        - username
+        - password
+        - email
+
 
 servers: []
