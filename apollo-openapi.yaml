@@ -173,7 +173,7 @@ paths:
                   orgName: 'Microservices Team'
                   ownerName: 'Dev Team'
                   ownerEmail: 'dev@company.com'
-          headers: {}
+          headers: { }
         '401':
           description: '未授权访问'
           content:
