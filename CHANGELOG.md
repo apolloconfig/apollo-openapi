@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bump package generation metadata from `0.0.1` to `0.2.0`.
 - Change the OpenAPI document version from `1.0.0` to `0.2.0`.
 - Remove generated OpenAPI document version comments to reduce churn on future version-only releases.
+- Use a Python generator template override to fix an upstream generated-code typo at the source.
 - Move AppNamespace operations from `Namespace Management` to `AppNamespace Management`.
 - Move namespace lock lookup from `Namespace Management` to `Namespace Lock Management`.
 - Move branch merge grouping from `Release Management` to `Namespace Branch Management`.
