@@ -1,7 +1,7 @@
 # apollo-openapi-client
 
 Apollo OpenAPI
-- API version: 1.0.0
+- API version: 0.2.0
 
 <p>Apollo配置中心OpenAPI接口文档</p>
 
@@ -54,7 +54,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.apollo</groupId>
   <artifactId>apollo-openapi-client</artifactId>
-  <version>0.0.1</version>
+  <version>0.2.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -70,7 +70,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "com.apollo:apollo-openapi-client:0.0.1"
+     implementation "com.apollo:apollo-openapi-client:0.2.0"
   }
 ```
 
@@ -84,7 +84,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/apollo-openapi-client-0.0.1.jar`
+* `target/apollo-openapi-client-0.2.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -248,7 +248,6 @@ Class | Method | HTTP request | Description
  - [OpenClusterDTO](docs/OpenClusterDTO.md)
  - [OpenClusterNamespaceRoleUserDTO](docs/OpenClusterNamespaceRoleUserDTO.md)
  - [OpenCreateAppDTO](docs/OpenCreateAppDTO.md)
- - [OpenCreateItemDTO](docs/OpenCreateItemDTO.md)
  - [OpenCreateNamespaceDTO](docs/OpenCreateNamespaceDTO.md)
  - [OpenEnvClusterDTO](docs/OpenEnvClusterDTO.md)
  - [OpenEnvClusterInfo](docs/OpenEnvClusterInfo.md)
@@ -258,7 +257,6 @@ Class | Method | HTTP request | Description
  - [OpenInstanceConfigDTO](docs/OpenInstanceConfigDTO.md)
  - [OpenInstanceDTO](docs/OpenInstanceDTO.md)
  - [OpenInstancePageDTO](docs/OpenInstancePageDTO.md)
- - [OpenItemChangeSets](docs/OpenItemChangeSets.md)
  - [OpenItemDTO](docs/OpenItemDTO.md)
  - [OpenItemDiffDTO](docs/OpenItemDiffDTO.md)
  - [OpenItemExtendDTO](docs/OpenItemExtendDTO.md)

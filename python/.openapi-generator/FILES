@@ -44,8 +44,6 @@ apollo_openapi/model/open_cluster_namespace_role_user_dto.py
 apollo_openapi/model/open_cluster_namespace_role_user_dto.pyi
 apollo_openapi/model/open_create_app_dto.py
 apollo_openapi/model/open_create_app_dto.pyi
-apollo_openapi/model/open_create_item_dto.py
-apollo_openapi/model/open_create_item_dto.pyi
 apollo_openapi/model/open_create_namespace_dto.py
 apollo_openapi/model/open_create_namespace_dto.pyi
 apollo_openapi/model/open_env_cluster_dto.py
@@ -64,8 +62,6 @@ apollo_openapi/model/open_instance_dto.py
 apollo_openapi/model/open_instance_dto.pyi
 apollo_openapi/model/open_instance_page_dto.py
 apollo_openapi/model/open_instance_page_dto.pyi
-apollo_openapi/model/open_item_change_sets.py
-apollo_openapi/model/open_item_change_sets.pyi
 apollo_openapi/model/open_item_diff_dto.py
 apollo_openapi/model/open_item_diff_dto.pyi
 apollo_openapi/model/open_item_dto.py
@@ -133,7 +129,6 @@ docs/models/OpenAppRoleUserDTO.md
 docs/models/OpenClusterDTO.md
 docs/models/OpenClusterNamespaceRoleUserDTO.md
 docs/models/OpenCreateAppDTO.md
-docs/models/OpenCreateItemDTO.md
 docs/models/OpenCreateNamespaceDTO.md
 docs/models/OpenEnvClusterDTO.md
 docs/models/OpenEnvClusterInfo.md
@@ -143,7 +138,6 @@ docs/models/OpenGrayReleaseRuleItemDTO.md
 docs/models/OpenInstanceConfigDTO.md
 docs/models/OpenInstanceDTO.md
 docs/models/OpenInstancePageDTO.md
-docs/models/OpenItemChangeSets.md
 docs/models/OpenItemDTO.md
 docs/models/OpenItemDiffDTO.md
 docs/models/OpenItemExtendDTO.md
@@ -182,7 +176,6 @@ test/test_models/test_open_app_role_user_dto.py
 test/test_models/test_open_cluster_dto.py
 test/test_models/test_open_cluster_namespace_role_user_dto.py
 test/test_models/test_open_create_app_dto.py
-test/test_models/test_open_create_item_dto.py
 test/test_models/test_open_create_namespace_dto.py
 test/test_models/test_open_env_cluster_dto.py
 test/test_models/test_open_env_cluster_info.py
@@ -192,7 +185,6 @@ test/test_models/test_open_gray_release_rule_item_dto.py
 test/test_models/test_open_instance_config_dto.py
 test/test_models/test_open_instance_dto.py
 test/test_models/test_open_instance_page_dto.py
-test/test_models/test_open_item_change_sets.py
 test/test_models/test_open_item_diff_dto.py
 test/test_models/test_open_item_dto.py
 test/test_models/test_open_item_extend_dto.py

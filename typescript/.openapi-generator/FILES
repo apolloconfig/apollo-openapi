@@ -28,7 +28,6 @@ src/models/OpenAppRoleUserDTO.ts
 src/models/OpenClusterDTO.ts
 src/models/OpenClusterNamespaceRoleUserDTO.ts
 src/models/OpenCreateAppDTO.ts
-src/models/OpenCreateItemDTO.ts
 src/models/OpenCreateNamespaceDTO.ts
 src/models/OpenEnvClusterDTO.ts
 src/models/OpenEnvClusterInfo.ts
@@ -38,7 +37,6 @@ src/models/OpenGrayReleaseRuleItemDTO.ts
 src/models/OpenInstanceConfigDTO.ts
 src/models/OpenInstanceDTO.ts
 src/models/OpenInstancePageDTO.ts
-src/models/OpenItemChangeSets.ts
 src/models/OpenItemDTO.ts
 src/models/OpenItemDiffDTO.ts
 src/models/OpenItemExtendDTO.ts
