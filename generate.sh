@@ -96,5 +96,5 @@ echo "✅ SDK generation complete."
 echo "Cleaning files (trailing spaces, CRLF, EOF newlines, wrong spellings)..."
 find . -type d \( -name .git -o -name .idea -o -name .mvn -o -name target -o -name build -o -name node_modules \) -prune -o \
   -type f \( -name "*.java" -o -name "*.xml" -o -name "*.properties" -o -name "*.md" -o -name "*.yml" -o -name "*.yaml" -o -name "*.gradle" -o -name "*.sh" -o -name "*.py" -o -name "*.pyi" -o -name "*.ts" -o -name "*.rs" -o -name ".editorconfig" -o -name ".gitignore" -o -name ".npmignore" -o -name "mvnw" -o -name "VERSION" \) -print0 \
-| xargs -0 perl -i -0777 -pe 's/[ \t]+(?=\r?$)//mg; s/\r//g; s/filesystem/filesystem/g; s/\s*\z/\n/s'
+| xargs -0 perl -i -0777 -pe 's/[ \t]+(?=\r?$)//mg; s/\r//g; s/filesystme/filesystem/g; s/^[ \t]*\* The version of the OpenAPI document: [^\r\n]*\R//mg; s/^[ \t]*The version of the OpenAPI document: [^\r\n]*\R//mg; s/\s*\z/\n/s'
 echo "Cleaning files (trailing spaces, CRLF, EOF newlines, wrong spellings)... Done!"
