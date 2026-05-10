@@ -30,7 +30,7 @@ import javax.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
 @Validated
-@Tag(name = "AccessKey Management", description = "the AccessKey Management API")
+@Tag(name = "AccessKey Management", description = "AccessKey管理相关接口，包括AccessKey的创建、查询、删除、启用、禁用等操作")
 public interface AccessKeyManagementApi {
 
     default AccessKeyManagementApiDelegate getDelegate() {

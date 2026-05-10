@@ -12,8 +12,8 @@ from apollo_openapi.apis.tags.namespace_branch_management_api import NamespaceBr
 from apollo_openapi.apis.tags.instance_management_api import InstanceManagementApi
 from apollo_openapi.apis.tags.organization_management_api import OrganizationManagementApi
 from apollo_openapi.apis.tags.environment_management_api import EnvironmentManagementApi
-from apollo_openapi.apis.tags.permission_management_api import PermissionManagementApi
 from apollo_openapi.apis.tags.access_key_management_api import AccessKeyManagementApi
+from apollo_openapi.apis.tags.permission_management_api import PermissionManagementApi
 
 TagToApi = typing_extensions.TypedDict(
     'TagToApi',
@@ -29,8 +29,8 @@ TagToApi = typing_extensions.TypedDict(
         TagValues.INSTANCE_MANAGEMENT: InstanceManagementApi,
         TagValues.ORGANIZATION_MANAGEMENT: OrganizationManagementApi,
         TagValues.ENVIRONMENT_MANAGEMENT: EnvironmentManagementApi,
-        TagValues.PERMISSION_MANAGEMENT: PermissionManagementApi,
         TagValues.ACCESS_KEY_MANAGEMENT: AccessKeyManagementApi,
+        TagValues.PERMISSION_MANAGEMENT: PermissionManagementApi,
     }
 )
 
@@ -47,7 +47,7 @@ tag_to_api = TagToApi(
         TagValues.INSTANCE_MANAGEMENT: InstanceManagementApi,
         TagValues.ORGANIZATION_MANAGEMENT: OrganizationManagementApi,
         TagValues.ENVIRONMENT_MANAGEMENT: EnvironmentManagementApi,
-        TagValues.PERMISSION_MANAGEMENT: PermissionManagementApi,
         TagValues.ACCESS_KEY_MANAGEMENT: AccessKeyManagementApi,
+        TagValues.PERMISSION_MANAGEMENT: PermissionManagementApi,
     }
 )

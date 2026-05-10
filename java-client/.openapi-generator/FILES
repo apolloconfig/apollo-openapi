@@ -26,7 +26,6 @@ docs/OpenAppRoleUserDTO.md
 docs/OpenClusterDTO.md
 docs/OpenClusterNamespaceRoleUserDTO.md
 docs/OpenCreateAppDTO.md
-docs/OpenCreateItemDTO.md
 docs/OpenCreateNamespaceDTO.md
 docs/OpenEnvClusterDTO.md
 docs/OpenEnvClusterInfo.md
@@ -36,7 +35,6 @@ docs/OpenGrayReleaseRuleItemDTO.md
 docs/OpenInstanceConfigDTO.md
 docs/OpenInstanceDTO.md
 docs/OpenInstancePageDTO.md
-docs/OpenItemChangeSets.md
 docs/OpenItemDTO.md
 docs/OpenItemDiffDTO.md
 docs/OpenItemExtendDTO.md
@@ -109,7 +107,6 @@ src/main/java/org/openapitools/client/model/OpenAppRoleUserDTO.java
 src/main/java/org/openapitools/client/model/OpenClusterDTO.java
 src/main/java/org/openapitools/client/model/OpenClusterNamespaceRoleUserDTO.java
 src/main/java/org/openapitools/client/model/OpenCreateAppDTO.java
-src/main/java/org/openapitools/client/model/OpenCreateItemDTO.java
 src/main/java/org/openapitools/client/model/OpenCreateNamespaceDTO.java
 src/main/java/org/openapitools/client/model/OpenEnvClusterDTO.java
 src/main/java/org/openapitools/client/model/OpenEnvClusterInfo.java
@@ -119,7 +116,6 @@ src/main/java/org/openapitools/client/model/OpenGrayReleaseRuleItemDTO.java
 src/main/java/org/openapitools/client/model/OpenInstanceConfigDTO.java
 src/main/java/org/openapitools/client/model/OpenInstanceDTO.java
 src/main/java/org/openapitools/client/model/OpenInstancePageDTO.java
-src/main/java/org/openapitools/client/model/OpenItemChangeSets.java
 src/main/java/org/openapitools/client/model/OpenItemDTO.java
 src/main/java/org/openapitools/client/model/OpenItemDiffDTO.java
 src/main/java/org/openapitools/client/model/OpenItemExtendDTO.java
@@ -162,7 +158,6 @@ src/test/java/org/openapitools/client/model/OpenAppRoleUserDTOTest.java
 src/test/java/org/openapitools/client/model/OpenClusterDTOTest.java
 src/test/java/org/openapitools/client/model/OpenClusterNamespaceRoleUserDTOTest.java
 src/test/java/org/openapitools/client/model/OpenCreateAppDTOTest.java
-src/test/java/org/openapitools/client/model/OpenCreateItemDTOTest.java
 src/test/java/org/openapitools/client/model/OpenCreateNamespaceDTOTest.java
 src/test/java/org/openapitools/client/model/OpenEnvClusterDTOTest.java
 src/test/java/org/openapitools/client/model/OpenEnvClusterInfoTest.java
@@ -172,7 +167,6 @@ src/test/java/org/openapitools/client/model/OpenGrayReleaseRuleItemDTOTest.java
 src/test/java/org/openapitools/client/model/OpenInstanceConfigDTOTest.java
 src/test/java/org/openapitools/client/model/OpenInstanceDTOTest.java
 src/test/java/org/openapitools/client/model/OpenInstancePageDTOTest.java
-src/test/java/org/openapitools/client/model/OpenItemChangeSetsTest.java
 src/test/java/org/openapitools/client/model/OpenItemDTOTest.java
 src/test/java/org/openapitools/client/model/OpenItemDiffDTOTest.java
 src/test/java/org/openapitools/client/model/OpenItemExtendDTOTest.java

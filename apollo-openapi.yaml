@@ -18,7 +18,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
 
-  version: 1.0.0
+  version: 0.2.0
 security:
   - ApiKeyAuth: []
 tags:
@@ -44,6 +44,8 @@ tags:
     description: 组织管理相关接口，包括组织信息查询等功能
   - name: Environment Management
     description: 环境管理相关接口，包括环境查询等功能
+  - name: AccessKey Management
+    description: AccessKey管理相关接口，包括AccessKey的创建、查询、删除、启用、禁用等操作
   - name: Permission Management
     description: 权限管理相关接口，包括权限查询等功能
 paths:
@@ -4955,21 +4957,6 @@ components:
         oldValue:
           type: string
           description: 上一次发布的值，用于对比变更
-    OpenCreateItemDTO:
-      type: object
-      properties:
-        key:
-          type: string
-          description: 配置项的键名，在同一命名空间内唯一标识一个配置项
-        type:
-          type: integer
-          description: 配置项类型，0表示普通配置项，1表示文件类型配置项
-        value:
-          type: string
-          description: 配置项的值，可以是字符串、数字、JSON等格式
-        comment:
-          type: string
-          description: 配置项的注释说明，用于描述配置项的用途和含义
     OpenItemPageDTO:
       type: object
       properties:
@@ -5406,47 +5393,6 @@ components:
         namespaceName:
           type: string
           description: '命名空间名称'
-    OpenItemChangeSets:
-      type: object
-      properties:
-        dataChangeCreatedBy:
-          type: string
-          description: '变更集合创建者用户名'
-        dataChangeLastModifiedBy:
-          type: string
-          description: '变更集合最后修改者用户名'
-        dataChangeCreatedByDisplayName:
-          type: string
-          description: '创建者显示名'
-        dataChangeLastModifiedByDisplayName:
-          type: string
-          description: '最后修改者显示名'
-        dataChangeCreatedTime:
-          type: string
-          description: '变更集合创建时间（ISO 8601）'
-          example: "2025-09-29T12:34:56Z"
-        dataChangeLastModifiedTime:
-          type: string
-          description: '变更集合最后修改时间（ISO 8601）'
-          example: "2025-09-29T12:34:56Z"
-        createItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/OpenItemDTO'
-          description: '待创建的配置项列表'
-          default: []
-        updateItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/OpenItemDTO'
-          description: '待更新的配置项列表'
-          default: []
-        deleteItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/OpenItemDTO'
-          description: '待删除的配置项列表'
-          default: []
     OpenItemDiffDTO:
       type: object
       properties:

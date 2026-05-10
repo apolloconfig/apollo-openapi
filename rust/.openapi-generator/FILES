@@ -13,7 +13,6 @@ docs/OpenAppRoleUserDto.md
 docs/OpenClusterDto.md
 docs/OpenClusterNamespaceRoleUserDto.md
 docs/OpenCreateAppDto.md
-docs/OpenCreateItemDto.md
 docs/OpenCreateNamespaceDto.md
 docs/OpenEnvClusterDto.md
 docs/OpenEnvClusterInfo.md
@@ -23,7 +22,6 @@ docs/OpenGrayReleaseRuleItemDto.md
 docs/OpenInstanceConfigDto.md
 docs/OpenInstanceDto.md
 docs/OpenInstancePageDto.md
-docs/OpenItemChangeSets.md
 docs/OpenItemDiffDto.md
 docs/OpenItemDto.md
 docs/OpenItemExtendDto.md
@@ -58,7 +56,6 @@ src/models/open_app_role_user_dto.rs
 src/models/open_cluster_dto.rs
 src/models/open_cluster_namespace_role_user_dto.rs
 src/models/open_create_app_dto.rs
-src/models/open_create_item_dto.rs
 src/models/open_create_namespace_dto.rs
 src/models/open_env_cluster_dto.rs
 src/models/open_env_cluster_info.rs
@@ -68,7 +65,6 @@ src/models/open_gray_release_rule_item_dto.rs
 src/models/open_instance_config_dto.rs
 src/models/open_instance_dto.rs
 src/models/open_instance_page_dto.rs
-src/models/open_item_change_sets.rs
 src/models/open_item_diff_dto.rs
 src/models/open_item_dto.rs
 src/models/open_item_extend_dto.rs
