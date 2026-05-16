@@ -7,12 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.2.1] - 2026-05-16
+## [0.3.0] - 2026-05-16
 
 ### Changed
 
 - Align `POST /openapi/v1/apps` success response with the legacy Java client's void `createApp` contract.
-- Bump generated package metadata and OpenAPI document version from `0.2.0` to `0.2.1`.
+- Bump generated package metadata and OpenAPI document version from `0.2.0` to `0.3.0`.
 
 ## [0.2.0] - 2026-05-10
 

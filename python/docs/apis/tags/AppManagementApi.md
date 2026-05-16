@@ -115,7 +115,7 @@ n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | Unset | body was not defined |
+body | Unset | body was not defined | N/A
 headers | Unset | headers were not defined |
 
 #### create_app.ApiResponseFor400
@@ -310,7 +310,7 @@ n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | Unset | body was not defined |
+body | Unset | body was not defined | N/A
 headers | Unset | headers were not defined |
 
 #### create_app_in_env.ApiResponseFor400
@@ -466,7 +466,7 @@ n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | Unset | body was not defined |
+body | Unset | body was not defined | N/A
 headers | Unset | headers were not defined |
 
 #### delete_app.ApiResponseFor403
@@ -1472,7 +1472,7 @@ n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | Unset | body was not defined |
+body | Unset | body was not defined | N/A
 headers | Unset | headers were not defined |
 
 #### update_app.ApiResponseFor400
