@@ -45,7 +45,7 @@ public class AppManagementApiTest {
     @Test
     public void createAppTest() throws ApiException {
         OpenCreateAppDTO openCreateAppDTO = null;
-        OpenAppDTO response = api.createApp(openCreateAppDTO);
+        api.createApp(openCreateAppDTO);
         // TODO: test validations
     }
 

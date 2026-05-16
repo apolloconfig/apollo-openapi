@@ -91,7 +91,7 @@ export class AppManagementApi extends runtime.BaseAPI {
      * POST /openapi/v1/apps
      * 创建应用 (original openapi)
      */
-    async createAppRaw(requestParameters: CreateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenAppDTO>> {
+    async createAppRaw(requestParameters: CreateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.openCreateAppDTO === null || requestParameters.openCreateAppDTO === undefined) {
             throw new runtime.RequiredError('openCreateAppDTO','Required parameter requestParameters.openCreateAppDTO was null or undefined when calling createApp.');
         }
@@ -114,16 +114,15 @@ export class AppManagementApi extends runtime.BaseAPI {
             body: OpenCreateAppDTOToJSON(requestParameters.openCreateAppDTO),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenAppDTOFromJSON(jsonValue));
+        return new runtime.VoidApiResponse(response);
     }
 
     /**
      * POST /openapi/v1/apps
      * 创建应用 (original openapi)
      */
-    async createApp(requestParameters: CreateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenAppDTO> {
-        const response = await this.createAppRaw(requestParameters, initOverrides);
-        return await response.value();
+    async createApp(requestParameters: CreateAppRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.createAppRaw(requestParameters, initOverrides);
     }
 
     /**

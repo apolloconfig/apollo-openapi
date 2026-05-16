@@ -151,7 +151,6 @@ public class AppManagementApi {
      * 创建应用 (original openapi)
      * POST /openapi/v1/apps
      * @param openCreateAppDTO  (required)
-     * @return OpenAppDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -161,16 +160,15 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public OpenAppDTO createApp(OpenCreateAppDTO openCreateAppDTO) throws ApiException {
-        ApiResponse<OpenAppDTO> localVarResp = createAppWithHttpInfo(openCreateAppDTO);
-        return localVarResp.getData();
+    public void createApp(OpenCreateAppDTO openCreateAppDTO) throws ApiException {
+        createAppWithHttpInfo(openCreateAppDTO);
     }
 
     /**
      * 创建应用 (original openapi)
      * POST /openapi/v1/apps
      * @param openCreateAppDTO  (required)
-     * @return ApiResponse&lt;OpenAppDTO&gt;
+     * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -180,10 +178,9 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenAppDTO> createAppWithHttpInfo(OpenCreateAppDTO openCreateAppDTO) throws ApiException {
+    public ApiResponse<Void> createAppWithHttpInfo(OpenCreateAppDTO openCreateAppDTO) throws ApiException {
         okhttp3.Call localVarCall = createAppValidateBeforeCall(openCreateAppDTO, null);
-        Type localVarReturnType = new TypeToken<OpenAppDTO>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+        return localVarApiClient.execute(localVarCall);
     }
 
     /**
@@ -201,11 +198,10 @@ public class AppManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createAppAsync(OpenCreateAppDTO openCreateAppDTO, final ApiCallback<OpenAppDTO> _callback) throws ApiException {
+    public okhttp3.Call createAppAsync(OpenCreateAppDTO openCreateAppDTO, final ApiCallback<Void> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = createAppValidateBeforeCall(openCreateAppDTO, _callback);
-        Type localVarReturnType = new TypeToken<OpenAppDTO>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**

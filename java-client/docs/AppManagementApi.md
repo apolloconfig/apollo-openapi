@@ -19,7 +19,7 @@ All URIs are relative to *http://localhost*
 
 <a id="createApp"></a>
 # **createApp**
-> OpenAppDTO createApp(openCreateAppDTO)
+> createApp(openCreateAppDTO)
 
 创建应用 (original openapi)
 
@@ -49,8 +49,7 @@ public class Example {
     AppManagementApi apiInstance = new AppManagementApi(defaultClient);
     OpenCreateAppDTO openCreateAppDTO = new OpenCreateAppDTO(); // OpenCreateAppDTO |
     try {
-      OpenAppDTO result = apiInstance.createApp(openCreateAppDTO);
-      System.out.println(result);
+      apiInstance.createApp(openCreateAppDTO);
     } catch (ApiException e) {
       System.err.println("Exception when calling AppManagementApi#createApp");
       System.err.println("Status code: " + e.getCode());
@@ -70,7 +69,7 @@ public class Example {
 
 ### Return type
 
-[**OpenAppDTO**](OpenAppDTO.md)
+null (empty response body)
 
 ### Authorization
 

@@ -66,10 +66,6 @@ paths:
       responses:
         '200':
           description: '应用创建成功'
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OpenAppDTO'
           headers: {}
         '400':
           description: '请求参数错误'

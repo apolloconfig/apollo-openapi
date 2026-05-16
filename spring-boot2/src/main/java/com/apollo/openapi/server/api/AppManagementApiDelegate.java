@@ -38,16 +38,7 @@ public interface AppManagementApiDelegate {
      *         or 权限不足 (status code 403)
      * @see AppManagementApi#createApp
      */
-    default ResponseEntity<OpenAppDTO> createApp(OpenCreateAppDTO openCreateAppDTO) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"orgName\" : \"orgName\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"ownerName\" : \"ownerName\", \"ownerDisplayName\" : \"ownerDisplayName\", \"appId\" : \"appId\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
+    default ResponseEntity<Void> createApp(OpenCreateAppDTO openCreateAppDTO) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

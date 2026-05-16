@@ -117,10 +117,6 @@ paths:
         required: true
       responses:
         "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/OpenAppDTO'
           description: 应用创建成功
         "400":
           content:
