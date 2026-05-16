@@ -57,9 +57,7 @@ public interface AppManagementApi {
         description = "POST /openapi/v1/apps",
         tags = { "App Management" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "应用创建成功", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenAppDTO.class))
-            }),
+            @ApiResponse(responseCode = "200", description = "应用创建成功"),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
@@ -77,7 +75,7 @@ public interface AppManagementApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<OpenAppDTO> createApp(
+    default ResponseEntity<Void> createApp(
         @Parameter(name = "OpenCreateAppDTO", description = "", required = true) @Valid @RequestBody OpenCreateAppDTO openCreateAppDTO
     ) {
         return getDelegate().createApp(openCreateAppDTO);

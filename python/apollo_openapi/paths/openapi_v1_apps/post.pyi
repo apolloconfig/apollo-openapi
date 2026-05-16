@@ -25,7 +25,6 @@ import frozendict  # noqa: F401
 
 from apollo_openapi import schemas  # noqa: F401
 
-from apollo_openapi.model.open_app_dto import OpenAppDTO
 from apollo_openapi.model.exception_response import ExceptionResponse
 from apollo_openapi.model.open_create_app_dto import OpenCreateAppDTO
 
@@ -40,24 +39,17 @@ request_body_open_create_app_dto = api_client.RequestBody(
     },
     required=True,
 )
-SchemaFor200ResponseBodyApplicationJson = OpenAppDTO
 
 
 @dataclass
 class ApiResponseFor200(api_client.ApiResponse):
     response: urllib3.HTTPResponse
-    body: typing.Union[
-        SchemaFor200ResponseBodyApplicationJson,
-    ]
+    body: schemas.Unset = schemas.unset
     headers: schemas.Unset = schemas.unset
 
 
 _response_for_200 = api_client.OpenApiResponse(
     response_cls=ApiResponseFor200,
-    content={
-        'application/json': api_client.MediaType(
-            schema=SchemaFor200ResponseBodyApplicationJson),
-    },
 )
 SchemaFor400ResponseBodyApplicationJson = ExceptionResponse
 

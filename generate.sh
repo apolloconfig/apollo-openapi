@@ -42,14 +42,14 @@ echo "🚀 Generating Python SDK..."
   -o "$PYTHON_DIR" \
   -t "$PYTHON_TEMPLATE_DIR" \
   --package-name apollo_openapi \
-  --additional-properties=projectName=apollo-openapi,packageVersion=0.2.0
+  --additional-properties=projectName=apollo-openapi,packageVersion=0.3.0
 
 echo "🚀 Generating TypeScript SDK..."
 "${OPENAPI_GENERATOR[@]}" generate \
   -i "$SPEC_FILE" \
   -g typescript-fetch \
   -o "$TS_DIR" \
-  --additional-properties=npmName=apollo-openapi,npmVersion=0.2.0,typescriptThreePlus=true
+  --additional-properties=npmName=apollo-openapi,npmVersion=0.3.0,typescriptThreePlus=true
 
 echo "🚀 Generating Java Client SDK..."
 "${OPENAPI_GENERATOR[@]}" generate \
@@ -57,7 +57,7 @@ echo "🚀 Generating Java Client SDK..."
   -g java \
   -o "$JAVA_CLIENT_DIR" \
   --additional-properties hideGenerationTimestamp=true \
-  --additional-properties=groupId=com.apollo,artifactId=apollo-openapi-client,artifactVersion=0.2.0,packageName=com.apollo.openapi.client
+  --additional-properties=groupId=com.apollo,artifactId=apollo-openapi-client,artifactVersion=0.3.0,packageName=com.apollo.openapi.client
 
 echo "🚀 Generating Spring Boot 2 Server..."
 "${OPENAPI_GENERATOR[@]}" generate \
@@ -65,7 +65,7 @@ echo "🚀 Generating Spring Boot 2 Server..."
   -g spring \
   -o "$SPRING_BOOT2_DIR" \
   --additional-properties hideGenerationTimestamp=true \
-  --additional-properties=groupId=com.apollo,artifactId=apollo-openapi-server,artifactVersion=0.2.0,packageName=com.apollo.openapi.server,basePackage=com.apollo.openapi.server,configPackage=com.apollo.openapi.server.config,modelPackage=com.apollo.openapi.server.model,apiPackage=com.apollo.openapi.server.api,library=spring-boot,java8=true,interfaceOnly=false,delegatePattern=true,useTags=true
+  --additional-properties=groupId=com.apollo,artifactId=apollo-openapi-server,artifactVersion=0.3.0,packageName=com.apollo.openapi.server,basePackage=com.apollo.openapi.server,configPackage=com.apollo.openapi.server.config,modelPackage=com.apollo.openapi.server.model,apiPackage=com.apollo.openapi.server.api,library=spring-boot,java8=true,interfaceOnly=false,delegatePattern=true,useTags=true
 
 echo "📦 Adding Maven Wrapper to Spring Boot 2 project..."
 cd "$SPRING_BOOT2_DIR"
@@ -90,7 +90,7 @@ echo "🚀 Generating Rust SDK..."
   -g rust \
   -o "$RUST_DIR" \
   --global-property models,supportingFiles \
-  --additional-properties=packageName=apollo-openapi,packageVersion=0.2.0
+  --additional-properties=packageName=apollo-openapi,packageVersion=0.3.0
 
 echo "✅ SDK generation complete."
 
@@ -98,5 +98,5 @@ echo "✅ SDK generation complete."
 echo "Cleaning files (trailing spaces, CRLF, EOF newlines, generated version comments)..."
 find . -type d \( -name .git -o -name .idea -o -name .mvn -o -name target -o -name build -o -name node_modules \) -prune -o \
   -type f \( -name "*.java" -o -name "*.xml" -o -name "*.properties" -o -name "*.md" -o -name "*.yml" -o -name "*.yaml" -o -name "*.gradle" -o -name "*.sh" -o -name "*.py" -o -name "*.pyi" -o -name "*.ts" -o -name "*.rs" -o -name ".editorconfig" -o -name ".gitignore" -o -name ".npmignore" -o -name "mvnw" -o -name "VERSION" \) -print0 \
-| xargs -0 perl -i -0777 -pe 's/[ \t]+(?=\r?$)//mg; s/\r//g; s/^[ \t]*\* The version of the OpenAPI document: [^\r\n]*\R//mg; s/^[ \t]*The version of the OpenAPI document: [^\r\n]*\R//mg; s/\s*\z/\n/s'
+| xargs -0 perl -i -0777 -pe 's/[ \t]+(?=\r?$)//mg; s/\r//g; s/^[ \t]*\* The version of the OpenAPI document: [^\r\n]*\R//mg; s/^[ \t]*The version of the OpenAPI document: [^\r\n]*\R//mg; s/^body \| Unset \| body was not defined \|$/body | Unset | body was not defined | N\/A/mg; s/\s*\z/\n/s'
 echo "Cleaning files (trailing spaces, CRLF, EOF newlines, generated version comments)... Done!"

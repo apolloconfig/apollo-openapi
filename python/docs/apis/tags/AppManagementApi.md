@@ -19,7 +19,7 @@ Method | HTTP request | Description
 
 # **create_app**
 <a id="create_app"></a>
-> OpenAppDTO create_app(open_create_app_dto)
+> create_app(open_create_app_dto)
 
 创建应用 (original openapi)
 
@@ -31,7 +31,6 @@ POST /openapi/v1/apps
 ```python
 import apollo_openapi
 from apollo_openapi.apis.tags import app_management_api
-from apollo_openapi.model.open_app_dto import OpenAppDTO
 from apollo_openapi.model.exception_response import ExceptionResponse
 from apollo_openapi.model.open_create_app_dto import OpenCreateAppDTO
 from pprint import pprint
@@ -81,7 +80,6 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         api_response = api_instance.create_app(
             body=body,
         )
-        pprint(api_response)
     except apollo_openapi.ApiException as e:
         print("Exception when calling AppManagementApi->create_app: %s\n" % e)
 ```
@@ -117,14 +115,8 @@ n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
+body | Unset | body was not defined | N/A
 headers | Unset | headers were not defined |
-
-# SchemaFor200ResponseBodyApplicationJson
-Type | Description  | Notes
-------------- | ------------- | -------------
-[**OpenAppDTO**](../../models/OpenAppDTO.md) |  |
-
 
 #### create_app.ApiResponseFor400
 Name | Type | Description  | Notes
@@ -318,7 +310,7 @@ n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | Unset | body was not defined |
+body | Unset | body was not defined | N/A
 headers | Unset | headers were not defined |
 
 #### create_app_in_env.ApiResponseFor400
@@ -474,7 +466,7 @@ n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | Unset | body was not defined |
+body | Unset | body was not defined | N/A
 headers | Unset | headers were not defined |
 
 #### delete_app.ApiResponseFor403
@@ -1480,7 +1472,7 @@ n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization i
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 response | urllib3.HTTPResponse | Raw response |
-body | Unset | body was not defined |
+body | Unset | body was not defined | N/A
 headers | Unset | headers were not defined |
 
 #### update_app.ApiResponseFor400
