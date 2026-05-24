@@ -26,6 +26,7 @@ from apollo_openapi import schemas  # noqa: F401
 
 # Query params
 ModeSchema = schemas.IntSchema
+OperatorSchema = schemas.StrSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
     'RequestRequiredQueryParams',
     {
@@ -35,6 +36,7 @@ RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
         'mode': typing.Union[ModeSchema, decimal.Decimal, int, ],
+        'operator': typing.Union[OperatorSchema, str, ],
     },
     total=False
 )
@@ -48,6 +50,12 @@ request_query_mode = api_client.QueryParameter(
     name="mode",
     style=api_client.ParameterStyle.FORM,
     schema=ModeSchema,
+    explode=True,
+)
+request_query_operator = api_client.QueryParameter(
+    name="operator",
+    style=api_client.ParameterStyle.FORM,
+    schema=OperatorSchema,
     explode=True,
 )
 # Path params
@@ -178,6 +186,7 @@ class BaseApi(api_client.Api):
         prefix_separator_iterator = None
         for parameter in (
             request_query_mode,
+            request_query_operator,
         ):
             parameter_data = query_params.get(parameter.name, schemas.unset)
             if parameter_data is schemas.unset:

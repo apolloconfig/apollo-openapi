@@ -1,7 +1,7 @@
 # apollo-openapi-client
 
 Apollo OpenAPI
-- API version: 0.3.2
+- API version: 0.3.3
 
 <p>Apollo配置中心OpenAPI接口文档</p>
 
@@ -54,7 +54,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.apollo</groupId>
   <artifactId>apollo-openapi-client</artifactId>
-  <version>0.3.2</version>
+  <version>0.3.3</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -70,7 +70,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "com.apollo:apollo-openapi-client:0.3.2"
+     implementation "com.apollo:apollo-openapi-client:0.3.3"
   }
 ```
 
@@ -84,7 +84,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/apollo-openapi-client-0.3.2.jar`
+* `target/apollo-openapi-client-0.3.3.jar`
 * `target/lib/*.jar`
 
 ## Getting Started

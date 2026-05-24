@@ -117,6 +117,7 @@ public interface AccessKeyManagementApi {
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
+     * @param operator  (optional)
      * @return  (status code 200)
      */
     @Operation(
@@ -138,9 +139,10 @@ public interface AccessKeyManagementApi {
     default ResponseEntity<Void> disableAccessKey(
         @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "accessKeyId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("accessKeyId") Long accessKeyId
+        @Parameter(name = "accessKeyId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("accessKeyId") Long accessKeyId,
+        @Parameter(name = "operator", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
-        return getDelegate().disableAccessKey(appId, env, accessKeyId);
+        return getDelegate().disableAccessKey(appId, env, accessKeyId, operator);
     }
 
 
@@ -152,6 +154,7 @@ public interface AccessKeyManagementApi {
      * @param env  (required)
      * @param accessKeyId  (required)
      * @param mode  (optional, default to 0)
+     * @param operator  (optional)
      * @return  (status code 200)
      */
     @Operation(
@@ -174,9 +177,10 @@ public interface AccessKeyManagementApi {
         @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "accessKeyId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("accessKeyId") Long accessKeyId,
-        @Parameter(name = "mode", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "mode", required = false, defaultValue = "0") Integer mode
+        @Parameter(name = "mode", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "mode", required = false, defaultValue = "0") Integer mode,
+        @Parameter(name = "operator", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
-        return getDelegate().enableAccessKey(appId, env, accessKeyId, mode);
+        return getDelegate().enableAccessKey(appId, env, accessKeyId, mode, operator);
     }
 
 

@@ -364,6 +364,7 @@ public class AccessKeyManagementApi {
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
+     * @param operator  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -373,7 +374,7 @@ public class AccessKeyManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call disableAccessKeyCall(String appId, String env, Long accessKeyId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call disableAccessKeyCall(String appId, String env, Long accessKeyId, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -401,6 +402,10 @@ public class AccessKeyManagementApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (operator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        }
+
         final String[] localVarAccepts = {
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
@@ -419,8 +424,23 @@ public class AccessKeyManagementApi {
         return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
+    /**
+     * Build call for disableAccessKey.
+     * This overload preserves the Java client API from versions before 0.3.3.
+     *
+     * @param appId  (required)
+     * @param env  (required)
+     * @param accessKeyId  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public okhttp3.Call disableAccessKeyCall(String appId, String env, Long accessKeyId, final ApiCallback _callback) throws ApiException {
+        return disableAccessKeyCall(appId, env, accessKeyId, null, _callback);
+    }
+
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call disableAccessKeyValidateBeforeCall(String appId, String env, Long accessKeyId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call disableAccessKeyValidateBeforeCall(String appId, String env, Long accessKeyId, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling disableAccessKey(Async)");
@@ -436,7 +456,7 @@ public class AccessKeyManagementApi {
             throw new ApiException("Missing the required parameter 'accessKeyId' when calling disableAccessKey(Async)");
         }
 
-        return disableAccessKeyCall(appId, env, accessKeyId, _callback);
+        return disableAccessKeyCall(appId, env, accessKeyId, operator, _callback);
 
     }
 
@@ -446,6 +466,7 @@ public class AccessKeyManagementApi {
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
+     * @param operator  (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -453,8 +474,21 @@ public class AccessKeyManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
+    public void disableAccessKey(String appId, String env, Long accessKeyId, String operator) throws ApiException {
+        disableAccessKeyWithHttpInfo(appId, env, accessKeyId, operator);
+    }
+
+    /**
+     * 禁用AccessKey
+     * This overload preserves the Java client API from versions before 0.3.3.
+     *
+     * @param appId  (required)
+     * @param env  (required)
+     * @param accessKeyId  (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
     public void disableAccessKey(String appId, String env, Long accessKeyId) throws ApiException {
-        disableAccessKeyWithHttpInfo(appId, env, accessKeyId);
+        disableAccessKey(appId, env, accessKeyId, null);
     }
 
     /**
@@ -463,6 +497,7 @@ public class AccessKeyManagementApi {
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
+     * @param operator  (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -471,9 +506,23 @@ public class AccessKeyManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> disableAccessKeyWithHttpInfo(String appId, String env, Long accessKeyId) throws ApiException {
-        okhttp3.Call localVarCall = disableAccessKeyValidateBeforeCall(appId, env, accessKeyId, null);
+    public ApiResponse<Void> disableAccessKeyWithHttpInfo(String appId, String env, Long accessKeyId, String operator) throws ApiException {
+        okhttp3.Call localVarCall = disableAccessKeyValidateBeforeCall(appId, env, accessKeyId, operator, null);
         return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * 禁用AccessKey
+     * This overload preserves the Java client API from versions before 0.3.3.
+     *
+     * @param appId  (required)
+     * @param env  (required)
+     * @param accessKeyId  (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> disableAccessKeyWithHttpInfo(String appId, String env, Long accessKeyId) throws ApiException {
+        return disableAccessKeyWithHttpInfo(appId, env, accessKeyId, null);
     }
 
     /**
@@ -482,6 +531,7 @@ public class AccessKeyManagementApi {
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
+     * @param operator  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -491,18 +541,35 @@ public class AccessKeyManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call disableAccessKeyAsync(String appId, String env, Long accessKeyId, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call disableAccessKeyAsync(String appId, String env, Long accessKeyId, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = disableAccessKeyValidateBeforeCall(appId, env, accessKeyId, _callback);
+        okhttp3.Call localVarCall = disableAccessKeyValidateBeforeCall(appId, env, accessKeyId, operator, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
+
+    /**
+     * 禁用AccessKey (asynchronously)
+     * This overload preserves the Java client API from versions before 0.3.3.
+     *
+     * @param appId  (required)
+     * @param env  (required)
+     * @param accessKeyId  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public okhttp3.Call disableAccessKeyAsync(String appId, String env, Long accessKeyId, final ApiCallback<Void> _callback) throws ApiException {
+        return disableAccessKeyAsync(appId, env, accessKeyId, null, _callback);
+    }
+
     /**
      * Build call for enableAccessKey
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
      * @param mode  (optional, default to 0)
+     * @param operator  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -512,7 +579,7 @@ public class AccessKeyManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call enableAccessKeyCall(String appId, String env, Long accessKeyId, Integer mode, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call enableAccessKeyCall(String appId, String env, Long accessKeyId, Integer mode, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -544,6 +611,10 @@ public class AccessKeyManagementApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
 
+        if (operator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        }
+
         final String[] localVarAccepts = {
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
@@ -562,8 +633,24 @@ public class AccessKeyManagementApi {
         return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
+    /**
+     * Build call for enableAccessKey.
+     * This overload preserves the Java client API from versions before 0.3.3.
+     *
+     * @param appId  (required)
+     * @param env  (required)
+     * @param accessKeyId  (required)
+     * @param mode  (optional, default to 0)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public okhttp3.Call enableAccessKeyCall(String appId, String env, Long accessKeyId, Integer mode, final ApiCallback _callback) throws ApiException {
+        return enableAccessKeyCall(appId, env, accessKeyId, mode, null, _callback);
+    }
+
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call enableAccessKeyValidateBeforeCall(String appId, String env, Long accessKeyId, Integer mode, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call enableAccessKeyValidateBeforeCall(String appId, String env, Long accessKeyId, Integer mode, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling enableAccessKey(Async)");
@@ -579,7 +666,7 @@ public class AccessKeyManagementApi {
             throw new ApiException("Missing the required parameter 'accessKeyId' when calling enableAccessKey(Async)");
         }
 
-        return enableAccessKeyCall(appId, env, accessKeyId, mode, _callback);
+        return enableAccessKeyCall(appId, env, accessKeyId, mode, operator, _callback);
 
     }
 
@@ -590,6 +677,7 @@ public class AccessKeyManagementApi {
      * @param env  (required)
      * @param accessKeyId  (required)
      * @param mode  (optional, default to 0)
+     * @param operator  (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -597,8 +685,22 @@ public class AccessKeyManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
+    public void enableAccessKey(String appId, String env, Long accessKeyId, Integer mode, String operator) throws ApiException {
+        enableAccessKeyWithHttpInfo(appId, env, accessKeyId, mode, operator);
+    }
+
+    /**
+     * 启用AccessKey
+     * This overload preserves the Java client API from versions before 0.3.3.
+     *
+     * @param appId  (required)
+     * @param env  (required)
+     * @param accessKeyId  (required)
+     * @param mode  (optional, default to 0)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
     public void enableAccessKey(String appId, String env, Long accessKeyId, Integer mode) throws ApiException {
-        enableAccessKeyWithHttpInfo(appId, env, accessKeyId, mode);
+        enableAccessKey(appId, env, accessKeyId, mode, null);
     }
 
     /**
@@ -608,6 +710,7 @@ public class AccessKeyManagementApi {
      * @param env  (required)
      * @param accessKeyId  (required)
      * @param mode  (optional, default to 0)
+     * @param operator  (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -616,9 +719,24 @@ public class AccessKeyManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> enableAccessKeyWithHttpInfo(String appId, String env, Long accessKeyId, Integer mode) throws ApiException {
-        okhttp3.Call localVarCall = enableAccessKeyValidateBeforeCall(appId, env, accessKeyId, mode, null);
+    public ApiResponse<Void> enableAccessKeyWithHttpInfo(String appId, String env, Long accessKeyId, Integer mode, String operator) throws ApiException {
+        okhttp3.Call localVarCall = enableAccessKeyValidateBeforeCall(appId, env, accessKeyId, mode, operator, null);
         return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * 启用AccessKey
+     * This overload preserves the Java client API from versions before 0.3.3.
+     *
+     * @param appId  (required)
+     * @param env  (required)
+     * @param accessKeyId  (required)
+     * @param mode  (optional, default to 0)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<Void> enableAccessKeyWithHttpInfo(String appId, String env, Long accessKeyId, Integer mode) throws ApiException {
+        return enableAccessKeyWithHttpInfo(appId, env, accessKeyId, mode, null);
     }
 
     /**
@@ -628,6 +746,7 @@ public class AccessKeyManagementApi {
      * @param env  (required)
      * @param accessKeyId  (required)
      * @param mode  (optional, default to 0)
+     * @param operator  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -637,12 +756,29 @@ public class AccessKeyManagementApi {
         <tr><td> 200 </td><td>  </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call enableAccessKeyAsync(String appId, String env, Long accessKeyId, Integer mode, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call enableAccessKeyAsync(String appId, String env, Long accessKeyId, Integer mode, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = enableAccessKeyValidateBeforeCall(appId, env, accessKeyId, mode, _callback);
+        okhttp3.Call localVarCall = enableAccessKeyValidateBeforeCall(appId, env, accessKeyId, mode, operator, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
+
+    /**
+     * 启用AccessKey (asynchronously)
+     * This overload preserves the Java client API from versions before 0.3.3.
+     *
+     * @param appId  (required)
+     * @param env  (required)
+     * @param accessKeyId  (required)
+     * @param mode  (optional, default to 0)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public okhttp3.Call enableAccessKeyAsync(String appId, String env, Long accessKeyId, Integer mode, final ApiCallback<Void> _callback) throws ApiException {
+        return enableAccessKeyAsync(appId, env, accessKeyId, mode, null, _callback);
+    }
+
     /**
      * Build call for findAccessKeys
      * @param appId  (required)

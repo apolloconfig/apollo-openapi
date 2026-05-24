@@ -339,10 +339,31 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         'env': "env_example",
         'accessKeyId': 1,
     }
+    query_params = {
+    }
     try:
         # 禁用AccessKey
         api_response = api_instance.disable_access_key(
             path_params=path_params,
+            query_params=query_params,
+        )
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling AccessKeyManagementApi->disable_access_key: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'appId': "appId_example",
+        'env': "env_example",
+        'accessKeyId': 1,
+    }
+    query_params = {
+        'operator': "operator_example",
+    }
+    try:
+        # 禁用AccessKey
+        api_response = api_instance.disable_access_key(
+            path_params=path_params,
+            query_params=query_params,
         )
     except apollo_openapi.ApiException as e:
         print("Exception when calling AccessKeyManagementApi->disable_access_key: %s\n" % e)
@@ -351,10 +372,26 @@ with apollo_openapi.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+query_params | RequestQueryParams | |
 path_params | RequestPathParams | |
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
 timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
 skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
+
+### query_params
+#### RequestQueryParams
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+operator | OperatorSchema | | optional
+
+
+# OperatorSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
 
 ### path_params
 #### RequestPathParams
@@ -465,6 +502,7 @@ with apollo_openapi.ApiClient(configuration) as api_client:
     }
     query_params = {
         'mode': 0,
+        'operator': "operator_example",
     }
     try:
         # 启用AccessKey
@@ -491,6 +529,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 mode | ModeSchema | | optional
+operator | OperatorSchema | | optional
 
 
 # ModeSchema
@@ -499,6 +538,13 @@ mode | ModeSchema | | optional
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 decimal.Decimal, int,  | decimal.Decimal,  |  | if omitted the server will use the default value of 0
+
+# OperatorSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+str,  | str,  |  |
 
 ### path_params
 #### RequestPathParams

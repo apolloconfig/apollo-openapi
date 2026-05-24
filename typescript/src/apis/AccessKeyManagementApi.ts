@@ -38,6 +38,7 @@ export interface DisableAccessKeyRequest {
     appId: string;
     env: string;
     accessKeyId: number;
+    operator?: string;
 }
 
 export interface EnableAccessKeyRequest {
@@ -45,6 +46,7 @@ export interface EnableAccessKeyRequest {
     env: string;
     accessKeyId: number;
     mode?: number;
+    operator?: string;
 }
 
 export interface FindAccessKeysRequest {
@@ -167,6 +169,10 @@ export class AccessKeyManagementApi extends runtime.BaseAPI {
 
         const queryParameters: any = {};
 
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
+        }
+
         const headerParameters: runtime.HTTPHeaders = {};
 
         if (this.configuration && this.configuration.apiKey) {
@@ -212,6 +218,10 @@ export class AccessKeyManagementApi extends runtime.BaseAPI {
 
         if (requestParameters.mode !== undefined) {
             queryParameters['mode'] = requestParameters.mode;
+        }
+
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

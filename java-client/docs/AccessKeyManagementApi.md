@@ -160,7 +160,7 @@ null (empty response body)
 
 <a id="disableAccessKey"></a>
 # **disableAccessKey**
-> disableAccessKey(appId, env, accessKeyId)
+> disableAccessKey(appId, env, accessKeyId, operator)
 
 禁用AccessKey
 
@@ -191,8 +191,9 @@ public class Example {
     String appId = "appId_example"; // String |
     String env = "env_example"; // String |
     Long accessKeyId = 56L; // Long |
+    String operator = "operator_example"; // String |
     try {
-      apiInstance.disableAccessKey(appId, env, accessKeyId);
+      apiInstance.disableAccessKey(appId, env, accessKeyId, operator);
     } catch (ApiException e) {
       System.err.println("Exception when calling AccessKeyManagementApi#disableAccessKey");
       System.err.println("Status code: " + e.getCode());
@@ -211,6 +212,7 @@ public class Example {
 | **appId** | **String**|  | |
 | **env** | **String**|  | |
 | **accessKeyId** | **Long**|  | |
+| **operator** | **String**|  | [optional] |
 
 ### Return type
 
@@ -232,7 +234,7 @@ null (empty response body)
 
 <a id="enableAccessKey"></a>
 # **enableAccessKey**
-> enableAccessKey(appId, env, accessKeyId, mode)
+> enableAccessKey(appId, env, accessKeyId, mode, operator)
 
 启用AccessKey
 
@@ -264,8 +266,9 @@ public class Example {
     String env = "env_example"; // String |
     Long accessKeyId = 56L; // Long |
     Integer mode = 0; // Integer |
+    String operator = "operator_example"; // String |
     try {
-      apiInstance.enableAccessKey(appId, env, accessKeyId, mode);
+      apiInstance.enableAccessKey(appId, env, accessKeyId, mode, operator);
     } catch (ApiException e) {
       System.err.println("Exception when calling AccessKeyManagementApi#enableAccessKey");
       System.err.println("Status code: " + e.getCode());
@@ -285,6 +288,7 @@ public class Example {
 | **env** | **String**|  | |
 | **accessKeyId** | **Long**|  | |
 | **mode** | **Integer**|  | [optional] [default to 0] |
+| **operator** | **String**|  | [optional] |
 
 ### Return type
 
