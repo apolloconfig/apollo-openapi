@@ -66,7 +66,7 @@ public interface NamespaceBranchManagementApiDelegate {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return 分支删除成功 (status code 200)
      * @see NamespaceBranchManagementApi#deleteBranch
      */
@@ -222,8 +222,8 @@ public interface NamespaceBranchManagementApiDelegate {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
      * @param openGrayReleaseRuleDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return 灰度规则更新成功 (status code 200)
      * @see NamespaceBranchManagementApi#updateBranchRules
      */
@@ -235,6 +235,32 @@ public interface NamespaceBranchManagementApiDelegate {
         String operator,
         OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules : 更新分支灰度发布规则 (original openapi)
+     * This overload preserves delegate implementations from versions before 0.3.1.
+     *
+     * @param appId 应用ID (required)
+     * @param env 环境标识 (required)
+     * @param clusterName 集群名称 (required)
+     * @param namespaceName 命名空间名称 (required)
+     * @param branchName 分支名称 (required)
+     * @param openGrayReleaseRuleDTO  (required)
+     * @param operator 操作人用户名 (optional)
+     * @return 灰度规则更新成功 (status code 200)
+     * @see NamespaceBranchManagementApi#updateBranchRules
+     */
+    default ResponseEntity<Void> updateBranchRules(String appId,
+        String env,
+        String clusterName,
+        String namespaceName,
+        String branchName,
+        OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO,
+        String operator) {
+        return updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator,
+            openGrayReleaseRuleDTO);
 
     }
 

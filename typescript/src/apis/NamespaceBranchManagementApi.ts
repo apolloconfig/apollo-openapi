@@ -47,7 +47,7 @@ export interface DeleteBranchRequest {
     clusterName: string;
     namespaceName: string;
     branchName: string;
-    operator: string;
+    operator?: string;
 }
 
 export interface FindBranchRequest {
@@ -93,8 +93,8 @@ export interface UpdateBranchRulesRequest {
     clusterName: string;
     namespaceName: string;
     branchName: string;
-    operator: string;
     openGrayReleaseRuleDTO: OpenGrayReleaseRuleDTO;
+    operator?: string;
 }
 
 /**
@@ -177,10 +177,6 @@ export class NamespaceBranchManagementApi extends runtime.BaseAPI {
 
         if (requestParameters.branchName === null || requestParameters.branchName === undefined) {
             throw new runtime.RequiredError('branchName','Required parameter requestParameters.branchName was null or undefined when calling deleteBranch.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling deleteBranch.');
         }
 
         const queryParameters: any = {};
@@ -478,10 +474,6 @@ export class NamespaceBranchManagementApi extends runtime.BaseAPI {
 
         if (requestParameters.branchName === null || requestParameters.branchName === undefined) {
             throw new runtime.RequiredError('branchName','Required parameter requestParameters.branchName was null or undefined when calling updateBranchRules.');
-        }
-
-        if (requestParameters.operator === null || requestParameters.operator === undefined) {
-            throw new runtime.RequiredError('operator','Required parameter requestParameters.operator was null or undefined when calling updateBranchRules.');
         }
 
         if (requestParameters.openGrayReleaseRuleDTO === null || requestParameters.openGrayReleaseRuleDTO === undefined) {

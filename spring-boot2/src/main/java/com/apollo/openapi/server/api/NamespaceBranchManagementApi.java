@@ -91,7 +91,7 @@ public interface NamespaceBranchManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return 分支删除成功 (status code 200)
      */
     @Operation(
@@ -116,7 +116,7 @@ public interface NamespaceBranchManagementApi {
         @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
         @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
         @Parameter(name = "branchName", description = "分支名称", required = true, in = ParameterIn.PATH) @PathVariable("branchName") String branchName,
-        @NotNull @Parameter(name = "operator", description = "操作人用户名", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = true) String operator
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
         return getDelegate().deleteBranch(env, appId, clusterName, namespaceName, branchName, operator);
     }
@@ -319,8 +319,8 @@ public interface NamespaceBranchManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
      * @param openGrayReleaseRuleDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return 灰度规则更新成功 (status code 200)
      */
     @Operation(
@@ -346,10 +346,10 @@ public interface NamespaceBranchManagementApi {
         @Parameter(name = "clusterName", description = "集群名称", required = true, in = ParameterIn.PATH) @PathVariable("clusterName") String clusterName,
         @Parameter(name = "namespaceName", description = "命名空间名称", required = true, in = ParameterIn.PATH) @PathVariable("namespaceName") String namespaceName,
         @Parameter(name = "branchName", description = "分支名称", required = true, in = ParameterIn.PATH) @PathVariable("branchName") String branchName,
-        @NotNull @Parameter(name = "operator", description = "操作人用户名", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = true) String operator,
-        @Parameter(name = "OpenGrayReleaseRuleDTO", description = "", required = true) @Valid @RequestBody OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO
+        @Parameter(name = "OpenGrayReleaseRuleDTO", description = "", required = true) @Valid @RequestBody OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO,
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
-        return getDelegate().updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO);
+        return getDelegate().updateBranchRules(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator);
     }
 
 }

@@ -181,7 +181,7 @@ Type | Description  | Notes
 
 # **delete_branch**
 <a id="delete_branch"></a>
-> delete_branch(envapp_idcluster_namenamespace_namebranch_nameoperator)
+> delete_branch(envapp_idcluster_namenamespace_namebranch_name)
 
 删除命名空间分支 (original openapi)
 
@@ -224,6 +224,25 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         'branchName': "branchName_example",
     }
     query_params = {
+    }
+    try:
+        # 删除命名空间分支 (original openapi)
+        api_response = api_instance.delete_branch(
+            path_params=path_params,
+            query_params=query_params,
+        )
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling NamespaceBranchManagementApi->delete_branch: %s\n" % e)
+
+    # example passing only optional values
+    path_params = {
+        'env': "env_example",
+        'appId': "appId_example",
+        'clusterName': "clusterName_example",
+        'namespaceName': "namespaceName_example",
+        'branchName': "branchName_example",
+    }
+    query_params = {
         'operator': "operator_example",
     }
     try:
@@ -250,7 +269,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-operator | OperatorSchema | |
+operator | OperatorSchema | | optional
 
 
 # OperatorSchema
@@ -1059,7 +1078,7 @@ Type | Description  | Notes
 
 # **update_branch_rules**
 <a id="update_branch_rules"></a>
-> update_branch_rules(app_idenvcluster_namenamespace_namebranch_nameoperatoropen_gray_release_rule_dto)
+> update_branch_rules(app_idenvcluster_namenamespace_namebranch_nameopen_gray_release_rule_dto)
 
 更新分支灰度发布规则 (original openapi)
 
@@ -1095,6 +1114,47 @@ with apollo_openapi.ApiClient(configuration) as api_client:
     api_instance = namespace_branch_management_api.NamespaceBranchManagementApi(api_client)
 
     # example passing only required values which don't have defaults set
+    path_params = {
+        'appId': "appId_example",
+        'env': "env_example",
+        'clusterName': "clusterName_example",
+        'namespaceName': "namespaceName_example",
+        'branchName': "branchName_example",
+    }
+    query_params = {
+    }
+    body = OpenGrayReleaseRuleDTO(
+        data_change_created_by="data_change_created_by_example",
+        data_change_last_modified_by="data_change_last_modified_by_example",
+        data_change_created_time="2025-09-29T12:34:56Z",
+        data_change_last_modified_time="2025-09-29T12:34:56Z",
+        app_id="app_id_example",
+        cluster_name="cluster_name_example",
+        namespace_name="namespace_name_example",
+        branch_name="branch_name_example",
+        rule_items=[
+            OpenGrayReleaseRuleItemDTO(
+                client_app_id="client_app_id_example",
+                client_ip_list=[
+                    "client_ip_list_example"
+                ],
+                client_label_list=[
+                    "client_label_list_example"
+                ],
+            )
+        ],
+    )
+    try:
+        # 更新分支灰度发布规则 (original openapi)
+        api_response = api_instance.update_branch_rules(
+            path_params=path_params,
+            query_params=query_params,
+            body=body,
+        )
+    except apollo_openapi.ApiException as e:
+        print("Exception when calling NamespaceBranchManagementApi->update_branch_rules: %s\n" % e)
+
+    # example passing only optional values
     path_params = {
         'appId': "appId_example",
         'env': "env_example",
@@ -1161,7 +1221,7 @@ Type | Description  | Notes
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-operator | OperatorSchema | |
+operator | OperatorSchema | | optional
 
 
 # OperatorSchema

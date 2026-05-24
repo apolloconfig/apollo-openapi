@@ -93,6 +93,7 @@ export interface RollbackRequest {
     env: string;
     releaseId: number;
     operator?: string;
+    toReleaseId?: number;
 }
 
 /**
@@ -506,6 +507,10 @@ export class ReleaseManagementApi extends runtime.BaseAPI {
 
         if (requestParameters.operator !== undefined) {
             queryParameters['operator'] = requestParameters.operator;
+        }
+
+        if (requestParameters.toReleaseId !== undefined) {
+            queryParameters['toReleaseId'] = requestParameters.toReleaseId;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};

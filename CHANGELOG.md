@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-05-24
+
+### Added
+
+- Add the optional `toReleaseId` query parameter to the release rollback API for rollback-to-release support.
+- Make branch delete and branch rule update `operator` query parameters optional for Portal user-session compatibility.
+- Preserve Java client and Spring server compatibility overloads from versions before 0.3.1.
+
 ## [0.3.0] - 2026-05-16
 
 ### Changed

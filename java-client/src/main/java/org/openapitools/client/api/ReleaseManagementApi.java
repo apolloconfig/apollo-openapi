@@ -1240,6 +1240,7 @@ public class ReleaseManagementApi {
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
      * @param operator 操作人用户名 (optional)
+     * @param toReleaseId 要回滚到的目标发布ID；不传时回滚到上一版本 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1249,7 +1250,7 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td> 发布回滚成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call rollbackCall(String env, Long releaseId, String operator, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call rollbackCall(String env, Long releaseId, String operator, Long toReleaseId, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1280,6 +1281,10 @@ public class ReleaseManagementApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
         }
 
+        if (toReleaseId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("toReleaseId", toReleaseId));
+        }
+
         final String[] localVarAccepts = {
         };
         final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
@@ -1298,8 +1303,16 @@ public class ReleaseManagementApi {
         return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
+    /**
+     * Build call for rollback.
+     * This overload preserves the Java client API from versions before 0.3.1.
+     */
+    public okhttp3.Call rollbackCall(String env, Long releaseId, String operator, final ApiCallback _callback) throws ApiException {
+        return rollbackCall(env, releaseId, operator, null, _callback);
+    }
+
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call rollbackValidateBeforeCall(String env, Long releaseId, String operator, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call rollbackValidateBeforeCall(String env, Long releaseId, String operator, Long toReleaseId, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'env' is set
         if (env == null) {
             throw new ApiException("Missing the required parameter 'env' when calling rollback(Async)");
@@ -1310,7 +1323,7 @@ public class ReleaseManagementApi {
             throw new ApiException("Missing the required parameter 'releaseId' when calling rollback(Async)");
         }
 
-        return rollbackCall(env, releaseId, operator, _callback);
+        return rollbackCall(env, releaseId, operator, toReleaseId, _callback);
 
     }
 
@@ -1320,6 +1333,7 @@ public class ReleaseManagementApi {
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
      * @param operator 操作人用户名 (optional)
+     * @param toReleaseId 要回滚到的目标发布ID；不传时回滚到上一版本 (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1327,8 +1341,16 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td> 发布回滚成功 </td><td>  -  </td></tr>
      </table>
      */
+    public void rollback(String env, Long releaseId, String operator, Long toReleaseId) throws ApiException {
+        rollbackWithHttpInfo(env, releaseId, operator, toReleaseId);
+    }
+
+    /**
+     * 回滚发布 (original openapi)
+     * This overload preserves the Java client API from versions before 0.3.1.
+     */
     public void rollback(String env, Long releaseId, String operator) throws ApiException {
-        rollbackWithHttpInfo(env, releaseId, operator);
+        rollback(env, releaseId, operator, null);
     }
 
     /**
@@ -1337,6 +1359,7 @@ public class ReleaseManagementApi {
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
      * @param operator 操作人用户名 (optional)
+     * @param toReleaseId 要回滚到的目标发布ID；不传时回滚到上一版本 (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1345,9 +1368,17 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td> 发布回滚成功 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> rollbackWithHttpInfo(String env, Long releaseId, String operator) throws ApiException {
-        okhttp3.Call localVarCall = rollbackValidateBeforeCall(env, releaseId, operator, null);
+    public ApiResponse<Void> rollbackWithHttpInfo(String env, Long releaseId, String operator, Long toReleaseId) throws ApiException {
+        okhttp3.Call localVarCall = rollbackValidateBeforeCall(env, releaseId, operator, toReleaseId, null);
         return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * 回滚发布 (original openapi)
+     * This overload preserves the Java client API from versions before 0.3.1.
+     */
+    public ApiResponse<Void> rollbackWithHttpInfo(String env, Long releaseId, String operator) throws ApiException {
+        return rollbackWithHttpInfo(env, releaseId, operator, null);
     }
 
     /**
@@ -1356,6 +1387,7 @@ public class ReleaseManagementApi {
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
      * @param operator 操作人用户名 (optional)
+     * @param toReleaseId 要回滚到的目标发布ID；不传时回滚到上一版本 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1365,10 +1397,18 @@ public class ReleaseManagementApi {
         <tr><td> 200 </td><td> 发布回滚成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call rollbackAsync(String env, Long releaseId, String operator, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call rollbackAsync(String env, Long releaseId, String operator, Long toReleaseId, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = rollbackValidateBeforeCall(env, releaseId, operator, _callback);
+        okhttp3.Call localVarCall = rollbackValidateBeforeCall(env, releaseId, operator, toReleaseId, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
+    }
+
+    /**
+     * 回滚发布 (original openapi) (asynchronously)
+     * This overload preserves the Java client API from versions before 0.3.1.
+     */
+    public okhttp3.Call rollbackAsync(String env, Long releaseId, String operator, final ApiCallback<Void> _callback) throws ApiException {
+        return rollbackAsync(env, releaseId, operator, null, _callback);
     }
 }

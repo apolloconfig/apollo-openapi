@@ -172,6 +172,8 @@ public class ReleaseManagementApiTest {
         String env = null;
         Long releaseId = null;
         String operator = null;
+        Long toReleaseId = null;
+        api.rollback(env, releaseId, operator, toReleaseId);
         api.rollback(env, releaseId, operator);
         // TODO: test validations
     }

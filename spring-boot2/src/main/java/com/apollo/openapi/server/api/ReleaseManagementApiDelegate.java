@@ -247,6 +247,7 @@ public interface ReleaseManagementApiDelegate {
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
      * @param operator 操作人用户名 (optional)
+     * @param toReleaseId 要回滚到的目标发布ID；不传时回滚到上一版本 (optional)
      * @return 发布回滚成功 (status code 200)
      * @see ReleaseManagementApi#rollback
      */
@@ -254,6 +255,25 @@ public interface ReleaseManagementApiDelegate {
         Long releaseId,
         String operator) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * PUT /openapi/v1/envs/{env}/releases/{releaseId}/rollback : 回滚发布 (original openapi)
+     * This overload preserves delegate implementations from versions before 0.3.1.
+     *
+     * @param env 环境标识 (required)
+     * @param releaseId 发布ID (required)
+     * @param operator 操作人用户名 (optional)
+     * @param toReleaseId 要回滚到的目标发布ID；不传时回滚到上一版本 (optional)
+     * @return 发布回滚成功 (status code 200)
+     * @see ReleaseManagementApi#rollback
+     */
+    default ResponseEntity<Void> rollback(String env,
+        Long releaseId,
+        String operator,
+        Long toReleaseId) {
+        return rollback(env, releaseId, operator);
 
     }
 

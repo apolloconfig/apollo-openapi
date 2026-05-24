@@ -350,6 +350,7 @@ public interface ReleaseManagementApi {
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
      * @param operator 操作人用户名 (optional)
+     * @param toReleaseId 要回滚到的目标发布ID；不传时回滚到上一版本 (optional)
      * @return 发布回滚成功 (status code 200)
      */
     @Operation(
@@ -371,9 +372,10 @@ public interface ReleaseManagementApi {
     default ResponseEntity<Void> rollback(
         @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "releaseId", description = "发布ID", required = true, in = ParameterIn.PATH) @PathVariable("releaseId") Long releaseId,
-        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator,
+        @Parameter(name = "toReleaseId", description = "要回滚到的目标发布ID；不传时回滚到上一版本", in = ParameterIn.QUERY) @Valid @RequestParam(value = "toReleaseId", required = false) Long toReleaseId
     ) {
-        return getDelegate().rollback(env, releaseId, operator);
+        return getDelegate().rollback(env, releaseId, operator, toReleaseId);
     }
 
 }
