@@ -222,7 +222,11 @@ public interface ReleaseManagementApiDelegate {
      */
     default ResponseEntity<OpenReleaseDTO> getReleaseById(String env,
         Long releaseId) {
-        return getReleaseById(env, releaseId == null ? null : Math.toIntExact(releaseId));
+        if (releaseId != null
+            && (releaseId > Integer.MAX_VALUE || releaseId < Integer.MIN_VALUE)) {
+            return ResponseEntity.badRequest().build();
+        }
+        return getReleaseById(env, releaseId == null ? null : releaseId.intValue());
 
     }
 
