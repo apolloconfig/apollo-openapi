@@ -12,4 +12,6 @@ export * from './NamespaceLockManagementApi';
 export * from './NamespaceManagementApi';
 export * from './OrganizationManagementApi';
 export * from './PermissionManagementApi';
+export * from './PortalManagementApi';
+export * from './PortalUserManagementApi';
 export * from './ReleaseManagementApi';

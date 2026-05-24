@@ -17,7 +17,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
   title: Apollo OpenAPI
-  version: 0.3.3
+  version: 0.3.4
 servers:
 - url: /
 security:
@@ -49,6 +49,10 @@ tags:
   name: AccessKey Management
 - description: 权限管理相关接口，包括权限查询等功能
   name: Permission Management
+- description: Portal用户管理相关接口，主要供Portal UI在用户登录态下调用
+  name: Portal User Management
+- description: Portal UI 登录态管理接口，主要供当前版本 Portal 前端调用
+  name: Portal Management
 paths:
   /openapi/v1/apps:
     get:
@@ -5585,6 +5589,1395 @@ paths:
       tags:
       - AccessKey Management
       x-accepts: application/json
+  /openapi/v1/user:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/user
+      operationId: getCurrentUser
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenUserInfoDTO'
+          description: 成功获取当前用户
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 未登录或未授权访问
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 仅支持Portal用户登录态访问
+      summary: 获取当前Portal用户(new added)
+      tags:
+      - Portal User Management
+      x-accepts: application/json
+  /openapi/v1/users:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/users
+      operationId: searchUsers
+      parameters:
+      - description: 用户名、显示名或邮箱关键字
+        explode: true
+        in: query
+        name: keyword
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: 是否包含禁用用户
+        explode: true
+        in: query
+        name: includeInactiveUsers
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: 偏移量
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          minimum: 0
+          type: integer
+        style: form
+      - description: 返回数量
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/OpenUserInfoDTO'
+                type: array
+          description: 成功获取用户列表
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 未登录或未授权访问
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 仅支持Portal用户登录态访问
+      summary: 搜索Portal用户(new added)
+      tags:
+      - Portal User Management
+      x-accepts: application/json
+    post:
+      deprecated: false
+      description: POST /openapi/v1/users
+      operationId: createOrUpdateUser
+      parameters:
+      - description: true 表示创建用户，false 表示更新用户
+        explode: true
+        in: query
+        name: isCreate
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpenUserDTO'
+        required: true
+      responses:
+        "200":
+          description: 用户创建或更新成功
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 请求参数错误
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 权限不足
+      summary: 创建或更新Portal用户(new added)
+      tags:
+      - Portal User Management
+      x-content-type: application/json
+      x-accepts: application/json
+  /openapi/v1/users/enabled:
+    put:
+      deprecated: false
+      description: PUT /openapi/v1/users/enabled
+      operationId: changeUserEnabled
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpenUserDTO'
+        required: true
+      responses:
+        "200":
+          description: 用户状态修改成功
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 请求参数错误
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 权限不足
+      summary: 修改Portal用户启用状态(new added)
+      tags:
+      - Portal User Management
+      x-content-type: application/json
+      x-accepts: application/json
+  /openapi/v1/apollo/audit/properties:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/apollo/audit/properties
+      operationId: getAuditProperties
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: 成功获取审计配置
+      summary: 获取审计配置(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/apollo/audit/logs:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/apollo/audit/logs
+      operationId: findAuditLogs
+      parameters:
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                type: array
+          description: 成功获取审计日志
+      summary: 查询审计日志(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/apollo/audit/logs/opName:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/apollo/audit/logs/opName
+      operationId: findAuditLogsByOpName
+      parameters:
+      - explode: true
+        in: query
+        name: opName
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: startDate
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: endDate
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                type: array
+          description: 成功获取审计日志
+      summary: 按操作名查询审计日志(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/apollo/audit/trace:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/apollo/audit/trace
+      operationId: findAuditTraceDetails
+      parameters:
+      - explode: true
+        in: query
+        name: traceId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                type: array
+          description: 成功获取审计链路详情
+      summary: 查询审计链路详情(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/apollo/audit/logs/dataInfluences/field:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/apollo/audit/logs/dataInfluences/field
+      operationId: findAuditDataInfluencesByField
+      parameters:
+      - explode: true
+        in: query
+        name: entityName
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: entityId
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: fieldName
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                type: array
+          description: 成功获取审计数据影响
+      summary: 查询审计数据影响(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/apollo/audit/logs/by-name-or-type-or-operator:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/apollo/audit/logs/by-name-or-type-or-operator
+      operationId: searchAuditLogs
+      parameters:
+      - explode: true
+        in: query
+        name: query
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                type: array
+          description: 成功搜索审计日志
+      summary: 搜索审计日志(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/commits:
+    get:
+      deprecated: false
+      description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/commits"
+      operationId: findCommits
+      parameters:
+      - explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: key
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                type: array
+          description: 成功获取提交记录
+      summary: 查询命名空间提交记录(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/page-settings:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/page-settings
+      operationId: getPageSettings
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: 成功获取页面配置
+      summary: 获取Portal页面配置(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/consumers:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/consumers
+      operationId: getConsumerList
+      parameters:
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                type: array
+          description: 成功获取消费者列表
+      summary: 查询开放平台消费者列表(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+    post:
+      deprecated: false
+      description: POST /openapi/v1/consumers
+      operationId: createConsumer
+      parameters:
+      - explode: true
+        in: query
+        name: expires
+        required: false
+        schema:
+          description: yyyyMMddHHmmss
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: 成功创建消费者
+      summary: 创建开放平台消费者(new added)
+      tags:
+      - Portal Management
+      x-content-type: application/json
+      x-accepts: application/json
+  /openapi/v1/consumer-tokens/by-appId:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/consumer-tokens/by-appId
+      operationId: getConsumerTokenByAppId
+      parameters:
+      - explode: true
+        in: query
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: 成功获取消费者Token
+      summary: 按应用ID查询消费者Token(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/consumers/{token}/assign-role:
+    post:
+      deprecated: false
+      description: "POST /openapi/v1/consumers/{token}/assign-role"
+      operationId: assignRoleToConsumer
+      parameters:
+      - explode: false
+        in: path
+        name: token
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: type
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: envs
+        required: false
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                type: array
+          description: 成功授权
+      summary: 给消费者授权(new added)
+      tags:
+      - Portal Management
+      x-content-type: application/json
+      x-accepts: application/json
+  /openapi/v1/consumers/by-appId:
+    delete:
+      deprecated: false
+      description: DELETE /openapi/v1/consumers/by-appId
+      operationId: deleteConsumer
+      parameters:
+      - explode: true
+        in: query
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: 成功删除消费者
+      summary: 按应用ID删除消费者(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/import:
+    post:
+      deprecated: false
+      description: POST /openapi/v1/import
+      operationId: importConfig
+      parameters:
+      - explode: true
+        in: query
+        name: envs
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: conflictAction
+        required: false
+        schema:
+          default: ignore
+          type: string
+        style: form
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/importConfig_request'
+        required: true
+      responses:
+        "200":
+          description: 导入成功
+      summary: 导入配置兼容入口(new added)
+      tags:
+      - Portal Management
+      x-content-type: multipart/form-data
+      x-accepts: application/json
+  /openapi/v1/favorites:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/favorites
+      operationId: findFavorites
+      parameters:
+      - explode: true
+        in: query
+        name: userId
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: appId
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                type: array
+          description: 成功获取收藏
+      summary: 查询收藏(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+    post:
+      deprecated: false
+      description: POST /openapi/v1/favorites
+      operationId: addFavorite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: 成功添加收藏
+      summary: 添加收藏(new added)
+      tags:
+      - Portal Management
+      x-content-type: application/json
+      x-accepts: application/json
+  /openapi/v1/favorites/{favoriteId}:
+    delete:
+      deprecated: false
+      description: "DELETE /openapi/v1/favorites/{favoriteId}"
+      operationId: deleteFavorite
+      parameters:
+      - explode: false
+        in: path
+        name: favoriteId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: 成功删除收藏
+      summary: 删除收藏(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+    put:
+      deprecated: false
+      description: "PUT /openapi/v1/favorites/{favoriteId}"
+      operationId: topFavorite
+      parameters:
+      - explode: false
+        in: path
+        name: favoriteId
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "200":
+          description: 成功置顶收藏
+      summary: 收藏置顶(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/global-search/item-info/by-key-or-value:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/global-search/item-info/by-key-or-value
+      operationId: searchItemInfoByKeyOrValue
+      parameters:
+      - explode: true
+        in: query
+        name: key
+        required: false
+        schema:
+          default: ""
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: value
+        required: false
+        schema:
+          default: ""
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: 成功搜索配置
+      summary: 按Key或Value全局搜索配置(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/releases/histories:
+    get:
+      deprecated: false
+      description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/releases/histories"
+      operationId: findReleaseHistoriesByNamespace
+      parameters:
+      - explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                type: array
+          description: 成功获取发布历史
+      summary: 查询命名空间发布历史(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/server/portal-db/config:
+    delete:
+      deprecated: false
+      description: DELETE /openapi/v1/server/portal-db/config
+      operationId: deletePortalDBConfig
+      parameters:
+      - explode: true
+        in: query
+        name: key
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: 成功删除配置
+      summary: 删除Portal DB配置(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+    post:
+      deprecated: false
+      description: POST /openapi/v1/server/portal-db/config
+      operationId: createOrUpdatePortalDBConfig
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: 成功创建或更新配置
+      summary: 创建或更新Portal DB配置(new added)
+      tags:
+      - Portal Management
+      x-content-type: application/json
+      x-accepts: application/json
+  /openapi/v1/server/envs/{env}/config-db/config:
+    delete:
+      deprecated: false
+      description: "DELETE /openapi/v1/server/envs/{env}/config-db/config"
+      operationId: deleteConfigDBConfig
+      parameters:
+      - explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: key
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: cluster
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          description: 成功删除配置
+      summary: 删除Config DB配置(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+    post:
+      deprecated: false
+      description: "POST /openapi/v1/server/envs/{env}/config-db/config"
+      operationId: createOrUpdateConfigDBConfig
+      parameters:
+      - explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: 成功创建或更新配置
+      summary: 创建或更新Config DB配置(new added)
+      tags:
+      - Portal Management
+      x-content-type: application/json
+      x-accepts: application/json
+  /openapi/v1/server/portal-db/config/find-all-config:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/server/portal-db/config/find-all-config
+      operationId: findAllPortalDBConfig
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                type: array
+          description: 成功获取配置列表
+      summary: 查询全部Portal DB配置(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/server/envs/{env}/config-db/config/find-all-config:
+    get:
+      deprecated: false
+      description: "GET /openapi/v1/server/envs/{env}/config-db/config/find-all-config"
+      operationId: findAllConfigDBConfig
+      parameters:
+      - explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: object
+                type: array
+          description: 成功获取配置列表
+      summary: 查询指定环境全部Config DB配置(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/system-info:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/system-info
+      operationId: getSystemInfo
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: 成功获取系统信息
+      summary: 获取系统信息(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/system-info/health:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/system-info/health
+      operationId: checkSystemHealth
+      parameters:
+      - explode: true
+        in: query
+        name: instanceId
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: 成功获取健康状态
+      summary: 检查系统实例健康状态(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/configs/export:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/configs/export
+      operationId: exportAllConfigs
+      parameters:
+      - explode: true
+        in: query
+        name: envs
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/octet-stream:
+              schema:
+                format: binary
+                type: string
+          description: 成功导出配置
+      summary: 导出所有配置(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/octet-stream
+  /openapi/v1/configs/import:
+    post:
+      deprecated: false
+      description: POST /openapi/v1/configs/import
+      operationId: importAllConfigs
+      parameters:
+      - explode: true
+        in: query
+        name: envs
+        required: true
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: conflictAction
+        required: false
+        schema:
+          default: ignore
+          type: string
+        style: form
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/importConfig_request'
+        required: true
+      responses:
+        "200":
+          description: 导入成功
+      summary: 导入所有配置(new added)
+      tags:
+      - Portal Management
+      x-content-type: multipart/form-data
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/export:
+    get:
+      deprecated: false
+      description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/export"
+      operationId: exportAppConfig
+      parameters:
+      - explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/octet-stream:
+              schema:
+                format: binary
+                type: string
+          description: 成功导出应用配置
+      summary: 导出应用配置(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/octet-stream
+    head:
+      deprecated: false
+      description: "HEAD /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/export"
+      operationId: checkExportAppConfig
+      parameters:
+      - explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          description: 可导出
+      summary: 检查应用配置导出权限(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/import:
+    post:
+      deprecated: false
+      description: "POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/import"
+      operationId: importAppConfig
+      parameters:
+      - explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: true
+        in: query
+        name: conflictAction
+        required: false
+        schema:
+          default: ignore
+          type: string
+        style: form
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/importConfig_request'
+        required: true
+      responses:
+        "200":
+          description: 导入成功
+      summary: 导入应用配置(new added)
+      tags:
+      - Portal Management
+      x-content-type: multipart/form-data
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items/export:
+    get:
+      deprecated: false
+      description: "GET /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items/export"
+      operationId: exportNamespaceItems
+      parameters:
+      - explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/octet-stream:
+              schema:
+                format: binary
+                type: string
+          description: 成功导出命名空间配置项
+      summary: 导出命名空间配置项(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/octet-stream
+  /openapi/v1/apps/search/by-appid-or-name:
+    get:
+      deprecated: false
+      description: GET /openapi/v1/apps/search/by-appid-or-name
+      operationId: searchAppsByAppIdOrName
+      parameters:
+      - explode: true
+        in: query
+        name: query
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                type: object
+          description: 成功搜索应用
+      summary: 按应用ID或名称搜索应用(new added)
+      tags:
+      - Portal Management
+      x-accepts: application/json
+  /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items/import:
+    post:
+      deprecated: false
+      description: "POST /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items/import"
+      operationId: importNamespaceItems
+      parameters:
+      - explode: false
+        in: path
+        name: appId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: env
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: clusterName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: namespaceName
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/importConfig_request'
+        required: true
+      responses:
+        "200":
+          description: 导入成功
+      summary: 导入命名空间配置项(new added)
+      tags:
+      - Portal Management
+      x-content-type: multipart/form-data
+      x-accepts: application/json
 components:
   schemas:
     OpenAppDTO:
@@ -6825,6 +8218,30 @@ components:
           description: ""
           type: integer
       type: object
+    OpenUserDTO:
+      example:
+        password: password
+        userDisplayName: userDisplayName
+        email: email
+        enabled: 0
+        username: username
+      properties:
+        username:
+          description: 用户名
+          type: string
+        userDisplayName:
+          description: 用户显示名
+          type: string
+        password:
+          description: 用户密码
+          type: string
+        email:
+          description: 用户邮箱
+          type: string
+        enabled:
+          description: 是否启用，1 表示启用，0 表示禁用
+          type: integer
+      type: object
     OpenEnvNamespaceRoleUserDTO:
       example:
         releaseRoleUsers:
@@ -7073,6 +8490,12 @@ components:
           featureY: false
         projectB:
           darkMode: true
+      type: object
+    importConfig_request:
+      properties:
+        file:
+          format: binary
+          type: string
       type: object
   securitySchemes:
     ApiKeyAuth:

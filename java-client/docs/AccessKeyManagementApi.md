@@ -43,7 +43,7 @@ public class Example {
     AccessKeyManagementApi apiInstance = new AccessKeyManagementApi(defaultClient);
     String appId = "appId_example"; // String |
     String env = "env_example"; // String |
-    String operator = "operator_example"; // String |
+    String operator = "operator_example"; // String | 操作人用户名
     try {
       OpenAccessKeyDTO result = apiInstance.createAccessKey(appId, env, operator);
       System.out.println(result);
@@ -117,7 +117,7 @@ public class Example {
     String appId = "appId_example"; // String |
     String env = "env_example"; // String |
     Long accessKeyId = 56L; // Long |
-    String operator = "operator_example"; // String |
+    String operator = "operator_example"; // String | 操作人用户名
     try {
       apiInstance.deleteAccessKey(appId, env, accessKeyId, operator);
     } catch (ApiException e) {
@@ -191,7 +191,7 @@ public class Example {
     String appId = "appId_example"; // String |
     String env = "env_example"; // String |
     Long accessKeyId = 56L; // Long |
-    String operator = "operator_example"; // String |
+    String operator = "operator_example"; // String | 操作人用户名
     try {
       apiInstance.disableAccessKey(appId, env, accessKeyId, operator);
     } catch (ApiException e) {
@@ -266,7 +266,7 @@ public class Example {
     String env = "env_example"; // String |
     Long accessKeyId = 56L; // Long |
     Integer mode = 0; // Integer |
-    String operator = "operator_example"; // String |
+    String operator = "operator_example"; // String | 操作人用户名
     try {
       apiInstance.enableAccessKey(appId, env, accessKeyId, mode, operator);
     } catch (ApiException e) {

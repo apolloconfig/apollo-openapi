@@ -43,7 +43,7 @@ public interface AccessKeyManagementApi {
      *
      * @param appId  (required)
      * @param env  (required)
-     * @param operator  (optional)
+     * @param operator 操作人用户名 (optional)
      * @return  (status code 200)
      */
     @Operation(
@@ -81,7 +81,7 @@ public interface AccessKeyManagementApi {
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
-     * @param operator  (optional)
+     * @param operator 操作人用户名 (optional)
      * @return  (status code 200)
      */
     @Operation(
@@ -112,31 +112,12 @@ public interface AccessKeyManagementApi {
 
     /**
      * PUT /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/deactivation : 禁用AccessKey
-     * This overload preserves the Spring API method from versions before 0.3.3.
      *
      *
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
-     * @return  (status code 200)
-     */
-    default ResponseEntity<Void> disableAccessKey(
-        String appId,
-        String env,
-        Long accessKeyId
-    ) {
-        return disableAccessKey(appId, env, accessKeyId, null);
-    }
-
-
-    /**
-     * PUT /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/deactivation : 禁用AccessKey
-     *
-     *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param accessKeyId  (required)
-     * @param operator  (optional)
+     * @param operator 操作人用户名 (optional)
      * @return  (status code 200)
      */
     @Operation(
@@ -167,34 +148,13 @@ public interface AccessKeyManagementApi {
 
     /**
      * PUT /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/activation : 启用AccessKey
-     * This overload preserves the Spring API method from versions before 0.3.3.
      *
      *
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
      * @param mode  (optional, default to 0)
-     * @return  (status code 200)
-     */
-    default ResponseEntity<Void> enableAccessKey(
-        String appId,
-        String env,
-        Long accessKeyId,
-        Integer mode
-    ) {
-        return enableAccessKey(appId, env, accessKeyId, mode, null);
-    }
-
-
-    /**
-     * PUT /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/activation : 启用AccessKey
-     *
-     *
-     * @param appId  (required)
-     * @param env  (required)
-     * @param accessKeyId  (required)
-     * @param mode  (optional, default to 0)
-     * @param operator  (optional)
+     * @param operator 操作人用户名 (optional)
      * @return  (status code 200)
      */
     @Operation(
