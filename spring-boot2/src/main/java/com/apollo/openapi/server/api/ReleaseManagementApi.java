@@ -294,7 +294,7 @@ public interface ReleaseManagementApi {
     )
     default ResponseEntity<OpenReleaseDTO> getReleaseById(
         @Parameter(name = "env", description = "环境标识", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "releaseId", description = "发布ID", required = true, in = ParameterIn.PATH) @PathVariable("releaseId") Integer releaseId
+        @Parameter(name = "releaseId", description = "发布ID", required = true, in = ParameterIn.PATH) @PathVariable("releaseId") Long releaseId
     ) {
         return getDelegate().getReleaseById(env, releaseId);
     }

@@ -31,7 +31,7 @@ from . import path
 
 # Path params
 EnvSchema = schemas.StrSchema
-ReleaseIdSchema = schemas.IntSchema
+ReleaseIdSchema = schemas.Int64Schema
 RequestRequiredPathParams = typing_extensions.TypedDict(
     'RequestRequiredPathParams',
     {

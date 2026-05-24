@@ -440,7 +440,7 @@ public class Example {
 
     ReleaseManagementApi apiInstance = new ReleaseManagementApi(defaultClient);
     String env = "env_example"; // String | 环境标识
-    Integer releaseId = 56; // Integer | 发布ID
+    Long releaseId = 56L; // Long | 发布ID
     try {
       OpenReleaseDTO result = apiInstance.getReleaseById(env, releaseId);
       System.out.println(result);
@@ -460,7 +460,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **env** | **String**| 环境标识 | |
-| **releaseId** | **Integer**| 发布ID | |
+| **releaseId** | **Long**| 发布ID | |
 
 ### Return type
 

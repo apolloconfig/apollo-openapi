@@ -18,7 +18,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
 
-  version: 0.3.1
+  version: 0.3.2
 security:
   - ApiKeyAuth: []
 tags:
@@ -2056,6 +2056,7 @@ paths:
           required: true
           schema:
             type: integer
+            format: int64
       responses:
         '200':
           description: '成功获取发布详情'
