@@ -75,7 +75,6 @@ public interface AccessKeyManagementApiDelegate {
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
-     * @param operator  (optional)
      * @return  (status code 200)
      * @see AccessKeyManagementApi#disableAccessKey
      */
@@ -88,7 +87,7 @@ public interface AccessKeyManagementApiDelegate {
 
     /**
      * PUT /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/deactivation : 禁用AccessKey
-     * This overload preserves the Spring delegate API from versions before 0.3.3.
+     * This overload accepts the 0.3.3 operator parameter and delegates to the legacy overload by default.
      *
      *
      * @param appId  (required)
@@ -114,7 +113,6 @@ public interface AccessKeyManagementApiDelegate {
      * @param env  (required)
      * @param accessKeyId  (required)
      * @param mode  (optional, default to 0)
-     * @param operator  (optional)
      * @return  (status code 200)
      * @see AccessKeyManagementApi#enableAccessKey
      */
@@ -128,7 +126,7 @@ public interface AccessKeyManagementApiDelegate {
 
     /**
      * PUT /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/activation : 启用AccessKey
-     * This overload preserves the Spring delegate API from versions before 0.3.3.
+     * This overload accepts the 0.3.3 operator parameter and delegates to the legacy overload by default.
      *
      *
      * @param appId  (required)
