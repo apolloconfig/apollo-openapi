@@ -64,7 +64,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **appId** | **String**|  | |
 | **env** | **String**|  | |
-| **operator** | **String**|  | [optional] |
+| **operator** | **String**| 操作人用户名 | [optional] |
 
 ### Return type
 
@@ -138,7 +138,7 @@ public class Example {
 | **appId** | **String**|  | |
 | **env** | **String**|  | |
 | **accessKeyId** | **Long**|  | |
-| **operator** | **String**|  | [optional] |
+| **operator** | **String**| 操作人用户名 | [optional] |
 
 ### Return type
 
@@ -212,7 +212,7 @@ public class Example {
 | **appId** | **String**|  | |
 | **env** | **String**|  | |
 | **accessKeyId** | **Long**|  | |
-| **operator** | **String**|  | [optional] |
+| **operator** | **String**| 操作人用户名 | [optional] |
 
 ### Return type
 
@@ -288,7 +288,7 @@ public class Example {
 | **env** | **String**|  | |
 | **accessKeyId** | **Long**|  | |
 | **mode** | **Integer**|  | [optional] [default to 0] |
-| **operator** | **String**|  | [optional] |
+| **operator** | **String**| 操作人用户名 | [optional] |
 
 ### Return type
 

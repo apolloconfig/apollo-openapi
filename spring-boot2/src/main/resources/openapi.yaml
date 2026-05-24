@@ -5592,7 +5592,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 操作人用户名
         explode: true
         in: query
         name: operator
@@ -5656,7 +5656,7 @@ paths:
           format: int64
           type: integer
         style: simple
-      - description: ""
+      - description: 操作人用户名
         explode: true
         in: query
         name: operator
@@ -5714,7 +5714,7 @@ paths:
           default: 0
           type: integer
         style: form
-      - description: ""
+      - description: 操作人用户名
         explode: true
         in: query
         name: operator
@@ -5762,7 +5762,7 @@ paths:
           format: int64
           type: integer
         style: simple
-      - description: ""
+      - description: 操作人用户名
         explode: true
         in: query
         name: operator

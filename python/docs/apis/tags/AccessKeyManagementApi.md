@@ -97,7 +97,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-operator | OperatorSchema | | optional
+operator | OperatorSchema | 操作人用户名 | optional
 
 
 # OperatorSchema
@@ -239,7 +239,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-operator | OperatorSchema | | optional
+operator | OperatorSchema | 操作人用户名 | optional
 
 
 # OperatorSchema
@@ -383,7 +383,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-operator | OperatorSchema | | optional
+operator | OperatorSchema | 操作人用户名 | optional
 
 
 # OperatorSchema
@@ -529,7 +529,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 mode | ModeSchema | | optional
-operator | OperatorSchema | | optional
+operator | OperatorSchema | 操作人用户名 | optional
 
 
 # ModeSchema

@@ -68,7 +68,7 @@ public interface AccessKeyManagementApi {
     default ResponseEntity<OpenAccessKeyDTO> createAccessKey(
         @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "operator", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
         return getDelegate().createAccessKey(appId, env, operator);
     }
@@ -104,7 +104,7 @@ public interface AccessKeyManagementApi {
         @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "accessKeyId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("accessKeyId") Long accessKeyId,
-        @Parameter(name = "operator", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
         return getDelegate().deleteAccessKey(appId, env, accessKeyId, operator);
     }
@@ -159,7 +159,7 @@ public interface AccessKeyManagementApi {
         @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "accessKeyId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("accessKeyId") Long accessKeyId,
-        @Parameter(name = "operator", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
         return getDelegate().disableAccessKey(appId, env, accessKeyId, operator);
     }
@@ -218,7 +218,7 @@ public interface AccessKeyManagementApi {
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "accessKeyId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("accessKeyId") Long accessKeyId,
         @Parameter(name = "mode", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "mode", required = false, defaultValue = "0") Integer mode,
-        @Parameter(name = "operator", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
         return getDelegate().enableAccessKey(appId, env, accessKeyId, mode, operator);
     }
