@@ -113,6 +113,7 @@ env | EnvSchema | |
 # EnvSchema
 
 ## Model Type Info
+
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 str,  | str,  |  |
@@ -1281,9 +1282,10 @@ str,  | str,  |  |
 # ToReleaseIdSchema
 
 ## Model Type Info
+
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-decimal.Decimal, int,  | decimal.Decimal,  |  | value must be a 64 bit integer
+decimal.Decimal, int,  | decimal.Decimal,  |  | value must be a 64-bit integer
 
 ### path_params
 #### RequestPathParams
