@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-05-24
+
+### Fixed
+
+- Mark `GET /openapi/v1/envs/{env}/releases/{releaseId}` `releaseId` as `int64` to match Apollo release identifiers.
+
 ## [0.3.1] - 2026-05-24
 
 ### Added

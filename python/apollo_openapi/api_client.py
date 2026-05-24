@@ -1002,7 +1002,7 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'OpenAPI-Generator/0.3.1/python'
+        self.user_agent = 'OpenAPI-Generator/0.3.2/python'
 
     def __enter__(self):
         return self

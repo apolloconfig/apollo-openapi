@@ -212,6 +212,21 @@ public interface ReleaseManagementApiDelegate {
     }
 
     /**
+     * GET /openapi/v1/envs/{env}/releases/{releaseId} : 获取发布详情 (new added)
+     * This overload preserves delegate implementations from versions before 0.3.2.
+     *
+     * @param env 环境标识 (required)
+     * @param releaseId 发布ID (required)
+     * @return 成功获取发布详情 (status code 200)
+     * @see ReleaseManagementApi#getReleaseById
+     */
+    default ResponseEntity<OpenReleaseDTO> getReleaseById(String env,
+        Long releaseId) {
+        return getReleaseById(env, releaseId == null ? null : Math.toIntExact(releaseId));
+
+    }
+
+    /**
      * GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/latest : 获取最新活跃发布 (original openapi)
      * 查询命名空间最新活跃发布
      *

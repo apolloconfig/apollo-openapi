@@ -29,7 +29,7 @@ from apollo_openapi.model.open_release_dto import OpenReleaseDTO
 
 # Path params
 EnvSchema = schemas.StrSchema
-ReleaseIdSchema = schemas.IntSchema
+ReleaseIdSchema = schemas.Int64Schema
 RequestRequiredPathParams = typing_extensions.TypedDict(
     'RequestRequiredPathParams',
     {
