@@ -1190,6 +1190,14 @@ public class NamespaceBranchManagementApi {
         return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
+    /**
+     * Build call for updateBranchRules.
+     * This overload preserves the Java client API from versions before 0.3.1.
+     */
+    public okhttp3.Call updateBranchRulesCall(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, final ApiCallback _callback) throws ApiException {
+        return updateBranchRulesCall(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator, _callback);
+    }
+
     @SuppressWarnings("rawtypes")
     private okhttp3.Call updateBranchRulesValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String branchName, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
@@ -1249,6 +1257,14 @@ public class NamespaceBranchManagementApi {
 
     /**
      * 更新分支灰度发布规则 (original openapi)
+     * This overload preserves the Java client API from versions before 0.3.1.
+     */
+    public void updateBranchRules(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO) throws ApiException {
+        updateBranchRules(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator);
+    }
+
+    /**
+     * 更新分支灰度发布规则 (original openapi)
      * PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules
      * @param appId 应用ID (required)
      * @param env 环境标识 (required)
@@ -1268,6 +1284,14 @@ public class NamespaceBranchManagementApi {
     public ApiResponse<Void> updateBranchRulesWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, String operator) throws ApiException {
         okhttp3.Call localVarCall = updateBranchRulesValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator, null);
         return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * 更新分支灰度发布规则 (original openapi)
+     * This overload preserves the Java client API from versions before 0.3.1.
+     */
+    public ApiResponse<Void> updateBranchRulesWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO) throws ApiException {
+        return updateBranchRulesWithHttpInfo(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator);
     }
 
     /**
@@ -1294,5 +1318,13 @@ public class NamespaceBranchManagementApi {
         okhttp3.Call localVarCall = updateBranchRulesValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
+    }
+
+    /**
+     * 更新分支灰度发布规则 (original openapi) (asynchronously)
+     * This overload preserves the Java client API from versions before 0.3.1.
+     */
+    public okhttp3.Call updateBranchRulesAsync(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, final ApiCallback<Void> _callback) throws ApiException {
+        return updateBranchRulesAsync(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator, _callback);
     }
 }

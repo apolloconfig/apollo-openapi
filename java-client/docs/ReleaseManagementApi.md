@@ -560,6 +560,9 @@ public class Example {
 # **rollback**
 > rollback(env, releaseId, operator, toReleaseId)
 
+The pre-0.3.1 overload `rollback(env, releaseId, operator)` is still available
+and delegates to the same endpoint without `toReleaseId`.
+
 回滚发布 (original openapi)
 
 回滚到指定的发布版本

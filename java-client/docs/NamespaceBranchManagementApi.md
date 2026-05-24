@@ -493,6 +493,10 @@ public class Example {
 # **updateBranchRules**
 > updateBranchRules(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator)
 
+The pre-0.3.1 overload
+`updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO)`
+is still available and delegates to this method.
+
 更新分支灰度发布规则 (original openapi)
 
 PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules
