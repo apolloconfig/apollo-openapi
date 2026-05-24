@@ -244,7 +244,7 @@ public class NamespaceBranchManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -333,11 +333,6 @@ public class NamespaceBranchManagementApi {
             throw new ApiException("Missing the required parameter 'branchName' when calling deleteBranch(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling deleteBranch(Async)");
-        }
-
         return deleteBranchCall(env, appId, clusterName, namespaceName, branchName, operator, _callback);
 
     }
@@ -350,7 +345,7 @@ public class NamespaceBranchManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -370,7 +365,7 @@ public class NamespaceBranchManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -392,7 +387,7 @@ public class NamespaceBranchManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1131,8 +1126,8 @@ public class NamespaceBranchManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
      * @param openGrayReleaseRuleDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1142,7 +1137,7 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 灰度规则更新成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateBranchRulesCall(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call updateBranchRulesCall(String appId, String env, String clusterName, String namespaceName, String branchName, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -1196,7 +1191,7 @@ public class NamespaceBranchManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateBranchRulesValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateBranchRulesValidateBeforeCall(String appId, String env, String clusterName, String namespaceName, String branchName, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'appId' is set
         if (appId == null) {
             throw new ApiException("Missing the required parameter 'appId' when calling updateBranchRules(Async)");
@@ -1222,17 +1217,12 @@ public class NamespaceBranchManagementApi {
             throw new ApiException("Missing the required parameter 'branchName' when calling updateBranchRules(Async)");
         }
 
-        // verify the required parameter 'operator' is set
-        if (operator == null) {
-            throw new ApiException("Missing the required parameter 'operator' when calling updateBranchRules(Async)");
-        }
-
         // verify the required parameter 'openGrayReleaseRuleDTO' is set
         if (openGrayReleaseRuleDTO == null) {
             throw new ApiException("Missing the required parameter 'openGrayReleaseRuleDTO' when calling updateBranchRules(Async)");
         }
 
-        return updateBranchRulesCall(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO, _callback);
+        return updateBranchRulesCall(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator, _callback);
 
     }
 
@@ -1244,8 +1234,8 @@ public class NamespaceBranchManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
      * @param openGrayReleaseRuleDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1253,8 +1243,8 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 灰度规则更新成功 </td><td>  -  </td></tr>
      </table>
      */
-    public void updateBranchRules(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO) throws ApiException {
-        updateBranchRulesWithHttpInfo(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO);
+    public void updateBranchRules(String appId, String env, String clusterName, String namespaceName, String branchName, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, String operator) throws ApiException {
+        updateBranchRulesWithHttpInfo(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator);
     }
 
     /**
@@ -1265,8 +1255,8 @@ public class NamespaceBranchManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
      * @param openGrayReleaseRuleDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1275,8 +1265,8 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 灰度规则更新成功 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> updateBranchRulesWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO) throws ApiException {
-        okhttp3.Call localVarCall = updateBranchRulesValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO, null);
+    public ApiResponse<Void> updateBranchRulesWithHttpInfo(String appId, String env, String clusterName, String namespaceName, String branchName, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = updateBranchRulesValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator, null);
         return localVarApiClient.execute(localVarCall);
     }
 
@@ -1288,8 +1278,8 @@ public class NamespaceBranchManagementApi {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
      * @param openGrayReleaseRuleDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1299,9 +1289,9 @@ public class NamespaceBranchManagementApi {
         <tr><td> 200 </td><td> 灰度规则更新成功 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateBranchRulesAsync(String appId, String env, String clusterName, String namespaceName, String branchName, String operator, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call updateBranchRulesAsync(String appId, String env, String clusterName, String namespaceName, String branchName, OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateBranchRulesValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO, _callback);
+        okhttp3.Call localVarCall = updateBranchRulesValidateBeforeCall(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }

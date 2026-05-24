@@ -148,7 +148,7 @@ public class Example {
 | **clusterName** | **String**| 集群名称 | |
 | **namespaceName** | **String**| 命名空间名称 | |
 | **branchName** | **String**| 分支名称 | |
-| **operator** | **String**| 操作人用户名 | |
+| **operator** | **String**| 操作人用户名 | [optional] |
 
 ### Return type
 
@@ -491,7 +491,7 @@ public class Example {
 
 <a id="updateBranchRules"></a>
 # **updateBranchRules**
-> updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO)
+> updateBranchRules(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator)
 
 更新分支灰度发布规则 (original openapi)
 
@@ -524,10 +524,10 @@ public class Example {
     String clusterName = "clusterName_example"; // String | 集群名称
     String namespaceName = "namespaceName_example"; // String | 命名空间名称
     String branchName = "branchName_example"; // String | 分支名称
-    String operator = "operator_example"; // String | 操作人用户名
     OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO = new OpenGrayReleaseRuleDTO(); // OpenGrayReleaseRuleDTO |
+    String operator = "operator_example"; // String | 操作人用户名
     try {
-      apiInstance.updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO);
+      apiInstance.updateBranchRules(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator);
     } catch (ApiException e) {
       System.err.println("Exception when calling NamespaceBranchManagementApi#updateBranchRules");
       System.err.println("Status code: " + e.getCode());
@@ -548,8 +548,8 @@ public class Example {
 | **clusterName** | **String**| 集群名称 | |
 | **namespaceName** | **String**| 命名空间名称 | |
 | **branchName** | **String**| 分支名称 | |
-| **operator** | **String**| 操作人用户名 | |
 | **openGrayReleaseRuleDTO** | [**OpenGrayReleaseRuleDTO**](OpenGrayReleaseRuleDTO.md)|  | |
+| **operator** | **String**| 操作人用户名 | [optional] |
 
 ### Return type
 

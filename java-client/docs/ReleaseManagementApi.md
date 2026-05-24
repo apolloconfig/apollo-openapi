@@ -558,7 +558,7 @@ public class Example {
 
 <a id="rollback"></a>
 # **rollback**
-> rollback(env, releaseId, operator)
+> rollback(env, releaseId, operator, toReleaseId)
 
 回滚发布 (original openapi)
 
@@ -589,8 +589,9 @@ public class Example {
     String env = "env_example"; // String | 环境标识
     Long releaseId = 56L; // Long | 发布ID
     String operator = "operator_example"; // String | 操作人用户名
+    Long toReleaseId = 56L; // Long | 要回滚到的目标发布ID；不传时回滚到上一版本
     try {
-      apiInstance.rollback(env, releaseId, operator);
+      apiInstance.rollback(env, releaseId, operator, toReleaseId);
     } catch (ApiException e) {
       System.err.println("Exception when calling ReleaseManagementApi#rollback");
       System.err.println("Status code: " + e.getCode());
@@ -609,6 +610,7 @@ public class Example {
 | **env** | **String**| 环境标识 | |
 | **releaseId** | **Long**| 发布ID | |
 | **operator** | **String**| 操作人用户名 | [optional] |
+| **toReleaseId** | **Long**| 要回滚到的目标发布ID；不传时回滚到上一版本 | [optional] |
 
 ### Return type
 

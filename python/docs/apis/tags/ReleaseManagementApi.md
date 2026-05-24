@@ -1241,6 +1241,7 @@ with apollo_openapi.ApiClient(configuration) as api_client:
     }
     query_params = {
         'operator': "operator_example",
+        'toReleaseId': 1,
     }
     try:
         # 回滚发布 (original openapi)
@@ -1267,6 +1268,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 operator | OperatorSchema | | optional
+toReleaseId | ToReleaseIdSchema | | optional
 
 
 # OperatorSchema
@@ -1275,6 +1277,13 @@ operator | OperatorSchema | | optional
 Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 str,  | str,  |  |
+
+# ToReleaseIdSchema
+
+## Model Type Info
+Input Type | Accessed Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+decimal.Decimal, int,  | decimal.Decimal,  |  | value must be a 64 bit integer
 
 ### path_params
 #### RequestPathParams

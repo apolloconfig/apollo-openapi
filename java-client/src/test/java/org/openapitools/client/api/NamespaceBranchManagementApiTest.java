@@ -162,9 +162,9 @@ public class NamespaceBranchManagementApiTest {
         String clusterName = null;
         String namespaceName = null;
         String branchName = null;
-        String operator = null;
         OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO = null;
-        api.updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO);
+        String operator = null;
+        api.updateBranchRules(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator);
         // TODO: test validations
     }
 

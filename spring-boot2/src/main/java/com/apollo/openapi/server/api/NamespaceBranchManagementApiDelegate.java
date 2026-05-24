@@ -66,7 +66,7 @@ public interface NamespaceBranchManagementApiDelegate {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
+     * @param operator 操作人用户名 (optional)
      * @return 分支删除成功 (status code 200)
      * @see NamespaceBranchManagementApi#deleteBranch
      */
@@ -222,8 +222,8 @@ public interface NamespaceBranchManagementApiDelegate {
      * @param clusterName 集群名称 (required)
      * @param namespaceName 命名空间名称 (required)
      * @param branchName 分支名称 (required)
-     * @param operator 操作人用户名 (required)
      * @param openGrayReleaseRuleDTO  (required)
+     * @param operator 操作人用户名 (optional)
      * @return 灰度规则更新成功 (status code 200)
      * @see NamespaceBranchManagementApi#updateBranchRules
      */
@@ -232,8 +232,8 @@ public interface NamespaceBranchManagementApiDelegate {
         String clusterName,
         String namespaceName,
         String branchName,
-        String operator,
-        OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO) {
+        OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO,
+        String operator) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
