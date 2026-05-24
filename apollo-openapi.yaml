@@ -18,7 +18,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
 
-  version: 0.3.2
+  version: 0.3.3
 security:
   - ApiKeyAuth: []
 tags:
@@ -4657,7 +4657,7 @@ paths:
             type: string
         - name: operator
           in: query
-          description: ''
+          description: '操作人用户名'
           required: false
           schema:
             type: string
@@ -4755,7 +4755,7 @@ paths:
             format: int64
         - name: operator
           in: query
-          description: ''
+          description: '操作人用户名'
           required: false
           schema:
             type: string
@@ -4798,6 +4798,12 @@ paths:
           schema:
             type: integer
             default: 0
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: ''
@@ -4829,6 +4835,12 @@ paths:
           schema:
             type: integer
             format: int64
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: ''

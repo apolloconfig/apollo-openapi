@@ -17,7 +17,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
   title: Apollo OpenAPI
-  version: 0.3.2
+  version: 0.3.3
 servers:
 - url: /
 security:
@@ -5406,7 +5406,7 @@ paths:
         schema:
           type: string
         style: simple
-      - description: ""
+      - description: 操作人用户名
         explode: true
         in: query
         name: operator
@@ -5468,7 +5468,7 @@ paths:
           format: int64
           type: integer
         style: simple
-      - description: ""
+      - description: 操作人用户名
         explode: true
         in: query
         name: operator
@@ -5524,6 +5524,14 @@ paths:
           default: 0
           type: integer
         style: form
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
       responses:
         "200":
           description: ""
@@ -5562,6 +5570,14 @@ paths:
           format: int64
           type: integer
         style: simple
+      - description: 操作人用户名
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
       responses:
         "200":
           description: ""

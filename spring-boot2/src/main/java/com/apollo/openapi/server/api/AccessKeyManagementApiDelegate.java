@@ -86,6 +86,26 @@ public interface AccessKeyManagementApiDelegate {
     }
 
     /**
+     * PUT /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/deactivation : 禁用AccessKey
+     * This overload accepts the 0.3.3 operator parameter and delegates to the legacy overload by default.
+     *
+     *
+     * @param appId  (required)
+     * @param env  (required)
+     * @param accessKeyId  (required)
+     * @param operator  (optional)
+     * @return  (status code 200)
+     * @see AccessKeyManagementApi#disableAccessKey
+     */
+    default ResponseEntity<Void> disableAccessKey(String appId,
+        String env,
+        Long accessKeyId,
+        String operator) {
+        return disableAccessKey(appId, env, accessKeyId);
+
+    }
+
+    /**
      * PUT /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/activation : 启用AccessKey
      *
      *
@@ -101,6 +121,28 @@ public interface AccessKeyManagementApiDelegate {
         Long accessKeyId,
         Integer mode) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+    /**
+     * PUT /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/activation : 启用AccessKey
+     * This overload accepts the 0.3.3 operator parameter and delegates to the legacy overload by default.
+     *
+     *
+     * @param appId  (required)
+     * @param env  (required)
+     * @param accessKeyId  (required)
+     * @param mode  (optional, default to 0)
+     * @param operator  (optional)
+     * @return  (status code 200)
+     * @see AccessKeyManagementApi#enableAccessKey
+     */
+    default ResponseEntity<Void> enableAccessKey(String appId,
+        String env,
+        Long accessKeyId,
+        Integer mode,
+        String operator) {
+        return enableAccessKey(appId, env, accessKeyId, mode);
 
     }
 

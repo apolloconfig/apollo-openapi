@@ -26,6 +26,32 @@ from apollo_openapi import schemas  # noqa: F401
 
 from . import path
 
+# Query params
+OperatorSchema = schemas.StrSchema
+RequestRequiredQueryParams = typing_extensions.TypedDict(
+    'RequestRequiredQueryParams',
+    {
+    }
+)
+RequestOptionalQueryParams = typing_extensions.TypedDict(
+    'RequestOptionalQueryParams',
+    {
+        'operator': typing.Union[OperatorSchema, str, ],
+    },
+    total=False
+)
+
+
+class RequestQueryParams(RequestRequiredQueryParams, RequestOptionalQueryParams):
+    pass
+
+
+request_query_operator = api_client.QueryParameter(
+    name="operator",
+    style=api_client.ParameterStyle.FORM,
+    schema=OperatorSchema,
+    explode=True,
+)
 # Path params
 AppIdSchema = schemas.StrSchema
 EnvSchema = schemas.StrSchema
@@ -93,6 +119,7 @@ class BaseApi(api_client.Api):
     def _disable_access_key_oapg(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
+        query_params: RequestQueryParams = frozendict.frozendict(),
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: typing_extensions.Literal[False] = ...,
@@ -105,6 +132,7 @@ class BaseApi(api_client.Api):
         self,
         skip_deserialization: typing_extensions.Literal[True],
         path_params: RequestPathParams = frozendict.frozendict(),
+        query_params: RequestQueryParams = frozendict.frozendict(),
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
     ) -> api_client.ApiResponseWithoutDeserialization: ...
@@ -113,6 +141,7 @@ class BaseApi(api_client.Api):
     def _disable_access_key_oapg(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
+        query_params: RequestQueryParams = frozendict.frozendict(),
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = ...,
@@ -124,6 +153,7 @@ class BaseApi(api_client.Api):
     def _disable_access_key_oapg(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
+        query_params: RequestQueryParams = frozendict.frozendict(),
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
@@ -134,6 +164,7 @@ class BaseApi(api_client.Api):
             api_response.body and api_response.headers will not be deserialized into schema
             class instances
         """
+        self._verify_typed_dict_inputs_oapg(RequestQueryParams, query_params)
         self._verify_typed_dict_inputs_oapg(RequestPathParams, path_params)
         used_path = path.value
 
@@ -151,6 +182,19 @@ class BaseApi(api_client.Api):
 
         for k, v in _path_params.items():
             used_path = used_path.replace('{%s}' % k, v)
+
+        prefix_separator_iterator = None
+        for parameter in (
+            request_query_operator,
+        ):
+            parameter_data = query_params.get(parameter.name, schemas.unset)
+            if parameter_data is schemas.unset:
+                continue
+            if prefix_separator_iterator is None:
+                prefix_separator_iterator = parameter.get_prefix_separator_iterator()
+            serialized_data = parameter.serialize(parameter_data, prefix_separator_iterator)
+            for serialized_value in serialized_data.values():
+                used_path += serialized_value
         # TODO add cookie handling
 
         response = self.api_client.call_api(
@@ -187,6 +231,7 @@ class DisableAccessKey(BaseApi):
     def disable_access_key(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
+        query_params: RequestQueryParams = frozendict.frozendict(),
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: typing_extensions.Literal[False] = ...,
@@ -199,6 +244,7 @@ class DisableAccessKey(BaseApi):
         self,
         skip_deserialization: typing_extensions.Literal[True],
         path_params: RequestPathParams = frozendict.frozendict(),
+        query_params: RequestQueryParams = frozendict.frozendict(),
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
     ) -> api_client.ApiResponseWithoutDeserialization: ...
@@ -207,6 +253,7 @@ class DisableAccessKey(BaseApi):
     def disable_access_key(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
+        query_params: RequestQueryParams = frozendict.frozendict(),
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = ...,
@@ -218,11 +265,13 @@ class DisableAccessKey(BaseApi):
     def disable_access_key(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
+        query_params: RequestQueryParams = frozendict.frozendict(),
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
         return self._disable_access_key_oapg(
+            query_params=query_params,
             path_params=path_params,
             stream=stream,
             timeout=timeout,
@@ -237,6 +286,7 @@ class ApiForput(BaseApi):
     def put(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
+        query_params: RequestQueryParams = frozendict.frozendict(),
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: typing_extensions.Literal[False] = ...,
@@ -249,6 +299,7 @@ class ApiForput(BaseApi):
         self,
         skip_deserialization: typing_extensions.Literal[True],
         path_params: RequestPathParams = frozendict.frozendict(),
+        query_params: RequestQueryParams = frozendict.frozendict(),
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
     ) -> api_client.ApiResponseWithoutDeserialization: ...
@@ -257,6 +308,7 @@ class ApiForput(BaseApi):
     def put(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
+        query_params: RequestQueryParams = frozendict.frozendict(),
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = ...,
@@ -268,11 +320,13 @@ class ApiForput(BaseApi):
     def put(
         self,
         path_params: RequestPathParams = frozendict.frozendict(),
+        query_params: RequestQueryParams = frozendict.frozendict(),
         stream: bool = False,
         timeout: typing.Optional[typing.Union[int, typing.Tuple]] = None,
         skip_deserialization: bool = False,
     ):
         return self._disable_access_key_oapg(
+            query_params=query_params,
             path_params=path_params,
             stream=stream,
             timeout=timeout,

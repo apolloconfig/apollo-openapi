@@ -68,7 +68,7 @@ public interface AccessKeyManagementApi {
     default ResponseEntity<OpenAccessKeyDTO> createAccessKey(
         @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "operator", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
         return getDelegate().createAccessKey(appId, env, operator);
     }
@@ -104,9 +104,28 @@ public interface AccessKeyManagementApi {
         @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "accessKeyId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("accessKeyId") Long accessKeyId,
-        @Parameter(name = "operator", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
         return getDelegate().deleteAccessKey(appId, env, accessKeyId, operator);
+    }
+
+
+    /**
+     * PUT /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/deactivation : 禁用AccessKey
+     * This overload preserves the Spring API method from versions before 0.3.3.
+     *
+     *
+     * @param appId  (required)
+     * @param env  (required)
+     * @param accessKeyId  (required)
+     * @return  (status code 200)
+     */
+    default ResponseEntity<Void> disableAccessKey(
+        String appId,
+        String env,
+        Long accessKeyId
+    ) {
+        return disableAccessKey(appId, env, accessKeyId, null);
     }
 
 
@@ -117,6 +136,7 @@ public interface AccessKeyManagementApi {
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
+     * @param operator  (optional)
      * @return  (status code 200)
      */
     @Operation(
@@ -138,9 +158,31 @@ public interface AccessKeyManagementApi {
     default ResponseEntity<Void> disableAccessKey(
         @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
-        @Parameter(name = "accessKeyId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("accessKeyId") Long accessKeyId
+        @Parameter(name = "accessKeyId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("accessKeyId") Long accessKeyId,
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
-        return getDelegate().disableAccessKey(appId, env, accessKeyId);
+        return getDelegate().disableAccessKey(appId, env, accessKeyId, operator);
+    }
+
+
+    /**
+     * PUT /openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/activation : 启用AccessKey
+     * This overload preserves the Spring API method from versions before 0.3.3.
+     *
+     *
+     * @param appId  (required)
+     * @param env  (required)
+     * @param accessKeyId  (required)
+     * @param mode  (optional, default to 0)
+     * @return  (status code 200)
+     */
+    default ResponseEntity<Void> enableAccessKey(
+        String appId,
+        String env,
+        Long accessKeyId,
+        Integer mode
+    ) {
+        return enableAccessKey(appId, env, accessKeyId, mode, null);
     }
 
 
@@ -152,6 +194,7 @@ public interface AccessKeyManagementApi {
      * @param env  (required)
      * @param accessKeyId  (required)
      * @param mode  (optional, default to 0)
+     * @param operator  (optional)
      * @return  (status code 200)
      */
     @Operation(
@@ -174,9 +217,10 @@ public interface AccessKeyManagementApi {
         @Parameter(name = "appId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("appId") String appId,
         @Parameter(name = "env", description = "", required = true, in = ParameterIn.PATH) @PathVariable("env") String env,
         @Parameter(name = "accessKeyId", description = "", required = true, in = ParameterIn.PATH) @PathVariable("accessKeyId") Long accessKeyId,
-        @Parameter(name = "mode", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "mode", required = false, defaultValue = "0") Integer mode
+        @Parameter(name = "mode", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "mode", required = false, defaultValue = "0") Integer mode,
+        @Parameter(name = "operator", description = "操作人用户名", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
-        return getDelegate().enableAccessKey(appId, env, accessKeyId, mode);
+        return getDelegate().enableAccessKey(appId, env, accessKeyId, mode, operator);
     }
 
 
