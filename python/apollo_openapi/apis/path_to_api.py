@@ -74,6 +74,39 @@ from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envs_env_accesskeys import
 from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envs_env_accesskeys_access_key_id import OpenapiV1AppsAppIdEnvsEnvAccesskeysAccessKeyId
 from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envs_env_accesskeys_access_key_id_activation import OpenapiV1AppsAppIdEnvsEnvAccesskeysAccessKeyIdActivation
 from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envs_env_accesskeys_access_key_id_deactivation import OpenapiV1AppsAppIdEnvsEnvAccesskeysAccessKeyIdDeactivation
+from apollo_openapi.apis.paths.openapi_v1_user import OpenapiV1User
+from apollo_openapi.apis.paths.openapi_v1_users import OpenapiV1Users
+from apollo_openapi.apis.paths.openapi_v1_users_enabled import OpenapiV1UsersEnabled
+from apollo_openapi.apis.paths.openapi_v1_apollo_audit_properties import OpenapiV1ApolloAuditProperties
+from apollo_openapi.apis.paths.openapi_v1_apollo_audit_logs import OpenapiV1ApolloAuditLogs
+from apollo_openapi.apis.paths.openapi_v1_apollo_audit_logs_op_name import OpenapiV1ApolloAuditLogsOpName
+from apollo_openapi.apis.paths.openapi_v1_apollo_audit_trace import OpenapiV1ApolloAuditTrace
+from apollo_openapi.apis.paths.openapi_v1_apollo_audit_logs_data_influences_field import OpenapiV1ApolloAuditLogsDataInfluencesField
+from apollo_openapi.apis.paths.openapi_v1_apollo_audit_logs_by_name_or_type_or_operator import OpenapiV1ApolloAuditLogsByNameOrTypeOrOperator
+from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envs_env_clusters_cluster_name_namespaces_namespace_name_commits import OpenapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameCommits
+from apollo_openapi.apis.paths.openapi_v1_page_settings import OpenapiV1PageSettings
+from apollo_openapi.apis.paths.openapi_v1_consumers import OpenapiV1Consumers
+from apollo_openapi.apis.paths.openapi_v1_consumer_tokens_by_app_id import OpenapiV1ConsumerTokensByAppId
+from apollo_openapi.apis.paths.openapi_v1_consumers_token_assign_role import OpenapiV1ConsumersTokenAssignRole
+from apollo_openapi.apis.paths.openapi_v1_consumers_by_app_id import OpenapiV1ConsumersByAppId
+from apollo_openapi.apis.paths.openapi_v1_import import OpenapiV1Import
+from apollo_openapi.apis.paths.openapi_v1_favorites import OpenapiV1Favorites
+from apollo_openapi.apis.paths.openapi_v1_favorites_favorite_id import OpenapiV1FavoritesFavoriteId
+from apollo_openapi.apis.paths.openapi_v1_global_search_item_info_by_key_or_value import OpenapiV1GlobalSearchItemInfoByKeyOrValue
+from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envs_env_clusters_cluster_name_namespaces_namespace_name_releases_histories import OpenapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameReleasesHistories
+from apollo_openapi.apis.paths.openapi_v1_server_portal_db_config import OpenapiV1ServerPortalDbConfig
+from apollo_openapi.apis.paths.openapi_v1_server_envs_env_config_db_config import OpenapiV1ServerEnvsEnvConfigDbConfig
+from apollo_openapi.apis.paths.openapi_v1_server_portal_db_config_find_all_config import OpenapiV1ServerPortalDbConfigFindAllConfig
+from apollo_openapi.apis.paths.openapi_v1_server_envs_env_config_db_config_find_all_config import OpenapiV1ServerEnvsEnvConfigDbConfigFindAllConfig
+from apollo_openapi.apis.paths.openapi_v1_system_info import OpenapiV1SystemInfo
+from apollo_openapi.apis.paths.openapi_v1_system_info_health import OpenapiV1SystemInfoHealth
+from apollo_openapi.apis.paths.openapi_v1_configs_export import OpenapiV1ConfigsExport
+from apollo_openapi.apis.paths.openapi_v1_configs_import import OpenapiV1ConfigsImport
+from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envs_env_clusters_cluster_name_export import OpenapiV1AppsAppIdEnvsEnvClustersClusterNameExport
+from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envs_env_clusters_cluster_name_import import OpenapiV1AppsAppIdEnvsEnvClustersClusterNameImport
+from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envs_env_clusters_cluster_name_namespaces_namespace_name_items_export import OpenapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameItemsExport
+from apollo_openapi.apis.paths.openapi_v1_apps_search_by_appid_or_name import OpenapiV1AppsSearchByAppidOrName
+from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envs_env_clusters_cluster_name_namespaces_namespace_name_items_import import OpenapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameItemsImport
 
 PathToApi = typing_extensions.TypedDict(
     'PathToApi',
@@ -151,6 +184,39 @@ PathToApi = typing_extensions.TypedDict(
         PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_ACCESSKEYS_ACCESS_KEY_ID: OpenapiV1AppsAppIdEnvsEnvAccesskeysAccessKeyId,
         PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_ACCESSKEYS_ACCESS_KEY_ID_ACTIVATION: OpenapiV1AppsAppIdEnvsEnvAccesskeysAccessKeyIdActivation,
         PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_ACCESSKEYS_ACCESS_KEY_ID_DEACTIVATION: OpenapiV1AppsAppIdEnvsEnvAccesskeysAccessKeyIdDeactivation,
+        PathValues.OPENAPI_V1_USER: OpenapiV1User,
+        PathValues.OPENAPI_V1_USERS: OpenapiV1Users,
+        PathValues.OPENAPI_V1_USERS_ENABLED: OpenapiV1UsersEnabled,
+        PathValues.OPENAPI_V1_APOLLO_AUDIT_PROPERTIES: OpenapiV1ApolloAuditProperties,
+        PathValues.OPENAPI_V1_APOLLO_AUDIT_LOGS: OpenapiV1ApolloAuditLogs,
+        PathValues.OPENAPI_V1_APOLLO_AUDIT_LOGS_OP_NAME: OpenapiV1ApolloAuditLogsOpName,
+        PathValues.OPENAPI_V1_APOLLO_AUDIT_TRACE: OpenapiV1ApolloAuditTrace,
+        PathValues.OPENAPI_V1_APOLLO_AUDIT_LOGS_DATA_INFLUENCES_FIELD: OpenapiV1ApolloAuditLogsDataInfluencesField,
+        PathValues.OPENAPI_V1_APOLLO_AUDIT_LOGS_BYNAMEORTYPEOROPERATOR: OpenapiV1ApolloAuditLogsByNameOrTypeOrOperator,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_COMMITS: OpenapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameCommits,
+        PathValues.OPENAPI_V1_PAGESETTINGS: OpenapiV1PageSettings,
+        PathValues.OPENAPI_V1_CONSUMERS: OpenapiV1Consumers,
+        PathValues.OPENAPI_V1_CONSUMERTOKENS_BYAPP_ID: OpenapiV1ConsumerTokensByAppId,
+        PathValues.OPENAPI_V1_CONSUMERS_TOKEN_ASSIGNROLE: OpenapiV1ConsumersTokenAssignRole,
+        PathValues.OPENAPI_V1_CONSUMERS_BYAPP_ID: OpenapiV1ConsumersByAppId,
+        PathValues.OPENAPI_V1_IMPORT: OpenapiV1Import,
+        PathValues.OPENAPI_V1_FAVORITES: OpenapiV1Favorites,
+        PathValues.OPENAPI_V1_FAVORITES_FAVORITE_ID: OpenapiV1FavoritesFavoriteId,
+        PathValues.OPENAPI_V1_GLOBALSEARCH_ITEMINFO_BYKEYORVALUE: OpenapiV1GlobalSearchItemInfoByKeyOrValue,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_RELEASES_HISTORIES: OpenapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameReleasesHistories,
+        PathValues.OPENAPI_V1_SERVER_PORTALDB_CONFIG: OpenapiV1ServerPortalDbConfig,
+        PathValues.OPENAPI_V1_SERVER_ENVS_ENV_CONFIGDB_CONFIG: OpenapiV1ServerEnvsEnvConfigDbConfig,
+        PathValues.OPENAPI_V1_SERVER_PORTALDB_CONFIG_FINDALLCONFIG: OpenapiV1ServerPortalDbConfigFindAllConfig,
+        PathValues.OPENAPI_V1_SERVER_ENVS_ENV_CONFIGDB_CONFIG_FINDALLCONFIG: OpenapiV1ServerEnvsEnvConfigDbConfigFindAllConfig,
+        PathValues.OPENAPI_V1_SYSTEMINFO: OpenapiV1SystemInfo,
+        PathValues.OPENAPI_V1_SYSTEMINFO_HEALTH: OpenapiV1SystemInfoHealth,
+        PathValues.OPENAPI_V1_CONFIGS_EXPORT: OpenapiV1ConfigsExport,
+        PathValues.OPENAPI_V1_CONFIGS_IMPORT: OpenapiV1ConfigsImport,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_CLUSTERS_CLUSTER_NAME_EXPORT: OpenapiV1AppsAppIdEnvsEnvClustersClusterNameExport,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_CLUSTERS_CLUSTER_NAME_IMPORT: OpenapiV1AppsAppIdEnvsEnvClustersClusterNameImport,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_ITEMS_EXPORT: OpenapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameItemsExport,
+        PathValues.OPENAPI_V1_APPS_SEARCH_BYAPPIDORNAME: OpenapiV1AppsSearchByAppidOrName,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_ITEMS_IMPORT: OpenapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameItemsImport,
     }
 )
 
@@ -229,5 +295,38 @@ path_to_api = PathToApi(
         PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_ACCESSKEYS_ACCESS_KEY_ID: OpenapiV1AppsAppIdEnvsEnvAccesskeysAccessKeyId,
         PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_ACCESSKEYS_ACCESS_KEY_ID_ACTIVATION: OpenapiV1AppsAppIdEnvsEnvAccesskeysAccessKeyIdActivation,
         PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_ACCESSKEYS_ACCESS_KEY_ID_DEACTIVATION: OpenapiV1AppsAppIdEnvsEnvAccesskeysAccessKeyIdDeactivation,
+        PathValues.OPENAPI_V1_USER: OpenapiV1User,
+        PathValues.OPENAPI_V1_USERS: OpenapiV1Users,
+        PathValues.OPENAPI_V1_USERS_ENABLED: OpenapiV1UsersEnabled,
+        PathValues.OPENAPI_V1_APOLLO_AUDIT_PROPERTIES: OpenapiV1ApolloAuditProperties,
+        PathValues.OPENAPI_V1_APOLLO_AUDIT_LOGS: OpenapiV1ApolloAuditLogs,
+        PathValues.OPENAPI_V1_APOLLO_AUDIT_LOGS_OP_NAME: OpenapiV1ApolloAuditLogsOpName,
+        PathValues.OPENAPI_V1_APOLLO_AUDIT_TRACE: OpenapiV1ApolloAuditTrace,
+        PathValues.OPENAPI_V1_APOLLO_AUDIT_LOGS_DATA_INFLUENCES_FIELD: OpenapiV1ApolloAuditLogsDataInfluencesField,
+        PathValues.OPENAPI_V1_APOLLO_AUDIT_LOGS_BYNAMEORTYPEOROPERATOR: OpenapiV1ApolloAuditLogsByNameOrTypeOrOperator,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_COMMITS: OpenapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameCommits,
+        PathValues.OPENAPI_V1_PAGESETTINGS: OpenapiV1PageSettings,
+        PathValues.OPENAPI_V1_CONSUMERS: OpenapiV1Consumers,
+        PathValues.OPENAPI_V1_CONSUMERTOKENS_BYAPP_ID: OpenapiV1ConsumerTokensByAppId,
+        PathValues.OPENAPI_V1_CONSUMERS_TOKEN_ASSIGNROLE: OpenapiV1ConsumersTokenAssignRole,
+        PathValues.OPENAPI_V1_CONSUMERS_BYAPP_ID: OpenapiV1ConsumersByAppId,
+        PathValues.OPENAPI_V1_IMPORT: OpenapiV1Import,
+        PathValues.OPENAPI_V1_FAVORITES: OpenapiV1Favorites,
+        PathValues.OPENAPI_V1_FAVORITES_FAVORITE_ID: OpenapiV1FavoritesFavoriteId,
+        PathValues.OPENAPI_V1_GLOBALSEARCH_ITEMINFO_BYKEYORVALUE: OpenapiV1GlobalSearchItemInfoByKeyOrValue,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_RELEASES_HISTORIES: OpenapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameReleasesHistories,
+        PathValues.OPENAPI_V1_SERVER_PORTALDB_CONFIG: OpenapiV1ServerPortalDbConfig,
+        PathValues.OPENAPI_V1_SERVER_ENVS_ENV_CONFIGDB_CONFIG: OpenapiV1ServerEnvsEnvConfigDbConfig,
+        PathValues.OPENAPI_V1_SERVER_PORTALDB_CONFIG_FINDALLCONFIG: OpenapiV1ServerPortalDbConfigFindAllConfig,
+        PathValues.OPENAPI_V1_SERVER_ENVS_ENV_CONFIGDB_CONFIG_FINDALLCONFIG: OpenapiV1ServerEnvsEnvConfigDbConfigFindAllConfig,
+        PathValues.OPENAPI_V1_SYSTEMINFO: OpenapiV1SystemInfo,
+        PathValues.OPENAPI_V1_SYSTEMINFO_HEALTH: OpenapiV1SystemInfoHealth,
+        PathValues.OPENAPI_V1_CONFIGS_EXPORT: OpenapiV1ConfigsExport,
+        PathValues.OPENAPI_V1_CONFIGS_IMPORT: OpenapiV1ConfigsImport,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_CLUSTERS_CLUSTER_NAME_EXPORT: OpenapiV1AppsAppIdEnvsEnvClustersClusterNameExport,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_CLUSTERS_CLUSTER_NAME_IMPORT: OpenapiV1AppsAppIdEnvsEnvClustersClusterNameImport,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_ITEMS_EXPORT: OpenapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameItemsExport,
+        PathValues.OPENAPI_V1_APPS_SEARCH_BYAPPIDORNAME: OpenapiV1AppsSearchByAppidOrName,
+        PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_CLUSTERS_CLUSTER_NAME_NAMESPACES_NAMESPACE_NAME_ITEMS_IMPORT: OpenapiV1AppsAppIdEnvsEnvClustersClusterNameNamespacesNamespaceNameItemsImport,
     }
 )

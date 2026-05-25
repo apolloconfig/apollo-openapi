@@ -37,4 +37,5 @@ export * from './OpenPermissionConditionDTO';
 export * from './OpenReleaseChangeDTO';
 export * from './OpenReleaseDTO';
 export * from './OpenReleaseDiffDTO';
+export * from './OpenUserDTO';
 export * from './OpenUserInfoDTO';

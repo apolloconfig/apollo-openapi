@@ -72,5 +72,7 @@ pub mod open_release_diff_dto;
 pub use self::open_release_diff_dto::OpenReleaseDiffDto;
 pub mod open_release_dto;
 pub use self::open_release_dto::OpenReleaseDto;
+pub mod open_user_dto;
+pub use self::open_user_dto::OpenUserDto;
 pub mod open_user_info_dto;
 pub use self::open_user_info_dto::OpenUserInfoDto;

@@ -40,6 +40,7 @@ docs/OpenPermissionConditionDto.md
 docs/OpenReleaseChangeDto.md
 docs/OpenReleaseDiffDto.md
 docs/OpenReleaseDto.md
+docs/OpenUserDto.md
 docs/OpenUserInfoDto.md
 git_push.sh
 src/apis/configuration.rs
@@ -83,4 +84,5 @@ src/models/open_permission_condition_dto.rs
 src/models/open_release_change_dto.rs
 src/models/open_release_diff_dto.rs
 src/models/open_release_dto.rs
+src/models/open_user_dto.rs
 src/models/open_user_info_dto.rs

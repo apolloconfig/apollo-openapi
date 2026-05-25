@@ -1,7 +1,7 @@
 # apollo-openapi-client
 
 Apollo OpenAPI
-- API version: 0.3.3
+- API version: 0.3.4
 
 <p>Apollo配置中心OpenAPI接口文档</p>
 
@@ -54,7 +54,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.apollo</groupId>
   <artifactId>apollo-openapi-client</artifactId>
-  <version>0.3.3</version>
+  <version>0.3.4</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -70,7 +70,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "com.apollo:apollo-openapi-client:0.3.3"
+     implementation "com.apollo:apollo-openapi-client:0.3.4"
   }
 ```
 
@@ -84,7 +84,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/apollo-openapi-client-0.3.3.jar`
+* `target/apollo-openapi-client-0.3.4.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -115,7 +115,7 @@ public class Example {
     AccessKeyManagementApi apiInstance = new AccessKeyManagementApi(defaultClient);
     String appId = "appId_example"; // String |
     String env = "env_example"; // String |
-    String operator = "operator_example"; // String |
+    String operator = "operator_example"; // String | 操作人用户名
     try {
       OpenAccessKeyDTO result = apiInstance.createAccessKey(appId, env, operator);
       System.out.println(result);
@@ -226,6 +226,46 @@ Class | Method | HTTP request | Description
 *PermissionManagementApi* | [**removeManageAppMasterRoleFromUser**](docs/PermissionManagementApi.md#removeManageAppMasterRoleFromUser) | **DELETE** /openapi/v1/apps/{appId}/roles/master | 移除AppMaster (new added)
 *PermissionManagementApi* | [**removeNamespaceEnvRoleFromUser**](docs/PermissionManagementApi.md#removeNamespaceEnvRoleFromUser) | **DELETE** /openapi/v1/apps/{appId}/envs/{env}/namespaces/{namespaceName}/roles/{roleType} | 移除环境Namespace角色 (new added)
 *PermissionManagementApi* | [**removeNamespaceRoleFromUser**](docs/PermissionManagementApi.md#removeNamespaceRoleFromUser) | **DELETE** /openapi/v1/apps/{appId}/namespaces/{namespaceName}/roles/{roleType} | 移除Namespace角色 (new added)
+*PortalManagementApi* | [**addFavorite**](docs/PortalManagementApi.md#addFavorite) | **POST** /openapi/v1/favorites | 添加收藏(new added)
+*PortalManagementApi* | [**assignRoleToConsumer**](docs/PortalManagementApi.md#assignRoleToConsumer) | **POST** /openapi/v1/consumers/{token}/assign-role | 给消费者授权(new added)
+*PortalManagementApi* | [**checkExportAppConfig**](docs/PortalManagementApi.md#checkExportAppConfig) | **HEAD** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/export | 检查应用配置导出权限(new added)
+*PortalManagementApi* | [**checkSystemHealth**](docs/PortalManagementApi.md#checkSystemHealth) | **GET** /openapi/v1/system-info/health | 检查系统实例健康状态(new added)
+*PortalManagementApi* | [**createConsumer**](docs/PortalManagementApi.md#createConsumer) | **POST** /openapi/v1/consumers | 创建开放平台消费者(new added)
+*PortalManagementApi* | [**createOrUpdateConfigDBConfig**](docs/PortalManagementApi.md#createOrUpdateConfigDBConfig) | **POST** /openapi/v1/server/envs/{env}/config-db/config | 创建或更新Config DB配置(new added)
+*PortalManagementApi* | [**createOrUpdatePortalDBConfig**](docs/PortalManagementApi.md#createOrUpdatePortalDBConfig) | **POST** /openapi/v1/server/portal-db/config | 创建或更新Portal DB配置(new added)
+*PortalManagementApi* | [**deleteConfigDBConfig**](docs/PortalManagementApi.md#deleteConfigDBConfig) | **DELETE** /openapi/v1/server/envs/{env}/config-db/config | 删除Config DB配置(new added)
+*PortalManagementApi* | [**deleteConsumer**](docs/PortalManagementApi.md#deleteConsumer) | **DELETE** /openapi/v1/consumers/by-appId | 按应用ID删除消费者(new added)
+*PortalManagementApi* | [**deleteFavorite**](docs/PortalManagementApi.md#deleteFavorite) | **DELETE** /openapi/v1/favorites/{favoriteId} | 删除收藏(new added)
+*PortalManagementApi* | [**deletePortalDBConfig**](docs/PortalManagementApi.md#deletePortalDBConfig) | **DELETE** /openapi/v1/server/portal-db/config | 删除Portal DB配置(new added)
+*PortalManagementApi* | [**exportAllConfigs**](docs/PortalManagementApi.md#exportAllConfigs) | **GET** /openapi/v1/configs/export | 导出所有配置(new added)
+*PortalManagementApi* | [**exportAppConfig**](docs/PortalManagementApi.md#exportAppConfig) | **GET** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/export | 导出应用配置(new added)
+*PortalManagementApi* | [**exportNamespaceItems**](docs/PortalManagementApi.md#exportNamespaceItems) | **GET** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items/export | 导出命名空间配置项(new added)
+*PortalManagementApi* | [**findAllConfigDBConfig**](docs/PortalManagementApi.md#findAllConfigDBConfig) | **GET** /openapi/v1/server/envs/{env}/config-db/config/find-all-config | 查询指定环境全部Config DB配置(new added)
+*PortalManagementApi* | [**findAllPortalDBConfig**](docs/PortalManagementApi.md#findAllPortalDBConfig) | **GET** /openapi/v1/server/portal-db/config/find-all-config | 查询全部Portal DB配置(new added)
+*PortalManagementApi* | [**findAuditDataInfluencesByField**](docs/PortalManagementApi.md#findAuditDataInfluencesByField) | **GET** /openapi/v1/apollo/audit/logs/dataInfluences/field | 查询审计数据影响(new added)
+*PortalManagementApi* | [**findAuditLogs**](docs/PortalManagementApi.md#findAuditLogs) | **GET** /openapi/v1/apollo/audit/logs | 查询审计日志(new added)
+*PortalManagementApi* | [**findAuditLogsByOpName**](docs/PortalManagementApi.md#findAuditLogsByOpName) | **GET** /openapi/v1/apollo/audit/logs/opName | 按操作名查询审计日志(new added)
+*PortalManagementApi* | [**findAuditTraceDetails**](docs/PortalManagementApi.md#findAuditTraceDetails) | **GET** /openapi/v1/apollo/audit/trace | 查询审计链路详情(new added)
+*PortalManagementApi* | [**findCommits**](docs/PortalManagementApi.md#findCommits) | **GET** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/commits | 查询命名空间提交记录(new added)
+*PortalManagementApi* | [**findFavorites**](docs/PortalManagementApi.md#findFavorites) | **GET** /openapi/v1/favorites | 查询收藏(new added)
+*PortalManagementApi* | [**findReleaseHistoriesByNamespace**](docs/PortalManagementApi.md#findReleaseHistoriesByNamespace) | **GET** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/releases/histories | 查询命名空间发布历史(new added)
+*PortalManagementApi* | [**getAuditProperties**](docs/PortalManagementApi.md#getAuditProperties) | **GET** /openapi/v1/apollo/audit/properties | 获取审计配置(new added)
+*PortalManagementApi* | [**getConsumerList**](docs/PortalManagementApi.md#getConsumerList) | **GET** /openapi/v1/consumers | 查询开放平台消费者列表(new added)
+*PortalManagementApi* | [**getConsumerTokenByAppId**](docs/PortalManagementApi.md#getConsumerTokenByAppId) | **GET** /openapi/v1/consumer-tokens/by-appId | 按应用ID查询消费者Token(new added)
+*PortalManagementApi* | [**getPageSettings**](docs/PortalManagementApi.md#getPageSettings) | **GET** /openapi/v1/page-settings | 获取Portal页面配置(new added)
+*PortalManagementApi* | [**getSystemInfo**](docs/PortalManagementApi.md#getSystemInfo) | **GET** /openapi/v1/system-info | 获取系统信息(new added)
+*PortalManagementApi* | [**importAllConfigs**](docs/PortalManagementApi.md#importAllConfigs) | **POST** /openapi/v1/configs/import | 导入所有配置(new added)
+*PortalManagementApi* | [**importAppConfig**](docs/PortalManagementApi.md#importAppConfig) | **POST** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/import | 导入应用配置(new added)
+*PortalManagementApi* | [**importConfig**](docs/PortalManagementApi.md#importConfig) | **POST** /openapi/v1/import | 导入配置兼容入口(new added)
+*PortalManagementApi* | [**importNamespaceItems**](docs/PortalManagementApi.md#importNamespaceItems) | **POST** /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/items/import | 导入命名空间配置项(new added)
+*PortalManagementApi* | [**searchAppsByAppIdOrName**](docs/PortalManagementApi.md#searchAppsByAppIdOrName) | **GET** /openapi/v1/apps/search/by-appid-or-name | 按应用ID或名称搜索应用(new added)
+*PortalManagementApi* | [**searchAuditLogs**](docs/PortalManagementApi.md#searchAuditLogs) | **GET** /openapi/v1/apollo/audit/logs/by-name-or-type-or-operator | 搜索审计日志(new added)
+*PortalManagementApi* | [**searchItemInfoByKeyOrValue**](docs/PortalManagementApi.md#searchItemInfoByKeyOrValue) | **GET** /openapi/v1/global-search/item-info/by-key-or-value | 按Key或Value全局搜索配置(new added)
+*PortalManagementApi* | [**topFavorite**](docs/PortalManagementApi.md#topFavorite) | **PUT** /openapi/v1/favorites/{favoriteId} | 收藏置顶(new added)
+*PortalUserManagementApi* | [**changeUserEnabled**](docs/PortalUserManagementApi.md#changeUserEnabled) | **PUT** /openapi/v1/users/enabled | 修改Portal用户启用状态(new added)
+*PortalUserManagementApi* | [**createOrUpdateUser**](docs/PortalUserManagementApi.md#createOrUpdateUser) | **POST** /openapi/v1/users | 创建或更新Portal用户(new added)
+*PortalUserManagementApi* | [**getCurrentUser**](docs/PortalUserManagementApi.md#getCurrentUser) | **GET** /openapi/v1/user | 获取当前Portal用户(new added)
+*PortalUserManagementApi* | [**searchUsers**](docs/PortalUserManagementApi.md#searchUsers) | **GET** /openapi/v1/users | 搜索Portal用户(new added)
 *ReleaseManagementApi* | [**compareRelease**](docs/ReleaseManagementApi.md#compareRelease) | **GET** /openapi/v1/envs/{env}/releases/comparison | Compare two releases
 *ReleaseManagementApi* | [**createGrayDelRelease**](docs/ReleaseManagementApi.md#createGrayDelRelease) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-del-releases | 创建灰度删除发布 (original openapi)
 *ReleaseManagementApi* | [**createGrayRelease**](docs/ReleaseManagementApi.md#createGrayRelease) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/releases | 创建灰度发布 (original openapi)
@@ -275,6 +315,7 @@ Class | Method | HTTP request | Description
  - [OpenReleaseChangeDTO](docs/OpenReleaseChangeDTO.md)
  - [OpenReleaseDTO](docs/OpenReleaseDTO.md)
  - [OpenReleaseDiffDTO](docs/OpenReleaseDiffDTO.md)
+ - [OpenUserDTO](docs/OpenUserDTO.md)
  - [OpenUserInfoDTO](docs/OpenUserInfoDTO.md)
 
 

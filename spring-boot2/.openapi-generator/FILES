@@ -40,6 +40,12 @@ src/main/java/com/apollo/openapi/server/api/OrganizationManagementApiDelegate.ja
 src/main/java/com/apollo/openapi/server/api/PermissionManagementApi.java
 src/main/java/com/apollo/openapi/server/api/PermissionManagementApiController.java
 src/main/java/com/apollo/openapi/server/api/PermissionManagementApiDelegate.java
+src/main/java/com/apollo/openapi/server/api/PortalManagementApi.java
+src/main/java/com/apollo/openapi/server/api/PortalManagementApiController.java
+src/main/java/com/apollo/openapi/server/api/PortalManagementApiDelegate.java
+src/main/java/com/apollo/openapi/server/api/PortalUserManagementApi.java
+src/main/java/com/apollo/openapi/server/api/PortalUserManagementApiController.java
+src/main/java/com/apollo/openapi/server/api/PortalUserManagementApiDelegate.java
 src/main/java/com/apollo/openapi/server/api/ReleaseManagementApi.java
 src/main/java/com/apollo/openapi/server/api/ReleaseManagementApiController.java
 src/main/java/com/apollo/openapi/server/api/ReleaseManagementApiDelegate.java
@@ -82,6 +88,7 @@ src/main/java/com/apollo/openapi/server/model/OpenPermissionConditionDTO.java
 src/main/java/com/apollo/openapi/server/model/OpenReleaseChangeDTO.java
 src/main/java/com/apollo/openapi/server/model/OpenReleaseDTO.java
 src/main/java/com/apollo/openapi/server/model/OpenReleaseDiffDTO.java
+src/main/java/com/apollo/openapi/server/model/OpenUserDTO.java
 src/main/java/com/apollo/openapi/server/model/OpenUserInfoDTO.java
 src/main/resources/application.properties
 src/main/resources/openapi.yaml

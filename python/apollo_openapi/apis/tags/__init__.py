@@ -19,3 +19,5 @@ class TagValues(str, enum.Enum):
     ENVIRONMENT_MANAGEMENT = "Environment Management"
     ACCESS_KEY_MANAGEMENT = "AccessKey Management"
     PERMISSION_MANAGEMENT = "Permission Management"
+    PORTAL_USER_MANAGEMENT = "Portal User Management"
+    PORTAL_MANAGEMENT = "Portal Management"

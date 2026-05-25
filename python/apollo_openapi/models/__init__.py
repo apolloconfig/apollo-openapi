@@ -49,5 +49,6 @@ from apollo_openapi.model.open_permission_condition_dto import OpenPermissionCon
 from apollo_openapi.model.open_release_change_dto import OpenReleaseChangeDTO
 from apollo_openapi.model.open_release_dto import OpenReleaseDTO
 from apollo_openapi.model.open_release_diff_dto import OpenReleaseDiffDTO
+from apollo_openapi.model.open_user_dto import OpenUserDTO
 from apollo_openapi.model.open_user_info_dto import OpenUserInfoDTO
 from apollo_openapi.model.string_to_string_bool_map import StringToStringBoolMap

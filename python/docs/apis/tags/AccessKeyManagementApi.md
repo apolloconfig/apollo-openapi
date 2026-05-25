@@ -97,7 +97,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-operator | OperatorSchema | 操作人用户名 | optional
+operator | OperatorSchema | | optional
 
 
 # OperatorSchema
@@ -239,7 +239,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-operator | OperatorSchema | 操作人用户名 | optional
+operator | OperatorSchema | | optional
 
 
 # OperatorSchema
@@ -372,8 +372,8 @@ with apollo_openapi.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-path_params | RequestPathParams | |
 query_params | RequestQueryParams | |
+path_params | RequestPathParams | |
 stream | bool | default is False | if True then the response.content will be streamed and loaded from a file like object. When downloading a file, set this to True to force the code to deserialize the content to a FileSchema file
 timeout | typing.Optional[typing.Union[int, typing.Tuple]] | default is None | the timeout used by the rest client
 skip_deserialization | bool | default is False | when True, headers and body will be unset and an instance of api_client.ApiResponseWithoutDeserialization will be returned
@@ -383,7 +383,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
-operator | OperatorSchema | 操作人用户名 | optional
+operator | OperatorSchema | | optional
 
 
 # OperatorSchema
@@ -529,7 +529,7 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 mode | ModeSchema | | optional
-operator | OperatorSchema | 操作人用户名 | optional
+operator | OperatorSchema | | optional
 
 
 # ModeSchema

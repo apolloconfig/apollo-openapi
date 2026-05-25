@@ -53,9 +53,12 @@ docs/OpenPermissionConditionDTO.md
 docs/OpenReleaseChangeDTO.md
 docs/OpenReleaseDTO.md
 docs/OpenReleaseDiffDTO.md
+docs/OpenUserDTO.md
 docs/OpenUserInfoDTO.md
 docs/OrganizationManagementApi.md
 docs/PermissionManagementApi.md
+docs/PortalManagementApi.md
+docs/PortalUserManagementApi.md
 docs/ReleaseManagementApi.md
 git_push.sh
 gradle.properties
@@ -91,6 +94,8 @@ src/main/java/org/openapitools/client/api/NamespaceLockManagementApi.java
 src/main/java/org/openapitools/client/api/NamespaceManagementApi.java
 src/main/java/org/openapitools/client/api/OrganizationManagementApi.java
 src/main/java/org/openapitools/client/api/PermissionManagementApi.java
+src/main/java/org/openapitools/client/api/PortalManagementApi.java
+src/main/java/org/openapitools/client/api/PortalUserManagementApi.java
 src/main/java/org/openapitools/client/api/ReleaseManagementApi.java
 src/main/java/org/openapitools/client/auth/ApiKeyAuth.java
 src/main/java/org/openapitools/client/auth/Authentication.java
@@ -134,6 +139,7 @@ src/main/java/org/openapitools/client/model/OpenPermissionConditionDTO.java
 src/main/java/org/openapitools/client/model/OpenReleaseChangeDTO.java
 src/main/java/org/openapitools/client/model/OpenReleaseDTO.java
 src/main/java/org/openapitools/client/model/OpenReleaseDiffDTO.java
+src/main/java/org/openapitools/client/model/OpenUserDTO.java
 src/main/java/org/openapitools/client/model/OpenUserInfoDTO.java
 src/test/java/org/openapitools/client/api/AccessKeyManagementApiTest.java
 src/test/java/org/openapitools/client/api/AppManagementApiTest.java
@@ -147,6 +153,8 @@ src/test/java/org/openapitools/client/api/NamespaceLockManagementApiTest.java
 src/test/java/org/openapitools/client/api/NamespaceManagementApiTest.java
 src/test/java/org/openapitools/client/api/OrganizationManagementApiTest.java
 src/test/java/org/openapitools/client/api/PermissionManagementApiTest.java
+src/test/java/org/openapitools/client/api/PortalManagementApiTest.java
+src/test/java/org/openapitools/client/api/PortalUserManagementApiTest.java
 src/test/java/org/openapitools/client/api/ReleaseManagementApiTest.java
 src/test/java/org/openapitools/client/model/ExceptionResponseTest.java
 src/test/java/org/openapitools/client/model/NamespaceGrayDelReleaseDTOTest.java
@@ -185,4 +193,5 @@ src/test/java/org/openapitools/client/model/OpenPermissionConditionDTOTest.java
 src/test/java/org/openapitools/client/model/OpenReleaseChangeDTOTest.java
 src/test/java/org/openapitools/client/model/OpenReleaseDTOTest.java
 src/test/java/org/openapitools/client/model/OpenReleaseDiffDTOTest.java
+src/test/java/org/openapitools/client/model/OpenUserDTOTest.java
 src/test/java/org/openapitools/client/model/OpenUserInfoDTOTest.java

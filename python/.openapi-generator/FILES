@@ -18,6 +18,8 @@ apollo_openapi/apis/tags/namespace_lock_management_api.py
 apollo_openapi/apis/tags/namespace_management_api.py
 apollo_openapi/apis/tags/organization_management_api.py
 apollo_openapi/apis/tags/permission_management_api.py
+apollo_openapi/apis/tags/portal_management_api.py
+apollo_openapi/apis/tags/portal_user_management_api.py
 apollo_openapi/apis/tags/release_management_api.py
 apollo_openapi/configuration.py
 apollo_openapi/exceptions.py
@@ -98,6 +100,8 @@ apollo_openapi/model/open_release_diff_dto.py
 apollo_openapi/model/open_release_diff_dto.pyi
 apollo_openapi/model/open_release_dto.py
 apollo_openapi/model/open_release_dto.pyi
+apollo_openapi/model/open_user_dto.py
+apollo_openapi/model/open_user_dto.pyi
 apollo_openapi/model/open_user_info_dto.py
 apollo_openapi/model/open_user_info_dto.pyi
 apollo_openapi/model/string_to_string_bool_map.py
@@ -117,6 +121,8 @@ docs/apis/tags/NamespaceLockManagementApi.md
 docs/apis/tags/NamespaceManagementApi.md
 docs/apis/tags/OrganizationManagementApi.md
 docs/apis/tags/PermissionManagementApi.md
+docs/apis/tags/PortalManagementApi.md
+docs/apis/tags/PortalUserManagementApi.md
 docs/apis/tags/ReleaseManagementApi.md
 docs/models/ExceptionResponse.md
 docs/models/MapString.md
@@ -156,6 +162,7 @@ docs/models/OpenPermissionConditionDTO.md
 docs/models/OpenReleaseChangeDTO.md
 docs/models/OpenReleaseDTO.md
 docs/models/OpenReleaseDiffDTO.md
+docs/models/OpenUserDTO.md
 docs/models/OpenUserInfoDTO.md
 docs/models/StringToStringBoolMap.md
 git_push.sh
@@ -203,6 +210,7 @@ test/test_models/test_open_permission_condition_dto.py
 test/test_models/test_open_release_change_dto.py
 test/test_models/test_open_release_diff_dto.py
 test/test_models/test_open_release_dto.py
+test/test_models/test_open_user_dto.py
 test/test_models/test_open_user_info_dto.py
 test/test_models/test_string_to_string_bool_map.py
 tox.ini

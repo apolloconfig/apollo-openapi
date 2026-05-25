@@ -29,7 +29,7 @@ public interface AccessKeyManagementApiDelegate {
      *
      * @param appId  (required)
      * @param env  (required)
-     * @param operator  (optional)
+     * @param operator 操作人用户名 (optional)
      * @return  (status code 200)
      * @see AccessKeyManagementApi#createAccessKey
      */
@@ -56,7 +56,7 @@ public interface AccessKeyManagementApiDelegate {
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
-     * @param operator  (optional)
+     * @param operator 操作人用户名 (optional)
      * @return  (status code 200)
      * @see AccessKeyManagementApi#deleteAccessKey
      */
@@ -75,6 +75,7 @@ public interface AccessKeyManagementApiDelegate {
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
+     * @param operator 操作人用户名 (optional)
      * @return  (status code 200)
      * @see AccessKeyManagementApi#disableAccessKey
      */
@@ -93,7 +94,7 @@ public interface AccessKeyManagementApiDelegate {
      * @param appId  (required)
      * @param env  (required)
      * @param accessKeyId  (required)
-     * @param operator  (optional)
+     * @param operator 操作人用户名 (optional)
      * @return  (status code 200)
      * @see AccessKeyManagementApi#disableAccessKey
      */
@@ -113,6 +114,7 @@ public interface AccessKeyManagementApiDelegate {
      * @param env  (required)
      * @param accessKeyId  (required)
      * @param mode  (optional, default to 0)
+     * @param operator 操作人用户名 (optional)
      * @return  (status code 200)
      * @see AccessKeyManagementApi#enableAccessKey
      */
@@ -133,7 +135,7 @@ public interface AccessKeyManagementApiDelegate {
      * @param env  (required)
      * @param accessKeyId  (required)
      * @param mode  (optional, default to 0)
-     * @param operator  (optional)
+     * @param operator 操作人用户名 (optional)
      * @return  (status code 200)
      * @see AccessKeyManagementApi#enableAccessKey
      */

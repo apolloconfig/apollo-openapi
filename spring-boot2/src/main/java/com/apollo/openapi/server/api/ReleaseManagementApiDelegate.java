@@ -197,17 +197,12 @@ public interface ReleaseManagementApiDelegate {
      * @see ReleaseManagementApi#getReleaseById
      */
     default ResponseEntity<OpenReleaseDTO> getReleaseById(String env,
-        Integer releaseId) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+        Long releaseId) {
+        if (releaseId != null
+            && (releaseId > Integer.MAX_VALUE || releaseId < Integer.MIN_VALUE)) {
+            return ResponseEntity.badRequest().build();
+        }
+        return getReleaseById(env, releaseId == null ? null : releaseId.intValue());
 
     }
 
@@ -221,12 +216,17 @@ public interface ReleaseManagementApiDelegate {
      * @see ReleaseManagementApi#getReleaseById
      */
     default ResponseEntity<OpenReleaseDTO> getReleaseById(String env,
-        Long releaseId) {
-        if (releaseId != null
-            && (releaseId > Integer.MAX_VALUE || releaseId < Integer.MIN_VALUE)) {
-            return ResponseEntity.badRequest().build();
-        }
-        return getReleaseById(env, releaseId == null ? null : releaseId.intValue());
+        Integer releaseId) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"dataChangeCreatedTime\" : \"2025-09-29T12:34:56Z\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"configurations\" : { \"key\" : \"configurations\" }, \"appId\" : \"appId\", \"clusterName\" : \"clusterName\", \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"name\" : \"name\", \"comment\" : \"comment\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2025-09-29T12:34:56Z\", \"namespaceName\" : \"namespaceName\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
 
