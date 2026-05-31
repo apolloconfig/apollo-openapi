@@ -28,7 +28,11 @@ public class OpenNamespaceDTO {
 
   private String dataChangeCreatedBy;
 
+  private String dataChangeCreatedByDisplayName;
+
   private String dataChangeLastModifiedBy;
+
+  private String dataChangeLastModifiedByDisplayName;
 
   private String dataChangeCreatedTime;
 
@@ -71,6 +75,26 @@ public class OpenNamespaceDTO {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
   }
 
+  public OpenNamespaceDTO dataChangeCreatedByDisplayName(String dataChangeCreatedByDisplayName) {
+    this.dataChangeCreatedByDisplayName = dataChangeCreatedByDisplayName;
+    return this;
+  }
+
+  /**
+   * 命名空间创建者显示名称，用于展示创建者的友好名称
+   * @return dataChangeCreatedByDisplayName
+  */
+
+  @Schema(name = "dataChangeCreatedByDisplayName", description = "命名空间创建者显示名称，用于展示创建者的友好名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("dataChangeCreatedByDisplayName")
+  public String getDataChangeCreatedByDisplayName() {
+    return dataChangeCreatedByDisplayName;
+  }
+
+  public void setDataChangeCreatedByDisplayName(String dataChangeCreatedByDisplayName) {
+    this.dataChangeCreatedByDisplayName = dataChangeCreatedByDisplayName;
+  }
+
   public OpenNamespaceDTO dataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
     return this;
@@ -89,6 +113,26 @@ public class OpenNamespaceDTO {
 
   public void setDataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
+  }
+
+  public OpenNamespaceDTO dataChangeLastModifiedByDisplayName(String dataChangeLastModifiedByDisplayName) {
+    this.dataChangeLastModifiedByDisplayName = dataChangeLastModifiedByDisplayName;
+    return this;
+  }
+
+  /**
+   * 命名空间最后修改者显示名称，用于展示最后修改者的友好名称
+   * @return dataChangeLastModifiedByDisplayName
+  */
+
+  @Schema(name = "dataChangeLastModifiedByDisplayName", description = "命名空间最后修改者显示名称，用于展示最后修改者的友好名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("dataChangeLastModifiedByDisplayName")
+  public String getDataChangeLastModifiedByDisplayName() {
+    return dataChangeLastModifiedByDisplayName;
+  }
+
+  public void setDataChangeLastModifiedByDisplayName(String dataChangeLastModifiedByDisplayName) {
+    this.dataChangeLastModifiedByDisplayName = dataChangeLastModifiedByDisplayName;
   }
 
   public OpenNamespaceDTO dataChangeCreatedTime(String dataChangeCreatedTime) {
@@ -309,7 +353,9 @@ public class OpenNamespaceDTO {
     }
     OpenNamespaceDTO openNamespaceDTO = (OpenNamespaceDTO) o;
     return Objects.equals(this.dataChangeCreatedBy, openNamespaceDTO.dataChangeCreatedBy) &&
+        Objects.equals(this.dataChangeCreatedByDisplayName, openNamespaceDTO.dataChangeCreatedByDisplayName) &&
         Objects.equals(this.dataChangeLastModifiedBy, openNamespaceDTO.dataChangeLastModifiedBy) &&
+        Objects.equals(this.dataChangeLastModifiedByDisplayName, openNamespaceDTO.dataChangeLastModifiedByDisplayName) &&
         Objects.equals(this.dataChangeCreatedTime, openNamespaceDTO.dataChangeCreatedTime) &&
         Objects.equals(this.dataChangeLastModifiedTime, openNamespaceDTO.dataChangeLastModifiedTime) &&
         Objects.equals(this.appId, openNamespaceDTO.appId) &&
@@ -324,7 +370,7 @@ public class OpenNamespaceDTO {
 
   @Override
   public int hashCode() {
-    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, appId, clusterName, namespaceName, comment, format, isPublic, items, extendInfo);
+    return Objects.hash(dataChangeCreatedBy, dataChangeCreatedByDisplayName, dataChangeLastModifiedBy, dataChangeLastModifiedByDisplayName, dataChangeCreatedTime, dataChangeLastModifiedTime, appId, clusterName, namespaceName, comment, format, isPublic, items, extendInfo);
   }
 
   @Override
@@ -332,7 +378,9 @@ public class OpenNamespaceDTO {
     StringBuilder sb = new StringBuilder();
     sb.append("class OpenNamespaceDTO {\n");
     sb.append("    dataChangeCreatedBy: ").append(toIndentedString(dataChangeCreatedBy)).append("\n");
+    sb.append("    dataChangeCreatedByDisplayName: ").append(toIndentedString(dataChangeCreatedByDisplayName)).append("\n");
     sb.append("    dataChangeLastModifiedBy: ").append(toIndentedString(dataChangeLastModifiedBy)).append("\n");
+    sb.append("    dataChangeLastModifiedByDisplayName: ").append(toIndentedString(dataChangeLastModifiedByDisplayName)).append("\n");
     sb.append("    dataChangeCreatedTime: ").append(toIndentedString(dataChangeCreatedTime)).append("\n");
     sb.append("    dataChangeLastModifiedTime: ").append(toIndentedString(dataChangeLastModifiedTime)).append("\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");

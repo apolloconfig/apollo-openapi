@@ -18,7 +18,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
 
-  version: 0.3.4
+  version: 0.3.5
 security:
   - ApiKeyAuth: []
 tags:
@@ -6063,9 +6063,15 @@ components:
         dataChangeCreatedBy:
           type: string
           description: 数据创建者用户名，记录是谁创建了这个应用
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 数据创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 数据最后修改者用户名，记录最后一次修改应用信息的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 数据最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 数据创建时间，ISO 8601格式的时间戳
@@ -6131,9 +6137,15 @@ components:
         dataChangeCreatedBy:
           type: string
           description: 配置项创建者用户名，记录是谁创建了这个配置项
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 配置项创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 配置项最后修改者用户名，记录最后一次修改配置的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 配置项最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 配置项创建时间，ISO 8601格式的时间戳
@@ -6190,9 +6202,15 @@ components:
         dataChangeCreatedBy:
           type: string
           description: 集群创建者用户名，记录是谁创建了这个集群
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 集群创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 集群最后修改者用户名，记录最后一次修改集群信息的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 集群最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 集群创建时间，ISO 8601格式的时间戳
@@ -6229,9 +6247,15 @@ components:
         dataChangeCreatedBy:
           type: string
           description: 发布创建者用户名，记录是谁创建了这次发布
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 发布创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 发布最后修改者用户名，记录最后一次修改发布信息的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 发布最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 发布创建时间，ISO 8601格式的时间戳
@@ -6305,9 +6329,15 @@ components:
         dataChangeCreatedBy:
           type: string
           description: 命名空间创建者用户名，记录是谁创建了这个应用命名空间
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 命名空间创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 命名空间最后修改者用户名，记录最后一次修改命名空间信息的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 命名空间最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 命名空间创建时间，ISO 8601格式的时间戳
@@ -6438,9 +6468,15 @@ components:
         dataChangeCreatedBy:
           type: string
           description: 命名空间创建者用户名，记录是谁创建了这个命名空间
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 命名空间创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 命名空间最后修改者用户名，记录最后一次修改命名空间信息的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 命名空间最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 命名空间创建时间，ISO 8601格式的时间戳

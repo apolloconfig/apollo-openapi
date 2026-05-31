@@ -17,7 +17,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
   title: Apollo OpenAPI
-  version: 0.3.4
+  version: 0.3.5
 servers:
 - url: /
 security:
@@ -7259,21 +7259,29 @@ components:
       example:
         dataChangeCreatedTime: 2025-09-29T12:34:56Z
         orgName: orgName
+        dataChangeCreatedBy: dataChangeCreatedBy
+        dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+        orgId: orgId
+        ownerEmail: ownerEmail
+        dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+        dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
         dataChangeLastModifiedBy: dataChangeLastModifiedBy
         ownerName: ownerName
         ownerDisplayName: ownerDisplayName
         appId: appId
-        dataChangeCreatedBy: dataChangeCreatedBy
         name: name
-        dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-        orgId: orgId
-        ownerEmail: ownerEmail
       properties:
         dataChangeCreatedBy:
           description: 数据创建者用户名，记录是谁创建了这个应用
           type: string
+        dataChangeCreatedByDisplayName:
+          description: 数据创建者显示名称，用于展示创建者的友好名称
+          type: string
         dataChangeLastModifiedBy:
           description: 数据最后修改者用户名，记录最后一次修改应用信息的用户
+          type: string
+        dataChangeLastModifiedByDisplayName:
+          description: 数据最后修改者显示名称，用于展示最后修改者的友好名称
           type: string
         dataChangeCreatedTime:
           description: 数据创建时间，ISO 8601格式的时间戳
@@ -7310,15 +7318,17 @@ components:
         app:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           orgName: orgName
+          dataChangeCreatedBy: dataChangeCreatedBy
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+          orgId: orgId
+          ownerEmail: ownerEmail
+          dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           ownerName: ownerName
           ownerDisplayName: ownerDisplayName
           appId: appId
-          dataChangeCreatedBy: dataChangeCreatedBy
           name: name
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-          orgId: orgId
-          ownerEmail: ownerEmail
         assignAppRoleToSelf: true
         admins:
         - admins
@@ -7339,6 +7349,8 @@ components:
     OpenItemDTO:
       description: Apollo配置项核心数据对象，仅包含键值及基础审计信息
       example:
+        dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+        dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
         dataChangeCreatedTime: 2025-09-29T12:34:56Z
         dataChangeLastModifiedBy: dataChangeLastModifiedBy
         dataChangeCreatedBy: dataChangeCreatedBy
@@ -7372,8 +7384,14 @@ components:
         dataChangeCreatedBy:
           description: 配置项创建者用户名，记录是谁创建了这个配置项
           type: string
+        dataChangeCreatedByDisplayName:
+          description: 配置项创建者显示名称，用于展示创建者的友好名称
+          type: string
         dataChangeLastModifiedBy:
           description: 配置项最后修改者用户名，记录最后一次修改配置的用户
+          type: string
+        dataChangeLastModifiedByDisplayName:
+          description: 配置项最后修改者显示名称，用于展示最后修改者的友好名称
           type: string
         dataChangeCreatedTime:
           description: 配置项创建时间，ISO 8601格式的时间戳
@@ -7421,7 +7439,9 @@ components:
         size: 6
         page: 0
         content:
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
@@ -7436,7 +7456,9 @@ components:
           value: value
           key: key
           dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
@@ -7471,6 +7493,8 @@ components:
     OpenClusterDTO:
       description: Apollo集群信息数据传输对象，表示应用在特定环境下的集群配置
       example:
+        dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+        dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
         dataChangeCreatedTime: 2025-09-29T12:34:56Z
         dataChangeLastModifiedBy: dataChangeLastModifiedBy
         appId: appId
@@ -7484,8 +7508,14 @@ components:
         dataChangeCreatedBy:
           description: 集群创建者用户名，记录是谁创建了这个集群
           type: string
+        dataChangeCreatedByDisplayName:
+          description: 集群创建者显示名称，用于展示创建者的友好名称
+          type: string
         dataChangeLastModifiedBy:
           description: 集群最后修改者用户名，记录最后一次修改集群信息的用户
+          type: string
+        dataChangeLastModifiedByDisplayName:
+          description: 集群最后修改者显示名称，用于展示最后修改者的友好名称
           type: string
         dataChangeCreatedTime:
           description: 集群创建时间，ISO 8601格式的时间戳
@@ -7521,23 +7551,31 @@ components:
       description: Apollo发布信息数据传输对象，表示一次配置发布的完整信息
       example:
         dataChangeCreatedTime: 2025-09-29T12:34:56Z
-        dataChangeLastModifiedBy: dataChangeLastModifiedBy
         configurations:
           key: configurations
+        dataChangeCreatedBy: dataChangeCreatedBy
+        dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+        dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+        dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+        dataChangeLastModifiedBy: dataChangeLastModifiedBy
         appId: appId
         clusterName: clusterName
-        dataChangeCreatedBy: dataChangeCreatedBy
         name: name
         comment: comment
         id: 0
-        dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         namespaceName: namespaceName
       properties:
         dataChangeCreatedBy:
           description: 发布创建者用户名，记录是谁创建了这次发布
           type: string
+        dataChangeCreatedByDisplayName:
+          description: 发布创建者显示名称，用于展示创建者的友好名称
+          type: string
         dataChangeLastModifiedBy:
           description: 发布最后修改者用户名，记录最后一次修改发布信息的用户
+          type: string
+        dataChangeLastModifiedByDisplayName:
+          description: 发布最后修改者显示名称，用于展示最后修改者的友好名称
           type: string
         dataChangeCreatedTime:
           description: 发布创建时间，ISO 8601格式的时间戳
@@ -7624,6 +7662,8 @@ components:
     OpenAppNamespaceDTO:
       description: Apollo应用命名空间数据传输对象，表示应用级别的命名空间配置信息
       example:
+        dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+        dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
         dataChangeCreatedTime: 2025-09-29T12:34:56Z
         dataChangeLastModifiedBy: dataChangeLastModifiedBy
         appendNamespacePrefix: true
@@ -7638,8 +7678,14 @@ components:
         dataChangeCreatedBy:
           description: 命名空间创建者用户名，记录是谁创建了这个应用命名空间
           type: string
+        dataChangeCreatedByDisplayName:
+          description: 命名空间创建者显示名称，用于展示创建者的友好名称
+          type: string
         dataChangeLastModifiedBy:
           description: 命名空间最后修改者用户名，记录最后一次修改命名空间信息的用户
+          type: string
+        dataChangeLastModifiedByDisplayName:
+          description: 命名空间最后修改者显示名称，用于展示最后修改者的友好名称
           type: string
         dataChangeCreatedTime:
           description: 命名空间创建时间，ISO 8601格式的时间戳
@@ -7814,56 +7860,68 @@ components:
       description: Apollo命名空间数据传输对象，表示一个完整的命名空间及其配置项
       example:
         dataChangeCreatedTime: 2025-09-29T12:34:56Z
-        dataChangeLastModifiedBy: dataChangeLastModifiedBy
-        appId: appId
-        clusterName: clusterName
         dataChangeCreatedBy: dataChangeCreatedBy
         format: format
-        isPublic: true
-        comment: comment
         extendInfo:
           parentAppId: parentAppId
           isConfigHidden: true
           itemModifiedCnt: 0
-        items:
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-          dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          dataChangeCreatedBy: dataChangeCreatedBy
-          comment: comment
-          type: 0
-          extendInfo:
-            newValue: newValue
-            isModified: true
-            isDeleted: true
-            namespaceId: 6
-            oldValue: oldValue
-            isNewlyAdded: true
-          value: value
-          key: key
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
-          dataChangeLastModifiedBy: dataChangeLastModifiedBy
-          dataChangeCreatedBy: dataChangeCreatedBy
-          comment: comment
-          type: 0
-          extendInfo:
-            newValue: newValue
-            isModified: true
-            isDeleted: true
-            namespaceId: 6
-            oldValue: oldValue
-            isNewlyAdded: true
-          value: value
-          key: key
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+        dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+        dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+        dataChangeLastModifiedBy: dataChangeLastModifiedBy
+        appId: appId
+        clusterName: clusterName
+        isPublic: true
+        comment: comment
+        items:
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
+          dataChangeLastModifiedBy: dataChangeLastModifiedBy
+          dataChangeCreatedBy: dataChangeCreatedBy
+          comment: comment
+          type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
+          value: value
+          key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
+          dataChangeLastModifiedBy: dataChangeLastModifiedBy
+          dataChangeCreatedBy: dataChangeCreatedBy
+          comment: comment
+          type: 0
+          extendInfo:
+            newValue: newValue
+            isModified: true
+            isDeleted: true
+            namespaceId: 6
+            oldValue: oldValue
+            isNewlyAdded: true
+          value: value
+          key: key
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         namespaceName: namespaceName
       properties:
         dataChangeCreatedBy:
           description: 命名空间创建者用户名，记录是谁创建了这个命名空间
           type: string
+        dataChangeCreatedByDisplayName:
+          description: 命名空间创建者显示名称，用于展示创建者的友好名称
+          type: string
         dataChangeLastModifiedBy:
           description: 命名空间最后修改者用户名，记录最后一次修改命名空间信息的用户
+          type: string
+        dataChangeLastModifiedByDisplayName:
+          description: 命名空间最后修改者显示名称，用于展示最后修改者的友好名称
           type: string
         dataChangeCreatedTime:
           description: 命名空间创建时间，ISO 8601格式的时间戳
@@ -7946,31 +8004,35 @@ components:
           - releaseDeliveryTime: 2025-09-29T12:34:56Z
             release:
               dataChangeCreatedTime: 2025-09-29T12:34:56Z
-              dataChangeLastModifiedBy: dataChangeLastModifiedBy
               configurations:
                 key: configurations
+              dataChangeCreatedBy: dataChangeCreatedBy
+              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+              dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+              dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+              dataChangeLastModifiedBy: dataChangeLastModifiedBy
               appId: appId
               clusterName: clusterName
-              dataChangeCreatedBy: dataChangeCreatedBy
               name: name
               comment: comment
               id: 0
-              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
               namespaceName: namespaceName
             dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
           - releaseDeliveryTime: 2025-09-29T12:34:56Z
             release:
               dataChangeCreatedTime: 2025-09-29T12:34:56Z
-              dataChangeLastModifiedBy: dataChangeLastModifiedBy
               configurations:
                 key: configurations
+              dataChangeCreatedBy: dataChangeCreatedBy
+              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+              dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+              dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+              dataChangeLastModifiedBy: dataChangeLastModifiedBy
               appId: appId
               clusterName: clusterName
-              dataChangeCreatedBy: dataChangeCreatedBy
               name: name
               comment: comment
               id: 0
-              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
               namespaceName: namespaceName
             dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
@@ -7983,31 +8045,35 @@ components:
           - releaseDeliveryTime: 2025-09-29T12:34:56Z
             release:
               dataChangeCreatedTime: 2025-09-29T12:34:56Z
-              dataChangeLastModifiedBy: dataChangeLastModifiedBy
               configurations:
                 key: configurations
+              dataChangeCreatedBy: dataChangeCreatedBy
+              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+              dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+              dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+              dataChangeLastModifiedBy: dataChangeLastModifiedBy
               appId: appId
               clusterName: clusterName
-              dataChangeCreatedBy: dataChangeCreatedBy
               name: name
               comment: comment
               id: 0
-              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
               namespaceName: namespaceName
             dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
           - releaseDeliveryTime: 2025-09-29T12:34:56Z
             release:
               dataChangeCreatedTime: 2025-09-29T12:34:56Z
-              dataChangeLastModifiedBy: dataChangeLastModifiedBy
               configurations:
                 key: configurations
+              dataChangeCreatedBy: dataChangeCreatedBy
+              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+              dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+              dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+              dataChangeLastModifiedBy: dataChangeLastModifiedBy
               appId: appId
               clusterName: clusterName
-              dataChangeCreatedBy: dataChangeCreatedBy
               name: name
               comment: comment
               id: 0
-              dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
               namespaceName: namespaceName
             dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
@@ -8056,7 +8122,9 @@ components:
         message: message
         env: env
         clusters:
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           appId: appId
           dataChangeCreatedBy: dataChangeCreatedBy
@@ -8065,7 +8133,9 @@ components:
           comment: comment
           id: 6
           dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           appId: appId
           dataChangeCreatedBy: dataChangeCreatedBy
@@ -8167,7 +8237,9 @@ components:
           env: env
           namespaceName: namespaceName
         deleteItems:
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
@@ -8182,7 +8254,9 @@ components:
           value: value
           key: key
           dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
@@ -8198,7 +8272,9 @@ components:
           key: key
           dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         createItems:
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
@@ -8213,7 +8289,9 @@ components:
           value: value
           key: key
           dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
@@ -8230,7 +8308,9 @@ components:
           dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         message: message
         updateItems:
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
@@ -8245,7 +8325,9 @@ components:
           value: value
           key: key
           dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
@@ -8285,7 +8367,9 @@ components:
     OpenNamespaceSyncDTO:
       example:
         syncItems:
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
@@ -8300,7 +8384,9 @@ components:
           value: value
           key: key
           dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
-        - dataChangeCreatedTime: 2025-09-29T12:34:56Z
+        - dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
           comment: comment
@@ -8341,16 +8427,18 @@ components:
         releaseDeliveryTime: 2025-09-29T12:34:56Z
         release:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
-          dataChangeLastModifiedBy: dataChangeLastModifiedBy
           configurations:
             key: configurations
+          dataChangeCreatedBy: dataChangeCreatedBy
+          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+          dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+          dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+          dataChangeLastModifiedBy: dataChangeLastModifiedBy
           appId: appId
           clusterName: clusterName
-          dataChangeCreatedBy: dataChangeCreatedBy
           name: name
           comment: comment
           id: 0
-          dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
           namespaceName: namespaceName
         dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
       properties:
@@ -8371,31 +8459,35 @@ components:
         - releaseDeliveryTime: 2025-09-29T12:34:56Z
           release:
             dataChangeCreatedTime: 2025-09-29T12:34:56Z
-            dataChangeLastModifiedBy: dataChangeLastModifiedBy
             configurations:
               key: configurations
+            dataChangeCreatedBy: dataChangeCreatedBy
+            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+            dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+            dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+            dataChangeLastModifiedBy: dataChangeLastModifiedBy
             appId: appId
             clusterName: clusterName
-            dataChangeCreatedBy: dataChangeCreatedBy
             name: name
             comment: comment
             id: 0
-            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
             namespaceName: namespaceName
           dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         - releaseDeliveryTime: 2025-09-29T12:34:56Z
           release:
             dataChangeCreatedTime: 2025-09-29T12:34:56Z
-            dataChangeLastModifiedBy: dataChangeLastModifiedBy
             configurations:
               key: configurations
+            dataChangeCreatedBy: dataChangeCreatedBy
+            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
+            dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+            dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
+            dataChangeLastModifiedBy: dataChangeLastModifiedBy
             appId: appId
             clusterName: clusterName
-            dataChangeCreatedBy: dataChangeCreatedBy
             name: name
             comment: comment
             id: 0
-            dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
             namespaceName: namespaceName
           dataChangeLastModifiedTime: 2025-09-29T12:34:56Z
         dataChangeCreatedTime: 2025-09-29T12:34:56Z

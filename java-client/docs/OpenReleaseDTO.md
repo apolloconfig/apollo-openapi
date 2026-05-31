@@ -9,7 +9,9 @@ Apollo发布信息数据传输对象，表示一次配置发布的完整信息
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
 |**dataChangeCreatedBy** | **String** | 发布创建者用户名，记录是谁创建了这次发布 |  [optional] |
+|**dataChangeCreatedByDisplayName** | **String** | 发布创建者显示名称，用于展示创建者的友好名称 |  [optional] |
 |**dataChangeLastModifiedBy** | **String** | 发布最后修改者用户名，记录最后一次修改发布信息的用户 |  [optional] |
+|**dataChangeLastModifiedByDisplayName** | **String** | 发布最后修改者显示名称，用于展示最后修改者的友好名称 |  [optional] |
 |**dataChangeCreatedTime** | **String** | 发布创建时间，ISO 8601格式的时间戳 |  [optional] |
 |**dataChangeLastModifiedTime** | **String** | 发布最后修改时间，ISO 8601格式的时间戳 |  [optional] |
 |**id** | **Long** | 发布记录的唯一标识符，系统自动生成 |  [optional] |

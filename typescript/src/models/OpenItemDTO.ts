@@ -62,11 +62,23 @@ export interface OpenItemDTO {
      */
     dataChangeCreatedBy?: string;
     /**
+     * 配置项创建者显示名称，用于展示创建者的友好名称
+     * @type {string}
+     * @memberof OpenItemDTO
+     */
+    dataChangeCreatedByDisplayName?: string;
+    /**
      * 配置项最后修改者用户名，记录最后一次修改配置的用户
      * @type {string}
      * @memberof OpenItemDTO
      */
     dataChangeLastModifiedBy?: string;
+    /**
+     * 配置项最后修改者显示名称，用于展示最后修改者的友好名称
+     * @type {string}
+     * @memberof OpenItemDTO
+     */
+    dataChangeLastModifiedByDisplayName?: string;
     /**
      * 配置项创建时间，ISO 8601格式的时间戳
      * @type {string}
@@ -106,7 +118,9 @@ export function OpenItemDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
         'extendInfo': !exists(json, 'extendInfo') ? undefined : OpenItemExtendDTOFromJSON(json['extendInfo']),
         'dataChangeCreatedBy': !exists(json, 'dataChangeCreatedBy') ? undefined : json['dataChangeCreatedBy'],
+        'dataChangeCreatedByDisplayName': !exists(json, 'dataChangeCreatedByDisplayName') ? undefined : json['dataChangeCreatedByDisplayName'],
         'dataChangeLastModifiedBy': !exists(json, 'dataChangeLastModifiedBy') ? undefined : json['dataChangeLastModifiedBy'],
+        'dataChangeLastModifiedByDisplayName': !exists(json, 'dataChangeLastModifiedByDisplayName') ? undefined : json['dataChangeLastModifiedByDisplayName'],
         'dataChangeCreatedTime': !exists(json, 'dataChangeCreatedTime') ? undefined : json['dataChangeCreatedTime'],
         'dataChangeLastModifiedTime': !exists(json, 'dataChangeLastModifiedTime') ? undefined : json['dataChangeLastModifiedTime'],
     };
@@ -127,7 +141,9 @@ export function OpenItemDTOToJSON(value?: OpenItemDTO | null): any {
         'comment': value.comment,
         'extendInfo': OpenItemExtendDTOToJSON(value.extendInfo),
         'dataChangeCreatedBy': value.dataChangeCreatedBy,
+        'dataChangeCreatedByDisplayName': value.dataChangeCreatedByDisplayName,
         'dataChangeLastModifiedBy': value.dataChangeLastModifiedBy,
+        'dataChangeLastModifiedByDisplayName': value.dataChangeLastModifiedByDisplayName,
         'dataChangeCreatedTime': value.dataChangeCreatedTime,
         'dataChangeLastModifiedTime': value.dataChangeLastModifiedTime,
     };

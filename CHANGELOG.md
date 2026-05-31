@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.5] - 2026-05-31
+
+### Added
+
+- Add optional audit display-name fields to BaseDTO-compatible OpenAPI schemas.
+
 ## [0.3.4] - 2026-05-24
 
 ### Added

@@ -10,7 +10,9 @@ Name | Type | Description | Notes
 **comment** | Option<**String**> | 配置项的注释说明，用于描述配置项的用途和含义 | [optional]
 **extend_info** | Option<[**crate::models::OpenItemExtendDto**](OpenItemExtendDTO.md)> |  | [optional]
 **data_change_created_by** | Option<**String**> | 配置项创建者用户名，记录是谁创建了这个配置项 | [optional]
+**data_change_created_by_display_name** | Option<**String**> | 配置项创建者显示名称，用于展示创建者的友好名称 | [optional]
 **data_change_last_modified_by** | Option<**String**> | 配置项最后修改者用户名，记录最后一次修改配置的用户 | [optional]
+**data_change_last_modified_by_display_name** | Option<**String**> | 配置项最后修改者显示名称，用于展示最后修改者的友好名称 | [optional]
 **data_change_created_time** | Option<**String**> | 配置项创建时间，ISO 8601格式的时间戳 | [optional]
 **data_change_last_modified_time** | Option<**String**> | 配置项最后修改时间，ISO 8601格式的时间戳 | [optional]
 

@@ -5,7 +5,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **data_change_created_by** | Option<**String**> | 命名空间创建者用户名，记录是谁创建了这个命名空间 | [optional]
+**data_change_created_by_display_name** | Option<**String**> | 命名空间创建者显示名称，用于展示创建者的友好名称 | [optional]
 **data_change_last_modified_by** | Option<**String**> | 命名空间最后修改者用户名，记录最后一次修改命名空间信息的用户 | [optional]
+**data_change_last_modified_by_display_name** | Option<**String**> | 命名空间最后修改者显示名称，用于展示最后修改者的友好名称 | [optional]
 **data_change_created_time** | Option<**String**> | 命名空间创建时间，ISO 8601格式的时间戳 | [optional]
 **data_change_last_modified_time** | Option<**String**> | 命名空间最后修改时间，ISO 8601格式的时间戳 | [optional]
 **app_id** | Option<**String**> | 所属应用的唯一标识符 | [optional]
