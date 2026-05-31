@@ -9,6 +9,7 @@ AUDIT_DISPLAY_NAME_SCHEMAS = (
     "OpenClusterDTO",
     "OpenNamespaceDTO",
     "OpenAppNamespaceDTO",
+    "OpenGrayReleaseRuleDTO",
     "OpenReleaseDTO",
     "OpenItemDTO",
 )
@@ -18,26 +19,32 @@ AUDIT_DISPLAY_NAME_FIELDS = (
     "dataChangeLastModifiedByDisplayName",
 )
 
+SPEC_FILES = (
+    "apollo-openapi.yaml",
+    "java-client/api/openapi.yaml",
+    "spring-boot2/src/main/resources/openapi.yaml",
+)
+
 
 class AuditDisplayNameFieldsTest(unittest.TestCase):
 
-  @classmethod
-  def setUpClass(cls):
-    spec_path = Path(__file__).resolve().parents[1] / "apollo-openapi.yaml"
-    cls.spec = yaml.safe_load(spec_path.read_text())
-    cls.schemas = cls.spec["components"]["schemas"]
-
   def test_base_dto_compatible_schemas_expose_optional_display_name_fields(self):
-    for schema_name in AUDIT_DISPLAY_NAME_SCHEMAS:
-      with self.subTest(schema=schema_name):
-        schema = self.schemas[schema_name]
-        properties = schema["properties"]
-        required = set(schema.get("required", ()))
+    repo_root = Path(__file__).resolve().parents[1]
 
-        for field_name in AUDIT_DISPLAY_NAME_FIELDS:
-          self.assertIn(field_name, properties)
-          self.assertEqual("string", properties[field_name]["type"])
-          self.assertNotIn(field_name, required)
+    for spec_file in SPEC_FILES:
+      spec = yaml.safe_load((repo_root / spec_file).read_text())
+      schemas = spec["components"]["schemas"]
+
+      for schema_name in AUDIT_DISPLAY_NAME_SCHEMAS:
+        with self.subTest(spec=spec_file, schema=schema_name):
+          schema = schemas[schema_name]
+          properties = schema["properties"]
+          required = set(schema.get("required", ()))
+
+          for field_name in AUDIT_DISPLAY_NAME_FIELDS:
+            self.assertIn(field_name, properties)
+            self.assertEqual("string", properties[field_name]["type"])
+            self.assertNotIn(field_name, required)
 
 
 if __name__ == "__main__":

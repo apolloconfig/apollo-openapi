@@ -32,11 +32,23 @@ export interface OpenGrayReleaseRuleDTO {
      */
     dataChangeCreatedBy?: string;
     /**
+     * 灰度规则创建者显示名称，用于展示创建者的友好名称
+     * @type {string}
+     * @memberof OpenGrayReleaseRuleDTO
+     */
+    dataChangeCreatedByDisplayName?: string;
+    /**
      * 灰度规则最后修改者用户名，记录最后一次修改规则的用户
      * @type {string}
      * @memberof OpenGrayReleaseRuleDTO
      */
     dataChangeLastModifiedBy?: string;
+    /**
+     * 灰度规则最后修改者显示名称，用于展示最后修改者的友好名称
+     * @type {string}
+     * @memberof OpenGrayReleaseRuleDTO
+     */
+    dataChangeLastModifiedByDisplayName?: string;
     /**
      * 灰度规则创建时间，ISO 8601格式的时间戳
      * @type {string}
@@ -101,7 +113,9 @@ export function OpenGrayReleaseRuleDTOFromJSONTyped(json: any, ignoreDiscriminat
     return {
 
         'dataChangeCreatedBy': !exists(json, 'dataChangeCreatedBy') ? undefined : json['dataChangeCreatedBy'],
+        'dataChangeCreatedByDisplayName': !exists(json, 'dataChangeCreatedByDisplayName') ? undefined : json['dataChangeCreatedByDisplayName'],
         'dataChangeLastModifiedBy': !exists(json, 'dataChangeLastModifiedBy') ? undefined : json['dataChangeLastModifiedBy'],
+        'dataChangeLastModifiedByDisplayName': !exists(json, 'dataChangeLastModifiedByDisplayName') ? undefined : json['dataChangeLastModifiedByDisplayName'],
         'dataChangeCreatedTime': !exists(json, 'dataChangeCreatedTime') ? undefined : json['dataChangeCreatedTime'],
         'dataChangeLastModifiedTime': !exists(json, 'dataChangeLastModifiedTime') ? undefined : json['dataChangeLastModifiedTime'],
         'appId': !exists(json, 'appId') ? undefined : json['appId'],
@@ -122,7 +136,9 @@ export function OpenGrayReleaseRuleDTOToJSON(value?: OpenGrayReleaseRuleDTO | nu
     return {
 
         'dataChangeCreatedBy': value.dataChangeCreatedBy,
+        'dataChangeCreatedByDisplayName': value.dataChangeCreatedByDisplayName,
         'dataChangeLastModifiedBy': value.dataChangeLastModifiedBy,
+        'dataChangeLastModifiedByDisplayName': value.dataChangeLastModifiedByDisplayName,
         'dataChangeCreatedTime': value.dataChangeCreatedTime,
         'dataChangeLastModifiedTime': value.dataChangeLastModifiedTime,
         'appId': value.appId,

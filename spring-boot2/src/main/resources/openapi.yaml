@@ -76,6 +76,8 @@ paths:
               example:
               - dataChangeCreatedBy: apollo
                 dataChangeLastModifiedBy: apollo
+                dataChangeCreatedByDisplayName: Apollo Admin
+                dataChangeLastModifiedByDisplayName: Apollo Admin
                 dataChangeCreatedTime: 2024-01-15T10:30:00.000Z
                 dataChangeLastModifiedTime: 2024-01-15T10:30:00.000Z
                 name: Sample Application
@@ -86,6 +88,8 @@ paths:
                 ownerEmail: admin@apollo.com
               - dataChangeCreatedBy: apollo
                 dataChangeLastModifiedBy: apollo
+                dataChangeCreatedByDisplayName: Apollo Admin
+                dataChangeLastModifiedByDisplayName: Apollo Admin
                 dataChangeCreatedTime: 2024-01-10T14:20:00.000Z
                 dataChangeLastModifiedTime: 2024-01-12T16:45:00.000Z
                 name: User Service
@@ -155,6 +159,8 @@ paths:
               example:
               - dataChangeCreatedBy: apollo
                 dataChangeLastModifiedBy: apollo
+                dataChangeCreatedByDisplayName: Apollo Admin
+                dataChangeLastModifiedByDisplayName: Apollo Admin
                 dataChangeCreatedTime: 2024-01-15T10:30:00.000Z
                 dataChangeLastModifiedTime: 2024-01-15T10:30:00.000Z
                 name: Sample Application
@@ -165,6 +171,8 @@ paths:
                 ownerEmail: admin@apollo.com
               - dataChangeCreatedBy: apollo
                 dataChangeLastModifiedBy: apollo
+                dataChangeCreatedByDisplayName: Apollo Admin
+                dataChangeLastModifiedByDisplayName: Apollo Admin
                 dataChangeCreatedTime: 2024-01-10T14:20:00.000Z
                 dataChangeLastModifiedTime: 2024-01-12T16:45:00.000Z
                 name: User Service
@@ -300,6 +308,8 @@ paths:
               example:
                 dataChangeCreatedBy: apollo
                 dataChangeLastModifiedBy: dev-user
+                dataChangeCreatedByDisplayName: Apollo Admin
+                dataChangeLastModifiedByDisplayName: Dev User
                 dataChangeCreatedTime: 2024-01-15T10:30:00.000Z
                 dataChangeLastModifiedTime: 2024-01-20T15:45:00.000Z
                 name: Sample Application
@@ -403,6 +413,8 @@ paths:
               example:
               - dataChangeCreatedBy: apollo
                 dataChangeLastModifiedBy: dev-user
+                dataChangeCreatedByDisplayName: Apollo Admin
+                dataChangeLastModifiedByDisplayName: Dev User
                 dataChangeCreatedTime: 2024-01-15T10:30:00.000Z
                 dataChangeLastModifiedTime: 2024-01-20T16:45:00.000Z
                 name: User Service
@@ -413,6 +425,8 @@ paths:
                 ownerEmail: dev@company.com
               - dataChangeCreatedBy: apollo
                 dataChangeLastModifiedBy: ops-user
+                dataChangeCreatedByDisplayName: Apollo Admin
+                dataChangeLastModifiedByDisplayName: Ops User
                 dataChangeCreatedTime: 2024-01-10T09:15:00.000Z
                 dataChangeLastModifiedTime: 2024-01-18T14:30:00.000Z
                 name: Order Service
@@ -7778,6 +7792,8 @@ components:
     OpenGrayReleaseRuleDTO:
       description: Apollo灰度发布规则数据传输对象，表示完整的灰度发布规则配置
       example:
+        dataChangeLastModifiedByDisplayName: dataChangeLastModifiedByDisplayName
+        dataChangeCreatedByDisplayName: dataChangeCreatedByDisplayName
         dataChangeCreatedTime: 2025-09-29T12:34:56Z
         dataChangeLastModifiedBy: dataChangeLastModifiedBy
         appId: appId
@@ -7805,8 +7821,14 @@ components:
         dataChangeCreatedBy:
           description: 灰度规则创建者用户名，记录是谁创建了这个灰度发布规则
           type: string
+        dataChangeCreatedByDisplayName:
+          description: 灰度规则创建者显示名称，用于展示创建者的友好名称
+          type: string
         dataChangeLastModifiedBy:
           description: 灰度规则最后修改者用户名，记录最后一次修改规则的用户
+          type: string
+        dataChangeLastModifiedByDisplayName:
+          description: 灰度规则最后修改者显示名称，用于展示最后修改者的友好名称
           type: string
         dataChangeCreatedTime:
           description: 灰度规则创建时间，ISO 8601格式的时间戳
