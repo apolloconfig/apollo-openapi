@@ -7094,13 +7094,14 @@ components:
         dataChangeCreatedTime: 2025-09-29T12:34:56Z
         dataChangeLastModifiedBy: dataChangeLastModifiedBy
         dataChangeCreatedBy: dataChangeCreatedBy
+        lineNum: 6
         comment: comment
         type: 0
         extendInfo:
           newValue: newValue
           isModified: true
           isDeleted: true
-          namespaceId: 6
+          namespaceId: 1
           oldValue: oldValue
           isNewlyAdded: true
         value: value
@@ -7119,6 +7120,10 @@ components:
         comment:
           description: 配置项的注释说明，用于描述配置项的用途和含义
           type: string
+        lineNum:
+          description: 配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序
+          format: int32
+          type: integer
         extendInfo:
           $ref: '#/components/schemas/OpenItemExtendDTO'
         dataChangeCreatedBy:
@@ -7148,7 +7153,7 @@ components:
         newValue: newValue
         isModified: true
         isDeleted: true
-        namespaceId: 6
+        namespaceId: 1
         oldValue: oldValue
         isNewlyAdded: true
       properties:
@@ -7184,13 +7189,14 @@ components:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
+          lineNum: 6
           comment: comment
           type: 0
           extendInfo:
             newValue: newValue
             isModified: true
             isDeleted: true
-            namespaceId: 6
+            namespaceId: 1
             oldValue: oldValue
             isNewlyAdded: true
           value: value
@@ -7201,13 +7207,14 @@ components:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
+          lineNum: 6
           comment: comment
           type: 0
           extendInfo:
             newValue: newValue
             isModified: true
             isDeleted: true
-            namespaceId: 6
+            namespaceId: 1
             oldValue: oldValue
             isNewlyAdded: true
           value: value
@@ -7628,13 +7635,14 @@ components:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
+          lineNum: 6
           comment: comment
           type: 0
           extendInfo:
             newValue: newValue
             isModified: true
             isDeleted: true
-            namespaceId: 6
+            namespaceId: 1
             oldValue: oldValue
             isNewlyAdded: true
           value: value
@@ -7645,13 +7653,14 @@ components:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
+          lineNum: 6
           comment: comment
           type: 0
           extendInfo:
             newValue: newValue
             isModified: true
             isDeleted: true
-            namespaceId: 6
+            namespaceId: 1
             oldValue: oldValue
             isNewlyAdded: true
           value: value
@@ -7990,13 +7999,14 @@ components:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
+          lineNum: 6
           comment: comment
           type: 0
           extendInfo:
             newValue: newValue
             isModified: true
             isDeleted: true
-            namespaceId: 6
+            namespaceId: 1
             oldValue: oldValue
             isNewlyAdded: true
           value: value
@@ -8007,13 +8017,14 @@ components:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
+          lineNum: 6
           comment: comment
           type: 0
           extendInfo:
             newValue: newValue
             isModified: true
             isDeleted: true
-            namespaceId: 6
+            namespaceId: 1
             oldValue: oldValue
             isNewlyAdded: true
           value: value
@@ -8025,13 +8036,14 @@ components:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
+          lineNum: 6
           comment: comment
           type: 0
           extendInfo:
             newValue: newValue
             isModified: true
             isDeleted: true
-            namespaceId: 6
+            namespaceId: 1
             oldValue: oldValue
             isNewlyAdded: true
           value: value
@@ -8042,13 +8054,14 @@ components:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
+          lineNum: 6
           comment: comment
           type: 0
           extendInfo:
             newValue: newValue
             isModified: true
             isDeleted: true
-            namespaceId: 6
+            namespaceId: 1
             oldValue: oldValue
             isNewlyAdded: true
           value: value
@@ -8061,13 +8074,14 @@ components:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
+          lineNum: 6
           comment: comment
           type: 0
           extendInfo:
             newValue: newValue
             isModified: true
             isDeleted: true
-            namespaceId: 6
+            namespaceId: 1
             oldValue: oldValue
             isNewlyAdded: true
           value: value
@@ -8078,13 +8092,14 @@ components:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
+          lineNum: 6
           comment: comment
           type: 0
           extendInfo:
             newValue: newValue
             isModified: true
             isDeleted: true
-            namespaceId: 6
+            namespaceId: 1
             oldValue: oldValue
             isNewlyAdded: true
           value: value
@@ -8120,13 +8135,14 @@ components:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
+          lineNum: 6
           comment: comment
           type: 0
           extendInfo:
             newValue: newValue
             isModified: true
             isDeleted: true
-            namespaceId: 6
+            namespaceId: 1
             oldValue: oldValue
             isNewlyAdded: true
           value: value
@@ -8137,13 +8153,14 @@ components:
           dataChangeCreatedTime: 2025-09-29T12:34:56Z
           dataChangeLastModifiedBy: dataChangeLastModifiedBy
           dataChangeCreatedBy: dataChangeCreatedBy
+          lineNum: 6
           comment: comment
           type: 0
           extendInfo:
             newValue: newValue
             isModified: true
             isDeleted: true
-            namespaceId: 6
+            namespaceId: 1
             oldValue: oldValue
             isNewlyAdded: true
           value: value

@@ -50,6 +50,12 @@ export interface OpenItemDTO {
      */
     comment?: string;
     /**
+     * 配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序
+     * @type {number}
+     * @memberof OpenItemDTO
+     */
+    lineNum?: number;
+    /**
      *
      * @type {OpenItemExtendDTO}
      * @memberof OpenItemDTO
@@ -116,6 +122,7 @@ export function OpenItemDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean
         'value': !exists(json, 'value') ? undefined : json['value'],
         'type': !exists(json, 'type') ? undefined : json['type'],
         'comment': !exists(json, 'comment') ? undefined : json['comment'],
+        'lineNum': !exists(json, 'lineNum') ? undefined : json['lineNum'],
         'extendInfo': !exists(json, 'extendInfo') ? undefined : OpenItemExtendDTOFromJSON(json['extendInfo']),
         'dataChangeCreatedBy': !exists(json, 'dataChangeCreatedBy') ? undefined : json['dataChangeCreatedBy'],
         'dataChangeCreatedByDisplayName': !exists(json, 'dataChangeCreatedByDisplayName') ? undefined : json['dataChangeCreatedByDisplayName'],
@@ -139,6 +146,7 @@ export function OpenItemDTOToJSON(value?: OpenItemDTO | null): any {
         'value': value.value,
         'type': value.type,
         'comment': value.comment,
+        'lineNum': value.lineNum,
         'extendInfo': OpenItemExtendDTOToJSON(value.extendInfo),
         'dataChangeCreatedBy': value.dataChangeCreatedBy,
         'dataChangeCreatedByDisplayName': value.dataChangeCreatedByDisplayName,

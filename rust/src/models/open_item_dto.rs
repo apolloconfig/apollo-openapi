@@ -25,6 +25,9 @@ pub struct OpenItemDto {
     /// 配置项的注释说明，用于描述配置项的用途和含义
     #[serde(rename = "comment", skip_serializing_if = "Option::is_none")]
     pub comment: Option<String>,
+    /// 配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序
+    #[serde(rename = "lineNum", skip_serializing_if = "Option::is_none")]
+    pub line_num: Option<i32>,
     #[serde(rename = "extendInfo", skip_serializing_if = "Option::is_none")]
     pub extend_info: Option<Box<crate::models::OpenItemExtendDto>>,
     /// 配置项创建者用户名，记录是谁创建了这个配置项
@@ -55,6 +58,7 @@ impl OpenItemDto {
             value: None,
             r#type: None,
             comment: None,
+            line_num: None,
             extend_info: None,
             data_change_created_by: None,
             data_change_created_by_display_name: None,

@@ -70,6 +70,14 @@ public class OpenItemDTOTest {
     }
 
     /**
+     * Test the property 'lineNum'
+     */
+    @Test
+    public void lineNumTest() {
+        // TODO: test lineNum
+    }
+
+    /**
      * Test the property 'extendInfo'
      */
     @Test

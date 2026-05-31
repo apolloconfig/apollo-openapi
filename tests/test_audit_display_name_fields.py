@@ -46,6 +46,20 @@ class AuditDisplayNameFieldsTest(unittest.TestCase):
             self.assertEqual("string", properties[field_name]["type"])
             self.assertNotIn(field_name, required)
 
+  def test_open_item_exposes_optional_line_num(self):
+    repo_root = Path(__file__).resolve().parents[1]
+
+    for spec_file in SPEC_FILES:
+      spec = yaml.safe_load((repo_root / spec_file).read_text())
+      open_item_schema = spec["components"]["schemas"]["OpenItemDTO"]
+      properties = open_item_schema["properties"]
+      required = set(open_item_schema.get("required", ()))
+
+      with self.subTest(spec=spec_file):
+        self.assertIn("lineNum", properties)
+        self.assertEqual("integer", properties["lineNum"]["type"])
+        self.assertNotIn("lineNum", required)
+
 
 if __name__ == "__main__":
   unittest.main()

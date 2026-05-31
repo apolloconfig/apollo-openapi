@@ -41,6 +41,7 @@ class OpenItemDTO(
             value = schemas.StrSchema
             type = schemas.IntSchema
             comment = schemas.StrSchema
+            lineNum = schemas.Int32Schema
 
             @staticmethod
             def extendInfo() -> typing.Type['OpenItemExtendDTO']:
@@ -56,6 +57,7 @@ class OpenItemDTO(
                 "value": value,
                 "type": type,
                 "comment": comment,
+                "lineNum": lineNum,
                 "extendInfo": extendInfo,
                 "dataChangeCreatedBy": dataChangeCreatedBy,
                 "dataChangeCreatedByDisplayName": dataChangeCreatedByDisplayName,
@@ -76,6 +78,9 @@ class OpenItemDTO(
 
     @typing.overload
     def __getitem__(self, name: typing_extensions.Literal["comment"]) -> MetaOapg.properties.comment: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["lineNum"]) -> MetaOapg.properties.lineNum: ...
 
     @typing.overload
     def __getitem__(self, name: typing_extensions.Literal["extendInfo"]) -> 'OpenItemExtendDTO': ...
@@ -101,7 +106,7 @@ class OpenItemDTO(
     @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
 
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["key", "value", "type", "comment", "extendInfo", "dataChangeCreatedBy", "dataChangeCreatedByDisplayName", "dataChangeLastModifiedBy", "dataChangeLastModifiedByDisplayName", "dataChangeCreatedTime", "dataChangeLastModifiedTime", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["key", "value", "type", "comment", "lineNum", "extendInfo", "dataChangeCreatedBy", "dataChangeCreatedByDisplayName", "dataChangeLastModifiedBy", "dataChangeLastModifiedByDisplayName", "dataChangeCreatedTime", "dataChangeLastModifiedTime", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
 
@@ -117,6 +122,9 @@ class OpenItemDTO(
 
     @typing.overload
     def get_item_oapg(self, name: typing_extensions.Literal["comment"]) -> typing.Union[MetaOapg.properties.comment, schemas.Unset]: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["lineNum"]) -> typing.Union[MetaOapg.properties.lineNum, schemas.Unset]: ...
 
     @typing.overload
     def get_item_oapg(self, name: typing_extensions.Literal["extendInfo"]) -> typing.Union['OpenItemExtendDTO', schemas.Unset]: ...
@@ -142,7 +150,7 @@ class OpenItemDTO(
     @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
 
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["key", "value", "type", "comment", "extendInfo", "dataChangeCreatedBy", "dataChangeCreatedByDisplayName", "dataChangeLastModifiedBy", "dataChangeLastModifiedByDisplayName", "dataChangeCreatedTime", "dataChangeLastModifiedTime", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["key", "value", "type", "comment", "lineNum", "extendInfo", "dataChangeCreatedBy", "dataChangeCreatedByDisplayName", "dataChangeLastModifiedBy", "dataChangeLastModifiedByDisplayName", "dataChangeCreatedTime", "dataChangeLastModifiedTime", ], str]):
         return super().get_item_oapg(name)
 
 
@@ -153,6 +161,7 @@ class OpenItemDTO(
         value: typing.Union[MetaOapg.properties.value, str, schemas.Unset] = schemas.unset,
         type: typing.Union[MetaOapg.properties.type, decimal.Decimal, int, schemas.Unset] = schemas.unset,
         comment: typing.Union[MetaOapg.properties.comment, str, schemas.Unset] = schemas.unset,
+        lineNum: typing.Union[MetaOapg.properties.lineNum, decimal.Decimal, int, schemas.Unset] = schemas.unset,
         extendInfo: typing.Union['OpenItemExtendDTO', schemas.Unset] = schemas.unset,
         dataChangeCreatedBy: typing.Union[MetaOapg.properties.dataChangeCreatedBy, str, schemas.Unset] = schemas.unset,
         dataChangeCreatedByDisplayName: typing.Union[MetaOapg.properties.dataChangeCreatedByDisplayName, str, schemas.Unset] = schemas.unset,
@@ -170,6 +179,7 @@ class OpenItemDTO(
             value=value,
             type=type,
             comment=comment,
+            lineNum=lineNum,
             extendInfo=extendInfo,
             dataChangeCreatedBy=dataChangeCreatedBy,
             dataChangeCreatedByDisplayName=dataChangeCreatedByDisplayName,

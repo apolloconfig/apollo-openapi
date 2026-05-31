@@ -6146,6 +6146,10 @@ components:
         comment:
           type: string
           description: 配置项的注释说明，用于描述配置项的用途和含义
+        lineNum:
+          type: integer
+          format: int32
+          description: 配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序
         extendInfo:
           $ref: '#/components/schemas/OpenItemExtendDTO'
         dataChangeCreatedBy:

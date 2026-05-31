@@ -68,6 +68,10 @@ public class OpenItemDTO {
   @SerializedName(SERIALIZED_NAME_COMMENT)
   private String comment;
 
+  public static final String SERIALIZED_NAME_LINE_NUM = "lineNum";
+  @SerializedName(SERIALIZED_NAME_LINE_NUM)
+  private Integer lineNum;
+
   public static final String SERIALIZED_NAME_EXTEND_INFO = "extendInfo";
   @SerializedName(SERIALIZED_NAME_EXTEND_INFO)
   private OpenItemExtendDTO extendInfo;
@@ -180,6 +184,27 @@ public class OpenItemDTO {
 
   public void setComment(String comment) {
     this.comment = comment;
+  }
+
+
+  public OpenItemDTO lineNum(Integer lineNum) {
+
+    this.lineNum = lineNum;
+    return this;
+  }
+
+   /**
+   * 配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序
+   * @return lineNum
+  **/
+  @javax.annotation.Nullable
+  public Integer getLineNum() {
+    return lineNum;
+  }
+
+
+  public void setLineNum(Integer lineNum) {
+    this.lineNum = lineNum;
   }
 
 
@@ -344,6 +369,7 @@ public class OpenItemDTO {
         Objects.equals(this.value, openItemDTO.value) &&
         Objects.equals(this.type, openItemDTO.type) &&
         Objects.equals(this.comment, openItemDTO.comment) &&
+        Objects.equals(this.lineNum, openItemDTO.lineNum) &&
         Objects.equals(this.extendInfo, openItemDTO.extendInfo) &&
         Objects.equals(this.dataChangeCreatedBy, openItemDTO.dataChangeCreatedBy) &&
         Objects.equals(this.dataChangeCreatedByDisplayName, openItemDTO.dataChangeCreatedByDisplayName) &&
@@ -355,7 +381,7 @@ public class OpenItemDTO {
 
   @Override
   public int hashCode() {
-    return Objects.hash(key, value, type, comment, extendInfo, dataChangeCreatedBy, dataChangeCreatedByDisplayName, dataChangeLastModifiedBy, dataChangeLastModifiedByDisplayName, dataChangeCreatedTime, dataChangeLastModifiedTime);
+    return Objects.hash(key, value, type, comment, lineNum, extendInfo, dataChangeCreatedBy, dataChangeCreatedByDisplayName, dataChangeLastModifiedBy, dataChangeLastModifiedByDisplayName, dataChangeCreatedTime, dataChangeLastModifiedTime);
   }
 
   @Override
@@ -366,6 +392,7 @@ public class OpenItemDTO {
     sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    comment: ").append(toIndentedString(comment)).append("\n");
+    sb.append("    lineNum: ").append(toIndentedString(lineNum)).append("\n");
     sb.append("    extendInfo: ").append(toIndentedString(extendInfo)).append("\n");
     sb.append("    dataChangeCreatedBy: ").append(toIndentedString(dataChangeCreatedBy)).append("\n");
     sb.append("    dataChangeCreatedByDisplayName: ").append(toIndentedString(dataChangeCreatedByDisplayName)).append("\n");
@@ -399,6 +426,7 @@ public class OpenItemDTO {
     openapiFields.add("value");
     openapiFields.add("type");
     openapiFields.add("comment");
+    openapiFields.add("lineNum");
     openapiFields.add("extendInfo");
     openapiFields.add("dataChangeCreatedBy");
     openapiFields.add("dataChangeCreatedByDisplayName");

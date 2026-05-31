@@ -285,6 +285,7 @@ with apollo_openapi.ApiClient(configuration) as api_client:
                 value="value_example",
                 type=1,
                 comment="comment_example",
+                line_num=1,
                 extend_info=OpenItemExtendDTO(
                     namespace_id=1,
                     is_modified=True,
@@ -454,6 +455,7 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         value="value_example",
         type=1,
         comment="comment_example",
+        line_num=1,
         extend_info=OpenItemExtendDTO(
             namespace_id=1,
             is_modified=True,
@@ -495,6 +497,7 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         value="value_example",
         type=1,
         comment="comment_example",
+        line_num=1,
         extend_info=OpenItemExtendDTO(
             namespace_id=1,
             is_modified=True,
@@ -1840,6 +1843,7 @@ with apollo_openapi.ApiClient(configuration) as api_client:
                 value="value_example",
                 type=1,
                 comment="comment_example",
+                line_num=1,
                 extend_info=OpenItemExtendDTO(
                     namespace_id=1,
                     is_modified=True,
@@ -1892,6 +1896,7 @@ with apollo_openapi.ApiClient(configuration) as api_client:
                 value="value_example",
                 type=1,
                 comment="comment_example",
+                line_num=1,
                 extend_info=OpenItemExtendDTO(
                     namespace_id=1,
                     is_modified=True,
@@ -2251,6 +2256,7 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         value="value_example",
         type=1,
         comment="comment_example",
+        line_num=1,
         extend_info=OpenItemExtendDTO(
             namespace_id=1,
             is_modified=True,
@@ -2293,6 +2299,7 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         value="value_example",
         type=1,
         comment="comment_example",
+        line_num=1,
         extend_info=OpenItemExtendDTO(
             namespace_id=1,
             is_modified=True,
@@ -2524,6 +2531,7 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         value="value_example",
         type=1,
         comment="comment_example",
+        line_num=1,
         extend_info=OpenItemExtendDTO(
             namespace_id=1,
             is_modified=True,
@@ -2566,6 +2574,7 @@ with apollo_openapi.ApiClient(configuration) as api_client:
         value="value_example",
         type=1,
         comment="comment_example",
+        line_num=1,
         extend_info=OpenItemExtendDTO(
             namespace_id=1,
             is_modified=True,

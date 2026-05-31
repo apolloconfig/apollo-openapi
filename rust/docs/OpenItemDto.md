@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **value** | Option<**String**> | 配置项的值，可以是字符串、数字、JSON等格式 | [optional]
 **r#type** | Option<**i32**> | 配置项类型 | [optional]
 **comment** | Option<**String**> | 配置项的注释说明，用于描述配置项的用途和含义 | [optional]
+**line_num** | Option<**i32**> | 配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序 | [optional]
 **extend_info** | Option<[**crate::models::OpenItemExtendDto**](OpenItemExtendDTO.md)> |  | [optional]
 **data_change_created_by** | Option<**String**> | 配置项创建者用户名，记录是谁创建了这个配置项 | [optional]
 **data_change_created_by_display_name** | Option<**String**> | 配置项创建者显示名称，用于展示创建者的友好名称 | [optional]
