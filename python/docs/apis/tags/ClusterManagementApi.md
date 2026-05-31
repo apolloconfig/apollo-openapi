@@ -54,7 +54,9 @@ with apollo_openapi.ApiClient(configuration) as api_client:
     }
     body = OpenClusterDTO(
         data_change_created_by="data_change_created_by_example",
+        data_change_created_by_display_name="data_change_created_by_display_name_example",
         data_change_last_modified_by="data_change_last_modified_by_example",
+        data_change_last_modified_by_display_name="data_change_last_modified_by_display_name_example",
         data_change_created_time="2025-09-29T12:34:56Z",
         data_change_last_modified_time="2025-09-29T12:34:56Z",
         name="name_example",

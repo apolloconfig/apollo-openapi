@@ -31,11 +31,17 @@ public class OpenItemDTO {
 
   private String comment;
 
+  private Integer lineNum;
+
   private OpenItemExtendDTO extendInfo;
 
   private String dataChangeCreatedBy;
 
+  private String dataChangeCreatedByDisplayName;
+
   private String dataChangeLastModifiedBy;
+
+  private String dataChangeLastModifiedByDisplayName;
 
   private String dataChangeCreatedTime;
 
@@ -121,6 +127,26 @@ public class OpenItemDTO {
     this.comment = comment;
   }
 
+  public OpenItemDTO lineNum(Integer lineNum) {
+    this.lineNum = lineNum;
+    return this;
+  }
+
+  /**
+   * 配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序
+   * @return lineNum
+  */
+
+  @Schema(name = "lineNum", description = "配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("lineNum")
+  public Integer getLineNum() {
+    return lineNum;
+  }
+
+  public void setLineNum(Integer lineNum) {
+    this.lineNum = lineNum;
+  }
+
   public OpenItemDTO extendInfo(OpenItemExtendDTO extendInfo) {
     this.extendInfo = extendInfo;
     return this;
@@ -161,6 +187,26 @@ public class OpenItemDTO {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
   }
 
+  public OpenItemDTO dataChangeCreatedByDisplayName(String dataChangeCreatedByDisplayName) {
+    this.dataChangeCreatedByDisplayName = dataChangeCreatedByDisplayName;
+    return this;
+  }
+
+  /**
+   * 配置项创建者显示名称，用于展示创建者的友好名称
+   * @return dataChangeCreatedByDisplayName
+  */
+
+  @Schema(name = "dataChangeCreatedByDisplayName", description = "配置项创建者显示名称，用于展示创建者的友好名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("dataChangeCreatedByDisplayName")
+  public String getDataChangeCreatedByDisplayName() {
+    return dataChangeCreatedByDisplayName;
+  }
+
+  public void setDataChangeCreatedByDisplayName(String dataChangeCreatedByDisplayName) {
+    this.dataChangeCreatedByDisplayName = dataChangeCreatedByDisplayName;
+  }
+
   public OpenItemDTO dataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
     return this;
@@ -179,6 +225,26 @@ public class OpenItemDTO {
 
   public void setDataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
+  }
+
+  public OpenItemDTO dataChangeLastModifiedByDisplayName(String dataChangeLastModifiedByDisplayName) {
+    this.dataChangeLastModifiedByDisplayName = dataChangeLastModifiedByDisplayName;
+    return this;
+  }
+
+  /**
+   * 配置项最后修改者显示名称，用于展示最后修改者的友好名称
+   * @return dataChangeLastModifiedByDisplayName
+  */
+
+  @Schema(name = "dataChangeLastModifiedByDisplayName", description = "配置项最后修改者显示名称，用于展示最后修改者的友好名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("dataChangeLastModifiedByDisplayName")
+  public String getDataChangeLastModifiedByDisplayName() {
+    return dataChangeLastModifiedByDisplayName;
+  }
+
+  public void setDataChangeLastModifiedByDisplayName(String dataChangeLastModifiedByDisplayName) {
+    this.dataChangeLastModifiedByDisplayName = dataChangeLastModifiedByDisplayName;
   }
 
   public OpenItemDTO dataChangeCreatedTime(String dataChangeCreatedTime) {
@@ -234,16 +300,19 @@ public class OpenItemDTO {
         Objects.equals(this.value, openItemDTO.value) &&
         Objects.equals(this.type, openItemDTO.type) &&
         Objects.equals(this.comment, openItemDTO.comment) &&
+        Objects.equals(this.lineNum, openItemDTO.lineNum) &&
         Objects.equals(this.extendInfo, openItemDTO.extendInfo) &&
         Objects.equals(this.dataChangeCreatedBy, openItemDTO.dataChangeCreatedBy) &&
+        Objects.equals(this.dataChangeCreatedByDisplayName, openItemDTO.dataChangeCreatedByDisplayName) &&
         Objects.equals(this.dataChangeLastModifiedBy, openItemDTO.dataChangeLastModifiedBy) &&
+        Objects.equals(this.dataChangeLastModifiedByDisplayName, openItemDTO.dataChangeLastModifiedByDisplayName) &&
         Objects.equals(this.dataChangeCreatedTime, openItemDTO.dataChangeCreatedTime) &&
         Objects.equals(this.dataChangeLastModifiedTime, openItemDTO.dataChangeLastModifiedTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(key, value, type, comment, extendInfo, dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime);
+    return Objects.hash(key, value, type, comment, lineNum, extendInfo, dataChangeCreatedBy, dataChangeCreatedByDisplayName, dataChangeLastModifiedBy, dataChangeLastModifiedByDisplayName, dataChangeCreatedTime, dataChangeLastModifiedTime);
   }
 
   @Override
@@ -254,9 +323,12 @@ public class OpenItemDTO {
     sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    comment: ").append(toIndentedString(comment)).append("\n");
+    sb.append("    lineNum: ").append(toIndentedString(lineNum)).append("\n");
     sb.append("    extendInfo: ").append(toIndentedString(extendInfo)).append("\n");
     sb.append("    dataChangeCreatedBy: ").append(toIndentedString(dataChangeCreatedBy)).append("\n");
+    sb.append("    dataChangeCreatedByDisplayName: ").append(toIndentedString(dataChangeCreatedByDisplayName)).append("\n");
     sb.append("    dataChangeLastModifiedBy: ").append(toIndentedString(dataChangeLastModifiedBy)).append("\n");
+    sb.append("    dataChangeLastModifiedByDisplayName: ").append(toIndentedString(dataChangeLastModifiedByDisplayName)).append("\n");
     sb.append("    dataChangeCreatedTime: ").append(toIndentedString(dataChangeCreatedTime)).append("\n");
     sb.append("    dataChangeLastModifiedTime: ").append(toIndentedString(dataChangeLastModifiedTime)).append("\n");
     sb.append("}");

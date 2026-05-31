@@ -28,7 +28,11 @@ public class OpenGrayReleaseRuleDTO {
 
   private String dataChangeCreatedBy;
 
+  private String dataChangeCreatedByDisplayName;
+
   private String dataChangeLastModifiedBy;
+
+  private String dataChangeLastModifiedByDisplayName;
 
   private String dataChangeCreatedTime;
 
@@ -65,6 +69,26 @@ public class OpenGrayReleaseRuleDTO {
     this.dataChangeCreatedBy = dataChangeCreatedBy;
   }
 
+  public OpenGrayReleaseRuleDTO dataChangeCreatedByDisplayName(String dataChangeCreatedByDisplayName) {
+    this.dataChangeCreatedByDisplayName = dataChangeCreatedByDisplayName;
+    return this;
+  }
+
+  /**
+   * 灰度规则创建者显示名称，用于展示创建者的友好名称
+   * @return dataChangeCreatedByDisplayName
+  */
+
+  @Schema(name = "dataChangeCreatedByDisplayName", description = "灰度规则创建者显示名称，用于展示创建者的友好名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("dataChangeCreatedByDisplayName")
+  public String getDataChangeCreatedByDisplayName() {
+    return dataChangeCreatedByDisplayName;
+  }
+
+  public void setDataChangeCreatedByDisplayName(String dataChangeCreatedByDisplayName) {
+    this.dataChangeCreatedByDisplayName = dataChangeCreatedByDisplayName;
+  }
+
   public OpenGrayReleaseRuleDTO dataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
     return this;
@@ -83,6 +107,26 @@ public class OpenGrayReleaseRuleDTO {
 
   public void setDataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
+  }
+
+  public OpenGrayReleaseRuleDTO dataChangeLastModifiedByDisplayName(String dataChangeLastModifiedByDisplayName) {
+    this.dataChangeLastModifiedByDisplayName = dataChangeLastModifiedByDisplayName;
+    return this;
+  }
+
+  /**
+   * 灰度规则最后修改者显示名称，用于展示最后修改者的友好名称
+   * @return dataChangeLastModifiedByDisplayName
+  */
+
+  @Schema(name = "dataChangeLastModifiedByDisplayName", description = "灰度规则最后修改者显示名称，用于展示最后修改者的友好名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("dataChangeLastModifiedByDisplayName")
+  public String getDataChangeLastModifiedByDisplayName() {
+    return dataChangeLastModifiedByDisplayName;
+  }
+
+  public void setDataChangeLastModifiedByDisplayName(String dataChangeLastModifiedByDisplayName) {
+    this.dataChangeLastModifiedByDisplayName = dataChangeLastModifiedByDisplayName;
   }
 
   public OpenGrayReleaseRuleDTO dataChangeCreatedTime(String dataChangeCreatedTime) {
@@ -244,7 +288,9 @@ public class OpenGrayReleaseRuleDTO {
     }
     OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO = (OpenGrayReleaseRuleDTO) o;
     return Objects.equals(this.dataChangeCreatedBy, openGrayReleaseRuleDTO.dataChangeCreatedBy) &&
+        Objects.equals(this.dataChangeCreatedByDisplayName, openGrayReleaseRuleDTO.dataChangeCreatedByDisplayName) &&
         Objects.equals(this.dataChangeLastModifiedBy, openGrayReleaseRuleDTO.dataChangeLastModifiedBy) &&
+        Objects.equals(this.dataChangeLastModifiedByDisplayName, openGrayReleaseRuleDTO.dataChangeLastModifiedByDisplayName) &&
         Objects.equals(this.dataChangeCreatedTime, openGrayReleaseRuleDTO.dataChangeCreatedTime) &&
         Objects.equals(this.dataChangeLastModifiedTime, openGrayReleaseRuleDTO.dataChangeLastModifiedTime) &&
         Objects.equals(this.appId, openGrayReleaseRuleDTO.appId) &&
@@ -256,7 +302,7 @@ public class OpenGrayReleaseRuleDTO {
 
   @Override
   public int hashCode() {
-    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, appId, clusterName, namespaceName, branchName, ruleItems);
+    return Objects.hash(dataChangeCreatedBy, dataChangeCreatedByDisplayName, dataChangeLastModifiedBy, dataChangeLastModifiedByDisplayName, dataChangeCreatedTime, dataChangeLastModifiedTime, appId, clusterName, namespaceName, branchName, ruleItems);
   }
 
   @Override
@@ -264,7 +310,9 @@ public class OpenGrayReleaseRuleDTO {
     StringBuilder sb = new StringBuilder();
     sb.append("class OpenGrayReleaseRuleDTO {\n");
     sb.append("    dataChangeCreatedBy: ").append(toIndentedString(dataChangeCreatedBy)).append("\n");
+    sb.append("    dataChangeCreatedByDisplayName: ").append(toIndentedString(dataChangeCreatedByDisplayName)).append("\n");
     sb.append("    dataChangeLastModifiedBy: ").append(toIndentedString(dataChangeLastModifiedBy)).append("\n");
+    sb.append("    dataChangeLastModifiedByDisplayName: ").append(toIndentedString(dataChangeLastModifiedByDisplayName)).append("\n");
     sb.append("    dataChangeCreatedTime: ").append(toIndentedString(dataChangeCreatedTime)).append("\n");
     sb.append("    dataChangeLastModifiedTime: ").append(toIndentedString(dataChangeLastModifiedTime)).append("\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");

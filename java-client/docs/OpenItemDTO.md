@@ -12,8 +12,11 @@ Apollo配置项核心数据对象，仅包含键值及基础审计信息
 |**value** | **String** | 配置项的值，可以是字符串、数字、JSON等格式 |  [optional] |
 |**type** | **Integer** | 配置项类型 |  [optional] |
 |**comment** | **String** | 配置项的注释说明，用于描述配置项的用途和含义 |  [optional] |
+|**lineNum** | **Integer** | 配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序 |  [optional] |
 |**extendInfo** | [**OpenItemExtendDTO**](OpenItemExtendDTO.md) |  |  [optional] |
 |**dataChangeCreatedBy** | **String** | 配置项创建者用户名，记录是谁创建了这个配置项 |  [optional] |
+|**dataChangeCreatedByDisplayName** | **String** | 配置项创建者显示名称，用于展示创建者的友好名称 |  [optional] |
 |**dataChangeLastModifiedBy** | **String** | 配置项最后修改者用户名，记录最后一次修改配置的用户 |  [optional] |
+|**dataChangeLastModifiedByDisplayName** | **String** | 配置项最后修改者显示名称，用于展示最后修改者的友好名称 |  [optional] |
 |**dataChangeCreatedTime** | **String** | 配置项创建时间，ISO 8601格式的时间戳 |  [optional] |
 |**dataChangeLastModifiedTime** | **String** | 配置项最后修改时间，ISO 8601格式的时间戳 |  [optional] |

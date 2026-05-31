@@ -14,9 +14,12 @@ Key | Input Type | Accessed Type | Description | Notes
 **value** | str,  | str,  | 配置项的值，可以是字符串、数字、JSON等格式 | [optional]
 **type** | decimal.Decimal, int,  | decimal.Decimal,  | 配置项类型 | [optional]
 **comment** | str,  | str,  | 配置项的注释说明，用于描述配置项的用途和含义 | [optional]
+**lineNum** | decimal.Decimal, int,  | decimal.Decimal,  | 配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序 | [optional] value must be a 32 bit integer
 **extendInfo** | [**OpenItemExtendDTO**](OpenItemExtendDTO.md) | [**OpenItemExtendDTO**](OpenItemExtendDTO.md) |  | [optional]
 **dataChangeCreatedBy** | str,  | str,  | 配置项创建者用户名，记录是谁创建了这个配置项 | [optional]
+**dataChangeCreatedByDisplayName** | str,  | str,  | 配置项创建者显示名称，用于展示创建者的友好名称 | [optional]
 **dataChangeLastModifiedBy** | str,  | str,  | 配置项最后修改者用户名，记录最后一次修改配置的用户 | [optional]
+**dataChangeLastModifiedByDisplayName** | str,  | str,  | 配置项最后修改者显示名称，用于展示最后修改者的友好名称 | [optional]
 **dataChangeCreatedTime** | str,  | str,  | 配置项创建时间，ISO 8601格式的时间戳 | [optional]
 **dataChangeLastModifiedTime** | str,  | str,  | 配置项最后修改时间，ISO 8601格式的时间戳 | [optional]
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]

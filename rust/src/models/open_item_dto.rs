@@ -25,14 +25,23 @@ pub struct OpenItemDto {
     /// 配置项的注释说明，用于描述配置项的用途和含义
     #[serde(rename = "comment", skip_serializing_if = "Option::is_none")]
     pub comment: Option<String>,
+    /// 配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序
+    #[serde(rename = "lineNum", skip_serializing_if = "Option::is_none")]
+    pub line_num: Option<i32>,
     #[serde(rename = "extendInfo", skip_serializing_if = "Option::is_none")]
     pub extend_info: Option<Box<crate::models::OpenItemExtendDto>>,
     /// 配置项创建者用户名，记录是谁创建了这个配置项
     #[serde(rename = "dataChangeCreatedBy", skip_serializing_if = "Option::is_none")]
     pub data_change_created_by: Option<String>,
+    /// 配置项创建者显示名称，用于展示创建者的友好名称
+    #[serde(rename = "dataChangeCreatedByDisplayName", skip_serializing_if = "Option::is_none")]
+    pub data_change_created_by_display_name: Option<String>,
     /// 配置项最后修改者用户名，记录最后一次修改配置的用户
     #[serde(rename = "dataChangeLastModifiedBy", skip_serializing_if = "Option::is_none")]
     pub data_change_last_modified_by: Option<String>,
+    /// 配置项最后修改者显示名称，用于展示最后修改者的友好名称
+    #[serde(rename = "dataChangeLastModifiedByDisplayName", skip_serializing_if = "Option::is_none")]
+    pub data_change_last_modified_by_display_name: Option<String>,
     /// 配置项创建时间，ISO 8601格式的时间戳
     #[serde(rename = "dataChangeCreatedTime", skip_serializing_if = "Option::is_none")]
     pub data_change_created_time: Option<String>,
@@ -49,9 +58,12 @@ impl OpenItemDto {
             value: None,
             r#type: None,
             comment: None,
+            line_num: None,
             extend_info: None,
             data_change_created_by: None,
+            data_change_created_by_display_name: None,
             data_change_last_modified_by: None,
+            data_change_last_modified_by_display_name: None,
             data_change_created_time: None,
             data_change_last_modified_time: None,
         }

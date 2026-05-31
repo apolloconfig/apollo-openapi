@@ -49,11 +49,27 @@ public class OpenNamespaceDTOTest {
     }
 
     /**
+     * Test the property 'dataChangeCreatedByDisplayName'
+     */
+    @Test
+    public void dataChangeCreatedByDisplayNameTest() {
+        // TODO: test dataChangeCreatedByDisplayName
+    }
+
+    /**
      * Test the property 'dataChangeLastModifiedBy'
      */
     @Test
     public void dataChangeLastModifiedByTest() {
         // TODO: test dataChangeLastModifiedBy
+    }
+
+    /**
+     * Test the property 'dataChangeLastModifiedByDisplayName'
+     */
+    @Test
+    public void dataChangeLastModifiedByDisplayNameTest() {
+        // TODO: test dataChangeLastModifiedByDisplayName
     }
 
     /**

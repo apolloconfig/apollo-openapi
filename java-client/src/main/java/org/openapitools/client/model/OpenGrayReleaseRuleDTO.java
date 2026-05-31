@@ -58,9 +58,17 @@ public class OpenGrayReleaseRuleDTO {
   @SerializedName(SERIALIZED_NAME_DATA_CHANGE_CREATED_BY)
   private String dataChangeCreatedBy;
 
+  public static final String SERIALIZED_NAME_DATA_CHANGE_CREATED_BY_DISPLAY_NAME = "dataChangeCreatedByDisplayName";
+  @SerializedName(SERIALIZED_NAME_DATA_CHANGE_CREATED_BY_DISPLAY_NAME)
+  private String dataChangeCreatedByDisplayName;
+
   public static final String SERIALIZED_NAME_DATA_CHANGE_LAST_MODIFIED_BY = "dataChangeLastModifiedBy";
   @SerializedName(SERIALIZED_NAME_DATA_CHANGE_LAST_MODIFIED_BY)
   private String dataChangeLastModifiedBy;
+
+  public static final String SERIALIZED_NAME_DATA_CHANGE_LAST_MODIFIED_BY_DISPLAY_NAME = "dataChangeLastModifiedByDisplayName";
+  @SerializedName(SERIALIZED_NAME_DATA_CHANGE_LAST_MODIFIED_BY_DISPLAY_NAME)
+  private String dataChangeLastModifiedByDisplayName;
 
   public static final String SERIALIZED_NAME_DATA_CHANGE_CREATED_TIME = "dataChangeCreatedTime";
   @SerializedName(SERIALIZED_NAME_DATA_CHANGE_CREATED_TIME)
@@ -114,6 +122,27 @@ public class OpenGrayReleaseRuleDTO {
   }
 
 
+  public OpenGrayReleaseRuleDTO dataChangeCreatedByDisplayName(String dataChangeCreatedByDisplayName) {
+
+    this.dataChangeCreatedByDisplayName = dataChangeCreatedByDisplayName;
+    return this;
+  }
+
+   /**
+   * 灰度规则创建者显示名称，用于展示创建者的友好名称
+   * @return dataChangeCreatedByDisplayName
+  **/
+  @javax.annotation.Nullable
+  public String getDataChangeCreatedByDisplayName() {
+    return dataChangeCreatedByDisplayName;
+  }
+
+
+  public void setDataChangeCreatedByDisplayName(String dataChangeCreatedByDisplayName) {
+    this.dataChangeCreatedByDisplayName = dataChangeCreatedByDisplayName;
+  }
+
+
   public OpenGrayReleaseRuleDTO dataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
 
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
@@ -132,6 +161,27 @@ public class OpenGrayReleaseRuleDTO {
 
   public void setDataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
+  }
+
+
+  public OpenGrayReleaseRuleDTO dataChangeLastModifiedByDisplayName(String dataChangeLastModifiedByDisplayName) {
+
+    this.dataChangeLastModifiedByDisplayName = dataChangeLastModifiedByDisplayName;
+    return this;
+  }
+
+   /**
+   * 灰度规则最后修改者显示名称，用于展示最后修改者的友好名称
+   * @return dataChangeLastModifiedByDisplayName
+  **/
+  @javax.annotation.Nullable
+  public String getDataChangeLastModifiedByDisplayName() {
+    return dataChangeLastModifiedByDisplayName;
+  }
+
+
+  public void setDataChangeLastModifiedByDisplayName(String dataChangeLastModifiedByDisplayName) {
+    this.dataChangeLastModifiedByDisplayName = dataChangeLastModifiedByDisplayName;
   }
 
 
@@ -301,7 +351,9 @@ public class OpenGrayReleaseRuleDTO {
     }
     OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO = (OpenGrayReleaseRuleDTO) o;
     return Objects.equals(this.dataChangeCreatedBy, openGrayReleaseRuleDTO.dataChangeCreatedBy) &&
+        Objects.equals(this.dataChangeCreatedByDisplayName, openGrayReleaseRuleDTO.dataChangeCreatedByDisplayName) &&
         Objects.equals(this.dataChangeLastModifiedBy, openGrayReleaseRuleDTO.dataChangeLastModifiedBy) &&
+        Objects.equals(this.dataChangeLastModifiedByDisplayName, openGrayReleaseRuleDTO.dataChangeLastModifiedByDisplayName) &&
         Objects.equals(this.dataChangeCreatedTime, openGrayReleaseRuleDTO.dataChangeCreatedTime) &&
         Objects.equals(this.dataChangeLastModifiedTime, openGrayReleaseRuleDTO.dataChangeLastModifiedTime) &&
         Objects.equals(this.appId, openGrayReleaseRuleDTO.appId) &&
@@ -313,7 +365,7 @@ public class OpenGrayReleaseRuleDTO {
 
   @Override
   public int hashCode() {
-    return Objects.hash(dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime, appId, clusterName, namespaceName, branchName, ruleItems);
+    return Objects.hash(dataChangeCreatedBy, dataChangeCreatedByDisplayName, dataChangeLastModifiedBy, dataChangeLastModifiedByDisplayName, dataChangeCreatedTime, dataChangeLastModifiedTime, appId, clusterName, namespaceName, branchName, ruleItems);
   }
 
   @Override
@@ -321,7 +373,9 @@ public class OpenGrayReleaseRuleDTO {
     StringBuilder sb = new StringBuilder();
     sb.append("class OpenGrayReleaseRuleDTO {\n");
     sb.append("    dataChangeCreatedBy: ").append(toIndentedString(dataChangeCreatedBy)).append("\n");
+    sb.append("    dataChangeCreatedByDisplayName: ").append(toIndentedString(dataChangeCreatedByDisplayName)).append("\n");
     sb.append("    dataChangeLastModifiedBy: ").append(toIndentedString(dataChangeLastModifiedBy)).append("\n");
+    sb.append("    dataChangeLastModifiedByDisplayName: ").append(toIndentedString(dataChangeLastModifiedByDisplayName)).append("\n");
     sb.append("    dataChangeCreatedTime: ").append(toIndentedString(dataChangeCreatedTime)).append("\n");
     sb.append("    dataChangeLastModifiedTime: ").append(toIndentedString(dataChangeLastModifiedTime)).append("\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
@@ -352,7 +406,9 @@ public class OpenGrayReleaseRuleDTO {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
     openapiFields.add("dataChangeCreatedBy");
+    openapiFields.add("dataChangeCreatedByDisplayName");
     openapiFields.add("dataChangeLastModifiedBy");
+    openapiFields.add("dataChangeLastModifiedByDisplayName");
     openapiFields.add("dataChangeCreatedTime");
     openapiFields.add("dataChangeLastModifiedTime");
     openapiFields.add("appId");
@@ -388,8 +444,14 @@ public class OpenGrayReleaseRuleDTO {
       if ((jsonObj.get("dataChangeCreatedBy") != null && !jsonObj.get("dataChangeCreatedBy").isJsonNull()) && !jsonObj.get("dataChangeCreatedBy").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `dataChangeCreatedBy` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dataChangeCreatedBy").toString()));
       }
+      if ((jsonObj.get("dataChangeCreatedByDisplayName") != null && !jsonObj.get("dataChangeCreatedByDisplayName").isJsonNull()) && !jsonObj.get("dataChangeCreatedByDisplayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dataChangeCreatedByDisplayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dataChangeCreatedByDisplayName").toString()));
+      }
       if ((jsonObj.get("dataChangeLastModifiedBy") != null && !jsonObj.get("dataChangeLastModifiedBy").isJsonNull()) && !jsonObj.get("dataChangeLastModifiedBy").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `dataChangeLastModifiedBy` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dataChangeLastModifiedBy").toString()));
+      }
+      if ((jsonObj.get("dataChangeLastModifiedByDisplayName") != null && !jsonObj.get("dataChangeLastModifiedByDisplayName").isJsonNull()) && !jsonObj.get("dataChangeLastModifiedByDisplayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dataChangeLastModifiedByDisplayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dataChangeLastModifiedByDisplayName").toString()));
       }
       if ((jsonObj.get("dataChangeCreatedTime") != null && !jsonObj.get("dataChangeCreatedTime").isJsonNull()) && !jsonObj.get("dataChangeCreatedTime").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `dataChangeCreatedTime` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dataChangeCreatedTime").toString()));

@@ -18,7 +18,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
 
-  version: 0.3.4
+  version: 0.3.5
 security:
   - ApiKeyAuth: []
 tags:
@@ -110,6 +110,8 @@ paths:
               example:
                 - dataChangeCreatedBy: 'apollo'
                   dataChangeLastModifiedBy: 'apollo'
+                  dataChangeCreatedByDisplayName: 'Apollo Admin'
+                  dataChangeLastModifiedByDisplayName: 'Apollo Admin'
                   dataChangeCreatedTime: '2024-01-15T10:30:00.000Z'
                   dataChangeLastModifiedTime: '2024-01-15T10:30:00.000Z'
                   name: 'Sample Application'
@@ -120,6 +122,8 @@ paths:
                   ownerEmail: 'admin@apollo.com'
                 - dataChangeCreatedBy: 'apollo'
                   dataChangeLastModifiedBy: 'apollo'
+                  dataChangeCreatedByDisplayName: 'Apollo Admin'
+                  dataChangeLastModifiedByDisplayName: 'Apollo Admin'
                   dataChangeCreatedTime: '2024-01-10T14:20:00.000Z'
                   dataChangeLastModifiedTime: '2024-01-12T16:45:00.000Z'
                   name: 'User Service'
@@ -155,6 +159,8 @@ paths:
               example:
                 - dataChangeCreatedBy: 'apollo'
                   dataChangeLastModifiedBy: 'apollo'
+                  dataChangeCreatedByDisplayName: 'Apollo Admin'
+                  dataChangeLastModifiedByDisplayName: 'Apollo Admin'
                   dataChangeCreatedTime: '2024-01-15T10:30:00.000Z'
                   dataChangeLastModifiedTime: '2024-01-15T10:30:00.000Z'
                   name: 'Sample Application'
@@ -165,6 +171,8 @@ paths:
                   ownerEmail: 'admin@apollo.com'
                 - dataChangeCreatedBy: 'apollo'
                   dataChangeLastModifiedBy: 'apollo'
+                  dataChangeCreatedByDisplayName: 'Apollo Admin'
+                  dataChangeLastModifiedByDisplayName: 'Apollo Admin'
                   dataChangeCreatedTime: '2024-01-10T14:20:00.000Z'
                   dataChangeLastModifiedTime: '2024-01-12T16:45:00.000Z'
                   name: 'User Service'
@@ -248,6 +256,8 @@ paths:
               example:
                 dataChangeCreatedBy: 'apollo'
                 dataChangeLastModifiedBy: 'dev-user'
+                dataChangeCreatedByDisplayName: 'Apollo Admin'
+                dataChangeLastModifiedByDisplayName: 'Dev User'
                 dataChangeCreatedTime: '2024-01-15T10:30:00.000Z'
                 dataChangeLastModifiedTime: '2024-01-20T15:45:00.000Z'
                 name: 'Sample Application'
@@ -375,6 +385,8 @@ paths:
               example:
                 - dataChangeCreatedBy: 'apollo'
                   dataChangeLastModifiedBy: 'dev-user'
+                  dataChangeCreatedByDisplayName: 'Apollo Admin'
+                  dataChangeLastModifiedByDisplayName: 'Dev User'
                   dataChangeCreatedTime: '2024-01-15T10:30:00.000Z'
                   dataChangeLastModifiedTime: '2024-01-20T16:45:00.000Z'
                   name: 'User Service'
@@ -385,6 +397,8 @@ paths:
                   ownerEmail: 'dev@company.com'
                 - dataChangeCreatedBy: 'apollo'
                   dataChangeLastModifiedBy: 'ops-user'
+                  dataChangeCreatedByDisplayName: 'Apollo Admin'
+                  dataChangeLastModifiedByDisplayName: 'Ops User'
                   dataChangeCreatedTime: '2024-01-10T09:15:00.000Z'
                   dataChangeLastModifiedTime: '2024-01-18T14:30:00.000Z'
                   name: 'Order Service'
@@ -6063,9 +6077,15 @@ components:
         dataChangeCreatedBy:
           type: string
           description: 数据创建者用户名，记录是谁创建了这个应用
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 数据创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 数据最后修改者用户名，记录最后一次修改应用信息的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 数据最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 数据创建时间，ISO 8601格式的时间戳
@@ -6126,14 +6146,24 @@ components:
         comment:
           type: string
           description: 配置项的注释说明，用于描述配置项的用途和含义
+        lineNum:
+          type: integer
+          format: int32
+          description: 配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序
         extendInfo:
           $ref: '#/components/schemas/OpenItemExtendDTO'
         dataChangeCreatedBy:
           type: string
           description: 配置项创建者用户名，记录是谁创建了这个配置项
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 配置项创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 配置项最后修改者用户名，记录最后一次修改配置的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 配置项最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 配置项创建时间，ISO 8601格式的时间戳
@@ -6190,9 +6220,15 @@ components:
         dataChangeCreatedBy:
           type: string
           description: 集群创建者用户名，记录是谁创建了这个集群
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 集群创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 集群最后修改者用户名，记录最后一次修改集群信息的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 集群最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 集群创建时间，ISO 8601格式的时间戳
@@ -6229,9 +6265,15 @@ components:
         dataChangeCreatedBy:
           type: string
           description: 发布创建者用户名，记录是谁创建了这次发布
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 发布创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 发布最后修改者用户名，记录最后一次修改发布信息的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 发布最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 发布创建时间，ISO 8601格式的时间戳
@@ -6305,9 +6347,15 @@ components:
         dataChangeCreatedBy:
           type: string
           description: 命名空间创建者用户名，记录是谁创建了这个应用命名空间
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 命名空间创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 命名空间最后修改者用户名，记录最后一次修改命名空间信息的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 命名空间最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 命名空间创建时间，ISO 8601格式的时间戳
@@ -6386,9 +6434,15 @@ components:
         dataChangeCreatedBy:
           type: string
           description: 灰度规则创建者用户名，记录是谁创建了这个灰度发布规则
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 灰度规则创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 灰度规则最后修改者用户名，记录最后一次修改规则的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 灰度规则最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 灰度规则创建时间，ISO 8601格式的时间戳
@@ -6438,9 +6492,15 @@ components:
         dataChangeCreatedBy:
           type: string
           description: 命名空间创建者用户名，记录是谁创建了这个命名空间
+        dataChangeCreatedByDisplayName:
+          type: string
+          description: 命名空间创建者显示名称，用于展示创建者的友好名称
         dataChangeLastModifiedBy:
           type: string
           description: 命名空间最后修改者用户名，记录最后一次修改命名空间信息的用户
+        dataChangeLastModifiedByDisplayName:
+          type: string
+          description: 命名空间最后修改者显示名称，用于展示最后修改者的友好名称
         dataChangeCreatedTime:
           type: string
           description: 命名空间创建时间，ISO 8601格式的时间戳

@@ -68,6 +68,10 @@ public class OpenItemDTO {
   @SerializedName(SERIALIZED_NAME_COMMENT)
   private String comment;
 
+  public static final String SERIALIZED_NAME_LINE_NUM = "lineNum";
+  @SerializedName(SERIALIZED_NAME_LINE_NUM)
+  private Integer lineNum;
+
   public static final String SERIALIZED_NAME_EXTEND_INFO = "extendInfo";
   @SerializedName(SERIALIZED_NAME_EXTEND_INFO)
   private OpenItemExtendDTO extendInfo;
@@ -76,9 +80,17 @@ public class OpenItemDTO {
   @SerializedName(SERIALIZED_NAME_DATA_CHANGE_CREATED_BY)
   private String dataChangeCreatedBy;
 
+  public static final String SERIALIZED_NAME_DATA_CHANGE_CREATED_BY_DISPLAY_NAME = "dataChangeCreatedByDisplayName";
+  @SerializedName(SERIALIZED_NAME_DATA_CHANGE_CREATED_BY_DISPLAY_NAME)
+  private String dataChangeCreatedByDisplayName;
+
   public static final String SERIALIZED_NAME_DATA_CHANGE_LAST_MODIFIED_BY = "dataChangeLastModifiedBy";
   @SerializedName(SERIALIZED_NAME_DATA_CHANGE_LAST_MODIFIED_BY)
   private String dataChangeLastModifiedBy;
+
+  public static final String SERIALIZED_NAME_DATA_CHANGE_LAST_MODIFIED_BY_DISPLAY_NAME = "dataChangeLastModifiedByDisplayName";
+  @SerializedName(SERIALIZED_NAME_DATA_CHANGE_LAST_MODIFIED_BY_DISPLAY_NAME)
+  private String dataChangeLastModifiedByDisplayName;
 
   public static final String SERIALIZED_NAME_DATA_CHANGE_CREATED_TIME = "dataChangeCreatedTime";
   @SerializedName(SERIALIZED_NAME_DATA_CHANGE_CREATED_TIME)
@@ -175,6 +187,27 @@ public class OpenItemDTO {
   }
 
 
+  public OpenItemDTO lineNum(Integer lineNum) {
+
+    this.lineNum = lineNum;
+    return this;
+  }
+
+   /**
+   * 配置项在命名空间中的行号，用于保持和旧版 Portal 配置项列表一致的默认展示顺序
+   * @return lineNum
+  **/
+  @javax.annotation.Nullable
+  public Integer getLineNum() {
+    return lineNum;
+  }
+
+
+  public void setLineNum(Integer lineNum) {
+    this.lineNum = lineNum;
+  }
+
+
   public OpenItemDTO extendInfo(OpenItemExtendDTO extendInfo) {
 
     this.extendInfo = extendInfo;
@@ -217,6 +250,27 @@ public class OpenItemDTO {
   }
 
 
+  public OpenItemDTO dataChangeCreatedByDisplayName(String dataChangeCreatedByDisplayName) {
+
+    this.dataChangeCreatedByDisplayName = dataChangeCreatedByDisplayName;
+    return this;
+  }
+
+   /**
+   * 配置项创建者显示名称，用于展示创建者的友好名称
+   * @return dataChangeCreatedByDisplayName
+  **/
+  @javax.annotation.Nullable
+  public String getDataChangeCreatedByDisplayName() {
+    return dataChangeCreatedByDisplayName;
+  }
+
+
+  public void setDataChangeCreatedByDisplayName(String dataChangeCreatedByDisplayName) {
+    this.dataChangeCreatedByDisplayName = dataChangeCreatedByDisplayName;
+  }
+
+
   public OpenItemDTO dataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
 
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
@@ -235,6 +289,27 @@ public class OpenItemDTO {
 
   public void setDataChangeLastModifiedBy(String dataChangeLastModifiedBy) {
     this.dataChangeLastModifiedBy = dataChangeLastModifiedBy;
+  }
+
+
+  public OpenItemDTO dataChangeLastModifiedByDisplayName(String dataChangeLastModifiedByDisplayName) {
+
+    this.dataChangeLastModifiedByDisplayName = dataChangeLastModifiedByDisplayName;
+    return this;
+  }
+
+   /**
+   * 配置项最后修改者显示名称，用于展示最后修改者的友好名称
+   * @return dataChangeLastModifiedByDisplayName
+  **/
+  @javax.annotation.Nullable
+  public String getDataChangeLastModifiedByDisplayName() {
+    return dataChangeLastModifiedByDisplayName;
+  }
+
+
+  public void setDataChangeLastModifiedByDisplayName(String dataChangeLastModifiedByDisplayName) {
+    this.dataChangeLastModifiedByDisplayName = dataChangeLastModifiedByDisplayName;
   }
 
 
@@ -294,16 +369,19 @@ public class OpenItemDTO {
         Objects.equals(this.value, openItemDTO.value) &&
         Objects.equals(this.type, openItemDTO.type) &&
         Objects.equals(this.comment, openItemDTO.comment) &&
+        Objects.equals(this.lineNum, openItemDTO.lineNum) &&
         Objects.equals(this.extendInfo, openItemDTO.extendInfo) &&
         Objects.equals(this.dataChangeCreatedBy, openItemDTO.dataChangeCreatedBy) &&
+        Objects.equals(this.dataChangeCreatedByDisplayName, openItemDTO.dataChangeCreatedByDisplayName) &&
         Objects.equals(this.dataChangeLastModifiedBy, openItemDTO.dataChangeLastModifiedBy) &&
+        Objects.equals(this.dataChangeLastModifiedByDisplayName, openItemDTO.dataChangeLastModifiedByDisplayName) &&
         Objects.equals(this.dataChangeCreatedTime, openItemDTO.dataChangeCreatedTime) &&
         Objects.equals(this.dataChangeLastModifiedTime, openItemDTO.dataChangeLastModifiedTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(key, value, type, comment, extendInfo, dataChangeCreatedBy, dataChangeLastModifiedBy, dataChangeCreatedTime, dataChangeLastModifiedTime);
+    return Objects.hash(key, value, type, comment, lineNum, extendInfo, dataChangeCreatedBy, dataChangeCreatedByDisplayName, dataChangeLastModifiedBy, dataChangeLastModifiedByDisplayName, dataChangeCreatedTime, dataChangeLastModifiedTime);
   }
 
   @Override
@@ -314,9 +392,12 @@ public class OpenItemDTO {
     sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    comment: ").append(toIndentedString(comment)).append("\n");
+    sb.append("    lineNum: ").append(toIndentedString(lineNum)).append("\n");
     sb.append("    extendInfo: ").append(toIndentedString(extendInfo)).append("\n");
     sb.append("    dataChangeCreatedBy: ").append(toIndentedString(dataChangeCreatedBy)).append("\n");
+    sb.append("    dataChangeCreatedByDisplayName: ").append(toIndentedString(dataChangeCreatedByDisplayName)).append("\n");
     sb.append("    dataChangeLastModifiedBy: ").append(toIndentedString(dataChangeLastModifiedBy)).append("\n");
+    sb.append("    dataChangeLastModifiedByDisplayName: ").append(toIndentedString(dataChangeLastModifiedByDisplayName)).append("\n");
     sb.append("    dataChangeCreatedTime: ").append(toIndentedString(dataChangeCreatedTime)).append("\n");
     sb.append("    dataChangeLastModifiedTime: ").append(toIndentedString(dataChangeLastModifiedTime)).append("\n");
     sb.append("}");
@@ -345,9 +426,12 @@ public class OpenItemDTO {
     openapiFields.add("value");
     openapiFields.add("type");
     openapiFields.add("comment");
+    openapiFields.add("lineNum");
     openapiFields.add("extendInfo");
     openapiFields.add("dataChangeCreatedBy");
+    openapiFields.add("dataChangeCreatedByDisplayName");
     openapiFields.add("dataChangeLastModifiedBy");
+    openapiFields.add("dataChangeLastModifiedByDisplayName");
     openapiFields.add("dataChangeCreatedTime");
     openapiFields.add("dataChangeLastModifiedTime");
 
@@ -391,8 +475,14 @@ public class OpenItemDTO {
       if ((jsonObj.get("dataChangeCreatedBy") != null && !jsonObj.get("dataChangeCreatedBy").isJsonNull()) && !jsonObj.get("dataChangeCreatedBy").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `dataChangeCreatedBy` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dataChangeCreatedBy").toString()));
       }
+      if ((jsonObj.get("dataChangeCreatedByDisplayName") != null && !jsonObj.get("dataChangeCreatedByDisplayName").isJsonNull()) && !jsonObj.get("dataChangeCreatedByDisplayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dataChangeCreatedByDisplayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dataChangeCreatedByDisplayName").toString()));
+      }
       if ((jsonObj.get("dataChangeLastModifiedBy") != null && !jsonObj.get("dataChangeLastModifiedBy").isJsonNull()) && !jsonObj.get("dataChangeLastModifiedBy").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `dataChangeLastModifiedBy` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dataChangeLastModifiedBy").toString()));
+      }
+      if ((jsonObj.get("dataChangeLastModifiedByDisplayName") != null && !jsonObj.get("dataChangeLastModifiedByDisplayName").isJsonNull()) && !jsonObj.get("dataChangeLastModifiedByDisplayName").isJsonPrimitive()) {
+        throw new IllegalArgumentException(String.format("Expected the field `dataChangeLastModifiedByDisplayName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dataChangeLastModifiedByDisplayName").toString()));
       }
       if ((jsonObj.get("dataChangeCreatedTime") != null && !jsonObj.get("dataChangeCreatedTime").isJsonNull()) && !jsonObj.get("dataChangeCreatedTime").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `dataChangeCreatedTime` to be a primitive type in the JSON string but got `%s`", jsonObj.get("dataChangeCreatedTime").toString()));

@@ -9,7 +9,9 @@ Apollo应用信息数据传输对象，包含应用的基本信息和元数据
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
 |**dataChangeCreatedBy** | **String** | 数据创建者用户名，记录是谁创建了这个应用 |  [optional] |
+|**dataChangeCreatedByDisplayName** | **String** | 数据创建者显示名称，用于展示创建者的友好名称 |  [optional] |
 |**dataChangeLastModifiedBy** | **String** | 数据最后修改者用户名，记录最后一次修改应用信息的用户 |  [optional] |
+|**dataChangeLastModifiedByDisplayName** | **String** | 数据最后修改者显示名称，用于展示最后修改者的友好名称 |  [optional] |
 |**dataChangeCreatedTime** | **String** | 数据创建时间，ISO 8601格式的时间戳 |  [optional] |
 |**dataChangeLastModifiedTime** | **String** | 数据最后修改时间，ISO 8601格式的时间戳 |  [optional] |
 |**name** | **String** | 应用名称，用于显示的友好名称 |  [optional] |

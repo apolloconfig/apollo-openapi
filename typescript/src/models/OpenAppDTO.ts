@@ -25,11 +25,23 @@ export interface OpenAppDTO {
      */
     dataChangeCreatedBy?: string;
     /**
+     * 数据创建者显示名称，用于展示创建者的友好名称
+     * @type {string}
+     * @memberof OpenAppDTO
+     */
+    dataChangeCreatedByDisplayName?: string;
+    /**
      * 数据最后修改者用户名，记录最后一次修改应用信息的用户
      * @type {string}
      * @memberof OpenAppDTO
      */
     dataChangeLastModifiedBy?: string;
+    /**
+     * 数据最后修改者显示名称，用于展示最后修改者的友好名称
+     * @type {string}
+     * @memberof OpenAppDTO
+     */
+    dataChangeLastModifiedByDisplayName?: string;
     /**
      * 数据创建时间，ISO 8601格式的时间戳
      * @type {string}
@@ -106,7 +118,9 @@ export function OpenAppDTOFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     return {
 
         'dataChangeCreatedBy': !exists(json, 'dataChangeCreatedBy') ? undefined : json['dataChangeCreatedBy'],
+        'dataChangeCreatedByDisplayName': !exists(json, 'dataChangeCreatedByDisplayName') ? undefined : json['dataChangeCreatedByDisplayName'],
         'dataChangeLastModifiedBy': !exists(json, 'dataChangeLastModifiedBy') ? undefined : json['dataChangeLastModifiedBy'],
+        'dataChangeLastModifiedByDisplayName': !exists(json, 'dataChangeLastModifiedByDisplayName') ? undefined : json['dataChangeLastModifiedByDisplayName'],
         'dataChangeCreatedTime': !exists(json, 'dataChangeCreatedTime') ? undefined : json['dataChangeCreatedTime'],
         'dataChangeLastModifiedTime': !exists(json, 'dataChangeLastModifiedTime') ? undefined : json['dataChangeLastModifiedTime'],
         'name': !exists(json, 'name') ? undefined : json['name'],
@@ -129,7 +143,9 @@ export function OpenAppDTOToJSON(value?: OpenAppDTO | null): any {
     return {
 
         'dataChangeCreatedBy': value.dataChangeCreatedBy,
+        'dataChangeCreatedByDisplayName': value.dataChangeCreatedByDisplayName,
         'dataChangeLastModifiedBy': value.dataChangeLastModifiedBy,
+        'dataChangeLastModifiedByDisplayName': value.dataChangeLastModifiedByDisplayName,
         'dataChangeCreatedTime': value.dataChangeCreatedTime,
         'dataChangeLastModifiedTime': value.dataChangeLastModifiedTime,
         'name': value.name,
