@@ -5400,7 +5400,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/OpenConsumerInfoDTO'
   /openapi/v1/consumers/{token}/assign-role:
     post:
       summary: 给消费者授权(new added)
@@ -6898,6 +6898,10 @@ components:
           type: integer
           description: 限流QPS，0表示不限流
           default: 0
+        rateLimitEnabled:
+          type: boolean
+          description: 是否开启限流
+          default: false
     OpenUserInfoDTO:
       type: object
       properties:

@@ -45,6 +45,9 @@ pub struct OpenConsumerInfoDto {
     /// 限流QPS，0表示不限流
     #[serde(rename = "rateLimit", skip_serializing_if = "Option::is_none")]
     pub rate_limit: Option<i32>,
+    /// 是否开启限流
+    #[serde(rename = "rateLimitEnabled", skip_serializing_if = "Option::is_none")]
+    pub rate_limit_enabled: Option<bool>,
 }
 
 impl OpenConsumerInfoDto {
@@ -61,6 +64,7 @@ impl OpenConsumerInfoDto {
             allow_create_application: None,
             allow_manage_users: None,
             rate_limit: None,
+            rate_limit_enabled: None,
         }
     }
 }

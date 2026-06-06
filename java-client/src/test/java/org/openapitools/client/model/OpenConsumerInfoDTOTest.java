@@ -124,4 +124,12 @@ public class OpenConsumerInfoDTOTest {
         // TODO: test rateLimit
     }
 
+    /**
+     * Test the property 'rateLimitEnabled'
+     */
+    @Test
+    public void rateLimitEnabledTest() {
+        // TODO: test rateLimitEnabled
+    }
+
 }

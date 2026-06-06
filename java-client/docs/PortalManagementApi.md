@@ -1832,7 +1832,7 @@ public class Example {
 
 <a id="getConsumerTokenByAppId"></a>
 # **getConsumerTokenByAppId**
-> Object getConsumerTokenByAppId(appId)
+> OpenConsumerInfoDTO getConsumerTokenByAppId(appId)
 
 按应用ID查询消费者Token(new added)
 
@@ -1862,7 +1862,7 @@ public class Example {
     PortalManagementApi apiInstance = new PortalManagementApi(defaultClient);
     String appId = "appId_example"; // String |
     try {
-      Object result = apiInstance.getConsumerTokenByAppId(appId);
+      OpenConsumerInfoDTO result = apiInstance.getConsumerTokenByAppId(appId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling PortalManagementApi#getConsumerTokenByAppId");
@@ -1883,7 +1883,7 @@ public class Example {
 
 ### Return type
 
-**Object**
+[**OpenConsumerInfoDTO**](OpenConsumerInfoDTO.md)
 
 ### Authorization
 

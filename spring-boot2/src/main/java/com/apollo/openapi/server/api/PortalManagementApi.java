@@ -941,7 +941,7 @@ public interface PortalManagementApi {
         tags = { "Portal Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "成功获取消费者Token", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenConsumerInfoDTO.class))
             })
         },
         security = {
@@ -953,7 +953,7 @@ public interface PortalManagementApi {
         value = "/openapi/v1/consumer-tokens/by-appId",
         produces = { "application/json" }
     )
-    default ResponseEntity<Object> getConsumerTokenByAppId(
+    default ResponseEntity<OpenConsumerInfoDTO> getConsumerTokenByAppId(
         @NotNull @Parameter(name = "appId", description = "", required = true, in = ParameterIn.QUERY) @Valid @RequestParam(value = "appId", required = true) String appId
     ) {
         return getDelegate().getConsumerTokenByAppId(appId);

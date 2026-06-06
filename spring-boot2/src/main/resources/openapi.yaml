@@ -6451,7 +6451,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/OpenConsumerInfoDTO'
           description: 成功获取消费者Token
       summary: 按应用ID查询消费者Token(new added)
       tags:
@@ -8715,6 +8715,7 @@ components:
         name: name
         allowCreateApplication: false
         allowManageUsers: false
+        rateLimitEnabled: false
         orgId: orgId
         ownerEmail: ownerEmail
         token: token
@@ -8756,6 +8757,10 @@ components:
           default: 0
           description: 限流QPS，0表示不限流
           type: integer
+        rateLimitEnabled:
+          default: false
+          description: 是否开启限流
+          type: boolean
       type: object
     OpenUserInfoDTO:
       example:

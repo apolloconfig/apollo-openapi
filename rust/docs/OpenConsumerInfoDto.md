@@ -15,5 +15,6 @@ Name | Type | Description | Notes
 **allow_create_application** | Option<**bool**> | 是否允许该Consumer Token创建应用 | [optional][default to false]
 **allow_manage_users** | Option<**bool**> | 是否允许该Consumer Token管理用户 | [optional][default to false]
 **rate_limit** | Option<**i32**> | 限流QPS，0表示不限流 | [optional][default to 0]
+**rate_limit_enabled** | Option<**bool**> | 是否开启限流 | [optional][default to false]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

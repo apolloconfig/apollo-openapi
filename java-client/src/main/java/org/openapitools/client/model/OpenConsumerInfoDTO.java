@@ -95,6 +95,10 @@ public class OpenConsumerInfoDTO {
   @SerializedName(SERIALIZED_NAME_RATE_LIMIT)
   private Integer rateLimit = 0;
 
+  public static final String SERIALIZED_NAME_RATE_LIMIT_ENABLED = "rateLimitEnabled";
+  @SerializedName(SERIALIZED_NAME_RATE_LIMIT_ENABLED)
+  private Boolean rateLimitEnabled = false;
+
   public OpenConsumerInfoDTO() {
   }
 
@@ -329,6 +333,27 @@ public class OpenConsumerInfoDTO {
   }
 
 
+  public OpenConsumerInfoDTO rateLimitEnabled(Boolean rateLimitEnabled) {
+
+    this.rateLimitEnabled = rateLimitEnabled;
+    return this;
+  }
+
+   /**
+   * 是否开启限流
+   * @return rateLimitEnabled
+  **/
+  @javax.annotation.Nullable
+  public Boolean getRateLimitEnabled() {
+    return rateLimitEnabled;
+  }
+
+
+  public void setRateLimitEnabled(Boolean rateLimitEnabled) {
+    this.rateLimitEnabled = rateLimitEnabled;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -349,12 +374,13 @@ public class OpenConsumerInfoDTO {
         Objects.equals(this.token, openConsumerInfoDTO.token) &&
         Objects.equals(this.allowCreateApplication, openConsumerInfoDTO.allowCreateApplication) &&
         Objects.equals(this.allowManageUsers, openConsumerInfoDTO.allowManageUsers) &&
-        Objects.equals(this.rateLimit, openConsumerInfoDTO.rateLimit);
+        Objects.equals(this.rateLimit, openConsumerInfoDTO.rateLimit) &&
+        Objects.equals(this.rateLimitEnabled, openConsumerInfoDTO.rateLimitEnabled);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(appId, name, orgId, orgName, ownerName, ownerEmail, consumerId, token, allowCreateApplication, allowManageUsers, rateLimit);
+    return Objects.hash(appId, name, orgId, orgName, ownerName, ownerEmail, consumerId, token, allowCreateApplication, allowManageUsers, rateLimit, rateLimitEnabled);
   }
 
   @Override
@@ -372,6 +398,7 @@ public class OpenConsumerInfoDTO {
     sb.append("    allowCreateApplication: ").append(toIndentedString(allowCreateApplication)).append("\n");
     sb.append("    allowManageUsers: ").append(toIndentedString(allowManageUsers)).append("\n");
     sb.append("    rateLimit: ").append(toIndentedString(rateLimit)).append("\n");
+    sb.append("    rateLimitEnabled: ").append(toIndentedString(rateLimitEnabled)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -405,6 +432,7 @@ public class OpenConsumerInfoDTO {
     openapiFields.add("allowCreateApplication");
     openapiFields.add("allowManageUsers");
     openapiFields.add("rateLimit");
+    openapiFields.add("rateLimitEnabled");
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();

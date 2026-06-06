@@ -428,7 +428,7 @@ public class PortalManagementApiTest {
     @Test
     public void getConsumerTokenByAppIdTest() throws ApiException {
         String appId = null;
-        Object response = api.getConsumerTokenByAppId(appId);
+        OpenConsumerInfoDTO response = api.getConsumerTokenByAppId(appId);
         // TODO: test validations
     }
 

@@ -43,6 +43,8 @@ public class OpenConsumerInfoDTO {
 
   private Integer rateLimit = 0;
 
+  private Boolean rateLimitEnabled = false;
+
   public OpenConsumerInfoDTO appId(String appId) {
     this.appId = appId;
     return this;
@@ -263,6 +265,26 @@ public class OpenConsumerInfoDTO {
     this.rateLimit = rateLimit;
   }
 
+  public OpenConsumerInfoDTO rateLimitEnabled(Boolean rateLimitEnabled) {
+    this.rateLimitEnabled = rateLimitEnabled;
+    return this;
+  }
+
+  /**
+   * 是否开启限流
+   * @return rateLimitEnabled
+  */
+
+  @Schema(name = "rateLimitEnabled", description = "是否开启限流", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @JsonProperty("rateLimitEnabled")
+  public Boolean getRateLimitEnabled() {
+    return rateLimitEnabled;
+  }
+
+  public void setRateLimitEnabled(Boolean rateLimitEnabled) {
+    this.rateLimitEnabled = rateLimitEnabled;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -282,12 +304,13 @@ public class OpenConsumerInfoDTO {
         Objects.equals(this.token, openConsumerInfoDTO.token) &&
         Objects.equals(this.allowCreateApplication, openConsumerInfoDTO.allowCreateApplication) &&
         Objects.equals(this.allowManageUsers, openConsumerInfoDTO.allowManageUsers) &&
-        Objects.equals(this.rateLimit, openConsumerInfoDTO.rateLimit);
+        Objects.equals(this.rateLimit, openConsumerInfoDTO.rateLimit) &&
+        Objects.equals(this.rateLimitEnabled, openConsumerInfoDTO.rateLimitEnabled);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(appId, name, orgId, orgName, ownerName, ownerEmail, consumerId, token, allowCreateApplication, allowManageUsers, rateLimit);
+    return Objects.hash(appId, name, orgId, orgName, ownerName, ownerEmail, consumerId, token, allowCreateApplication, allowManageUsers, rateLimit, rateLimitEnabled);
   }
 
   @Override
@@ -305,6 +328,7 @@ public class OpenConsumerInfoDTO {
     sb.append("    allowCreateApplication: ").append(toIndentedString(allowCreateApplication)).append("\n");
     sb.append("    allowManageUsers: ").append(toIndentedString(allowManageUsers)).append("\n");
     sb.append("    rateLimit: ").append(toIndentedString(rateLimit)).append("\n");
+    sb.append("    rateLimitEnabled: ").append(toIndentedString(rateLimitEnabled)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -46,6 +46,7 @@ class OpenConsumerInfoDTO(
             allowCreateApplication = schemas.BoolSchema
             allowManageUsers = schemas.BoolSchema
             rateLimit = schemas.IntSchema
+            rateLimitEnabled = schemas.BoolSchema
             __annotations__ = {
                 "appId": appId,
                 "name": name,
@@ -58,6 +59,7 @@ class OpenConsumerInfoDTO(
                 "allowCreateApplication": allowCreateApplication,
                 "allowManageUsers": allowManageUsers,
                 "rateLimit": rateLimit,
+                "rateLimitEnabled": rateLimitEnabled,
             }
 
     @typing.overload
@@ -94,9 +96,12 @@ class OpenConsumerInfoDTO(
     def __getitem__(self, name: typing_extensions.Literal["rateLimit"]) -> MetaOapg.properties.rateLimit: ...
 
     @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["rateLimitEnabled"]) -> MetaOapg.properties.rateLimitEnabled: ...
+
+    @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
 
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["appId", "name", "orgId", "orgName", "ownerName", "ownerEmail", "consumerId", "token", "allowCreateApplication", "allowManageUsers", "rateLimit", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["appId", "name", "orgId", "orgName", "ownerName", "ownerEmail", "consumerId", "token", "allowCreateApplication", "allowManageUsers", "rateLimit", "rateLimitEnabled", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
 
@@ -135,9 +140,12 @@ class OpenConsumerInfoDTO(
     def get_item_oapg(self, name: typing_extensions.Literal["rateLimit"]) -> typing.Union[MetaOapg.properties.rateLimit, schemas.Unset]: ...
 
     @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["rateLimitEnabled"]) -> typing.Union[MetaOapg.properties.rateLimitEnabled, schemas.Unset]: ...
+
+    @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
 
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["appId", "name", "orgId", "orgName", "ownerName", "ownerEmail", "consumerId", "token", "allowCreateApplication", "allowManageUsers", "rateLimit", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["appId", "name", "orgId", "orgName", "ownerName", "ownerEmail", "consumerId", "token", "allowCreateApplication", "allowManageUsers", "rateLimit", "rateLimitEnabled", ], str]):
         return super().get_item_oapg(name)
 
 
@@ -155,6 +163,7 @@ class OpenConsumerInfoDTO(
         allowCreateApplication: typing.Union[MetaOapg.properties.allowCreateApplication, bool, schemas.Unset] = schemas.unset,
         allowManageUsers: typing.Union[MetaOapg.properties.allowManageUsers, bool, schemas.Unset] = schemas.unset,
         rateLimit: typing.Union[MetaOapg.properties.rateLimit, decimal.Decimal, int, schemas.Unset] = schemas.unset,
+        rateLimitEnabled: typing.Union[MetaOapg.properties.rateLimitEnabled, bool, schemas.Unset] = schemas.unset,
         _configuration: typing.Optional[schemas.Configuration] = None,
         **kwargs: typing.Union[schemas.AnyTypeSchema, dict, frozendict.frozendict, str, date, datetime, uuid.UUID, int, float, decimal.Decimal, None, list, tuple, bytes],
     ) -> 'OpenConsumerInfoDTO':
@@ -172,6 +181,7 @@ class OpenConsumerInfoDTO(
             allowCreateApplication=allowCreateApplication,
             allowManageUsers=allowManageUsers,
             rateLimit=rateLimit,
+            rateLimitEnabled=rateLimitEnabled,
             _configuration=_configuration,
             **kwargs,
         )

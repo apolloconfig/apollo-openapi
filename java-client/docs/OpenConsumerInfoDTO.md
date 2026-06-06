@@ -18,3 +18,4 @@
 |**allowCreateApplication** | **Boolean** | 是否允许该Consumer Token创建应用 |  [optional] |
 |**allowManageUsers** | **Boolean** | 是否允许该Consumer Token管理用户 |  [optional] |
 |**rateLimit** | **Integer** | 限流QPS，0表示不限流 |  [optional] |
+|**rateLimitEnabled** | **Boolean** | 是否开启限流 |  [optional] |

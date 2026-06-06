@@ -84,6 +84,12 @@ export interface OpenConsumerInfoDTO {
      * @memberof OpenConsumerInfoDTO
      */
     rateLimit?: number;
+    /**
+     * 是否开启限流
+     * @type {boolean}
+     * @memberof OpenConsumerInfoDTO
+     */
+    rateLimitEnabled?: boolean;
 }
 
 /**
@@ -116,6 +122,7 @@ export function OpenConsumerInfoDTOFromJSONTyped(json: any, ignoreDiscriminator:
         'allowCreateApplication': !exists(json, 'allowCreateApplication') ? undefined : json['allowCreateApplication'],
         'allowManageUsers': !exists(json, 'allowManageUsers') ? undefined : json['allowManageUsers'],
         'rateLimit': !exists(json, 'rateLimit') ? undefined : json['rateLimit'],
+        'rateLimitEnabled': !exists(json, 'rateLimitEnabled') ? undefined : json['rateLimitEnabled'],
     };
 }
 
@@ -139,5 +146,6 @@ export function OpenConsumerInfoDTOToJSON(value?: OpenConsumerInfoDTO | null): a
         'allowCreateApplication': value.allowCreateApplication,
         'allowManageUsers': value.allowManageUsers,
         'rateLimit': value.rateLimit,
+        'rateLimitEnabled': value.rateLimitEnabled,
     };
 }

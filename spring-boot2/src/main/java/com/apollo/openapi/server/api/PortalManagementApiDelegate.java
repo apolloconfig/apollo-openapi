@@ -109,7 +109,7 @@ public interface PortalManagementApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"orgName\" : \"orgName\", \"rateLimit\" : 6, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" }";
+                    String exampleString = "{ \"orgName\" : \"orgName\", \"rateLimit\" : 6, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -521,7 +521,7 @@ public interface PortalManagementApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"orgName\" : \"orgName\", \"rateLimit\" : 6, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" }, { \"orgName\" : \"orgName\", \"rateLimit\" : 6, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" } ]";
+                    String exampleString = "[ { \"orgName\" : \"orgName\", \"rateLimit\" : 6, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" }, { \"orgName\" : \"orgName\", \"rateLimit\" : 6, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -539,7 +539,16 @@ public interface PortalManagementApiDelegate {
      * @return 成功获取消费者Token (status code 200)
      * @see PortalManagementApi#getConsumerTokenByAppId
      */
-    default ResponseEntity<Object> getConsumerTokenByAppId(String appId) {
+    default ResponseEntity<OpenConsumerInfoDTO> getConsumerTokenByAppId(String appId) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"orgName\" : \"orgName\", \"rateLimit\" : 6, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

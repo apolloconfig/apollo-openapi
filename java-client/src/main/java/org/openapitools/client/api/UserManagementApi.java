@@ -138,6 +138,14 @@ public class UserManagementApi {
         return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
+    /**
+     * Build call for changeUserEnabled.
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public okhttp3.Call changeUserEnabledCall(OpenUserDTO openUserDTO, final ApiCallback _callback) throws ApiException {
+        return changeUserEnabledCall(openUserDTO, null, _callback);
+    }
+
     @SuppressWarnings("rawtypes")
     private okhttp3.Call changeUserEnabledValidateBeforeCall(OpenUserDTO openUserDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'openUserDTO' is set
@@ -169,6 +177,14 @@ public class UserManagementApi {
 
     /**
      * 修改用户启用状态(new added)
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public void changeUserEnabled(OpenUserDTO openUserDTO) throws ApiException {
+        changeUserEnabled(openUserDTO, null);
+    }
+
+    /**
+     * 修改用户启用状态(new added)
      * PUT /openapi/v1/users/enabled，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
      * @param openUserDTO  (required)
      * @param operator 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数 (optional)
@@ -185,6 +201,14 @@ public class UserManagementApi {
     public ApiResponse<Void> changeUserEnabledWithHttpInfo(OpenUserDTO openUserDTO, String operator) throws ApiException {
         okhttp3.Call localVarCall = changeUserEnabledValidateBeforeCall(openUserDTO, operator, null);
         return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * 修改用户启用状态(new added)
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public ApiResponse<Void> changeUserEnabledWithHttpInfo(OpenUserDTO openUserDTO) throws ApiException {
+        return changeUserEnabledWithHttpInfo(openUserDTO, null);
     }
 
     /**
@@ -209,6 +233,15 @@ public class UserManagementApi {
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
+
+    /**
+     * 修改用户启用状态(new added) (asynchronously)
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public okhttp3.Call changeUserEnabledAsync(OpenUserDTO openUserDTO, final ApiCallback<Void> _callback) throws ApiException {
+        return changeUserEnabledAsync(openUserDTO, null, _callback);
+    }
+
     /**
      * Build call for createOrUpdateUser
      * @param openUserDTO  (required)
@@ -278,6 +311,14 @@ public class UserManagementApi {
         return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
+    /**
+     * Build call for createOrUpdateUser.
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public okhttp3.Call createOrUpdateUserCall(OpenUserDTO openUserDTO, Boolean isCreate, final ApiCallback _callback) throws ApiException {
+        return createOrUpdateUserCall(openUserDTO, isCreate, null, _callback);
+    }
+
     @SuppressWarnings("rawtypes")
     private okhttp3.Call createOrUpdateUserValidateBeforeCall(OpenUserDTO openUserDTO, Boolean isCreate, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'openUserDTO' is set
@@ -310,6 +351,14 @@ public class UserManagementApi {
 
     /**
      * 创建或更新用户(new added)
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public void createOrUpdateUser(OpenUserDTO openUserDTO, Boolean isCreate) throws ApiException {
+        createOrUpdateUser(openUserDTO, isCreate, null);
+    }
+
+    /**
+     * 创建或更新用户(new added)
      * POST /openapi/v1/users，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
      * @param openUserDTO  (required)
      * @param isCreate true 表示创建用户，false 表示更新用户 (optional, default to false)
@@ -327,6 +376,14 @@ public class UserManagementApi {
     public ApiResponse<Void> createOrUpdateUserWithHttpInfo(OpenUserDTO openUserDTO, Boolean isCreate, String operator) throws ApiException {
         okhttp3.Call localVarCall = createOrUpdateUserValidateBeforeCall(openUserDTO, isCreate, operator, null);
         return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * 创建或更新用户(new added)
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public ApiResponse<Void> createOrUpdateUserWithHttpInfo(OpenUserDTO openUserDTO, Boolean isCreate) throws ApiException {
+        return createOrUpdateUserWithHttpInfo(openUserDTO, isCreate, null);
     }
 
     /**
@@ -351,6 +408,14 @@ public class UserManagementApi {
         okhttp3.Call localVarCall = createOrUpdateUserValidateBeforeCall(openUserDTO, isCreate, operator, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
+    }
+
+    /**
+     * 创建或更新用户(new added) (asynchronously)
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public okhttp3.Call createOrUpdateUserAsync(OpenUserDTO openUserDTO, Boolean isCreate, final ApiCallback<Void> _callback) throws ApiException {
+        return createOrUpdateUserAsync(openUserDTO, isCreate, null, _callback);
     }
     /**
      * Build call for getCurrentUser

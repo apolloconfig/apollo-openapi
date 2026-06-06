@@ -25,6 +25,8 @@ import frozendict  # noqa: F401
 
 from apollo_openapi import schemas  # noqa: F401
 
+from apollo_openapi.model.open_consumer_info_dto import OpenConsumerInfoDTO
+
 # Query params
 AppIdSchema = schemas.StrSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
@@ -52,7 +54,7 @@ request_query_app_id = api_client.QueryParameter(
     required=True,
     explode=True,
 )
-SchemaFor200ResponseBodyApplicationJson = schemas.DictSchema
+SchemaFor200ResponseBodyApplicationJson = OpenConsumerInfoDTO
 
 
 @dataclass
