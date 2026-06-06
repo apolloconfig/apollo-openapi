@@ -290,7 +290,6 @@ Class | Method | HTTP request | Description
  - [OpenClusterNamespaceRoleUserDTO](docs/OpenClusterNamespaceRoleUserDTO.md)
  - [OpenConsumerCreateRequestDTO](docs/OpenConsumerCreateRequestDTO.md)
  - [OpenConsumerInfoDTO](docs/OpenConsumerInfoDTO.md)
- - [OpenConsumerSummaryDTO](docs/OpenConsumerSummaryDTO.md)
  - [OpenConsumerTokenDTO](docs/OpenConsumerTokenDTO.md)
  - [OpenCreateAppDTO](docs/OpenCreateAppDTO.md)
  - [OpenCreateNamespaceDTO](docs/OpenCreateNamespaceDTO.md)

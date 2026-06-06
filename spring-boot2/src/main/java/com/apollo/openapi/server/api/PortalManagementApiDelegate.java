@@ -2,7 +2,6 @@ package com.apollo.openapi.server.api;
 
 import com.apollo.openapi.server.model.OpenConsumerCreateRequestDTO;
 import com.apollo.openapi.server.model.OpenConsumerInfoDTO;
-import com.apollo.openapi.server.model.OpenConsumerSummaryDTO;
 import com.apollo.openapi.server.model.OpenConsumerTokenDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -518,12 +517,12 @@ public interface PortalManagementApiDelegate {
      * @return 成功获取消费者列表 (status code 200)
      * @see PortalManagementApi#getConsumerList
      */
-    default ResponseEntity<List<OpenConsumerSummaryDTO>> getConsumerList(Integer page,
+    default ResponseEntity<List<OpenConsumerInfoDTO>> getConsumerList(Integer page,
         Integer size) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"orgName\" : \"orgName\", \"rateLimit\" : 0, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\" }, { \"orgName\" : \"orgName\", \"rateLimit\" : 0, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\" } ]";
+                    String exampleString = "[ { \"orgName\" : \"orgName\", \"rateLimit\" : 0, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" }, { \"orgName\" : \"orgName\", \"rateLimit\" : 0, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

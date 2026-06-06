@@ -5,9 +5,9 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import java.time.OffsetDateTime;
-import java.util.Arrays;
-import org.openapitools.jackson.nullable.JsonNullable;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.openapitools.jackson.nullable.JsonNullable;
+import java.time.OffsetDateTime;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -27,11 +27,11 @@ public class OpenConsumerTokenDTO {
 
   private Boolean deleted = false;
 
-  private Long deletedAt = 0L;
+  private Long deletedAt = 0l;
 
   private Long consumerId;
 
-  private JsonNullable<String> token = JsonNullable.undefined();
+  private String token;
 
   private Integer rateLimit = 0;
 
@@ -129,7 +129,7 @@ public class OpenConsumerTokenDTO {
   }
 
   public OpenConsumerTokenDTO token(String token) {
-    this.token = JsonNullable.of(token);
+    this.token = token;
     return this;
   }
 
@@ -140,11 +140,11 @@ public class OpenConsumerTokenDTO {
 
   @Schema(name = "token", description = "Consumer Token", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("token")
-  public JsonNullable<String> getToken() {
+  public String getToken() {
     return token;
   }
 
-  public void setToken(JsonNullable<String> token) {
+  public void setToken(String token) {
     this.token = token;
   }
 
@@ -282,7 +282,7 @@ public class OpenConsumerTokenDTO {
         Objects.equals(this.deleted, openConsumerTokenDTO.deleted) &&
         Objects.equals(this.deletedAt, openConsumerTokenDTO.deletedAt) &&
         Objects.equals(this.consumerId, openConsumerTokenDTO.consumerId) &&
-        equalsNullable(this.token, openConsumerTokenDTO.token) &&
+        Objects.equals(this.token, openConsumerTokenDTO.token) &&
         Objects.equals(this.rateLimit, openConsumerTokenDTO.rateLimit) &&
         Objects.equals(this.expires, openConsumerTokenDTO.expires) &&
         Objects.equals(this.dataChangeCreatedBy, openConsumerTokenDTO.dataChangeCreatedBy) &&
@@ -291,20 +291,9 @@ public class OpenConsumerTokenDTO {
         Objects.equals(this.dataChangeLastModifiedTime, openConsumerTokenDTO.dataChangeLastModifiedTime);
   }
 
-  private static <T> boolean equalsNullable(JsonNullable<T> a, JsonNullable<T> b) {
-    return a == b || (a != null && b != null && a.isPresent() && b.isPresent() && Objects.deepEquals(a.get(), b.get()));
-  }
-
   @Override
   public int hashCode() {
-    return Objects.hash(id, deleted, deletedAt, consumerId, hashCodeNullable(token), rateLimit, expires, dataChangeCreatedBy, dataChangeCreatedTime, dataChangeLastModifiedBy, dataChangeLastModifiedTime);
-  }
-
-  private static <T> int hashCodeNullable(JsonNullable<T> a) {
-    if (a == null) {
-      return 1;
-    }
-    return a.isPresent() ? Arrays.deepHashCode(new Object[]{a.get()}) : 31;
+    return Objects.hash(id, deleted, deletedAt, consumerId, token, rateLimit, expires, dataChangeCreatedBy, dataChangeCreatedTime, dataChangeLastModifiedBy, dataChangeLastModifiedTime);
   }
 
   @Override
@@ -315,7 +304,7 @@ public class OpenConsumerTokenDTO {
     sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
     sb.append("    deletedAt: ").append(toIndentedString(deletedAt)).append("\n");
     sb.append("    consumerId: ").append(toIndentedString(consumerId)).append("\n");
-    sb.append("    token: ").append(token == null || !token.isPresent() ? "null" : "***redacted***").append("\n");
+    sb.append("    token: ").append(token == null ? "null" : "***redacted***").append("\n");
     sb.append("    rateLimit: ").append(toIndentedString(rateLimit)).append("\n");
     sb.append("    expires: ").append(toIndentedString(expires)).append("\n");
     sb.append("    dataChangeCreatedBy: ").append(toIndentedString(dataChangeCreatedBy)).append("\n");

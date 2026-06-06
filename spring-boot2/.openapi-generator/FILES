@@ -62,7 +62,6 @@ src/main/java/com/apollo/openapi/server/model/OpenClusterDTO.java
 src/main/java/com/apollo/openapi/server/model/OpenClusterNamespaceRoleUserDTO.java
 src/main/java/com/apollo/openapi/server/model/OpenConsumerCreateRequestDTO.java
 src/main/java/com/apollo/openapi/server/model/OpenConsumerInfoDTO.java
-src/main/java/com/apollo/openapi/server/model/OpenConsumerSummaryDTO.java
 src/main/java/com/apollo/openapi/server/model/OpenConsumerTokenDTO.java
 src/main/java/com/apollo/openapi/server/model/OpenCreateAppDTO.java
 src/main/java/com/apollo/openapi/server/model/OpenCreateNamespaceDTO.java

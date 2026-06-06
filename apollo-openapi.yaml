@@ -5385,7 +5385,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/OpenConsumerSummaryDTO'
+                  $ref: '#/components/schemas/OpenConsumerInfoDTO'
   /openapi/v1/consumer-tokens/by-appId:
     get:
       summary: 按应用ID查询消费者Token(new added)
@@ -6914,48 +6914,6 @@ components:
           type: boolean
           description: 是否开启限流
           default: false
-    OpenConsumerSummaryDTO:
-      type: object
-      properties:
-        appId:
-          type: string
-          description: 第三方应用ID
-        name:
-          type: string
-          description: 第三方应用名称
-        orgId:
-          type: string
-          description: 部门ID
-        orgName:
-          type: string
-          description: 部门名称
-        ownerName:
-          type: string
-          description: 负责人用户名
-        ownerEmail:
-          type: string
-          description: 负责人邮箱
-        consumerId:
-          type: integer
-          format: int64
-          description: Consumer ID
-        allowCreateApplication:
-          type: boolean
-          description: 是否允许该Consumer Token创建应用
-          default: false
-        allowManageUsers:
-          type: boolean
-          description: 是否允许该Consumer Token管理用户
-          default: false
-        rateLimit:
-          type: integer
-          description: 限流QPS，0表示不限流
-          minimum: 0
-          default: 0
-        rateLimitEnabled:
-          type: boolean
-          description: 是否开启限流
-          default: false
     OpenConsumerTokenDTO:
       type: object
       properties:
@@ -6978,7 +6936,6 @@ components:
           description: Consumer ID
         token:
           type: string
-          nullable: true
           description: Consumer Token
         rateLimit:
           type: integer

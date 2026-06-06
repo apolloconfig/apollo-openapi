@@ -16,7 +16,6 @@ import * as runtime from '../runtime';
 import type {
   OpenConsumerCreateRequestDTO,
   OpenConsumerInfoDTO,
-  OpenConsumerSummaryDTO,
   OpenConsumerTokenDTO,
 } from '../models';
 import {
@@ -24,8 +23,6 @@ import {
     OpenConsumerCreateRequestDTOToJSON,
     OpenConsumerInfoDTOFromJSON,
     OpenConsumerInfoDTOToJSON,
-    OpenConsumerSummaryDTOFromJSON,
-    OpenConsumerSummaryDTOToJSON,
     OpenConsumerTokenDTOFromJSON,
     OpenConsumerTokenDTOToJSON,
 } from '../models';
@@ -1284,7 +1281,7 @@ export class PortalManagementApi extends runtime.BaseAPI {
      * GET /openapi/v1/consumers
      * 查询开放平台消费者列表(new added)
      */
-    async getConsumerListRaw(requestParameters: GetConsumerListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenConsumerSummaryDTO>>> {
+    async getConsumerListRaw(requestParameters: GetConsumerListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenConsumerInfoDTO>>> {
         const queryParameters: any = {};
 
         if (requestParameters.page !== undefined) {
@@ -1308,14 +1305,14 @@ export class PortalManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenConsumerSummaryDTOFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenConsumerInfoDTOFromJSON));
     }
 
     /**
      * GET /openapi/v1/consumers
      * 查询开放平台消费者列表(new added)
      */
-    async getConsumerList(requestParameters: GetConsumerListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenConsumerSummaryDTO>> {
+    async getConsumerList(requestParameters: GetConsumerListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenConsumerInfoDTO>> {
         const response = await this.getConsumerListRaw(requestParameters, initOverrides);
         return await response.value();
     }

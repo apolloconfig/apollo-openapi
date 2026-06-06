@@ -55,7 +55,6 @@ Class | Method | HTTP request | Description
  - [OpenClusterNamespaceRoleUserDto](docs/OpenClusterNamespaceRoleUserDto.md)
  - [OpenConsumerCreateRequestDto](docs/OpenConsumerCreateRequestDto.md)
  - [OpenConsumerInfoDto](docs/OpenConsumerInfoDto.md)
- - [OpenConsumerSummaryDto](docs/OpenConsumerSummaryDto.md)
  - [OpenConsumerTokenDto](docs/OpenConsumerTokenDto.md)
  - [OpenCreateAppDto](docs/OpenCreateAppDto.md)
  - [OpenCreateNamespaceDto](docs/OpenCreateNamespaceDto.md)

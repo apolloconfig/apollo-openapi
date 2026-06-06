@@ -7,7 +7,6 @@ package com.apollo.openapi.server.api;
 
 import com.apollo.openapi.server.model.OpenConsumerCreateRequestDTO;
 import com.apollo.openapi.server.model.OpenConsumerInfoDTO;
-import com.apollo.openapi.server.model.OpenConsumerSummaryDTO;
 import com.apollo.openapi.server.model.OpenConsumerTokenDTO;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
@@ -909,7 +908,7 @@ public interface PortalManagementApi {
         tags = { "Portal Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "成功获取消费者列表", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenConsumerSummaryDTO.class)))
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenConsumerInfoDTO.class)))
             })
         },
         security = {
@@ -921,7 +920,7 @@ public interface PortalManagementApi {
         value = "/openapi/v1/consumers",
         produces = { "application/json" }
     )
-    default ResponseEntity<List<OpenConsumerSummaryDTO>> getConsumerList(
+    default ResponseEntity<List<OpenConsumerInfoDTO>> getConsumerList(
         @Parameter(name = "page", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
         @Parameter(name = "size", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "size", required = false, defaultValue = "10") Integer size
     ) {

@@ -39,26 +39,7 @@ class OpenConsumerTokenDTO(
             deleted = schemas.BoolSchema
             deletedAt = schemas.Int64Schema
             consumerId = schemas.Int64Schema
-
-
-            class token(
-                schemas.StrBase,
-                schemas.NoneBase,
-                schemas.Schema,
-                schemas.NoneStrMixin
-            ):
-
-
-                def __new__(
-                    cls,
-                    *_args: typing.Union[None, str, ],
-                    _configuration: typing.Optional[schemas.Configuration] = None,
-                ) -> 'token':
-                    return super().__new__(
-                        cls,
-                        *_args,
-                        _configuration=_configuration,
-                    )
+            token = schemas.StrSchema
 
 
             class rateLimit(
@@ -175,7 +156,7 @@ class OpenConsumerTokenDTO(
         deleted: typing.Union[MetaOapg.properties.deleted, bool, schemas.Unset] = schemas.unset,
         deletedAt: typing.Union[MetaOapg.properties.deletedAt, decimal.Decimal, int, schemas.Unset] = schemas.unset,
         consumerId: typing.Union[MetaOapg.properties.consumerId, decimal.Decimal, int, schemas.Unset] = schemas.unset,
-        token: typing.Union[MetaOapg.properties.token, None, str, schemas.Unset] = schemas.unset,
+        token: typing.Union[MetaOapg.properties.token, str, schemas.Unset] = schemas.unset,
         rateLimit: typing.Union[MetaOapg.properties.rateLimit, decimal.Decimal, int, schemas.Unset] = schemas.unset,
         expires: typing.Union[MetaOapg.properties.expires, str, datetime, schemas.Unset] = schemas.unset,
         dataChangeCreatedBy: typing.Union[MetaOapg.properties.dataChangeCreatedBy, str, schemas.Unset] = schemas.unset,

@@ -349,7 +349,6 @@ Class | Method | HTTP request | Description
  - [OpenClusterNamespaceRoleUserDTO](docs/models/OpenClusterNamespaceRoleUserDTO.md)
  - [OpenConsumerCreateRequestDTO](docs/models/OpenConsumerCreateRequestDTO.md)
  - [OpenConsumerInfoDTO](docs/models/OpenConsumerInfoDTO.md)
- - [OpenConsumerSummaryDTO](docs/models/OpenConsumerSummaryDTO.md)
  - [OpenConsumerTokenDTO](docs/models/OpenConsumerTokenDTO.md)
  - [OpenCreateAppDTO](docs/models/OpenCreateAppDTO.md)
  - [OpenCreateNamespaceDTO](docs/models/OpenCreateNamespaceDTO.md)

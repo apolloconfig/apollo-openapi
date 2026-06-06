@@ -29,7 +29,6 @@ import java.io.IOException;
 import java.io.File;
 import org.openapitools.client.model.OpenConsumerCreateRequestDTO;
 import org.openapitools.client.model.OpenConsumerInfoDTO;
-import org.openapitools.client.model.OpenConsumerSummaryDTO;
 import org.openapitools.client.model.OpenConsumerTokenDTO;
 
 import java.lang.reflect.Type;
@@ -3427,7 +3426,7 @@ public class PortalManagementApi {
      * GET /openapi/v1/consumers
      * @param page  (optional, default to 0)
      * @param size  (optional, default to 10)
-     * @return List&lt;OpenConsumerSummaryDTO&gt;
+     * @return List&lt;OpenConsumerInfoDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -3435,8 +3434,8 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功获取消费者列表 </td><td>  -  </td></tr>
      </table>
      */
-    public List<OpenConsumerSummaryDTO> getConsumerList(Integer page, Integer size) throws ApiException {
-        ApiResponse<List<OpenConsumerSummaryDTO>> localVarResp = getConsumerListWithHttpInfo(page, size);
+    public List<OpenConsumerInfoDTO> getConsumerList(Integer page, Integer size) throws ApiException {
+        ApiResponse<List<OpenConsumerInfoDTO>> localVarResp = getConsumerListWithHttpInfo(page, size);
         return localVarResp.getData();
     }
 
@@ -3445,7 +3444,7 @@ public class PortalManagementApi {
      * GET /openapi/v1/consumers
      * @param page  (optional, default to 0)
      * @param size  (optional, default to 10)
-     * @return ApiResponse&lt;List&lt;OpenConsumerSummaryDTO&gt;&gt;
+     * @return ApiResponse&lt;List&lt;OpenConsumerInfoDTO&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -3453,9 +3452,9 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功获取消费者列表 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<OpenConsumerSummaryDTO>> getConsumerListWithHttpInfo(Integer page, Integer size) throws ApiException {
+    public ApiResponse<List<OpenConsumerInfoDTO>> getConsumerListWithHttpInfo(Integer page, Integer size) throws ApiException {
         okhttp3.Call localVarCall = getConsumerListValidateBeforeCall(page, size, null);
-        Type localVarReturnType = new TypeToken<List<OpenConsumerSummaryDTO>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<OpenConsumerInfoDTO>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -3473,10 +3472,10 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功获取消费者列表 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getConsumerListAsync(Integer page, Integer size, final ApiCallback<List<OpenConsumerSummaryDTO>> _callback) throws ApiException {
+    public okhttp3.Call getConsumerListAsync(Integer page, Integer size, final ApiCallback<List<OpenConsumerInfoDTO>> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getConsumerListValidateBeforeCall(page, size, _callback);
-        Type localVarReturnType = new TypeToken<List<OpenConsumerSummaryDTO>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<OpenConsumerInfoDTO>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
