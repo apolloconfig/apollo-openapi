@@ -16,15 +16,15 @@ import * as runtime from '../runtime';
 import type {
   OpenConsumerCreateRequestDTO,
   OpenConsumerInfoDTO,
-  OpenConsumerSummaryDTO,
+  OpenConsumerTokenDTO,
 } from '../models';
 import {
     OpenConsumerCreateRequestDTOFromJSON,
     OpenConsumerCreateRequestDTOToJSON,
     OpenConsumerInfoDTOFromJSON,
     OpenConsumerInfoDTOToJSON,
-    OpenConsumerSummaryDTOFromJSON,
-    OpenConsumerSummaryDTOToJSON,
+    OpenConsumerTokenDTOFromJSON,
+    OpenConsumerTokenDTOToJSON,
 } from '../models';
 
 export interface AddFavoriteRequest {
@@ -1281,7 +1281,7 @@ export class PortalManagementApi extends runtime.BaseAPI {
      * GET /openapi/v1/consumers
      * 查询开放平台消费者列表(new added)
      */
-    async getConsumerListRaw(requestParameters: GetConsumerListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenConsumerSummaryDTO>>> {
+    async getConsumerListRaw(requestParameters: GetConsumerListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenConsumerInfoDTO>>> {
         const queryParameters: any = {};
 
         if (requestParameters.page !== undefined) {
@@ -1305,14 +1305,14 @@ export class PortalManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenConsumerSummaryDTOFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenConsumerInfoDTOFromJSON));
     }
 
     /**
      * GET /openapi/v1/consumers
      * 查询开放平台消费者列表(new added)
      */
-    async getConsumerList(requestParameters: GetConsumerListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenConsumerSummaryDTO>> {
+    async getConsumerList(requestParameters: GetConsumerListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenConsumerInfoDTO>> {
         const response = await this.getConsumerListRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -1321,7 +1321,7 @@ export class PortalManagementApi extends runtime.BaseAPI {
      * GET /openapi/v1/consumer-tokens/by-appId
      * 按应用ID查询消费者Token(new added)
      */
-    async getConsumerTokenByAppIdRaw(requestParameters: GetConsumerTokenByAppIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenConsumerInfoDTO>> {
+    async getConsumerTokenByAppIdRaw(requestParameters: GetConsumerTokenByAppIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenConsumerTokenDTO>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getConsumerTokenByAppId.');
         }
@@ -1345,14 +1345,14 @@ export class PortalManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenConsumerInfoDTOFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpenConsumerTokenDTOFromJSON(jsonValue));
     }
 
     /**
      * GET /openapi/v1/consumer-tokens/by-appId
      * 按应用ID查询消费者Token(new added)
      */
-    async getConsumerTokenByAppId(requestParameters: GetConsumerTokenByAppIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenConsumerInfoDTO> {
+    async getConsumerTokenByAppId(requestParameters: GetConsumerTokenByAppIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenConsumerTokenDTO> {
         const response = await this.getConsumerTokenByAppIdRaw(requestParameters, initOverrides);
         return await response.value();
     }

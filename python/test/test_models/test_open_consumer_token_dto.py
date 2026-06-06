@@ -11,12 +11,12 @@
 import unittest
 
 import apollo_openapi
-from apollo_openapi.model.open_consumer_summary_dto import OpenConsumerSummaryDTO
+from apollo_openapi.model.open_consumer_token_dto import OpenConsumerTokenDTO
 from apollo_openapi import configuration
 
 
-class TestOpenConsumerSummaryDTO(unittest.TestCase):
-    """OpenConsumerSummaryDTO unit test stubs"""
+class TestOpenConsumerTokenDTO(unittest.TestCase):
+    """OpenConsumerTokenDTO unit test stubs"""
     _configuration = configuration.Configuration()
 
 

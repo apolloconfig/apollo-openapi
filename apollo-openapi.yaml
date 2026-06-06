@@ -18,7 +18,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
 
-  version: 0.3.6
+  version: 0.3.7
 security:
   - ApiKeyAuth: []
 tags:
@@ -5385,7 +5385,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/OpenConsumerSummaryDTO'
+                  $ref: '#/components/schemas/OpenConsumerInfoDTO'
   /openapi/v1/consumer-tokens/by-appId:
     get:
       summary: 按应用ID查询消费者Token(new added)
@@ -5406,7 +5406,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OpenConsumerInfoDTO'
+                $ref: '#/components/schemas/OpenConsumerTokenDTO'
   /openapi/v1/consumers/{token}/assign-role:
     post:
       summary: 给消费者授权(new added)
@@ -6832,6 +6832,11 @@ components:
           description: ''
     OpenConsumerCreateRequestDTO:
       type: object
+      required:
+        - appId
+        - name
+        - orgId
+        - ownerName
       properties:
         appId:
           type: string
@@ -6862,9 +6867,8 @@ components:
           default: false
         rateLimit:
           type: integer
-          description: 限流QPS，0表示不限流
+          description: 限流QPS，rateLimitEnabled 为 true 时必须大于 0；未开启限流时 0 表示不限流
           minimum: 0
-          default: 0
     OpenConsumerInfoDTO:
       type: object
       properties:
@@ -6910,48 +6914,39 @@ components:
           type: boolean
           description: 是否开启限流
           default: false
-    OpenConsumerSummaryDTO:
+    OpenConsumerTokenDTO:
       type: object
       properties:
-        appId:
-          type: string
-          description: 第三方应用ID
-        name:
-          type: string
-          description: 第三方应用名称
-        orgId:
-          type: string
-          description: 部门ID
-        orgName:
-          type: string
-          description: 部门名称
-        ownerName:
-          type: string
-          description: 负责人用户名
-        ownerEmail:
-          type: string
-          description: 负责人邮箱
         consumerId:
           type: integer
           format: int64
           description: Consumer ID
-        allowCreateApplication:
-          type: boolean
-          description: 是否允许该Consumer Token创建应用
-          default: false
-        allowManageUsers:
-          type: boolean
-          description: 是否允许该Consumer Token管理用户
-          default: false
+        token:
+          type: string
+          description: Consumer Token
         rateLimit:
           type: integer
           description: 限流QPS，0表示不限流
           minimum: 0
           default: 0
-        rateLimitEnabled:
-          type: boolean
-          description: 是否开启限流
-          default: false
+        expires:
+          type: string
+          format: date-time
+          description: 过期时间
+        dataChangeCreatedBy:
+          type: string
+          description: 创建人
+        dataChangeCreatedTime:
+          type: string
+          format: date-time
+          description: 创建时间
+        dataChangeLastModifiedBy:
+          type: string
+          description: 最后修改人
+        dataChangeLastModifiedTime:
+          type: string
+          format: date-time
+          description: 最后修改时间
     OpenUserInfoDTO:
       type: object
       properties:

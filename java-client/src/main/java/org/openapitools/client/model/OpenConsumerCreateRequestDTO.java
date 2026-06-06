@@ -85,7 +85,7 @@ public class OpenConsumerCreateRequestDTO {
 
   public static final String SERIALIZED_NAME_RATE_LIMIT = "rateLimit";
   @SerializedName(SERIALIZED_NAME_RATE_LIMIT)
-  private Integer rateLimit = 0;
+  private Integer rateLimit;
 
   public OpenConsumerCreateRequestDTO() {
   }
@@ -100,7 +100,7 @@ public class OpenConsumerCreateRequestDTO {
    * 第三方应用ID
    * @return appId
   **/
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getAppId() {
     return appId;
   }
@@ -163,7 +163,7 @@ public class OpenConsumerCreateRequestDTO {
    * 第三方应用名称
    * @return name
   **/
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getName() {
     return name;
   }
@@ -184,7 +184,7 @@ public class OpenConsumerCreateRequestDTO {
    * 部门ID
    * @return orgId
   **/
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getOrgId() {
     return orgId;
   }
@@ -226,7 +226,7 @@ public class OpenConsumerCreateRequestDTO {
    * 负责人用户名
    * @return ownerName
   **/
-  @javax.annotation.Nullable
+  @javax.annotation.Nonnull
   public String getOwnerName() {
     return ownerName;
   }
@@ -265,7 +265,7 @@ public class OpenConsumerCreateRequestDTO {
   }
 
    /**
-   * 限流QPS，0表示不限流
+   * 限流QPS，rateLimitEnabled 为 true 时必须大于 0；未开启限流时 0 表示不限流
    * minimum: 0
    * @return rateLimit
   **/
@@ -353,6 +353,10 @@ public class OpenConsumerCreateRequestDTO {
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>();
+    openapiRequiredFields.add("appId");
+    openapiRequiredFields.add("name");
+    openapiRequiredFields.add("orgId");
+    openapiRequiredFields.add("ownerName");
   }
 
  /**
@@ -376,19 +380,26 @@ public class OpenConsumerCreateRequestDTO {
           throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `OpenConsumerCreateRequestDTO` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
         }
       }
-      if ((jsonObj.get("appId") != null && !jsonObj.get("appId").isJsonNull()) && !jsonObj.get("appId").isJsonPrimitive()) {
+
+      // check to make sure all required properties/fields are present in the JSON string
+      for (String requiredField : OpenConsumerCreateRequestDTO.openapiRequiredFields) {
+        if (jsonObj.get(requiredField) == null) {
+          throw new IllegalArgumentException(String.format("The required field `%s` is not found in the JSON string: %s", requiredField, jsonObj.toString()));
+        }
+      }
+      if (!jsonObj.get("appId").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `appId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("appId").toString()));
       }
-      if ((jsonObj.get("name") != null && !jsonObj.get("name").isJsonNull()) && !jsonObj.get("name").isJsonPrimitive()) {
+      if (!jsonObj.get("name").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `name` to be a primitive type in the JSON string but got `%s`", jsonObj.get("name").toString()));
       }
-      if ((jsonObj.get("orgId") != null && !jsonObj.get("orgId").isJsonNull()) && !jsonObj.get("orgId").isJsonPrimitive()) {
+      if (!jsonObj.get("orgId").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `orgId` to be a primitive type in the JSON string but got `%s`", jsonObj.get("orgId").toString()));
       }
       if ((jsonObj.get("orgName") != null && !jsonObj.get("orgName").isJsonNull()) && !jsonObj.get("orgName").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `orgName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("orgName").toString()));
       }
-      if ((jsonObj.get("ownerName") != null && !jsonObj.get("ownerName").isJsonNull()) && !jsonObj.get("ownerName").isJsonPrimitive()) {
+      if (!jsonObj.get("ownerName").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ownerName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ownerName").toString()));
       }
   }

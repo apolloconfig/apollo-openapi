@@ -80,26 +80,39 @@ class UserManagementContractTest(unittest.TestCase):
 
         list_consumers = spec["paths"]["/openapi/v1/consumers"]["get"]
         self.assertEqual(
-            "#/components/schemas/OpenConsumerSummaryDTO",
+            "#/components/schemas/OpenConsumerInfoDTO",
             list_consumers["responses"]["200"]["content"]["application/json"]["schema"]["items"]["$ref"],
         )
 
         consumer_token = spec["paths"]["/openapi/v1/consumer-tokens/by-appId"]["get"]
         self.assertEqual(
-            "#/components/schemas/OpenConsumerInfoDTO",
+            "#/components/schemas/OpenConsumerTokenDTO",
             consumer_token["responses"]["200"]["content"]["application/json"]["schema"]["$ref"],
         )
 
-        for schema_name in (
-            "OpenConsumerCreateRequestDTO", "OpenConsumerInfoDTO", "OpenConsumerSummaryDTO"):
+        self.assertNotIn("OpenConsumerSummaryDTO", schemas)
+        for schema_name in ("OpenConsumerCreateRequestDTO", "OpenConsumerInfoDTO"):
           properties = schemas[schema_name]["properties"]
           self.assertEqual("boolean", properties["allowCreateApplication"]["type"])
           self.assertEqual("boolean", properties["allowManageUsers"]["type"])
           self.assertEqual(0, properties["rateLimit"]["minimum"])
+        create_schema = schemas["OpenConsumerCreateRequestDTO"]
+        self.assertEqual(["appId", "name", "orgId", "ownerName"], create_schema["required"])
+        self.assertNotIn("default", create_schema["properties"]["rateLimit"])
+        self.assertIn("必须大于 0", create_schema["properties"]["rateLimit"]["description"])
         self.assertEqual("boolean",
             schemas["OpenConsumerInfoDTO"]["properties"]["rateLimitEnabled"]["type"])
-        self.assertNotIn("token", schemas["OpenConsumerSummaryDTO"]["properties"])
         self.assertIn("token", schemas["OpenConsumerInfoDTO"]["properties"])
+        token_properties = schemas["OpenConsumerTokenDTO"]["properties"]
+        self.assertNotIn("id", token_properties)
+        self.assertNotIn("deleted", token_properties)
+        self.assertNotIn("deletedAt", token_properties)
+        self.assertEqual("integer", token_properties["consumerId"]["type"])
+        self.assertEqual("int64", token_properties["consumerId"]["format"])
+        self.assertEqual("string", token_properties["token"]["type"])
+        self.assertNotIn("nullable", token_properties["token"])
+        self.assertEqual("string", token_properties["expires"]["type"])
+        self.assertEqual("date-time", token_properties["expires"]["format"])
 
   def test_spring_server_api_uses_user_management_name(self):
     api_dir = self.repo_root / "spring-boot2/src/main/java/com/apollo/openapi/server/api"
@@ -120,7 +133,7 @@ class UserManagementContractTest(unittest.TestCase):
   def test_consumer_java_models_handle_null_json_and_redact_tokens(self):
     model_dir = self.repo_root / "java-client/src/main/java/org/openapitools/client/model"
     for model_name in (
-        "OpenConsumerCreateRequestDTO", "OpenConsumerInfoDTO", "OpenConsumerSummaryDTO"):
+        "OpenConsumerCreateRequestDTO", "OpenConsumerInfoDTO", "OpenConsumerTokenDTO"):
       content = (model_dir / f"{model_name}.java").read_text(encoding="utf-8")
 
       with self.subTest(model=model_name):
@@ -128,6 +141,8 @@ class UserManagementContractTest(unittest.TestCase):
             r"if \(jsonObj == null\) \{.*?return;.*?\}\s+"
             r"Set<Entry<String, JsonElement>> entries = jsonObj\.entrySet\(\);",
             re.DOTALL))
+
+    self.assertFalse((model_dir / "OpenConsumerSummaryDTO.java").exists())
 
     client_info = (model_dir / "OpenConsumerInfoDTO.java").read_text(encoding="utf-8")
     self.assertIn('token == null ? "null" : "***redacted***"', client_info)
@@ -138,6 +153,16 @@ class UserManagementContractTest(unittest.TestCase):
         ).read_text(encoding="utf-8")
     self.assertIn('token == null ? "null" : "***redacted***"', spring_info)
     self.assertNotIn('token: ").append(toIndentedString(token))', spring_info)
+
+    client_token = (model_dir / "OpenConsumerTokenDTO.java").read_text(encoding="utf-8")
+    self.assertIn('token == null ? "null" : "***redacted***"', client_token)
+    self.assertNotIn('token: ").append(toIndentedString(token))', client_token)
+
+    spring_token = (self.repo_root /
+        "spring-boot2/src/main/java/com/apollo/openapi/server/model/OpenConsumerTokenDTO.java"
+        ).read_text(encoding="utf-8")
+    self.assertIn('token == null ? "null" : "***redacted***"', spring_token)
+    self.assertNotIn('token: ").append(toIndentedString(token))', spring_token)
 
   def _find_parameter(self, operation, name):
     for parameter in operation.get("parameters", ()):

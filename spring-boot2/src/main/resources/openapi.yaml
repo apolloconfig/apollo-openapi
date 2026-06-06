@@ -17,7 +17,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
   title: Apollo OpenAPI
-  version: 0.3.6
+  version: 0.3.7
 servers:
 - url: /
 security:
@@ -6397,7 +6397,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/OpenConsumerSummaryDTO'
+                  $ref: '#/components/schemas/OpenConsumerInfoDTO'
                 type: array
           description: 成功获取消费者列表
       summary: 查询开放平台消费者列表(new added)
@@ -6457,7 +6457,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OpenConsumerInfoDTO'
+                $ref: '#/components/schemas/OpenConsumerTokenDTO'
           description: 成功获取消费者Token
       summary: 按应用ID查询消费者Token(new added)
       tags:
@@ -8707,10 +8707,14 @@ components:
           description: 是否开启限流
           type: boolean
         rateLimit:
-          default: 0
-          description: 限流QPS，0表示不限流
+          description: 限流QPS，rateLimitEnabled 为 true 时必须大于 0；未开启限流时 0 表示不限流
           minimum: 0
           type: integer
+      required:
+      - appId
+      - name
+      - orgId
+      - ownerName
       type: object
     OpenConsumerInfoDTO:
       example:
@@ -8770,59 +8774,47 @@ components:
           description: 是否开启限流
           type: boolean
       type: object
-    OpenConsumerSummaryDTO:
+    OpenConsumerTokenDTO:
       example:
-        orgName: orgName
+        expires: 2000-01-23T04:56:07.000+00:00
         rateLimit: 0
-        ownerName: ownerName
+        dataChangeCreatedTime: 2000-01-23T04:56:07.000+00:00
+        dataChangeLastModifiedBy: dataChangeLastModifiedBy
         consumerId: 0
-        appId: appId
-        name: name
-        allowCreateApplication: false
-        allowManageUsers: false
-        rateLimitEnabled: false
-        orgId: orgId
-        ownerEmail: ownerEmail
+        dataChangeCreatedBy: dataChangeCreatedBy
+        dataChangeLastModifiedTime: 2000-01-23T04:56:07.000+00:00
+        token: token
       properties:
-        appId:
-          description: 第三方应用ID
-          type: string
-        name:
-          description: 第三方应用名称
-          type: string
-        orgId:
-          description: 部门ID
-          type: string
-        orgName:
-          description: 部门名称
-          type: string
-        ownerName:
-          description: 负责人用户名
-          type: string
-        ownerEmail:
-          description: 负责人邮箱
-          type: string
         consumerId:
           description: Consumer ID
           format: int64
           type: integer
-        allowCreateApplication:
-          default: false
-          description: 是否允许该Consumer Token创建应用
-          type: boolean
-        allowManageUsers:
-          default: false
-          description: 是否允许该Consumer Token管理用户
-          type: boolean
+        token:
+          description: Consumer Token
+          type: string
         rateLimit:
           default: 0
           description: 限流QPS，0表示不限流
           minimum: 0
           type: integer
-        rateLimitEnabled:
-          default: false
-          description: 是否开启限流
-          type: boolean
+        expires:
+          description: 过期时间
+          format: date-time
+          type: string
+        dataChangeCreatedBy:
+          description: 创建人
+          type: string
+        dataChangeCreatedTime:
+          description: 创建时间
+          format: date-time
+          type: string
+        dataChangeLastModifiedBy:
+          description: 最后修改人
+          type: string
+        dataChangeLastModifiedTime:
+          description: 最后修改时间
+          format: date-time
+          type: string
       type: object
     OpenUserInfoDTO:
       example:

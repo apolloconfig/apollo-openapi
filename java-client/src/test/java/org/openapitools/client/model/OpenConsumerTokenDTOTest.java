@@ -18,70 +18,23 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import java.time.OffsetDateTime;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 
 /**
- * Model tests for OpenConsumerSummaryDTO
+ * Model tests for OpenConsumerTokenDTO
  */
-public class OpenConsumerSummaryDTOTest {
-    private final OpenConsumerSummaryDTO model = new OpenConsumerSummaryDTO();
+public class OpenConsumerTokenDTOTest {
+    private final OpenConsumerTokenDTO model = new OpenConsumerTokenDTO();
 
     /**
-     * Model tests for OpenConsumerSummaryDTO
+     * Model tests for OpenConsumerTokenDTO
      */
     @Test
-    public void testOpenConsumerSummaryDTO() {
-        // TODO: test OpenConsumerSummaryDTO
-    }
-
-    /**
-     * Test the property 'appId'
-     */
-    @Test
-    public void appIdTest() {
-        // TODO: test appId
-    }
-
-    /**
-     * Test the property 'name'
-     */
-    @Test
-    public void nameTest() {
-        // TODO: test name
-    }
-
-    /**
-     * Test the property 'orgId'
-     */
-    @Test
-    public void orgIdTest() {
-        // TODO: test orgId
-    }
-
-    /**
-     * Test the property 'orgName'
-     */
-    @Test
-    public void orgNameTest() {
-        // TODO: test orgName
-    }
-
-    /**
-     * Test the property 'ownerName'
-     */
-    @Test
-    public void ownerNameTest() {
-        // TODO: test ownerName
-    }
-
-    /**
-     * Test the property 'ownerEmail'
-     */
-    @Test
-    public void ownerEmailTest() {
-        // TODO: test ownerEmail
+    public void testOpenConsumerTokenDTO() {
+        // TODO: test OpenConsumerTokenDTO
     }
 
     /**
@@ -93,19 +46,11 @@ public class OpenConsumerSummaryDTOTest {
     }
 
     /**
-     * Test the property 'allowCreateApplication'
+     * Test the property 'token'
      */
     @Test
-    public void allowCreateApplicationTest() {
-        // TODO: test allowCreateApplication
-    }
-
-    /**
-     * Test the property 'allowManageUsers'
-     */
-    @Test
-    public void allowManageUsersTest() {
-        // TODO: test allowManageUsers
+    public void tokenTest() {
+        // TODO: test token
     }
 
     /**
@@ -117,11 +62,43 @@ public class OpenConsumerSummaryDTOTest {
     }
 
     /**
-     * Test the property 'rateLimitEnabled'
+     * Test the property 'expires'
      */
     @Test
-    public void rateLimitEnabledTest() {
-        // TODO: test rateLimitEnabled
+    public void expiresTest() {
+        // TODO: test expires
+    }
+
+    /**
+     * Test the property 'dataChangeCreatedBy'
+     */
+    @Test
+    public void dataChangeCreatedByTest() {
+        // TODO: test dataChangeCreatedBy
+    }
+
+    /**
+     * Test the property 'dataChangeCreatedTime'
+     */
+    @Test
+    public void dataChangeCreatedTimeTest() {
+        // TODO: test dataChangeCreatedTime
+    }
+
+    /**
+     * Test the property 'dataChangeLastModifiedBy'
+     */
+    @Test
+    public void dataChangeLastModifiedByTest() {
+        // TODO: test dataChangeLastModifiedBy
+    }
+
+    /**
+     * Test the property 'dataChangeLastModifiedTime'
+     */
+    @Test
+    public void dataChangeLastModifiedTimeTest() {
+        // TODO: test dataChangeLastModifiedTime
     }
 
 }

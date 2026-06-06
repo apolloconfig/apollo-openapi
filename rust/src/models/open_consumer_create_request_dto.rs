@@ -13,8 +13,8 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct OpenConsumerCreateRequestDto {
     /// 第三方应用ID
-    #[serde(rename = "appId", skip_serializing_if = "Option::is_none")]
-    pub app_id: Option<String>,
+    #[serde(rename = "appId")]
+    pub app_id: String,
     /// 是否允许该Consumer Token创建应用
     #[serde(rename = "allowCreateApplication", skip_serializing_if = "Option::is_none")]
     pub allow_create_application: Option<bool>,
@@ -22,35 +22,35 @@ pub struct OpenConsumerCreateRequestDto {
     #[serde(rename = "allowManageUsers", skip_serializing_if = "Option::is_none")]
     pub allow_manage_users: Option<bool>,
     /// 第三方应用名称
-    #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
-    pub name: Option<String>,
+    #[serde(rename = "name")]
+    pub name: String,
     /// 部门ID
-    #[serde(rename = "orgId", skip_serializing_if = "Option::is_none")]
-    pub org_id: Option<String>,
+    #[serde(rename = "orgId")]
+    pub org_id: String,
     /// 部门名称
     #[serde(rename = "orgName", skip_serializing_if = "Option::is_none")]
     pub org_name: Option<String>,
     /// 负责人用户名
-    #[serde(rename = "ownerName", skip_serializing_if = "Option::is_none")]
-    pub owner_name: Option<String>,
+    #[serde(rename = "ownerName")]
+    pub owner_name: String,
     /// 是否开启限流
     #[serde(rename = "rateLimitEnabled", skip_serializing_if = "Option::is_none")]
     pub rate_limit_enabled: Option<bool>,
-    /// 限流QPS，0表示不限流
+    /// 限流QPS，rateLimitEnabled 为 true 时必须大于 0；未开启限流时 0 表示不限流
     #[serde(rename = "rateLimit", skip_serializing_if = "Option::is_none")]
     pub rate_limit: Option<i32>,
 }
 
 impl OpenConsumerCreateRequestDto {
-    pub fn new() -> OpenConsumerCreateRequestDto {
+    pub fn new(app_id: String, name: String, org_id: String, owner_name: String) -> OpenConsumerCreateRequestDto {
         OpenConsumerCreateRequestDto {
-            app_id: None,
+            app_id,
             allow_create_application: None,
             allow_manage_users: None,
-            name: None,
-            org_id: None,
+            name,
+            org_id,
             org_name: None,
-            owner_name: None,
+            owner_name,
             rate_limit_enabled: None,
             rate_limit: None,
         }

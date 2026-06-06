@@ -1,4 +1,4 @@
-# apollo_openapi.model.open_consumer_summary_dto.OpenConsumerSummaryDTO
+# apollo_openapi.model.open_consumer_token_dto.OpenConsumerTokenDTO
 
 ## Model Type Info
 Input Type | Accessed Type | Description | Notes
@@ -8,17 +8,14 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 ### Dictionary Keys
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
-**appId** | str,  | str,  | 第三方应用ID | [optional]
-**name** | str,  | str,  | 第三方应用名称 | [optional]
-**orgId** | str,  | str,  | 部门ID | [optional]
-**orgName** | str,  | str,  | 部门名称 | [optional]
-**ownerName** | str,  | str,  | 负责人用户名 | [optional]
-**ownerEmail** | str,  | str,  | 负责人邮箱 | [optional]
 **consumerId** | decimal.Decimal, int,  | decimal.Decimal,  | Consumer ID | [optional] value must be a 64 bit integer
-**allowCreateApplication** | bool,  | BoolClass,  | 是否允许该Consumer Token创建应用 | [optional] if omitted the server will use the default value of False
-**allowManageUsers** | bool,  | BoolClass,  | 是否允许该Consumer Token管理用户 | [optional] if omitted the server will use the default value of False
+**token** | str,  | str,  | Consumer Token | [optional]
 **rateLimit** | decimal.Decimal, int,  | decimal.Decimal,  | 限流QPS，0表示不限流 | [optional] if omitted the server will use the default value of 0
-**rateLimitEnabled** | bool,  | BoolClass,  | 是否开启限流 | [optional] if omitted the server will use the default value of False
+**expires** | str, datetime,  | str,  | 过期时间 | [optional] value must conform to RFC-3339 date-time
+**dataChangeCreatedBy** | str,  | str,  | 创建人 | [optional]
+**dataChangeCreatedTime** | str, datetime,  | str,  | 创建时间 | [optional] value must conform to RFC-3339 date-time
+**dataChangeLastModifiedBy** | str,  | str,  | 最后修改人 | [optional]
+**dataChangeLastModifiedTime** | str, datetime,  | str,  | 最后修改时间 | [optional] value must conform to RFC-3339 date-time
 **any_string_name** | dict, frozendict.frozendict, str, date, datetime, int, float, bool, decimal.Decimal, None, list, tuple, bytes, io.FileIO, io.BufferedReader | frozendict.frozendict, str, BoolClass, decimal.Decimal, NoneClass, tuple, bytes, FileIO | any string name can be used but the value must be the correct type | [optional]
 
 [[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)

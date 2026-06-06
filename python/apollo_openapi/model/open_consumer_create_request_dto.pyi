@@ -33,15 +33,21 @@ class OpenConsumerCreateRequestDTO(
 
 
     class MetaOapg:
+        required = {
+            "ownerName",
+            "appId",
+            "name",
+            "orgId",
+        }
 
         class properties:
             appId = schemas.StrSchema
-            allowCreateApplication = schemas.BoolSchema
-            allowManageUsers = schemas.BoolSchema
             name = schemas.StrSchema
             orgId = schemas.StrSchema
-            orgName = schemas.StrSchema
             ownerName = schemas.StrSchema
+            allowCreateApplication = schemas.BoolSchema
+            allowManageUsers = schemas.BoolSchema
+            orgName = schemas.StrSchema
             rateLimitEnabled = schemas.BoolSchema
 
 
@@ -51,24 +57,23 @@ class OpenConsumerCreateRequestDTO(
                 pass
             __annotations__ = {
                 "appId": appId,
-                "allowCreateApplication": allowCreateApplication,
-                "allowManageUsers": allowManageUsers,
                 "name": name,
                 "orgId": orgId,
-                "orgName": orgName,
                 "ownerName": ownerName,
+                "allowCreateApplication": allowCreateApplication,
+                "allowManageUsers": allowManageUsers,
+                "orgName": orgName,
                 "rateLimitEnabled": rateLimitEnabled,
                 "rateLimit": rateLimit,
             }
 
+    ownerName: MetaOapg.properties.ownerName
+    appId: MetaOapg.properties.appId
+    name: MetaOapg.properties.name
+    orgId: MetaOapg.properties.orgId
+
     @typing.overload
     def __getitem__(self, name: typing_extensions.Literal["appId"]) -> MetaOapg.properties.appId: ...
-
-    @typing.overload
-    def __getitem__(self, name: typing_extensions.Literal["allowCreateApplication"]) -> MetaOapg.properties.allowCreateApplication: ...
-
-    @typing.overload
-    def __getitem__(self, name: typing_extensions.Literal["allowManageUsers"]) -> MetaOapg.properties.allowManageUsers: ...
 
     @typing.overload
     def __getitem__(self, name: typing_extensions.Literal["name"]) -> MetaOapg.properties.name: ...
@@ -77,10 +82,16 @@ class OpenConsumerCreateRequestDTO(
     def __getitem__(self, name: typing_extensions.Literal["orgId"]) -> MetaOapg.properties.orgId: ...
 
     @typing.overload
-    def __getitem__(self, name: typing_extensions.Literal["orgName"]) -> MetaOapg.properties.orgName: ...
+    def __getitem__(self, name: typing_extensions.Literal["ownerName"]) -> MetaOapg.properties.ownerName: ...
 
     @typing.overload
-    def __getitem__(self, name: typing_extensions.Literal["ownerName"]) -> MetaOapg.properties.ownerName: ...
+    def __getitem__(self, name: typing_extensions.Literal["allowCreateApplication"]) -> MetaOapg.properties.allowCreateApplication: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["allowManageUsers"]) -> MetaOapg.properties.allowManageUsers: ...
+
+    @typing.overload
+    def __getitem__(self, name: typing_extensions.Literal["orgName"]) -> MetaOapg.properties.orgName: ...
 
     @typing.overload
     def __getitem__(self, name: typing_extensions.Literal["rateLimitEnabled"]) -> MetaOapg.properties.rateLimitEnabled: ...
@@ -91,13 +102,22 @@ class OpenConsumerCreateRequestDTO(
     @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
 
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["appId", "allowCreateApplication", "allowManageUsers", "name", "orgId", "orgName", "ownerName", "rateLimitEnabled", "rateLimit", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["appId", "name", "orgId", "ownerName", "allowCreateApplication", "allowManageUsers", "orgName", "rateLimitEnabled", "rateLimit", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
 
 
     @typing.overload
-    def get_item_oapg(self, name: typing_extensions.Literal["appId"]) -> typing.Union[MetaOapg.properties.appId, schemas.Unset]: ...
+    def get_item_oapg(self, name: typing_extensions.Literal["appId"]) -> MetaOapg.properties.appId: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["name"]) -> MetaOapg.properties.name: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["orgId"]) -> MetaOapg.properties.orgId: ...
+
+    @typing.overload
+    def get_item_oapg(self, name: typing_extensions.Literal["ownerName"]) -> MetaOapg.properties.ownerName: ...
 
     @typing.overload
     def get_item_oapg(self, name: typing_extensions.Literal["allowCreateApplication"]) -> typing.Union[MetaOapg.properties.allowCreateApplication, schemas.Unset]: ...
@@ -106,16 +126,7 @@ class OpenConsumerCreateRequestDTO(
     def get_item_oapg(self, name: typing_extensions.Literal["allowManageUsers"]) -> typing.Union[MetaOapg.properties.allowManageUsers, schemas.Unset]: ...
 
     @typing.overload
-    def get_item_oapg(self, name: typing_extensions.Literal["name"]) -> typing.Union[MetaOapg.properties.name, schemas.Unset]: ...
-
-    @typing.overload
-    def get_item_oapg(self, name: typing_extensions.Literal["orgId"]) -> typing.Union[MetaOapg.properties.orgId, schemas.Unset]: ...
-
-    @typing.overload
     def get_item_oapg(self, name: typing_extensions.Literal["orgName"]) -> typing.Union[MetaOapg.properties.orgName, schemas.Unset]: ...
-
-    @typing.overload
-    def get_item_oapg(self, name: typing_extensions.Literal["ownerName"]) -> typing.Union[MetaOapg.properties.ownerName, schemas.Unset]: ...
 
     @typing.overload
     def get_item_oapg(self, name: typing_extensions.Literal["rateLimitEnabled"]) -> typing.Union[MetaOapg.properties.rateLimitEnabled, schemas.Unset]: ...
@@ -126,20 +137,20 @@ class OpenConsumerCreateRequestDTO(
     @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
 
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["appId", "allowCreateApplication", "allowManageUsers", "name", "orgId", "orgName", "ownerName", "rateLimitEnabled", "rateLimit", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["appId", "name", "orgId", "ownerName", "allowCreateApplication", "allowManageUsers", "orgName", "rateLimitEnabled", "rateLimit", ], str]):
         return super().get_item_oapg(name)
 
 
     def __new__(
         cls,
         *_args: typing.Union[dict, frozendict.frozendict, ],
-        appId: typing.Union[MetaOapg.properties.appId, str, schemas.Unset] = schemas.unset,
+        ownerName: typing.Union[MetaOapg.properties.ownerName, str, ],
+        appId: typing.Union[MetaOapg.properties.appId, str, ],
+        name: typing.Union[MetaOapg.properties.name, str, ],
+        orgId: typing.Union[MetaOapg.properties.orgId, str, ],
         allowCreateApplication: typing.Union[MetaOapg.properties.allowCreateApplication, bool, schemas.Unset] = schemas.unset,
         allowManageUsers: typing.Union[MetaOapg.properties.allowManageUsers, bool, schemas.Unset] = schemas.unset,
-        name: typing.Union[MetaOapg.properties.name, str, schemas.Unset] = schemas.unset,
-        orgId: typing.Union[MetaOapg.properties.orgId, str, schemas.Unset] = schemas.unset,
         orgName: typing.Union[MetaOapg.properties.orgName, str, schemas.Unset] = schemas.unset,
-        ownerName: typing.Union[MetaOapg.properties.ownerName, str, schemas.Unset] = schemas.unset,
         rateLimitEnabled: typing.Union[MetaOapg.properties.rateLimitEnabled, bool, schemas.Unset] = schemas.unset,
         rateLimit: typing.Union[MetaOapg.properties.rateLimit, decimal.Decimal, int, schemas.Unset] = schemas.unset,
         _configuration: typing.Optional[schemas.Configuration] = None,
@@ -148,13 +159,13 @@ class OpenConsumerCreateRequestDTO(
         return super().__new__(
             cls,
             *_args,
+            ownerName=ownerName,
             appId=appId,
-            allowCreateApplication=allowCreateApplication,
-            allowManageUsers=allowManageUsers,
             name=name,
             orgId=orgId,
+            allowCreateApplication=allowCreateApplication,
+            allowManageUsers=allowManageUsers,
             orgName=orgName,
-            ownerName=ownerName,
             rateLimitEnabled=rateLimitEnabled,
             rateLimit=rateLimit,
             _configuration=_configuration,

@@ -37,7 +37,26 @@ public class OpenConsumerCreateRequestDTO {
 
   private Boolean rateLimitEnabled = false;
 
-  private Integer rateLimit = 0;
+  private Integer rateLimit;
+
+  /**
+   * Default constructor
+   * @deprecated Use {@link OpenConsumerCreateRequestDTO#OpenConsumerCreateRequestDTO(String, String, String, String)}
+   */
+  @Deprecated
+  public OpenConsumerCreateRequestDTO() {
+    super();
+  }
+
+  /**
+   * Constructor with only required parameters
+   */
+  public OpenConsumerCreateRequestDTO(String appId, String name, String orgId, String ownerName) {
+    this.appId = appId;
+    this.name = name;
+    this.orgId = orgId;
+    this.ownerName = ownerName;
+  }
 
   public OpenConsumerCreateRequestDTO appId(String appId) {
     this.appId = appId;
@@ -48,8 +67,8 @@ public class OpenConsumerCreateRequestDTO {
    * 第三方应用ID
    * @return appId
   */
-
-  @Schema(name = "appId", description = "第三方应用ID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull
+  @Schema(name = "appId", description = "第三方应用ID", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("appId")
   public String getAppId() {
     return appId;
@@ -108,8 +127,8 @@ public class OpenConsumerCreateRequestDTO {
    * 第三方应用名称
    * @return name
   */
-
-  @Schema(name = "name", description = "第三方应用名称", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull
+  @Schema(name = "name", description = "第三方应用名称", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("name")
   public String getName() {
     return name;
@@ -128,8 +147,8 @@ public class OpenConsumerCreateRequestDTO {
    * 部门ID
    * @return orgId
   */
-
-  @Schema(name = "orgId", description = "部门ID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull
+  @Schema(name = "orgId", description = "部门ID", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("orgId")
   public String getOrgId() {
     return orgId;
@@ -168,8 +187,8 @@ public class OpenConsumerCreateRequestDTO {
    * 负责人用户名
    * @return ownerName
   */
-
-  @Schema(name = "ownerName", description = "负责人用户名", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @NotNull
+  @Schema(name = "ownerName", description = "负责人用户名", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("ownerName")
   public String getOwnerName() {
     return ownerName;
@@ -205,12 +224,12 @@ public class OpenConsumerCreateRequestDTO {
   }
 
   /**
-   * 限流QPS，0表示不限流
+   * 限流QPS，rateLimitEnabled 为 true 时必须大于 0；未开启限流时 0 表示不限流
    * minimum: 0
    * @return rateLimit
   */
   @Min(0)
-  @Schema(name = "rateLimit", description = "限流QPS，0表示不限流", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+  @Schema(name = "rateLimit", description = "限流QPS，rateLimitEnabled 为 true 时必须大于 0；未开启限流时 0 表示不限流", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("rateLimit")
   public Integer getRateLimit() {
     return rateLimit;
