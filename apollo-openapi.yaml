@@ -18,7 +18,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
 
-  version: 0.3.6
+  version: 0.3.7
 security:
   - ApiKeyAuth: []
 tags:
@@ -5406,7 +5406,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OpenConsumerInfoDTO'
+                $ref: '#/components/schemas/OpenConsumerTokenDTO'
   /openapi/v1/consumers/{token}/assign-role:
     post:
       summary: 给消费者授权(new added)
@@ -6952,6 +6952,52 @@ components:
           type: boolean
           description: 是否开启限流
           default: false
+    OpenConsumerTokenDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Consumer Token ID
+        deleted:
+          type: boolean
+          description: 是否已删除
+          default: false
+        deletedAt:
+          type: integer
+          format: int64
+          description: 删除时间戳
+          default: 0
+        consumerId:
+          type: integer
+          format: int64
+          description: Consumer ID
+        token:
+          type: string
+          description: Consumer Token
+        rateLimit:
+          type: integer
+          description: 限流QPS，0表示不限流
+          minimum: 0
+          default: 0
+        expires:
+          type: string
+          format: date-time
+          description: 过期时间
+        dataChangeCreatedBy:
+          type: string
+          description: 创建人
+        dataChangeCreatedTime:
+          type: string
+          format: date-time
+          description: 创建时间
+        dataChangeLastModifiedBy:
+          type: string
+          description: 最后修改人
+        dataChangeLastModifiedTime:
+          type: string
+          format: date-time
+          description: 最后修改时间
     OpenUserInfoDTO:
       type: object
       properties:

@@ -30,6 +30,7 @@ import java.io.File;
 import org.openapitools.client.model.OpenConsumerCreateRequestDTO;
 import org.openapitools.client.model.OpenConsumerInfoDTO;
 import org.openapitools.client.model.OpenConsumerSummaryDTO;
+import org.openapitools.client.model.OpenConsumerTokenDTO;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -3554,7 +3555,7 @@ public class PortalManagementApi {
      * 按应用ID查询消费者Token(new added)
      * GET /openapi/v1/consumer-tokens/by-appId
      * @param appId  (required)
-     * @return OpenConsumerInfoDTO
+     * @return OpenConsumerTokenDTO
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -3562,8 +3563,8 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功获取消费者Token </td><td>  -  </td></tr>
      </table>
      */
-    public OpenConsumerInfoDTO getConsumerTokenByAppId(String appId) throws ApiException {
-        ApiResponse<OpenConsumerInfoDTO> localVarResp = getConsumerTokenByAppIdWithHttpInfo(appId);
+    public OpenConsumerTokenDTO getConsumerTokenByAppId(String appId) throws ApiException {
+        ApiResponse<OpenConsumerTokenDTO> localVarResp = getConsumerTokenByAppIdWithHttpInfo(appId);
         return localVarResp.getData();
     }
 
@@ -3571,7 +3572,7 @@ public class PortalManagementApi {
      * 按应用ID查询消费者Token(new added)
      * GET /openapi/v1/consumer-tokens/by-appId
      * @param appId  (required)
-     * @return ApiResponse&lt;OpenConsumerInfoDTO&gt;
+     * @return ApiResponse&lt;OpenConsumerTokenDTO&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -3579,9 +3580,9 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功获取消费者Token </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenConsumerInfoDTO> getConsumerTokenByAppIdWithHttpInfo(String appId) throws ApiException {
+    public ApiResponse<OpenConsumerTokenDTO> getConsumerTokenByAppIdWithHttpInfo(String appId) throws ApiException {
         okhttp3.Call localVarCall = getConsumerTokenByAppIdValidateBeforeCall(appId, null);
-        Type localVarReturnType = new TypeToken<OpenConsumerInfoDTO>(){}.getType();
+        Type localVarReturnType = new TypeToken<OpenConsumerTokenDTO>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -3598,10 +3599,10 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功获取消费者Token </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getConsumerTokenByAppIdAsync(String appId, final ApiCallback<OpenConsumerInfoDTO> _callback) throws ApiException {
+    public okhttp3.Call getConsumerTokenByAppIdAsync(String appId, final ApiCallback<OpenConsumerTokenDTO> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getConsumerTokenByAppIdValidateBeforeCall(appId, _callback);
-        Type localVarReturnType = new TypeToken<OpenConsumerInfoDTO>(){}.getType();
+        Type localVarReturnType = new TypeToken<OpenConsumerTokenDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

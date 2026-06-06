@@ -3091,7 +3091,7 @@ Class Name | Input Type | Accessed Type | Description | Notes
 
 # **get_consumer_token_by_app_id**
 <a id="get_consumer_token_by_app_id"></a>
-> OpenConsumerInfoDTO get_consumer_token_by_app_id(app_id)
+> OpenConsumerTokenDTO get_consumer_token_by_app_id(app_id)
 
 按应用ID查询消费者Token(new added)
 
@@ -3103,7 +3103,7 @@ GET /openapi/v1/consumer-tokens/by-appId
 ```python
 import apollo_openapi
 from apollo_openapi.apis.tags import portal_management_api
-from apollo_openapi.model.open_consumer_info_dto import OpenConsumerInfoDTO
+from apollo_openapi.model.open_consumer_token_dto import OpenConsumerTokenDTO
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -3181,7 +3181,7 @@ headers | Unset | headers were not defined |
 # SchemaFor200ResponseBodyApplicationJson
 Type | Description  | Notes
 ------------- | ------------- | -------------
-[**OpenConsumerInfoDTO**](../../models/OpenConsumerInfoDTO.md) |  |
+[**OpenConsumerTokenDTO**](../../models/OpenConsumerTokenDTO.md) |  |
 
 
 ### Authorization

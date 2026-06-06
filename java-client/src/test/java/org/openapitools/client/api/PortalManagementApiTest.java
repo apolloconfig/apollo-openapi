@@ -17,6 +17,7 @@ import java.io.File;
 import org.openapitools.client.model.OpenConsumerCreateRequestDTO;
 import org.openapitools.client.model.OpenConsumerInfoDTO;
 import org.openapitools.client.model.OpenConsumerSummaryDTO;
+import org.openapitools.client.model.OpenConsumerTokenDTO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -429,7 +430,7 @@ public class PortalManagementApiTest {
     @Test
     public void getConsumerTokenByAppIdTest() throws ApiException {
         String appId = null;
-        OpenConsumerInfoDTO response = api.getConsumerTokenByAppId(appId);
+        OpenConsumerTokenDTO response = api.getConsumerTokenByAppId(appId);
         // TODO: test validations
     }
 

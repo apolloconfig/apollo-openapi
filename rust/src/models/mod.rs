@@ -22,6 +22,8 @@ pub mod open_consumer_info_dto;
 pub use self::open_consumer_info_dto::OpenConsumerInfoDto;
 pub mod open_consumer_summary_dto;
 pub use self::open_consumer_summary_dto::OpenConsumerSummaryDto;
+pub mod open_consumer_token_dto;
+pub use self::open_consumer_token_dto::OpenConsumerTokenDto;
 pub mod open_create_app_dto;
 pub use self::open_create_app_dto::OpenCreateAppDto;
 pub mod open_create_namespace_dto;

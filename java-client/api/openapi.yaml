@@ -17,7 +17,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
   title: Apollo OpenAPI
-  version: 0.3.6
+  version: 0.3.7
 servers:
 - url: /
 security:
@@ -6233,7 +6233,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OpenConsumerInfoDTO'
+                $ref: '#/components/schemas/OpenConsumerTokenDTO'
           description: 成功获取消费者Token
       summary: 按应用ID查询消费者Token(new added)
       tags:
@@ -8547,6 +8547,64 @@ components:
           default: false
           description: 是否开启限流
           type: boolean
+      type: object
+    OpenConsumerTokenDTO:
+      example:
+        deletedAt: 6
+        expires: 2000-01-23T04:56:07.000+00:00
+        deleted: false
+        rateLimit: 0
+        dataChangeCreatedTime: 2000-01-23T04:56:07.000+00:00
+        dataChangeLastModifiedBy: dataChangeLastModifiedBy
+        consumerId: 1
+        dataChangeCreatedBy: dataChangeCreatedBy
+        id: 0
+        dataChangeLastModifiedTime: 2000-01-23T04:56:07.000+00:00
+        token: token
+      properties:
+        id:
+          description: Consumer Token ID
+          format: int64
+          type: integer
+        deleted:
+          default: false
+          description: 是否已删除
+          type: boolean
+        deletedAt:
+          default: 0
+          description: 删除时间戳
+          format: int64
+          type: integer
+        consumerId:
+          description: Consumer ID
+          format: int64
+          type: integer
+        token:
+          description: Consumer Token
+          type: string
+        rateLimit:
+          default: 0
+          description: 限流QPS，0表示不限流
+          minimum: 0
+          type: integer
+        expires:
+          description: 过期时间
+          format: date-time
+          type: string
+        dataChangeCreatedBy:
+          description: 创建人
+          type: string
+        dataChangeCreatedTime:
+          description: 创建时间
+          format: date-time
+          type: string
+        dataChangeLastModifiedBy:
+          description: 最后修改人
+          type: string
+        dataChangeLastModifiedTime:
+          description: 最后修改时间
+          format: date-time
+          type: string
       type: object
     OpenUserInfoDTO:
       example:

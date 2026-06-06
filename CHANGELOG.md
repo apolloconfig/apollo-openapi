@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Rename Portal user management contracts from `Portal User Management` to `User Management`.
 
+### Fixed
+
+- Restore `/openapi/v1/consumer-tokens/by-appId` to a token-specific response schema.
+
 ### Added
 
 - Add Consumer Token support notes to user management contracts, including `ManageUsers`-guarded user lookup and mutation operations.

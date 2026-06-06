@@ -1,7 +1,7 @@
 # apollo-openapi-client
 
 Apollo OpenAPI
-- API version: 0.3.6
+- API version: 0.3.7
 
 <p>Apollo配置中心OpenAPI接口文档</p>
 
@@ -54,7 +54,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.apollo</groupId>
   <artifactId>apollo-openapi-client</artifactId>
-  <version>0.3.6</version>
+  <version>0.3.7</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -70,7 +70,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "com.apollo:apollo-openapi-client:0.3.6"
+     implementation "com.apollo:apollo-openapi-client:0.3.7"
   }
 ```
 
@@ -84,7 +84,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/apollo-openapi-client-0.3.6.jar`
+* `target/apollo-openapi-client-0.3.7.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -291,6 +291,7 @@ Class | Method | HTTP request | Description
  - [OpenConsumerCreateRequestDTO](docs/OpenConsumerCreateRequestDTO.md)
  - [OpenConsumerInfoDTO](docs/OpenConsumerInfoDTO.md)
  - [OpenConsumerSummaryDTO](docs/OpenConsumerSummaryDTO.md)
+ - [OpenConsumerTokenDTO](docs/OpenConsumerTokenDTO.md)
  - [OpenCreateAppDTO](docs/OpenCreateAppDTO.md)
  - [OpenCreateNamespaceDTO](docs/OpenCreateNamespaceDTO.md)
  - [OpenEnvClusterDTO](docs/OpenEnvClusterDTO.md)

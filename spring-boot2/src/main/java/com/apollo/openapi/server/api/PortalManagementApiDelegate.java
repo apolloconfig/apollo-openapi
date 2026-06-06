@@ -3,6 +3,7 @@ package com.apollo.openapi.server.api;
 import com.apollo.openapi.server.model.OpenConsumerCreateRequestDTO;
 import com.apollo.openapi.server.model.OpenConsumerInfoDTO;
 import com.apollo.openapi.server.model.OpenConsumerSummaryDTO;
+import com.apollo.openapi.server.model.OpenConsumerTokenDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -540,11 +541,11 @@ public interface PortalManagementApiDelegate {
      * @return 成功获取消费者Token (status code 200)
      * @see PortalManagementApi#getConsumerTokenByAppId
      */
-    default ResponseEntity<OpenConsumerInfoDTO> getConsumerTokenByAppId(String appId) {
+    default ResponseEntity<OpenConsumerTokenDTO> getConsumerTokenByAppId(String appId) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"orgName\" : \"orgName\", \"rateLimit\" : 0, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" }";
+                    String exampleString = "{ \"deletedAt\" : 6, \"expires\" : \"2000-01-23T04:56:07.000+00:00\", \"deleted\" : false, \"rateLimit\" : 0, \"dataChangeCreatedTime\" : \"2000-01-23T04:56:07.000+00:00\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"consumerId\" : 1, \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2000-01-23T04:56:07.000+00:00\", \"token\" : \"token\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

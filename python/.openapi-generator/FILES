@@ -50,6 +50,8 @@ apollo_openapi/model/open_consumer_info_dto.py
 apollo_openapi/model/open_consumer_info_dto.pyi
 apollo_openapi/model/open_consumer_summary_dto.py
 apollo_openapi/model/open_consumer_summary_dto.pyi
+apollo_openapi/model/open_consumer_token_dto.py
+apollo_openapi/model/open_consumer_token_dto.pyi
 apollo_openapi/model/open_create_app_dto.py
 apollo_openapi/model/open_create_app_dto.pyi
 apollo_openapi/model/open_create_namespace_dto.py
@@ -143,6 +145,7 @@ docs/models/OpenClusterNamespaceRoleUserDTO.md
 docs/models/OpenConsumerCreateRequestDTO.md
 docs/models/OpenConsumerInfoDTO.md
 docs/models/OpenConsumerSummaryDTO.md
+docs/models/OpenConsumerTokenDTO.md
 docs/models/OpenCreateAppDTO.md
 docs/models/OpenCreateNamespaceDTO.md
 docs/models/OpenEnvClusterDTO.md
@@ -194,6 +197,7 @@ test/test_models/test_open_cluster_namespace_role_user_dto.py
 test/test_models/test_open_consumer_create_request_dto.py
 test/test_models/test_open_consumer_info_dto.py
 test/test_models/test_open_consumer_summary_dto.py
+test/test_models/test_open_consumer_token_dto.py
 test/test_models/test_open_create_app_dto.py
 test/test_models/test_open_create_namespace_dto.py
 test/test_models/test_open_env_cluster_dto.py
