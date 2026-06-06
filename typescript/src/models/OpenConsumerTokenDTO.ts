@@ -19,24 +19,6 @@ import { exists, mapValues } from '../runtime';
  */
 export interface OpenConsumerTokenDTO {
     /**
-     * Consumer Token ID
-     * @type {number}
-     * @memberof OpenConsumerTokenDTO
-     */
-    id?: number;
-    /**
-     * 是否已删除
-     * @type {boolean}
-     * @memberof OpenConsumerTokenDTO
-     */
-    deleted?: boolean;
-    /**
-     * 删除时间戳
-     * @type {number}
-     * @memberof OpenConsumerTokenDTO
-     */
-    deletedAt?: number;
-    /**
      * Consumer ID
      * @type {number}
      * @memberof OpenConsumerTokenDTO
@@ -105,9 +87,6 @@ export function OpenConsumerTokenDTOFromJSONTyped(json: any, ignoreDiscriminator
     }
     return {
 
-        'id': !exists(json, 'id') ? undefined : json['id'],
-        'deleted': !exists(json, 'deleted') ? undefined : json['deleted'],
-        'deletedAt': !exists(json, 'deletedAt') ? undefined : json['deletedAt'],
         'consumerId': !exists(json, 'consumerId') ? undefined : json['consumerId'],
         'token': !exists(json, 'token') ? undefined : json['token'],
         'rateLimit': !exists(json, 'rateLimit') ? undefined : json['rateLimit'],
@@ -128,9 +107,6 @@ export function OpenConsumerTokenDTOToJSON(value?: OpenConsumerTokenDTO | null):
     }
     return {
 
-        'id': value.id,
-        'deleted': value.deleted,
-        'deletedAt': value.deletedAt,
         'consumerId': value.consumerId,
         'token': value.token,
         'rateLimit': value.rateLimit,

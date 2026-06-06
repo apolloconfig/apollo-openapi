@@ -38,30 +38,6 @@ public class OpenConsumerTokenDTOTest {
     }
 
     /**
-     * Test the property 'id'
-     */
-    @Test
-    public void idTest() {
-        // TODO: test id
-    }
-
-    /**
-     * Test the property 'deleted'
-     */
-    @Test
-    public void deletedTest() {
-        // TODO: test deleted
-    }
-
-    /**
-     * Test the property 'deletedAt'
-     */
-    @Test
-    public void deletedAtTest() {
-        // TODO: test deletedAt
-    }
-
-    /**
      * Test the property 'consumerId'
      */
     @Test

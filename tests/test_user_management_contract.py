@@ -104,6 +104,9 @@ class UserManagementContractTest(unittest.TestCase):
             schemas["OpenConsumerInfoDTO"]["properties"]["rateLimitEnabled"]["type"])
         self.assertIn("token", schemas["OpenConsumerInfoDTO"]["properties"])
         token_properties = schemas["OpenConsumerTokenDTO"]["properties"]
+        self.assertNotIn("id", token_properties)
+        self.assertNotIn("deleted", token_properties)
+        self.assertNotIn("deletedAt", token_properties)
         self.assertEqual("integer", token_properties["consumerId"]["type"])
         self.assertEqual("int64", token_properties["consumerId"]["format"])
         self.assertEqual("string", token_properties["token"]["type"])

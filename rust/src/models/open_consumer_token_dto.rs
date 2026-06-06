@@ -12,15 +12,6 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct OpenConsumerTokenDto {
-    /// Consumer Token ID
-    #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
-    pub id: Option<i64>,
-    /// 是否已删除
-    #[serde(rename = "deleted", skip_serializing_if = "Option::is_none")]
-    pub deleted: Option<bool>,
-    /// 删除时间戳
-    #[serde(rename = "deletedAt", skip_serializing_if = "Option::is_none")]
-    pub deleted_at: Option<i64>,
     /// Consumer ID
     #[serde(rename = "consumerId", skip_serializing_if = "Option::is_none")]
     pub consumer_id: Option<i64>,
@@ -50,9 +41,6 @@ pub struct OpenConsumerTokenDto {
 impl OpenConsumerTokenDto {
     pub fn new() -> OpenConsumerTokenDto {
         OpenConsumerTokenDto {
-            id: None,
-            deleted: None,
-            deleted_at: None,
             consumer_id: None,
             token: None,
             rate_limit: None,

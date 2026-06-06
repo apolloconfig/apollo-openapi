@@ -52,18 +52,6 @@ import org.openapitools.client.JSON;
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
 public class OpenConsumerTokenDTO {
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private Long id;
-
-  public static final String SERIALIZED_NAME_DELETED = "deleted";
-  @SerializedName(SERIALIZED_NAME_DELETED)
-  private Boolean deleted = false;
-
-  public static final String SERIALIZED_NAME_DELETED_AT = "deletedAt";
-  @SerializedName(SERIALIZED_NAME_DELETED_AT)
-  private Long deletedAt = 0l;
-
   public static final String SERIALIZED_NAME_CONSUMER_ID = "consumerId";
   @SerializedName(SERIALIZED_NAME_CONSUMER_ID)
   private Long consumerId;
@@ -98,69 +86,6 @@ public class OpenConsumerTokenDTO {
 
   public OpenConsumerTokenDTO() {
   }
-
-  public OpenConsumerTokenDTO id(Long id) {
-
-    this.id = id;
-    return this;
-  }
-
-   /**
-   * Consumer Token ID
-   * @return id
-  **/
-  @javax.annotation.Nullable
-  public Long getId() {
-    return id;
-  }
-
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-
-  public OpenConsumerTokenDTO deleted(Boolean deleted) {
-
-    this.deleted = deleted;
-    return this;
-  }
-
-   /**
-   * 是否已删除
-   * @return deleted
-  **/
-  @javax.annotation.Nullable
-  public Boolean getDeleted() {
-    return deleted;
-  }
-
-
-  public void setDeleted(Boolean deleted) {
-    this.deleted = deleted;
-  }
-
-
-  public OpenConsumerTokenDTO deletedAt(Long deletedAt) {
-
-    this.deletedAt = deletedAt;
-    return this;
-  }
-
-   /**
-   * 删除时间戳
-   * @return deletedAt
-  **/
-  @javax.annotation.Nullable
-  public Long getDeletedAt() {
-    return deletedAt;
-  }
-
-
-  public void setDeletedAt(Long deletedAt) {
-    this.deletedAt = deletedAt;
-  }
-
 
   public OpenConsumerTokenDTO consumerId(Long consumerId) {
 
@@ -341,10 +266,7 @@ public class OpenConsumerTokenDTO {
       return false;
     }
     OpenConsumerTokenDTO openConsumerTokenDTO = (OpenConsumerTokenDTO) o;
-    return Objects.equals(this.id, openConsumerTokenDTO.id) &&
-        Objects.equals(this.deleted, openConsumerTokenDTO.deleted) &&
-        Objects.equals(this.deletedAt, openConsumerTokenDTO.deletedAt) &&
-        Objects.equals(this.consumerId, openConsumerTokenDTO.consumerId) &&
+    return Objects.equals(this.consumerId, openConsumerTokenDTO.consumerId) &&
         Objects.equals(this.token, openConsumerTokenDTO.token) &&
         Objects.equals(this.rateLimit, openConsumerTokenDTO.rateLimit) &&
         Objects.equals(this.expires, openConsumerTokenDTO.expires) &&
@@ -356,16 +278,13 @@ public class OpenConsumerTokenDTO {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, deleted, deletedAt, consumerId, token, rateLimit, expires, dataChangeCreatedBy, dataChangeCreatedTime, dataChangeLastModifiedBy, dataChangeLastModifiedTime);
+    return Objects.hash(consumerId, token, rateLimit, expires, dataChangeCreatedBy, dataChangeCreatedTime, dataChangeLastModifiedBy, dataChangeLastModifiedTime);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OpenConsumerTokenDTO {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
-    sb.append("    deletedAt: ").append(toIndentedString(deletedAt)).append("\n");
     sb.append("    consumerId: ").append(toIndentedString(consumerId)).append("\n");
     sb.append("    token: ").append(token == null ? "null" : "***redacted***").append("\n");
     sb.append("    rateLimit: ").append(toIndentedString(rateLimit)).append("\n");
@@ -396,9 +315,6 @@ public class OpenConsumerTokenDTO {
   static {
     // a set of all properties/fields (JSON key names)
     openapiFields = new HashSet<String>();
-    openapiFields.add("id");
-    openapiFields.add("deleted");
-    openapiFields.add("deletedAt");
     openapiFields.add("consumerId");
     openapiFields.add("token");
     openapiFields.add("rateLimit");

@@ -6917,19 +6917,6 @@ components:
     OpenConsumerTokenDTO:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-          description: Consumer Token ID
-        deleted:
-          type: boolean
-          description: 是否已删除
-          default: false
-        deletedAt:
-          type: integer
-          format: int64
-          description: 删除时间戳
-          default: 0
         consumerId:
           type: integer
           format: int64

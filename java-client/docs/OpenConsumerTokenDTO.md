@@ -7,9 +7,6 @@
 
 | Name | Type | Description | Notes |
 |------------ | ------------- | ------------- | -------------|
-|**id** | **Long** | Consumer Token ID |  [optional] |
-|**deleted** | **Boolean** | 是否已删除 |  [optional] |
-|**deletedAt** | **Long** | 删除时间戳 |  [optional] |
 |**consumerId** | **Long** | Consumer ID |  [optional] |
 |**token** | **String** | Consumer Token |  [optional] |
 |**rateLimit** | **Integer** | 限流QPS，0表示不限流 |  [optional] |

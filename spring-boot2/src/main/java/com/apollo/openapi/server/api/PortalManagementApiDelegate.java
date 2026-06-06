@@ -544,7 +544,7 @@ public interface PortalManagementApiDelegate {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"deletedAt\" : 6, \"expires\" : \"2000-01-23T04:56:07.000+00:00\", \"deleted\" : false, \"rateLimit\" : 0, \"dataChangeCreatedTime\" : \"2000-01-23T04:56:07.000+00:00\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"consumerId\" : 1, \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"id\" : 0, \"dataChangeLastModifiedTime\" : \"2000-01-23T04:56:07.000+00:00\", \"token\" : \"token\" }";
+                    String exampleString = "{ \"expires\" : \"2000-01-23T04:56:07.000+00:00\", \"rateLimit\" : 0, \"dataChangeCreatedTime\" : \"2000-01-23T04:56:07.000+00:00\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"consumerId\" : 0, \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"dataChangeLastModifiedTime\" : \"2000-01-23T04:56:07.000+00:00\", \"token\" : \"token\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

@@ -35,9 +35,6 @@ class OpenConsumerTokenDTO(
     class MetaOapg:
 
         class properties:
-            id = schemas.Int64Schema
-            deleted = schemas.BoolSchema
-            deletedAt = schemas.Int64Schema
             consumerId = schemas.Int64Schema
             token = schemas.StrSchema
 
@@ -52,9 +49,6 @@ class OpenConsumerTokenDTO(
             dataChangeLastModifiedBy = schemas.StrSchema
             dataChangeLastModifiedTime = schemas.DateTimeSchema
             __annotations__ = {
-                "id": id,
-                "deleted": deleted,
-                "deletedAt": deletedAt,
                 "consumerId": consumerId,
                 "token": token,
                 "rateLimit": rateLimit,
@@ -64,15 +58,6 @@ class OpenConsumerTokenDTO(
                 "dataChangeLastModifiedBy": dataChangeLastModifiedBy,
                 "dataChangeLastModifiedTime": dataChangeLastModifiedTime,
             }
-
-    @typing.overload
-    def __getitem__(self, name: typing_extensions.Literal["id"]) -> MetaOapg.properties.id: ...
-
-    @typing.overload
-    def __getitem__(self, name: typing_extensions.Literal["deleted"]) -> MetaOapg.properties.deleted: ...
-
-    @typing.overload
-    def __getitem__(self, name: typing_extensions.Literal["deletedAt"]) -> MetaOapg.properties.deletedAt: ...
 
     @typing.overload
     def __getitem__(self, name: typing_extensions.Literal["consumerId"]) -> MetaOapg.properties.consumerId: ...
@@ -101,19 +86,10 @@ class OpenConsumerTokenDTO(
     @typing.overload
     def __getitem__(self, name: str) -> schemas.UnsetAnyTypeSchema: ...
 
-    def __getitem__(self, name: typing.Union[typing_extensions.Literal["id", "deleted", "deletedAt", "consumerId", "token", "rateLimit", "expires", "dataChangeCreatedBy", "dataChangeCreatedTime", "dataChangeLastModifiedBy", "dataChangeLastModifiedTime", ], str]):
+    def __getitem__(self, name: typing.Union[typing_extensions.Literal["consumerId", "token", "rateLimit", "expires", "dataChangeCreatedBy", "dataChangeCreatedTime", "dataChangeLastModifiedBy", "dataChangeLastModifiedTime", ], str]):
         # dict_instance[name] accessor
         return super().__getitem__(name)
 
-
-    @typing.overload
-    def get_item_oapg(self, name: typing_extensions.Literal["id"]) -> typing.Union[MetaOapg.properties.id, schemas.Unset]: ...
-
-    @typing.overload
-    def get_item_oapg(self, name: typing_extensions.Literal["deleted"]) -> typing.Union[MetaOapg.properties.deleted, schemas.Unset]: ...
-
-    @typing.overload
-    def get_item_oapg(self, name: typing_extensions.Literal["deletedAt"]) -> typing.Union[MetaOapg.properties.deletedAt, schemas.Unset]: ...
 
     @typing.overload
     def get_item_oapg(self, name: typing_extensions.Literal["consumerId"]) -> typing.Union[MetaOapg.properties.consumerId, schemas.Unset]: ...
@@ -142,16 +118,13 @@ class OpenConsumerTokenDTO(
     @typing.overload
     def get_item_oapg(self, name: str) -> typing.Union[schemas.UnsetAnyTypeSchema, schemas.Unset]: ...
 
-    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["id", "deleted", "deletedAt", "consumerId", "token", "rateLimit", "expires", "dataChangeCreatedBy", "dataChangeCreatedTime", "dataChangeLastModifiedBy", "dataChangeLastModifiedTime", ], str]):
+    def get_item_oapg(self, name: typing.Union[typing_extensions.Literal["consumerId", "token", "rateLimit", "expires", "dataChangeCreatedBy", "dataChangeCreatedTime", "dataChangeLastModifiedBy", "dataChangeLastModifiedTime", ], str]):
         return super().get_item_oapg(name)
 
 
     def __new__(
         cls,
         *_args: typing.Union[dict, frozendict.frozendict, ],
-        id: typing.Union[MetaOapg.properties.id, decimal.Decimal, int, schemas.Unset] = schemas.unset,
-        deleted: typing.Union[MetaOapg.properties.deleted, bool, schemas.Unset] = schemas.unset,
-        deletedAt: typing.Union[MetaOapg.properties.deletedAt, decimal.Decimal, int, schemas.Unset] = schemas.unset,
         consumerId: typing.Union[MetaOapg.properties.consumerId, decimal.Decimal, int, schemas.Unset] = schemas.unset,
         token: typing.Union[MetaOapg.properties.token, str, schemas.Unset] = schemas.unset,
         rateLimit: typing.Union[MetaOapg.properties.rateLimit, decimal.Decimal, int, schemas.Unset] = schemas.unset,
@@ -166,9 +139,6 @@ class OpenConsumerTokenDTO(
         return super().__new__(
             cls,
             *_args,
-            id=id,
-            deleted=deleted,
-            deletedAt=deletedAt,
             consumerId=consumerId,
             token=token,
             rateLimit=rateLimit,

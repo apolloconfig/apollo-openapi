@@ -4,9 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | Option<**i64**> | Consumer Token ID | [optional]
-**deleted** | Option<**bool**> | 是否已删除 | [optional][default to false]
-**deleted_at** | Option<**i64**> | 删除时间戳 | [optional][default to 0]
 **consumer_id** | Option<**i64**> | Consumer ID | [optional]
 **token** | Option<**String**> | Consumer Token | [optional]
 **rate_limit** | Option<**i32**> | 限流QPS，0表示不限流 | [optional][default to 0]

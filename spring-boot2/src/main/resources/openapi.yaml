@@ -8776,31 +8776,15 @@ components:
       type: object
     OpenConsumerTokenDTO:
       example:
-        deletedAt: 6
         expires: 2000-01-23T04:56:07.000+00:00
-        deleted: false
         rateLimit: 0
         dataChangeCreatedTime: 2000-01-23T04:56:07.000+00:00
         dataChangeLastModifiedBy: dataChangeLastModifiedBy
-        consumerId: 1
+        consumerId: 0
         dataChangeCreatedBy: dataChangeCreatedBy
-        id: 0
         dataChangeLastModifiedTime: 2000-01-23T04:56:07.000+00:00
         token: token
       properties:
-        id:
-          description: Consumer Token ID
-          format: int64
-          type: integer
-        deleted:
-          default: false
-          description: 是否已删除
-          type: boolean
-        deletedAt:
-          default: 0
-          description: 删除时间戳
-          format: int64
-          type: integer
         consumerId:
           description: Consumer ID
           format: int64

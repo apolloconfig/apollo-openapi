@@ -23,12 +23,6 @@ import javax.annotation.Generated;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
 public class OpenConsumerTokenDTO {
 
-  private Long id;
-
-  private Boolean deleted = false;
-
-  private Long deletedAt = 0l;
-
   private Long consumerId;
 
   private String token;
@@ -47,66 +41,6 @@ public class OpenConsumerTokenDTO {
 
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
   private OffsetDateTime dataChangeLastModifiedTime;
-
-  public OpenConsumerTokenDTO id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Consumer Token ID
-   * @return id
-  */
-
-  @Schema(name = "id", description = "Consumer Token ID", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("id")
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public OpenConsumerTokenDTO deleted(Boolean deleted) {
-    this.deleted = deleted;
-    return this;
-  }
-
-  /**
-   * 是否已删除
-   * @return deleted
-  */
-
-  @Schema(name = "deleted", description = "是否已删除", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("deleted")
-  public Boolean getDeleted() {
-    return deleted;
-  }
-
-  public void setDeleted(Boolean deleted) {
-    this.deleted = deleted;
-  }
-
-  public OpenConsumerTokenDTO deletedAt(Long deletedAt) {
-    this.deletedAt = deletedAt;
-    return this;
-  }
-
-  /**
-   * 删除时间戳
-   * @return deletedAt
-  */
-
-  @Schema(name = "deletedAt", description = "删除时间戳", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("deletedAt")
-  public Long getDeletedAt() {
-    return deletedAt;
-  }
-
-  public void setDeletedAt(Long deletedAt) {
-    this.deletedAt = deletedAt;
-  }
 
   public OpenConsumerTokenDTO consumerId(Long consumerId) {
     this.consumerId = consumerId;
@@ -278,10 +212,7 @@ public class OpenConsumerTokenDTO {
       return false;
     }
     OpenConsumerTokenDTO openConsumerTokenDTO = (OpenConsumerTokenDTO) o;
-    return Objects.equals(this.id, openConsumerTokenDTO.id) &&
-        Objects.equals(this.deleted, openConsumerTokenDTO.deleted) &&
-        Objects.equals(this.deletedAt, openConsumerTokenDTO.deletedAt) &&
-        Objects.equals(this.consumerId, openConsumerTokenDTO.consumerId) &&
+    return Objects.equals(this.consumerId, openConsumerTokenDTO.consumerId) &&
         Objects.equals(this.token, openConsumerTokenDTO.token) &&
         Objects.equals(this.rateLimit, openConsumerTokenDTO.rateLimit) &&
         Objects.equals(this.expires, openConsumerTokenDTO.expires) &&
@@ -293,16 +224,13 @@ public class OpenConsumerTokenDTO {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, deleted, deletedAt, consumerId, token, rateLimit, expires, dataChangeCreatedBy, dataChangeCreatedTime, dataChangeLastModifiedBy, dataChangeLastModifiedTime);
+    return Objects.hash(consumerId, token, rateLimit, expires, dataChangeCreatedBy, dataChangeCreatedTime, dataChangeLastModifiedBy, dataChangeLastModifiedTime);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class OpenConsumerTokenDTO {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
-    sb.append("    deletedAt: ").append(toIndentedString(deletedAt)).append("\n");
     sb.append("    consumerId: ").append(toIndentedString(consumerId)).append("\n");
     sb.append("    token: ").append(token == null ? "null" : "***redacted***").append("\n");
     sb.append("    rateLimit: ").append(toIndentedString(rateLimit)).append("\n");
