@@ -8,10 +8,10 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 ### Dictionary Keys
 Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
-**ownerName** | str,  | str,  | 负责人用户名 |
-**appId** | str,  | str,  | 第三方应用ID |
-**name** | str,  | str,  | 第三方应用名称 |
-**orgId** | str,  | str,  | 部门ID |
+**ownerName** | str,  | str,  | 负责人用户名 | [required]
+**appId** | str,  | str,  | 第三方应用ID | [required]
+**name** | str,  | str,  | 第三方应用名称 | [required]
+**orgId** | str,  | str,  | 部门ID | [required]
 **allowCreateApplication** | bool,  | BoolClass,  | 是否允许该Consumer Token创建应用 | [optional] if omitted the server will use the default value of False
 **allowManageUsers** | bool,  | BoolClass,  | 是否允许该Consumer Token管理用户 | [optional] if omitted the server will use the default value of False
 **orgName** | str,  | str,  | 部门名称 | [optional]
