@@ -32,27 +32,28 @@ import javax.annotation.Generated;
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
 @Validated
-@Tag(name = "Portal User Management", description = "Portal用户管理相关接口，主要供Portal UI在用户登录态下调用")
-public interface PortalUserManagementApi {
+@Tag(name = "User Management", description = "用户管理相关接口，支持Portal用户登录态和具备用户管理权限的Consumer Token调用")
+public interface UserManagementApi {
 
-    default PortalUserManagementApiDelegate getDelegate() {
-        return new PortalUserManagementApiDelegate() {};
+    default UserManagementApiDelegate getDelegate() {
+        return new UserManagementApiDelegate() {};
     }
 
     /**
-     * PUT /openapi/v1/users/enabled : 修改Portal用户启用状态(new added)
-     * PUT /openapi/v1/users/enabled
+     * PUT /openapi/v1/users/enabled : 修改用户启用状态(new added)
+     * PUT /openapi/v1/users/enabled，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
      *
      * @param openUserDTO  (required)
+     * @param operator 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数 (optional)
      * @return 用户状态修改成功 (status code 200)
      *         or 请求参数错误 (status code 400)
      *         or 权限不足 (status code 403)
      */
     @Operation(
         operationId = "changeUserEnabled",
-        summary = "修改Portal用户启用状态(new added)",
-        description = "PUT /openapi/v1/users/enabled",
-        tags = { "Portal User Management" },
+        summary = "修改用户启用状态(new added)",
+        description = "PUT /openapi/v1/users/enabled，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator",
+        tags = { "User Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "用户状态修改成功"),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
@@ -73,27 +74,29 @@ public interface PortalUserManagementApi {
         consumes = { "application/json" }
     )
     default ResponseEntity<Void> changeUserEnabled(
-        @Parameter(name = "OpenUserDTO", description = "", required = true) @Valid @RequestBody OpenUserDTO openUserDTO
+        @Parameter(name = "OpenUserDTO", description = "", required = true) @Valid @RequestBody OpenUserDTO openUserDTO,
+        @Parameter(name = "operator", description = "操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
-        return getDelegate().changeUserEnabled(openUserDTO);
+        return getDelegate().changeUserEnabled(openUserDTO, operator);
     }
 
 
     /**
-     * POST /openapi/v1/users : 创建或更新Portal用户(new added)
-     * POST /openapi/v1/users
+     * POST /openapi/v1/users : 创建或更新用户(new added)
+     * POST /openapi/v1/users，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
      *
      * @param openUserDTO  (required)
      * @param isCreate true 表示创建用户，false 表示更新用户 (optional, default to false)
+     * @param operator 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数 (optional)
      * @return 用户创建或更新成功 (status code 200)
      *         or 请求参数错误 (status code 400)
      *         or 权限不足 (status code 403)
      */
     @Operation(
         operationId = "createOrUpdateUser",
-        summary = "创建或更新Portal用户(new added)",
-        description = "POST /openapi/v1/users",
-        tags = { "Portal User Management" },
+        summary = "创建或更新用户(new added)",
+        description = "POST /openapi/v1/users，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator",
+        tags = { "User Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "用户创建或更新成功"),
             @ApiResponse(responseCode = "400", description = "请求参数错误", content = {
@@ -115,9 +118,10 @@ public interface PortalUserManagementApi {
     )
     default ResponseEntity<Void> createOrUpdateUser(
         @Parameter(name = "OpenUserDTO", description = "", required = true) @Valid @RequestBody OpenUserDTO openUserDTO,
-        @Parameter(name = "isCreate", description = "true 表示创建用户，false 表示更新用户", in = ParameterIn.QUERY) @Valid @RequestParam(value = "isCreate", required = false, defaultValue = "false") Boolean isCreate
+        @Parameter(name = "isCreate", description = "true 表示创建用户，false 表示更新用户", in = ParameterIn.QUERY) @Valid @RequestParam(value = "isCreate", required = false, defaultValue = "false") Boolean isCreate,
+        @Parameter(name = "operator", description = "操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数", in = ParameterIn.QUERY) @Valid @RequestParam(value = "operator", required = false) String operator
     ) {
-        return getDelegate().createOrUpdateUser(openUserDTO, isCreate);
+        return getDelegate().createOrUpdateUser(openUserDTO, isCreate, operator);
     }
 
 
@@ -133,7 +137,7 @@ public interface PortalUserManagementApi {
         operationId = "getCurrentUser",
         summary = "获取当前Portal用户(new added)",
         description = "GET /openapi/v1/user",
-        tags = { "Portal User Management" },
+        tags = { "User Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "成功获取当前用户", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenUserInfoDTO.class))
@@ -162,8 +166,53 @@ public interface PortalUserManagementApi {
 
 
     /**
-     * GET /openapi/v1/users : 搜索Portal用户(new added)
-     * GET /openapi/v1/users
+     * GET /openapi/v1/users/{userId} : 获取指定用户(new added)
+     * GET /openapi/v1/users/{userId}，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
+     *
+     * @param userId 用户ID (required)
+     * @return 成功获取用户 (status code 200)
+     *         or 请求参数错误或用户不存在 (status code 400)
+     *         or 未登录或未认证 (status code 401)
+     *         or 权限不足 (status code 403)
+     */
+    @Operation(
+        operationId = "getUserByUserId",
+        summary = "获取指定用户(new added)",
+        description = "GET /openapi/v1/users/{userId}，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问",
+        tags = { "User Management" },
+        responses = {
+            @ApiResponse(responseCode = "200", description = "成功获取用户", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenUserInfoDTO.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "请求参数错误或用户不存在", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "未登录或未认证", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
+            }),
+            @ApiResponse(responseCode = "403", description = "权限不足", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
+            })
+        },
+        security = {
+            @SecurityRequirement(name = "ApiKeyAuth")
+        }
+    )
+    @RequestMapping(
+        method = RequestMethod.GET,
+        value = "/openapi/v1/users/{userId}",
+        produces = { "application/json" }
+    )
+    default ResponseEntity<OpenUserInfoDTO> getUserByUserId(
+        @Parameter(name = "userId", description = "用户ID", required = true, in = ParameterIn.PATH) @PathVariable("userId") String userId
+    ) {
+        return getDelegate().getUserByUserId(userId);
+    }
+
+
+    /**
+     * GET /openapi/v1/users : 搜索用户(new added)
+     * GET /openapi/v1/users，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
      *
      * @param keyword 用户名、显示名或邮箱关键字 (required)
      * @param includeInactiveUsers 是否包含禁用用户 (optional, default to false)
@@ -171,13 +220,13 @@ public interface PortalUserManagementApi {
      * @param limit 返回数量 (optional, default to 10)
      * @return 成功获取用户列表 (status code 200)
      *         or 未登录或未授权访问 (status code 401)
-     *         or 仅支持Portal用户登录态访问 (status code 403)
+     *         or 权限不足 (status code 403)
      */
     @Operation(
         operationId = "searchUsers",
-        summary = "搜索Portal用户(new added)",
-        description = "GET /openapi/v1/users",
-        tags = { "Portal User Management" },
+        summary = "搜索用户(new added)",
+        description = "GET /openapi/v1/users，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问",
+        tags = { "User Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "成功获取用户列表", content = {
                 @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenUserInfoDTO.class)))
@@ -185,7 +234,7 @@ public interface PortalUserManagementApi {
             @ApiResponse(responseCode = "401", description = "未登录或未授权访问", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
-            @ApiResponse(responseCode = "403", description = "仅支持Portal用户登录态访问", content = {
+            @ApiResponse(responseCode = "403", description = "权限不足", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             })
         },

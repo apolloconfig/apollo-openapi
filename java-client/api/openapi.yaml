@@ -17,7 +17,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
   title: Apollo OpenAPI
-  version: 0.3.5
+  version: 0.3.6
 servers:
 - url: /
 security:
@@ -49,8 +49,8 @@ tags:
   name: AccessKey Management
 - description: 权限管理相关接口，包括权限查询等功能
   name: Permission Management
-- description: Portal用户管理相关接口，主要供Portal UI在用户登录态下调用
-  name: Portal User Management
+- description: 用户管理相关接口，支持Portal用户登录态和具备用户管理权限的Consumer Token调用
+  name: User Management
 - description: Portal UI 登录态管理接口，主要供当前版本 Portal 前端调用
   name: Portal Management
 paths:
@@ -5629,12 +5629,12 @@ paths:
           description: 仅支持Portal用户登录态访问
       summary: 获取当前Portal用户(new added)
       tags:
-      - Portal User Management
+      - User Management
       x-accepts: application/json
   /openapi/v1/users:
     get:
       deprecated: false
-      description: GET /openapi/v1/users
+      description: GET /openapi/v1/users，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
       operationId: searchUsers
       parameters:
       - description: 用户名、显示名或邮箱关键字
@@ -5694,14 +5694,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
-          description: 仅支持Portal用户登录态访问
-      summary: 搜索Portal用户(new added)
+          description: 权限不足
+      summary: 搜索用户(new added)
       tags:
-      - Portal User Management
+      - User Management
       x-accepts: application/json
     post:
       deprecated: false
-      description: POST /openapi/v1/users
+      description: POST /openapi/v1/users，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
       operationId: createOrUpdateUser
       parameters:
       - description: true 表示创建用户，false 表示更新用户
@@ -5712,6 +5712,14 @@ paths:
         schema:
           default: false
           type: boolean
+        style: form
+      - description: 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
         style: form
       requestBody:
         content:
@@ -5734,16 +5742,70 @@ paths:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
-      summary: 创建或更新Portal用户(new added)
+      summary: 创建或更新用户(new added)
       tags:
-      - Portal User Management
+      - User Management
       x-content-type: application/json
+      x-accepts: application/json
+  /openapi/v1/users/{userId}:
+    get:
+      deprecated: false
+      description: "GET /openapi/v1/users/{userId}，支持Portal用户登录态或具备ManageUsers权限的\
+        Consumer Token访问"
+      operationId: getUserByUserId
+      parameters:
+      - description: 用户ID
+        explode: false
+        in: path
+        name: userId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenUserInfoDTO'
+          description: 成功获取用户
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 请求参数错误或用户不存在
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 未登录或未认证
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 权限不足
+      summary: 获取指定用户(new added)
+      tags:
+      - User Management
       x-accepts: application/json
   /openapi/v1/users/enabled:
     put:
       deprecated: false
-      description: PUT /openapi/v1/users/enabled
+      description: PUT /openapi/v1/users/enabled，Portal用户登录态使用当前登录用户作为operator；Consumer
+        Token访问时需要具备ManageUsers权限并传入有效operator
       operationId: changeUserEnabled
+      parameters:
+      - description: 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数
+        explode: true
+        in: query
+        name: operator
+        required: false
+        schema:
+          type: string
+        style: form
       requestBody:
         content:
           application/json:
@@ -5765,9 +5827,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
           description: 权限不足
-      summary: 修改Portal用户启用状态(new added)
+      summary: 修改用户启用状态(new added)
       tags:
-      - Portal User Management
+      - User Management
       x-content-type: application/json
       x-accepts: application/json
   /openapi/v1/apollo/audit/properties:
@@ -6115,7 +6177,7 @@ paths:
             application/json:
               schema:
                 items:
-                  type: object
+                  $ref: '#/components/schemas/OpenConsumerSummaryDTO'
                 type: array
           description: 成功获取消费者列表
       summary: 查询开放平台消费者列表(new added)
@@ -6139,14 +6201,14 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              $ref: '#/components/schemas/OpenConsumerCreateRequestDTO'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/OpenConsumerInfoDTO'
           description: 成功创建消费者
       summary: 创建开放平台消费者(new added)
       tags:
@@ -6171,7 +6233,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                $ref: '#/components/schemas/OpenConsumerInfoDTO'
           description: 成功获取消费者Token
       summary: 按应用ID查询消费者Token(new added)
       tags:
@@ -8327,6 +8389,163 @@ components:
       properties:
         hasPermission:
           description: ""
+          type: boolean
+      type: object
+    OpenConsumerCreateRequestDTO:
+      example:
+        orgName: orgName
+        rateLimit: 0
+        ownerName: ownerName
+        appId: appId
+        name: name
+        allowCreateApplication: false
+        allowManageUsers: false
+        rateLimitEnabled: false
+        orgId: orgId
+      properties:
+        appId:
+          description: 第三方应用ID
+          type: string
+        allowCreateApplication:
+          default: false
+          description: 是否允许该Consumer Token创建应用
+          type: boolean
+        allowManageUsers:
+          default: false
+          description: 是否允许该Consumer Token管理用户
+          type: boolean
+        name:
+          description: 第三方应用名称
+          type: string
+        orgId:
+          description: 部门ID
+          type: string
+        orgName:
+          description: 部门名称
+          type: string
+        ownerName:
+          description: 负责人用户名
+          type: string
+        rateLimitEnabled:
+          default: false
+          description: 是否开启限流
+          type: boolean
+        rateLimit:
+          default: 0
+          description: 限流QPS，0表示不限流
+          minimum: 0
+          type: integer
+      type: object
+    OpenConsumerInfoDTO:
+      example:
+        orgName: orgName
+        rateLimit: 0
+        ownerName: ownerName
+        consumerId: 0
+        appId: appId
+        name: name
+        allowCreateApplication: false
+        allowManageUsers: false
+        rateLimitEnabled: false
+        orgId: orgId
+        ownerEmail: ownerEmail
+        token: token
+      properties:
+        appId:
+          description: 第三方应用ID
+          type: string
+        name:
+          description: 第三方应用名称
+          type: string
+        orgId:
+          description: 部门ID
+          type: string
+        orgName:
+          description: 部门名称
+          type: string
+        ownerName:
+          description: 负责人用户名
+          type: string
+        ownerEmail:
+          description: 负责人邮箱
+          type: string
+        consumerId:
+          description: Consumer ID
+          format: int64
+          type: integer
+        token:
+          description: Consumer Token，仅在创建或按应用查询详情时返回
+          type: string
+        allowCreateApplication:
+          default: false
+          description: 是否允许该Consumer Token创建应用
+          type: boolean
+        allowManageUsers:
+          default: false
+          description: 是否允许该Consumer Token管理用户
+          type: boolean
+        rateLimit:
+          default: 0
+          description: 限流QPS，0表示不限流
+          minimum: 0
+          type: integer
+        rateLimitEnabled:
+          default: false
+          description: 是否开启限流
+          type: boolean
+      type: object
+    OpenConsumerSummaryDTO:
+      example:
+        orgName: orgName
+        rateLimit: 0
+        ownerName: ownerName
+        consumerId: 0
+        appId: appId
+        name: name
+        allowCreateApplication: false
+        allowManageUsers: false
+        rateLimitEnabled: false
+        orgId: orgId
+        ownerEmail: ownerEmail
+      properties:
+        appId:
+          description: 第三方应用ID
+          type: string
+        name:
+          description: 第三方应用名称
+          type: string
+        orgId:
+          description: 部门ID
+          type: string
+        orgName:
+          description: 部门名称
+          type: string
+        ownerName:
+          description: 负责人用户名
+          type: string
+        ownerEmail:
+          description: 负责人邮箱
+          type: string
+        consumerId:
+          description: Consumer ID
+          format: int64
+          type: integer
+        allowCreateApplication:
+          default: false
+          description: 是否允许该Consumer Token创建应用
+          type: boolean
+        allowManageUsers:
+          default: false
+          description: 是否允许该Consumer Token管理用户
+          type: boolean
+        rateLimit:
+          default: 0
+          description: 限流QPS，0表示不限流
+          minimum: 0
+          type: integer
+        rateLimitEnabled:
+          default: false
+          description: 是否开启限流
           type: boolean
       type: object
     OpenUserInfoDTO:

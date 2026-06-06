@@ -1,7 +1,7 @@
 # apollo-openapi-client
 
 Apollo OpenAPI
-- API version: 0.3.5
+- API version: 0.3.6
 
 <p>Apollo配置中心OpenAPI接口文档</p>
 
@@ -54,7 +54,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.apollo</groupId>
   <artifactId>apollo-openapi-client</artifactId>
-  <version>0.3.5</version>
+  <version>0.3.6</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -70,7 +70,7 @@ Add this dependency to your project's build file:
   }
 
   dependencies {
-     implementation "com.apollo:apollo-openapi-client:0.3.5"
+     implementation "com.apollo:apollo-openapi-client:0.3.6"
   }
 ```
 
@@ -84,7 +84,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/apollo-openapi-client-0.3.5.jar`
+* `target/apollo-openapi-client-0.3.6.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -262,10 +262,6 @@ Class | Method | HTTP request | Description
 *PortalManagementApi* | [**searchAuditLogs**](docs/PortalManagementApi.md#searchAuditLogs) | **GET** /openapi/v1/apollo/audit/logs/by-name-or-type-or-operator | 搜索审计日志(new added)
 *PortalManagementApi* | [**searchItemInfoByKeyOrValue**](docs/PortalManagementApi.md#searchItemInfoByKeyOrValue) | **GET** /openapi/v1/global-search/item-info/by-key-or-value | 按Key或Value全局搜索配置(new added)
 *PortalManagementApi* | [**topFavorite**](docs/PortalManagementApi.md#topFavorite) | **PUT** /openapi/v1/favorites/{favoriteId} | 收藏置顶(new added)
-*PortalUserManagementApi* | [**changeUserEnabled**](docs/PortalUserManagementApi.md#changeUserEnabled) | **PUT** /openapi/v1/users/enabled | 修改Portal用户启用状态(new added)
-*PortalUserManagementApi* | [**createOrUpdateUser**](docs/PortalUserManagementApi.md#createOrUpdateUser) | **POST** /openapi/v1/users | 创建或更新Portal用户(new added)
-*PortalUserManagementApi* | [**getCurrentUser**](docs/PortalUserManagementApi.md#getCurrentUser) | **GET** /openapi/v1/user | 获取当前Portal用户(new added)
-*PortalUserManagementApi* | [**searchUsers**](docs/PortalUserManagementApi.md#searchUsers) | **GET** /openapi/v1/users | 搜索Portal用户(new added)
 *ReleaseManagementApi* | [**compareRelease**](docs/ReleaseManagementApi.md#compareRelease) | **GET** /openapi/v1/envs/{env}/releases/comparison | Compare two releases
 *ReleaseManagementApi* | [**createGrayDelRelease**](docs/ReleaseManagementApi.md#createGrayDelRelease) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/gray-del-releases | 创建灰度删除发布 (original openapi)
 *ReleaseManagementApi* | [**createGrayRelease**](docs/ReleaseManagementApi.md#createGrayRelease) | **POST** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/releases | 创建灰度发布 (original openapi)
@@ -274,6 +270,11 @@ Class | Method | HTTP request | Description
 *ReleaseManagementApi* | [**getReleaseById**](docs/ReleaseManagementApi.md#getReleaseById) | **GET** /openapi/v1/envs/{env}/releases/{releaseId} | 获取发布详情 (new added)
 *ReleaseManagementApi* | [**loadLatestActiveRelease**](docs/ReleaseManagementApi.md#loadLatestActiveRelease) | **GET** /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/releases/latest | 获取最新活跃发布 (original openapi)
 *ReleaseManagementApi* | [**rollback**](docs/ReleaseManagementApi.md#rollback) | **PUT** /openapi/v1/envs/{env}/releases/{releaseId}/rollback | 回滚发布 (original openapi)
+*UserManagementApi* | [**changeUserEnabled**](docs/UserManagementApi.md#changeUserEnabled) | **PUT** /openapi/v1/users/enabled | 修改用户启用状态(new added)
+*UserManagementApi* | [**createOrUpdateUser**](docs/UserManagementApi.md#createOrUpdateUser) | **POST** /openapi/v1/users | 创建或更新用户(new added)
+*UserManagementApi* | [**getCurrentUser**](docs/UserManagementApi.md#getCurrentUser) | **GET** /openapi/v1/user | 获取当前Portal用户(new added)
+*UserManagementApi* | [**getUserByUserId**](docs/UserManagementApi.md#getUserByUserId) | **GET** /openapi/v1/users/{userId} | 获取指定用户(new added)
+*UserManagementApi* | [**searchUsers**](docs/UserManagementApi.md#searchUsers) | **GET** /openapi/v1/users | 搜索用户(new added)
 
 
 ## Documentation for Models
@@ -287,6 +288,9 @@ Class | Method | HTTP request | Description
  - [OpenAppRoleUserDTO](docs/OpenAppRoleUserDTO.md)
  - [OpenClusterDTO](docs/OpenClusterDTO.md)
  - [OpenClusterNamespaceRoleUserDTO](docs/OpenClusterNamespaceRoleUserDTO.md)
+ - [OpenConsumerCreateRequestDTO](docs/OpenConsumerCreateRequestDTO.md)
+ - [OpenConsumerInfoDTO](docs/OpenConsumerInfoDTO.md)
+ - [OpenConsumerSummaryDTO](docs/OpenConsumerSummaryDTO.md)
  - [OpenCreateAppDTO](docs/OpenCreateAppDTO.md)
  - [OpenCreateNamespaceDTO](docs/OpenCreateNamespaceDTO.md)
  - [OpenEnvClusterDTO](docs/OpenEnvClusterDTO.md)

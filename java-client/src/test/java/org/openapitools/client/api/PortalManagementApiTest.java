@@ -14,6 +14,9 @@ package org.openapitools.client.api;
 
 import org.openapitools.client.ApiException;
 import java.io.File;
+import org.openapitools.client.model.OpenConsumerCreateRequestDTO;
+import org.openapitools.client.model.OpenConsumerInfoDTO;
+import org.openapitools.client.model.OpenConsumerSummaryDTO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -100,9 +103,9 @@ public class PortalManagementApiTest {
      */
     @Test
     public void createConsumerTest() throws ApiException {
-        Object body = null;
+        OpenConsumerCreateRequestDTO openConsumerCreateRequestDTO = null;
         String expires = null;
-        Object response = api.createConsumer(body, expires);
+        OpenConsumerInfoDTO response = api.createConsumer(openConsumerCreateRequestDTO, expires);
         // TODO: test validations
     }
 
@@ -412,7 +415,7 @@ public class PortalManagementApiTest {
     public void getConsumerListTest() throws ApiException {
         Integer page = null;
         Integer size = null;
-        List<Object> response = api.getConsumerList(page, size);
+        List<OpenConsumerSummaryDTO> response = api.getConsumerList(page, size);
         // TODO: test validations
     }
 
@@ -426,7 +429,7 @@ public class PortalManagementApiTest {
     @Test
     public void getConsumerTokenByAppIdTest() throws ApiException {
         String appId = null;
-        Object response = api.getConsumerTokenByAppId(appId);
+        OpenConsumerInfoDTO response = api.getConsumerTokenByAppId(appId);
         // TODO: test validations
     }
 

@@ -1,5 +1,8 @@
 package com.apollo.openapi.server.api;
 
+import com.apollo.openapi.server.model.OpenConsumerCreateRequestDTO;
+import com.apollo.openapi.server.model.OpenConsumerInfoDTO;
+import com.apollo.openapi.server.model.OpenConsumerSummaryDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -97,13 +100,22 @@ public interface PortalManagementApiDelegate {
      * POST /openapi/v1/consumers : 创建开放平台消费者(new added)
      * POST /openapi/v1/consumers
      *
-     * @param body  (required)
+     * @param openConsumerCreateRequestDTO  (required)
      * @param expires  (optional)
      * @return 成功创建消费者 (status code 200)
      * @see PortalManagementApi#createConsumer
      */
-    default ResponseEntity<Object> createConsumer(Object body,
+    default ResponseEntity<OpenConsumerInfoDTO> createConsumer(OpenConsumerCreateRequestDTO openConsumerCreateRequestDTO,
         String expires) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"orgName\" : \"orgName\", \"rateLimit\" : 0, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -505,12 +517,12 @@ public interface PortalManagementApiDelegate {
      * @return 成功获取消费者列表 (status code 200)
      * @see PortalManagementApi#getConsumerList
      */
-    default ResponseEntity<List<Object>> getConsumerList(Integer page,
+    default ResponseEntity<List<OpenConsumerSummaryDTO>> getConsumerList(Integer page,
         Integer size) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ \"{}\", \"{}\" ]";
+                    String exampleString = "[ { \"orgName\" : \"orgName\", \"rateLimit\" : 0, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\" }, { \"orgName\" : \"orgName\", \"rateLimit\" : 0, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\" } ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -528,7 +540,16 @@ public interface PortalManagementApiDelegate {
      * @return 成功获取消费者Token (status code 200)
      * @see PortalManagementApi#getConsumerTokenByAppId
      */
-    default ResponseEntity<Object> getConsumerTokenByAppId(String appId) {
+    default ResponseEntity<OpenConsumerInfoDTO> getConsumerTokenByAppId(String appId) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    String exampleString = "{ \"orgName\" : \"orgName\", \"rateLimit\" : 0, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" }";
+                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
+                    break;
+                }
+            }
+        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

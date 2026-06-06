@@ -32,6 +32,7 @@ from . import path
 
 # Query params
 IsCreateSchema = schemas.BoolSchema
+OperatorSchema = schemas.StrSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
     'RequestRequiredQueryParams',
     {
@@ -41,6 +42,7 @@ RequestOptionalQueryParams = typing_extensions.TypedDict(
     'RequestOptionalQueryParams',
     {
         'isCreate': typing.Union[IsCreateSchema, bool, ],
+        'operator': typing.Union[OperatorSchema, str, ],
     },
     total=False
 )
@@ -54,6 +56,12 @@ request_query_is_create = api_client.QueryParameter(
     name="isCreate",
     style=api_client.ParameterStyle.FORM,
     schema=IsCreateSchema,
+    explode=True,
+)
+request_query_operator = api_client.QueryParameter(
+    name="operator",
+    style=api_client.ParameterStyle.FORM,
+    schema=OperatorSchema,
     explode=True,
 )
 # body param
@@ -198,7 +206,7 @@ class BaseApi(api_client.Api):
         skip_deserialization: bool = False,
     ):
         """
-        创建或更新Portal用户(new added)
+        创建或更新用户(new added)
         :param skip_deserialization: If true then api_response.response will be set but
             api_response.body and api_response.headers will not be deserialized into schema
             class instances
@@ -209,6 +217,7 @@ class BaseApi(api_client.Api):
         prefix_separator_iterator = None
         for parameter in (
             request_query_is_create,
+            request_query_operator,
         ):
             parameter_data = query_params.get(parameter.name, schemas.unset)
             if parameter_data is schemas.unset:

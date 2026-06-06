@@ -1,5 +1,8 @@
 package com.apollo.openapi.server.api;
 
+import com.apollo.openapi.server.model.OpenConsumerCreateRequestDTO;
+import com.apollo.openapi.server.model.OpenConsumerInfoDTO;
+import com.apollo.openapi.server.model.OpenConsumerSummaryDTO;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

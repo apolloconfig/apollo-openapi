@@ -76,6 +76,7 @@ from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envs_env_accesskeys_access
 from apollo_openapi.apis.paths.openapi_v1_apps_app_id_envs_env_accesskeys_access_key_id_deactivation import OpenapiV1AppsAppIdEnvsEnvAccesskeysAccessKeyIdDeactivation
 from apollo_openapi.apis.paths.openapi_v1_user import OpenapiV1User
 from apollo_openapi.apis.paths.openapi_v1_users import OpenapiV1Users
+from apollo_openapi.apis.paths.openapi_v1_users_user_id import OpenapiV1UsersUserId
 from apollo_openapi.apis.paths.openapi_v1_users_enabled import OpenapiV1UsersEnabled
 from apollo_openapi.apis.paths.openapi_v1_apollo_audit_properties import OpenapiV1ApolloAuditProperties
 from apollo_openapi.apis.paths.openapi_v1_apollo_audit_logs import OpenapiV1ApolloAuditLogs
@@ -186,6 +187,7 @@ PathToApi = typing_extensions.TypedDict(
         PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_ACCESSKEYS_ACCESS_KEY_ID_DEACTIVATION: OpenapiV1AppsAppIdEnvsEnvAccesskeysAccessKeyIdDeactivation,
         PathValues.OPENAPI_V1_USER: OpenapiV1User,
         PathValues.OPENAPI_V1_USERS: OpenapiV1Users,
+        PathValues.OPENAPI_V1_USERS_USER_ID: OpenapiV1UsersUserId,
         PathValues.OPENAPI_V1_USERS_ENABLED: OpenapiV1UsersEnabled,
         PathValues.OPENAPI_V1_APOLLO_AUDIT_PROPERTIES: OpenapiV1ApolloAuditProperties,
         PathValues.OPENAPI_V1_APOLLO_AUDIT_LOGS: OpenapiV1ApolloAuditLogs,
@@ -297,6 +299,7 @@ path_to_api = PathToApi(
         PathValues.OPENAPI_V1_APPS_APP_ID_ENVS_ENV_ACCESSKEYS_ACCESS_KEY_ID_DEACTIVATION: OpenapiV1AppsAppIdEnvsEnvAccesskeysAccessKeyIdDeactivation,
         PathValues.OPENAPI_V1_USER: OpenapiV1User,
         PathValues.OPENAPI_V1_USERS: OpenapiV1Users,
+        PathValues.OPENAPI_V1_USERS_USER_ID: OpenapiV1UsersUserId,
         PathValues.OPENAPI_V1_USERS_ENABLED: OpenapiV1UsersEnabled,
         PathValues.OPENAPI_V1_APOLLO_AUDIT_PROPERTIES: OpenapiV1ApolloAuditProperties,
         PathValues.OPENAPI_V1_APOLLO_AUDIT_LOGS: OpenapiV1ApolloAuditLogs,

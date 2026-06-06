@@ -30,16 +30,16 @@ import javax.annotation.Generated;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
 @Controller
 @RequestMapping("${openapi.apolloOpen.base-path:}")
-public class PortalUserManagementApiController implements PortalUserManagementApi {
+public class UserManagementApiController implements UserManagementApi {
 
-    private final PortalUserManagementApiDelegate delegate;
+    private final UserManagementApiDelegate delegate;
 
-    public PortalUserManagementApiController(@Autowired(required = false) PortalUserManagementApiDelegate delegate) {
-        this.delegate = Optional.ofNullable(delegate).orElse(new PortalUserManagementApiDelegate() {});
+    public UserManagementApiController(@Autowired(required = false) UserManagementApiDelegate delegate) {
+        this.delegate = Optional.ofNullable(delegate).orElse(new UserManagementApiDelegate() {});
     }
 
     @Override
-    public PortalUserManagementApiDelegate getDelegate() {
+    public UserManagementApiDelegate getDelegate() {
         return delegate;
     }
 

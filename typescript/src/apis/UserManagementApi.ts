@@ -29,11 +29,17 @@ import {
 
 export interface ChangeUserEnabledRequest {
     openUserDTO: OpenUserDTO;
+    operator?: string;
 }
 
 export interface CreateOrUpdateUserRequest {
     openUserDTO: OpenUserDTO;
     isCreate?: boolean;
+    operator?: string;
+}
+
+export interface GetUserByUserIdRequest {
+    userId: string;
 }
 
 export interface SearchUsersRequest {
@@ -46,11 +52,11 @@ export interface SearchUsersRequest {
 /**
  *
  */
-export class PortalUserManagementApi extends runtime.BaseAPI {
+export class UserManagementApi extends runtime.BaseAPI {
 
     /**
-     * PUT /openapi/v1/users/enabled
-     * 修改Portal用户启用状态(new added)
+     * PUT /openapi/v1/users/enabled，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
+     * 修改用户启用状态(new added)
      */
     async changeUserEnabledRaw(requestParameters: ChangeUserEnabledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.openUserDTO === null || requestParameters.openUserDTO === undefined) {
@@ -58,6 +64,10 @@ export class PortalUserManagementApi extends runtime.BaseAPI {
         }
 
         const queryParameters: any = {};
+
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
+        }
 
         const headerParameters: runtime.HTTPHeaders = {};
 
@@ -79,16 +89,16 @@ export class PortalUserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * PUT /openapi/v1/users/enabled
-     * 修改Portal用户启用状态(new added)
+     * PUT /openapi/v1/users/enabled，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
+     * 修改用户启用状态(new added)
      */
     async changeUserEnabled(requestParameters: ChangeUserEnabledRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.changeUserEnabledRaw(requestParameters, initOverrides);
     }
 
     /**
-     * POST /openapi/v1/users
-     * 创建或更新Portal用户(new added)
+     * POST /openapi/v1/users，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
+     * 创建或更新用户(new added)
      */
     async createOrUpdateUserRaw(requestParameters: CreateOrUpdateUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters.openUserDTO === null || requestParameters.openUserDTO === undefined) {
@@ -99,6 +109,10 @@ export class PortalUserManagementApi extends runtime.BaseAPI {
 
         if (requestParameters.isCreate !== undefined) {
             queryParameters['isCreate'] = requestParameters.isCreate;
+        }
+
+        if (requestParameters.operator !== undefined) {
+            queryParameters['operator'] = requestParameters.operator;
         }
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -121,8 +135,8 @@ export class PortalUserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * POST /openapi/v1/users
-     * 创建或更新Portal用户(new added)
+     * POST /openapi/v1/users，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
+     * 创建或更新用户(new added)
      */
     async createOrUpdateUser(requestParameters: CreateOrUpdateUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.createOrUpdateUserRaw(requestParameters, initOverrides);
@@ -161,8 +175,44 @@ export class PortalUserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * GET /openapi/v1/users
-     * 搜索Portal用户(new added)
+     * GET /openapi/v1/users/{userId}，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
+     * 获取指定用户(new added)
+     */
+    async getUserByUserIdRaw(requestParameters: GetUserByUserIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenUserInfoDTO>> {
+        if (requestParameters.userId === null || requestParameters.userId === undefined) {
+            throw new runtime.RequiredError('userId','Required parameter requestParameters.userId was null or undefined when calling getUserByUserId.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = this.configuration.apiKey("Authorization"); // ApiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/openapi/v1/users/{userId}`.replace(`{${"userId"}}`, encodeURIComponent(String(requestParameters.userId))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpenUserInfoDTOFromJSON(jsonValue));
+    }
+
+    /**
+     * GET /openapi/v1/users/{userId}，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
+     * 获取指定用户(new added)
+     */
+    async getUserByUserId(requestParameters: GetUserByUserIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenUserInfoDTO> {
+        const response = await this.getUserByUserIdRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * GET /openapi/v1/users，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
+     * 搜索用户(new added)
      */
     async searchUsersRaw(requestParameters: SearchUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenUserInfoDTO>>> {
         if (requestParameters.keyword === null || requestParameters.keyword === undefined) {
@@ -204,8 +254,8 @@ export class PortalUserManagementApi extends runtime.BaseAPI {
     }
 
     /**
-     * GET /openapi/v1/users
-     * 搜索Portal用户(new added)
+     * GET /openapi/v1/users，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
+     * 搜索用户(new added)
      */
     async searchUsers(requestParameters: SearchUsersRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenUserInfoDTO>> {
         const response = await this.searchUsersRaw(requestParameters, initOverrides);

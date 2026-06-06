@@ -21,7 +21,7 @@ from .. import ApiTestMixin
 class TestOpenapiV1Users(ApiTestMixin, unittest.TestCase):
     """
     OpenapiV1Users unit test stubs
-        创建或更新Portal用户(new added)  # noqa: E501
+        创建或更新用户(new added)  # noqa: E501
     """
     _configuration = configuration.Configuration()
 

@@ -19,8 +19,8 @@ apollo_openapi/apis/tags/namespace_management_api.py
 apollo_openapi/apis/tags/organization_management_api.py
 apollo_openapi/apis/tags/permission_management_api.py
 apollo_openapi/apis/tags/portal_management_api.py
-apollo_openapi/apis/tags/portal_user_management_api.py
 apollo_openapi/apis/tags/release_management_api.py
+apollo_openapi/apis/tags/user_management_api.py
 apollo_openapi/configuration.py
 apollo_openapi/exceptions.py
 apollo_openapi/model/__init__.py
@@ -44,6 +44,12 @@ apollo_openapi/model/open_cluster_dto.py
 apollo_openapi/model/open_cluster_dto.pyi
 apollo_openapi/model/open_cluster_namespace_role_user_dto.py
 apollo_openapi/model/open_cluster_namespace_role_user_dto.pyi
+apollo_openapi/model/open_consumer_create_request_dto.py
+apollo_openapi/model/open_consumer_create_request_dto.pyi
+apollo_openapi/model/open_consumer_info_dto.py
+apollo_openapi/model/open_consumer_info_dto.pyi
+apollo_openapi/model/open_consumer_summary_dto.py
+apollo_openapi/model/open_consumer_summary_dto.pyi
 apollo_openapi/model/open_create_app_dto.py
 apollo_openapi/model/open_create_app_dto.pyi
 apollo_openapi/model/open_create_namespace_dto.py
@@ -122,8 +128,8 @@ docs/apis/tags/NamespaceManagementApi.md
 docs/apis/tags/OrganizationManagementApi.md
 docs/apis/tags/PermissionManagementApi.md
 docs/apis/tags/PortalManagementApi.md
-docs/apis/tags/PortalUserManagementApi.md
 docs/apis/tags/ReleaseManagementApi.md
+docs/apis/tags/UserManagementApi.md
 docs/models/ExceptionResponse.md
 docs/models/MapString.md
 docs/models/NamespaceGrayDelReleaseDTO.md
@@ -134,6 +140,9 @@ docs/models/OpenAppNamespaceDTO.md
 docs/models/OpenAppRoleUserDTO.md
 docs/models/OpenClusterDTO.md
 docs/models/OpenClusterNamespaceRoleUserDTO.md
+docs/models/OpenConsumerCreateRequestDTO.md
+docs/models/OpenConsumerInfoDTO.md
+docs/models/OpenConsumerSummaryDTO.md
 docs/models/OpenCreateAppDTO.md
 docs/models/OpenCreateNamespaceDTO.md
 docs/models/OpenEnvClusterDTO.md
@@ -182,6 +191,9 @@ test/test_models/test_open_app_namespace_dto.py
 test/test_models/test_open_app_role_user_dto.py
 test/test_models/test_open_cluster_dto.py
 test/test_models/test_open_cluster_namespace_role_user_dto.py
+test/test_models/test_open_consumer_create_request_dto.py
+test/test_models/test_open_consumer_info_dto.py
+test/test_models/test_open_consumer_summary_dto.py
 test/test_models/test_open_create_app_dto.py
 test/test_models/test_open_create_namespace_dto.py
 test/test_models/test_open_env_cluster_dto.py

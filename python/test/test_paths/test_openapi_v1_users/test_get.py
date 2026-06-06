@@ -21,7 +21,7 @@ from .. import ApiTestMixin
 class TestOpenapiV1Users(ApiTestMixin, unittest.TestCase):
     """
     OpenapiV1Users unit test stubs
-        搜索Portal用户(new added)  # noqa: E501
+        搜索用户(new added)  # noqa: E501
     """
     _configuration = configuration.Configuration()
 

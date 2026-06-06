@@ -81,6 +81,7 @@ class PathValues(str, enum.Enum):
     OPENAPI_V1_APPS_APP_ID_ENVS_ENV_ACCESSKEYS_ACCESS_KEY_ID_DEACTIVATION = "/openapi/v1/apps/{appId}/envs/{env}/accesskeys/{accessKeyId}/deactivation"
     OPENAPI_V1_USER = "/openapi/v1/user"
     OPENAPI_V1_USERS = "/openapi/v1/users"
+    OPENAPI_V1_USERS_USER_ID = "/openapi/v1/users/{userId}"
     OPENAPI_V1_USERS_ENABLED = "/openapi/v1/users/enabled"
     OPENAPI_V1_APOLLO_AUDIT_PROPERTIES = "/openapi/v1/apollo/audit/properties"
     OPENAPI_V1_APOLLO_AUDIT_LOGS = "/openapi/v1/apollo/audit/logs"
