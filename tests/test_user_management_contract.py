@@ -17,7 +17,7 @@ class UserManagementContractTest(unittest.TestCase):
     self.repo_root = Path(__file__).resolve().parents[1]
 
   def _load_spec(self, spec_file):
-    return yaml.safe_load((self.repo_root / spec_file).read_text())
+    return yaml.safe_load((self.repo_root / spec_file).read_text(encoding="utf-8"))
 
   def test_user_management_tag_renamed_in_all_specs(self):
     for spec_file in SPEC_FILES:
