@@ -25,8 +25,8 @@ pub struct OpenConsumerTokenDto {
     #[serde(rename = "consumerId", skip_serializing_if = "Option::is_none")]
     pub consumer_id: Option<i64>,
     /// Consumer Token
-    #[serde(rename = "token", skip_serializing_if = "Option::is_none")]
-    pub token: Option<String>,
+    #[serde(rename = "token", default, with = "::serde_with::rust::double_option", skip_serializing_if = "Option::is_none")]
+    pub token: Option<Option<String>>,
     /// 限流QPS，0表示不限流
     #[serde(rename = "rateLimit", skip_serializing_if = "Option::is_none")]
     pub rate_limit: Option<i32>,

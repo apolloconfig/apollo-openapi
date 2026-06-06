@@ -8431,10 +8431,14 @@ components:
           description: 是否开启限流
           type: boolean
         rateLimit:
-          default: 0
-          description: 限流QPS，0表示不限流
+          description: 限流QPS，rateLimitEnabled 为 true 时必须大于 0；未开启限流时 0 表示不限流
           minimum: 0
           type: integer
+      required:
+      - appId
+      - name
+      - orgId
+      - ownerName
       type: object
     OpenConsumerInfoDTO:
       example:
@@ -8581,6 +8585,7 @@ components:
           type: integer
         token:
           description: Consumer Token
+          nullable: true
           type: string
         rateLimit:
           default: 0

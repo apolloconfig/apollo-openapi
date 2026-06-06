@@ -47,7 +47,7 @@ export interface OpenConsumerTokenDTO {
      * @type {string}
      * @memberof OpenConsumerTokenDTO
      */
-    token?: string;
+    token?: string | null;
     /**
      * 限流QPS，0表示不限流
      * @type {number}

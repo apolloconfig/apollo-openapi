@@ -3181,7 +3181,7 @@ headers | Unset | headers were not defined |
 # SchemaFor200ResponseBodyApplicationJson
 Type | Description  | Notes
 ------------- | ------------- | -------------
-[**OpenConsumerTokenDTO**](../../models/OpenConsumerTokenDTO.md) |  |
+[**OpenConsumerTokenDTO**](../../models/OpenConsumerTokenDTO.md) |  |  |
 
 
 ### Authorization

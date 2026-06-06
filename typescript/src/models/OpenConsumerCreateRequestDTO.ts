@@ -23,7 +23,7 @@ export interface OpenConsumerCreateRequestDTO {
      * @type {string}
      * @memberof OpenConsumerCreateRequestDTO
      */
-    appId?: string;
+    appId: string;
     /**
      * 是否允许该Consumer Token创建应用
      * @type {boolean}
@@ -41,13 +41,13 @@ export interface OpenConsumerCreateRequestDTO {
      * @type {string}
      * @memberof OpenConsumerCreateRequestDTO
      */
-    name?: string;
+    name: string;
     /**
      * 部门ID
      * @type {string}
      * @memberof OpenConsumerCreateRequestDTO
      */
-    orgId?: string;
+    orgId: string;
     /**
      * 部门名称
      * @type {string}
@@ -59,7 +59,7 @@ export interface OpenConsumerCreateRequestDTO {
      * @type {string}
      * @memberof OpenConsumerCreateRequestDTO
      */
-    ownerName?: string;
+    ownerName: string;
     /**
      * 是否开启限流
      * @type {boolean}
@@ -67,7 +67,7 @@ export interface OpenConsumerCreateRequestDTO {
      */
     rateLimitEnabled?: boolean;
     /**
-     * 限流QPS，0表示不限流
+     * 限流QPS，rateLimitEnabled 为 true 时必须大于 0；未开启限流时 0 表示不限流
      * @type {number}
      * @memberof OpenConsumerCreateRequestDTO
      */
@@ -79,6 +79,10 @@ export interface OpenConsumerCreateRequestDTO {
  */
 export function instanceOfOpenConsumerCreateRequestDTO(value: object): boolean {
     let isInstance = true;
+    isInstance = isInstance && "appId" in value;
+    isInstance = isInstance && "name" in value;
+    isInstance = isInstance && "orgId" in value;
+    isInstance = isInstance && "ownerName" in value;
 
     return isInstance;
 }
@@ -93,13 +97,13 @@ export function OpenConsumerCreateRequestDTOFromJSONTyped(json: any, ignoreDiscr
     }
     return {
 
-        'appId': !exists(json, 'appId') ? undefined : json['appId'],
+        'appId': json['appId'],
         'allowCreateApplication': !exists(json, 'allowCreateApplication') ? undefined : json['allowCreateApplication'],
         'allowManageUsers': !exists(json, 'allowManageUsers') ? undefined : json['allowManageUsers'],
-        'name': !exists(json, 'name') ? undefined : json['name'],
-        'orgId': !exists(json, 'orgId') ? undefined : json['orgId'],
+        'name': json['name'],
+        'orgId': json['orgId'],
         'orgName': !exists(json, 'orgName') ? undefined : json['orgName'],
-        'ownerName': !exists(json, 'ownerName') ? undefined : json['ownerName'],
+        'ownerName': json['ownerName'],
         'rateLimitEnabled': !exists(json, 'rateLimitEnabled') ? undefined : json['rateLimitEnabled'],
         'rateLimit': !exists(json, 'rateLimit') ? undefined : json['rateLimit'],
     };

@@ -10,9 +10,9 @@ Key | Input Type | Accessed Type | Description | Notes
 ------------ | ------------- | ------------- | ------------- | -------------
 **id** | decimal.Decimal, int,  | decimal.Decimal,  | Consumer Token ID | [optional] value must be a 64 bit integer
 **deleted** | bool,  | BoolClass,  | 是否已删除 | [optional] if omitted the server will use the default value of False
-**deletedAt** | decimal.Decimal, int,  | decimal.Decimal,  | 删除时间戳 | [optional] if omitted the server will use the default value of 0value must be a 64 bit integer
+**deletedAt** | decimal.Decimal, int,  | decimal.Decimal,  | 删除时间戳 | [optional] if omitted the server will use the default value of 0; value must be a 64 bit integer
 **consumerId** | decimal.Decimal, int,  | decimal.Decimal,  | Consumer ID | [optional] value must be a 64 bit integer
-**token** | str,  | str,  | Consumer Token | [optional]
+**token** | None, str,  | NoneClass, str,  | Consumer Token | [optional]
 **rateLimit** | decimal.Decimal, int,  | decimal.Decimal,  | 限流QPS，0表示不限流 | [optional] if omitted the server will use the default value of 0
 **expires** | str, datetime,  | str,  | 过期时间 | [optional] value must conform to RFC-3339 date-time
 **dataChangeCreatedBy** | str,  | str,  | 创建人 | [optional]

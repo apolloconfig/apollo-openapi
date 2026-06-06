@@ -96,6 +96,10 @@ class UserManagementContractTest(unittest.TestCase):
           self.assertEqual("boolean", properties["allowCreateApplication"]["type"])
           self.assertEqual("boolean", properties["allowManageUsers"]["type"])
           self.assertEqual(0, properties["rateLimit"]["minimum"])
+        create_schema = schemas["OpenConsumerCreateRequestDTO"]
+        self.assertEqual(["appId", "name", "orgId", "ownerName"], create_schema["required"])
+        self.assertNotIn("default", create_schema["properties"]["rateLimit"])
+        self.assertIn("必须大于 0", create_schema["properties"]["rateLimit"]["description"])
         self.assertEqual("boolean",
             schemas["OpenConsumerInfoDTO"]["properties"]["rateLimitEnabled"]["type"])
         self.assertNotIn("token", schemas["OpenConsumerSummaryDTO"]["properties"])
@@ -104,6 +108,7 @@ class UserManagementContractTest(unittest.TestCase):
         self.assertEqual("integer", token_properties["consumerId"]["type"])
         self.assertEqual("int64", token_properties["consumerId"]["format"])
         self.assertEqual("string", token_properties["token"]["type"])
+        self.assertTrue(token_properties["token"]["nullable"])
         self.assertEqual("string", token_properties["expires"]["type"])
         self.assertEqual("date-time", token_properties["expires"]["format"])
 
@@ -153,7 +158,8 @@ class UserManagementContractTest(unittest.TestCase):
     spring_token = (self.repo_root /
         "spring-boot2/src/main/java/com/apollo/openapi/server/model/OpenConsumerTokenDTO.java"
         ).read_text(encoding="utf-8")
-    self.assertIn('token == null ? "null" : "***redacted***"', spring_token)
+    self.assertIn(
+        'token == null || !token.isPresent() ? "null" : "***redacted***"', spring_token)
     self.assertNotIn('token: ").append(toIndentedString(token))', spring_token)
 
   def _find_parameter(self, operation, name):

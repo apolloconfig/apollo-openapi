@@ -6832,6 +6832,11 @@ components:
           description: ''
     OpenConsumerCreateRequestDTO:
       type: object
+      required:
+        - appId
+        - name
+        - orgId
+        - ownerName
       properties:
         appId:
           type: string
@@ -6862,9 +6867,8 @@ components:
           default: false
         rateLimit:
           type: integer
-          description: 限流QPS，0表示不限流
+          description: 限流QPS，rateLimitEnabled 为 true 时必须大于 0；未开启限流时 0 表示不限流
           minimum: 0
-          default: 0
     OpenConsumerInfoDTO:
       type: object
       properties:
@@ -6974,6 +6978,7 @@ components:
           description: Consumer ID
         token:
           type: string
+          nullable: true
           description: Consumer Token
         rateLimit:
           type: integer

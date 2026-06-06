@@ -62,7 +62,7 @@ public class OpenConsumerTokenDTO {
 
   public static final String SERIALIZED_NAME_DELETED_AT = "deletedAt";
   @SerializedName(SERIALIZED_NAME_DELETED_AT)
-  private Long deletedAt = 0l;
+  private Long deletedAt = 0L;
 
   public static final String SERIALIZED_NAME_CONSUMER_ID = "consumerId";
   @SerializedName(SERIALIZED_NAME_CONSUMER_ID)
