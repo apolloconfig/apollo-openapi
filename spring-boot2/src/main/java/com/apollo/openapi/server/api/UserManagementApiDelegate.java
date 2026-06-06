@@ -15,7 +15,7 @@ import java.util.Optional;
 import javax.annotation.Generated;
 
 /**
- * A delegate to be called by the {@link UserManagementApiController}.
+ * A delegate to be called by the {@link UserManagementApiController}}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")

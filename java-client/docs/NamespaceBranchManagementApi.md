@@ -495,9 +495,6 @@ public class Example {
 
 更新分支灰度发布规则 (original openapi)
 
-Compatibility: the Java client also preserves the pre-0.3.1 overload with `operator`
-before `openGrayReleaseRuleDTO`.
-
 PUT /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules
 
 ### Example

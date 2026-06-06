@@ -415,9 +415,6 @@ public class Example {
 
 获取发布详情 (new added)
 
-Compatibility: the Java client also preserves the pre-0.3.5 overloads that
-accept `Integer releaseId`.
-
 GET /openapi/v1/envs/{env}/releases/{releaseId}
 
 ### Example
@@ -564,9 +561,6 @@ public class Example {
 > rollback(env, releaseId, operator, toReleaseId)
 
 回滚发布 (original openapi)
-
-Compatibility: the Java client also preserves the pre-0.3.5 overloads without
-`toReleaseId`.
 
 回滚到指定的发布版本
 

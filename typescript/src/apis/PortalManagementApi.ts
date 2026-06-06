@@ -13,19 +13,6 @@
 
 
 import * as runtime from '../runtime';
-import type {
-  OpenConsumerCreateRequestDTO,
-  OpenConsumerInfoDTO,
-  OpenConsumerTokenDTO,
-} from '../models';
-import {
-    OpenConsumerCreateRequestDTOFromJSON,
-    OpenConsumerCreateRequestDTOToJSON,
-    OpenConsumerInfoDTOFromJSON,
-    OpenConsumerInfoDTOToJSON,
-    OpenConsumerTokenDTOFromJSON,
-    OpenConsumerTokenDTOToJSON,
-} from '../models';
 
 export interface AddFavoriteRequest {
     body: object;
@@ -49,7 +36,7 @@ export interface CheckSystemHealthRequest {
 }
 
 export interface CreateConsumerRequest {
-    openConsumerCreateRequestDTO: OpenConsumerCreateRequestDTO;
+    body: object;
     expires?: string;
 }
 
@@ -396,9 +383,9 @@ export class PortalManagementApi extends runtime.BaseAPI {
      * POST /openapi/v1/consumers
      * 创建开放平台消费者(new added)
      */
-    async createConsumerRaw(requestParameters: CreateConsumerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenConsumerInfoDTO>> {
-        if (requestParameters.openConsumerCreateRequestDTO === null || requestParameters.openConsumerCreateRequestDTO === undefined) {
-            throw new runtime.RequiredError('openConsumerCreateRequestDTO','Required parameter requestParameters.openConsumerCreateRequestDTO was null or undefined when calling createConsumer.');
+    async createConsumerRaw(requestParameters: CreateConsumerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createConsumer.');
         }
 
         const queryParameters: any = {};
@@ -420,17 +407,17 @@ export class PortalManagementApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: OpenConsumerCreateRequestDTOToJSON(requestParameters.openConsumerCreateRequestDTO),
+            body: requestParameters.body as any,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenConsumerInfoDTOFromJSON(jsonValue));
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
      * POST /openapi/v1/consumers
      * 创建开放平台消费者(new added)
      */
-    async createConsumer(requestParameters: CreateConsumerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenConsumerInfoDTO> {
+    async createConsumer(requestParameters: CreateConsumerRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
         const response = await this.createConsumerRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -1281,7 +1268,7 @@ export class PortalManagementApi extends runtime.BaseAPI {
      * GET /openapi/v1/consumers
      * 查询开放平台消费者列表(new added)
      */
-    async getConsumerListRaw(requestParameters: GetConsumerListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OpenConsumerInfoDTO>>> {
+    async getConsumerListRaw(requestParameters: GetConsumerListRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<object>>> {
         const queryParameters: any = {};
 
         if (requestParameters.page !== undefined) {
@@ -1305,14 +1292,14 @@ export class PortalManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OpenConsumerInfoDTOFromJSON));
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
      * GET /openapi/v1/consumers
      * 查询开放平台消费者列表(new added)
      */
-    async getConsumerList(requestParameters: GetConsumerListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OpenConsumerInfoDTO>> {
+    async getConsumerList(requestParameters: GetConsumerListRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<object>> {
         const response = await this.getConsumerListRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -1321,7 +1308,7 @@ export class PortalManagementApi extends runtime.BaseAPI {
      * GET /openapi/v1/consumer-tokens/by-appId
      * 按应用ID查询消费者Token(new added)
      */
-    async getConsumerTokenByAppIdRaw(requestParameters: GetConsumerTokenByAppIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpenConsumerTokenDTO>> {
+    async getConsumerTokenByAppIdRaw(requestParameters: GetConsumerTokenByAppIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<object>> {
         if (requestParameters.appId === null || requestParameters.appId === undefined) {
             throw new runtime.RequiredError('appId','Required parameter requestParameters.appId was null or undefined when calling getConsumerTokenByAppId.');
         }
@@ -1345,14 +1332,14 @@ export class PortalManagementApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OpenConsumerTokenDTOFromJSON(jsonValue));
+        return new runtime.JSONApiResponse<any>(response);
     }
 
     /**
      * GET /openapi/v1/consumer-tokens/by-appId
      * 按应用ID查询消费者Token(new added)
      */
-    async getConsumerTokenByAppId(requestParameters: GetConsumerTokenByAppIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpenConsumerTokenDTO> {
+    async getConsumerTokenByAppId(requestParameters: GetConsumerTokenByAppIdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<object> {
         const response = await this.getConsumerTokenByAppIdRaw(requestParameters, initOverrides);
         return await response.value();
     }

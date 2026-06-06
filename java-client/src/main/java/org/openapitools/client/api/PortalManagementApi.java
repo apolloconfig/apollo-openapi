@@ -27,9 +27,6 @@ import java.io.IOException;
 
 
 import java.io.File;
-import org.openapitools.client.model.OpenConsumerCreateRequestDTO;
-import org.openapitools.client.model.OpenConsumerInfoDTO;
-import org.openapitools.client.model.OpenConsumerTokenDTO;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -618,7 +615,7 @@ public class PortalManagementApi {
     }
     /**
      * Build call for createConsumer
-     * @param openConsumerCreateRequestDTO  (required)
+     * @param body  (required)
      * @param expires  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -629,7 +626,7 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功创建消费者 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createConsumerCall(OpenConsumerCreateRequestDTO openConsumerCreateRequestDTO, String expires, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call createConsumerCall(Object body, String expires, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -643,7 +640,7 @@ public class PortalManagementApi {
             basePath = null;
         }
 
-        Object localVarPostBody = openConsumerCreateRequestDTO;
+        Object localVarPostBody = body;
 
         // create path and map variables
         String localVarPath = "/openapi/v1/consumers";
@@ -679,22 +676,22 @@ public class PortalManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createConsumerValidateBeforeCall(OpenConsumerCreateRequestDTO openConsumerCreateRequestDTO, String expires, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'openConsumerCreateRequestDTO' is set
-        if (openConsumerCreateRequestDTO == null) {
-            throw new ApiException("Missing the required parameter 'openConsumerCreateRequestDTO' when calling createConsumer(Async)");
+    private okhttp3.Call createConsumerValidateBeforeCall(Object body, String expires, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling createConsumer(Async)");
         }
 
-        return createConsumerCall(openConsumerCreateRequestDTO, expires, _callback);
+        return createConsumerCall(body, expires, _callback);
 
     }
 
     /**
      * 创建开放平台消费者(new added)
      * POST /openapi/v1/consumers
-     * @param openConsumerCreateRequestDTO  (required)
+     * @param body  (required)
      * @param expires  (optional)
-     * @return OpenConsumerInfoDTO
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -702,17 +699,17 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功创建消费者 </td><td>  -  </td></tr>
      </table>
      */
-    public OpenConsumerInfoDTO createConsumer(OpenConsumerCreateRequestDTO openConsumerCreateRequestDTO, String expires) throws ApiException {
-        ApiResponse<OpenConsumerInfoDTO> localVarResp = createConsumerWithHttpInfo(openConsumerCreateRequestDTO, expires);
+    public Object createConsumer(Object body, String expires) throws ApiException {
+        ApiResponse<Object> localVarResp = createConsumerWithHttpInfo(body, expires);
         return localVarResp.getData();
     }
 
     /**
      * 创建开放平台消费者(new added)
      * POST /openapi/v1/consumers
-     * @param openConsumerCreateRequestDTO  (required)
+     * @param body  (required)
      * @param expires  (optional)
-     * @return ApiResponse&lt;OpenConsumerInfoDTO&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -720,16 +717,16 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功创建消费者 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenConsumerInfoDTO> createConsumerWithHttpInfo(OpenConsumerCreateRequestDTO openConsumerCreateRequestDTO, String expires) throws ApiException {
-        okhttp3.Call localVarCall = createConsumerValidateBeforeCall(openConsumerCreateRequestDTO, expires, null);
-        Type localVarReturnType = new TypeToken<OpenConsumerInfoDTO>(){}.getType();
+    public ApiResponse<Object> createConsumerWithHttpInfo(Object body, String expires) throws ApiException {
+        okhttp3.Call localVarCall = createConsumerValidateBeforeCall(body, expires, null);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * 创建开放平台消费者(new added) (asynchronously)
      * POST /openapi/v1/consumers
-     * @param openConsumerCreateRequestDTO  (required)
+     * @param body  (required)
      * @param expires  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -740,10 +737,10 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功创建消费者 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createConsumerAsync(OpenConsumerCreateRequestDTO openConsumerCreateRequestDTO, String expires, final ApiCallback<OpenConsumerInfoDTO> _callback) throws ApiException {
+    public okhttp3.Call createConsumerAsync(Object body, String expires, final ApiCallback<Object> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createConsumerValidateBeforeCall(openConsumerCreateRequestDTO, expires, _callback);
-        Type localVarReturnType = new TypeToken<OpenConsumerInfoDTO>(){}.getType();
+        okhttp3.Call localVarCall = createConsumerValidateBeforeCall(body, expires, _callback);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -3426,7 +3423,7 @@ public class PortalManagementApi {
      * GET /openapi/v1/consumers
      * @param page  (optional, default to 0)
      * @param size  (optional, default to 10)
-     * @return List&lt;OpenConsumerInfoDTO&gt;
+     * @return List&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -3434,8 +3431,8 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功获取消费者列表 </td><td>  -  </td></tr>
      </table>
      */
-    public List<OpenConsumerInfoDTO> getConsumerList(Integer page, Integer size) throws ApiException {
-        ApiResponse<List<OpenConsumerInfoDTO>> localVarResp = getConsumerListWithHttpInfo(page, size);
+    public List<Object> getConsumerList(Integer page, Integer size) throws ApiException {
+        ApiResponse<List<Object>> localVarResp = getConsumerListWithHttpInfo(page, size);
         return localVarResp.getData();
     }
 
@@ -3444,7 +3441,7 @@ public class PortalManagementApi {
      * GET /openapi/v1/consumers
      * @param page  (optional, default to 0)
      * @param size  (optional, default to 10)
-     * @return ApiResponse&lt;List&lt;OpenConsumerInfoDTO&gt;&gt;
+     * @return ApiResponse&lt;List&lt;Object&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -3452,9 +3449,9 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功获取消费者列表 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<OpenConsumerInfoDTO>> getConsumerListWithHttpInfo(Integer page, Integer size) throws ApiException {
+    public ApiResponse<List<Object>> getConsumerListWithHttpInfo(Integer page, Integer size) throws ApiException {
         okhttp3.Call localVarCall = getConsumerListValidateBeforeCall(page, size, null);
-        Type localVarReturnType = new TypeToken<List<OpenConsumerInfoDTO>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<Object>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -3472,10 +3469,10 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功获取消费者列表 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getConsumerListAsync(Integer page, Integer size, final ApiCallback<List<OpenConsumerInfoDTO>> _callback) throws ApiException {
+    public okhttp3.Call getConsumerListAsync(Integer page, Integer size, final ApiCallback<List<Object>> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getConsumerListValidateBeforeCall(page, size, _callback);
-        Type localVarReturnType = new TypeToken<List<OpenConsumerInfoDTO>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<Object>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -3554,7 +3551,7 @@ public class PortalManagementApi {
      * 按应用ID查询消费者Token(new added)
      * GET /openapi/v1/consumer-tokens/by-appId
      * @param appId  (required)
-     * @return OpenConsumerTokenDTO
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -3562,8 +3559,8 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功获取消费者Token </td><td>  -  </td></tr>
      </table>
      */
-    public OpenConsumerTokenDTO getConsumerTokenByAppId(String appId) throws ApiException {
-        ApiResponse<OpenConsumerTokenDTO> localVarResp = getConsumerTokenByAppIdWithHttpInfo(appId);
+    public Object getConsumerTokenByAppId(String appId) throws ApiException {
+        ApiResponse<Object> localVarResp = getConsumerTokenByAppIdWithHttpInfo(appId);
         return localVarResp.getData();
     }
 
@@ -3571,7 +3568,7 @@ public class PortalManagementApi {
      * 按应用ID查询消费者Token(new added)
      * GET /openapi/v1/consumer-tokens/by-appId
      * @param appId  (required)
-     * @return ApiResponse&lt;OpenConsumerTokenDTO&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -3579,9 +3576,9 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功获取消费者Token </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<OpenConsumerTokenDTO> getConsumerTokenByAppIdWithHttpInfo(String appId) throws ApiException {
+    public ApiResponse<Object> getConsumerTokenByAppIdWithHttpInfo(String appId) throws ApiException {
         okhttp3.Call localVarCall = getConsumerTokenByAppIdValidateBeforeCall(appId, null);
-        Type localVarReturnType = new TypeToken<OpenConsumerTokenDTO>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -3598,10 +3595,10 @@ public class PortalManagementApi {
         <tr><td> 200 </td><td> 成功获取消费者Token </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getConsumerTokenByAppIdAsync(String appId, final ApiCallback<OpenConsumerTokenDTO> _callback) throws ApiException {
+    public okhttp3.Call getConsumerTokenByAppIdAsync(String appId, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getConsumerTokenByAppIdValidateBeforeCall(appId, _callback);
-        Type localVarReturnType = new TypeToken<OpenConsumerTokenDTO>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

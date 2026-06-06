@@ -164,7 +164,7 @@ public class NamespaceBranchManagementApiTest {
         String branchName = null;
         OpenGrayReleaseRuleDTO openGrayReleaseRuleDTO = null;
         String operator = null;
-        api.updateBranchRules(appId, env, clusterName, namespaceName, branchName, operator, openGrayReleaseRuleDTO);
+        api.updateBranchRules(appId, env, clusterName, namespaceName, branchName, openGrayReleaseRuleDTO, operator);
         // TODO: test validations
     }
 

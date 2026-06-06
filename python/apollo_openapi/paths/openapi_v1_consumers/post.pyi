@@ -25,9 +25,6 @@ import frozendict  # noqa: F401
 
 from apollo_openapi import schemas  # noqa: F401
 
-from apollo_openapi.model.open_consumer_create_request_dto import OpenConsumerCreateRequestDTO
-from apollo_openapi.model.open_consumer_info_dto import OpenConsumerInfoDTO
-
 # Query params
 ExpiresSchema = schemas.StrSchema
 RequestRequiredQueryParams = typing_extensions.TypedDict(
@@ -55,17 +52,17 @@ request_query_expires = api_client.QueryParameter(
     explode=True,
 )
 # body param
-SchemaForRequestBodyApplicationJson = OpenConsumerCreateRequestDTO
+SchemaForRequestBodyApplicationJson = schemas.DictSchema
 
 
-request_body_open_consumer_create_request_dto = api_client.RequestBody(
+request_body_body = api_client.RequestBody(
     content={
         'application/json': api_client.MediaType(
             schema=SchemaForRequestBodyApplicationJson),
     },
     required=True,
 )
-SchemaFor200ResponseBodyApplicationJson = OpenConsumerInfoDTO
+SchemaFor200ResponseBodyApplicationJson = schemas.DictSchema
 
 
 @dataclass
@@ -93,7 +90,7 @@ class BaseApi(api_client.Api):
     @typing.overload
     def _create_consumer_oapg(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         content_type: typing_extensions.Literal["application/json"] = ...,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -107,7 +104,7 @@ class BaseApi(api_client.Api):
     @typing.overload
     def _create_consumer_oapg(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         content_type: str = ...,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -122,7 +119,7 @@ class BaseApi(api_client.Api):
     @typing.overload
     def _create_consumer_oapg(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         skip_deserialization: typing_extensions.Literal[True],
         content_type: str = ...,
         query_params: RequestQueryParams = frozendict.frozendict(),
@@ -134,7 +131,7 @@ class BaseApi(api_client.Api):
     @typing.overload
     def _create_consumer_oapg(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         content_type: str = ...,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -148,7 +145,7 @@ class BaseApi(api_client.Api):
 
     def _create_consumer_oapg(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         content_type: str = 'application/json',
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -189,7 +186,7 @@ class BaseApi(api_client.Api):
                 'The required body parameter has an invalid value of: unset. Set a valid value instead')
         _fields = None
         _body = None
-        serialized_data = request_body_open_consumer_create_request_dto.serialize(body, content_type)
+        serialized_data = request_body_body.serialize(body, content_type)
         _headers.add('Content-Type', content_type)
         if 'fields' in serialized_data:
             _fields = serialized_data['fields']
@@ -231,7 +228,7 @@ class CreateConsumer(BaseApi):
     @typing.overload
     def create_consumer(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         content_type: typing_extensions.Literal["application/json"] = ...,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -245,7 +242,7 @@ class CreateConsumer(BaseApi):
     @typing.overload
     def create_consumer(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         content_type: str = ...,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -260,7 +257,7 @@ class CreateConsumer(BaseApi):
     @typing.overload
     def create_consumer(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         skip_deserialization: typing_extensions.Literal[True],
         content_type: str = ...,
         query_params: RequestQueryParams = frozendict.frozendict(),
@@ -272,7 +269,7 @@ class CreateConsumer(BaseApi):
     @typing.overload
     def create_consumer(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         content_type: str = ...,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -286,7 +283,7 @@ class CreateConsumer(BaseApi):
 
     def create_consumer(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         content_type: str = 'application/json',
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -311,7 +308,7 @@ class ApiForpost(BaseApi):
     @typing.overload
     def post(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         content_type: typing_extensions.Literal["application/json"] = ...,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -325,7 +322,7 @@ class ApiForpost(BaseApi):
     @typing.overload
     def post(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         content_type: str = ...,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -340,7 +337,7 @@ class ApiForpost(BaseApi):
     @typing.overload
     def post(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         skip_deserialization: typing_extensions.Literal[True],
         content_type: str = ...,
         query_params: RequestQueryParams = frozendict.frozendict(),
@@ -352,7 +349,7 @@ class ApiForpost(BaseApi):
     @typing.overload
     def post(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         content_type: str = ...,
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,
@@ -366,7 +363,7 @@ class ApiForpost(BaseApi):
 
     def post(
         self,
-        body: typing.Union[SchemaForRequestBodyApplicationJson,],
+        body: typing.Union[SchemaForRequestBodyApplicationJson,dict, frozendict.frozendict, ],
         content_type: str = 'application/json',
         query_params: RequestQueryParams = frozendict.frozendict(),
         accept_content_types: typing.Tuple[str] = _all_accept_content_types,

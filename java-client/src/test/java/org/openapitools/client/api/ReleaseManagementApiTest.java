@@ -138,7 +138,7 @@ public class ReleaseManagementApiTest {
     @Test
     public void getReleaseByIdTest() throws ApiException {
         String env = null;
-        Integer releaseId = null;
+        Long releaseId = null;
         OpenReleaseDTO response = api.getReleaseById(env, releaseId);
         // TODO: test validations
     }
@@ -172,7 +172,8 @@ public class ReleaseManagementApiTest {
         String env = null;
         Long releaseId = null;
         String operator = null;
-        api.rollback(env, releaseId, operator);
+        Long toReleaseId = null;
+        api.rollback(env, releaseId, operator, toReleaseId);
         // TODO: test validations
     }
 

@@ -17,7 +17,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
   title: Apollo OpenAPI
-  version: 0.3.7
+  version: 0.3.8
 servers:
 - url: /
 security:
@@ -6177,7 +6177,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/OpenConsumerInfoDTO'
+                  type: object
                 type: array
           description: 成功获取消费者列表
       summary: 查询开放平台消费者列表(new added)
@@ -6201,14 +6201,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OpenConsumerCreateRequestDTO'
+              type: object
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OpenConsumerInfoDTO'
+                type: object
           description: 成功创建消费者
       summary: 创建开放平台消费者(new added)
       tags:
@@ -6233,7 +6233,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OpenConsumerTokenDTO'
+                type: object
           description: 成功获取消费者Token
       summary: 按应用ID查询消费者Token(new added)
       tags:
@@ -8390,155 +8390,6 @@ components:
         hasPermission:
           description: ""
           type: boolean
-      type: object
-    OpenConsumerCreateRequestDTO:
-      example:
-        orgName: orgName
-        rateLimit: 0
-        ownerName: ownerName
-        appId: appId
-        name: name
-        allowCreateApplication: false
-        allowManageUsers: false
-        rateLimitEnabled: false
-        orgId: orgId
-      properties:
-        appId:
-          description: 第三方应用ID
-          type: string
-        allowCreateApplication:
-          default: false
-          description: 是否允许该Consumer Token创建应用
-          type: boolean
-        allowManageUsers:
-          default: false
-          description: 是否允许该Consumer Token管理用户
-          type: boolean
-        name:
-          description: 第三方应用名称
-          type: string
-        orgId:
-          description: 部门ID
-          type: string
-        orgName:
-          description: 部门名称
-          type: string
-        ownerName:
-          description: 负责人用户名
-          type: string
-        rateLimitEnabled:
-          default: false
-          description: 是否开启限流
-          type: boolean
-        rateLimit:
-          description: 限流QPS，rateLimitEnabled 为 true 时必须大于 0；未开启限流时 0 表示不限流
-          minimum: 0
-          type: integer
-      required:
-      - appId
-      - name
-      - orgId
-      - ownerName
-      type: object
-    OpenConsumerInfoDTO:
-      example:
-        orgName: orgName
-        rateLimit: 0
-        ownerName: ownerName
-        consumerId: 0
-        appId: appId
-        name: name
-        allowCreateApplication: false
-        allowManageUsers: false
-        rateLimitEnabled: false
-        orgId: orgId
-        ownerEmail: ownerEmail
-        token: token
-      properties:
-        appId:
-          description: 第三方应用ID
-          type: string
-        name:
-          description: 第三方应用名称
-          type: string
-        orgId:
-          description: 部门ID
-          type: string
-        orgName:
-          description: 部门名称
-          type: string
-        ownerName:
-          description: 负责人用户名
-          type: string
-        ownerEmail:
-          description: 负责人邮箱
-          type: string
-        consumerId:
-          description: Consumer ID
-          format: int64
-          type: integer
-        token:
-          description: Consumer Token，仅在创建或按应用查询详情时返回
-          type: string
-        allowCreateApplication:
-          default: false
-          description: 是否允许该Consumer Token创建应用
-          type: boolean
-        allowManageUsers:
-          default: false
-          description: 是否允许该Consumer Token管理用户
-          type: boolean
-        rateLimit:
-          default: 0
-          description: 限流QPS，0表示不限流
-          minimum: 0
-          type: integer
-        rateLimitEnabled:
-          default: false
-          description: 是否开启限流
-          type: boolean
-      type: object
-    OpenConsumerTokenDTO:
-      example:
-        expires: 2000-01-23T04:56:07.000+00:00
-        rateLimit: 0
-        dataChangeCreatedTime: 2000-01-23T04:56:07.000+00:00
-        dataChangeLastModifiedBy: dataChangeLastModifiedBy
-        consumerId: 0
-        dataChangeCreatedBy: dataChangeCreatedBy
-        dataChangeLastModifiedTime: 2000-01-23T04:56:07.000+00:00
-        token: token
-      properties:
-        consumerId:
-          description: Consumer ID
-          format: int64
-          type: integer
-        token:
-          description: Consumer Token
-          type: string
-        rateLimit:
-          default: 0
-          description: 限流QPS，0表示不限流
-          minimum: 0
-          type: integer
-        expires:
-          description: 过期时间
-          format: date-time
-          type: string
-        dataChangeCreatedBy:
-          description: 创建人
-          type: string
-        dataChangeCreatedTime:
-          description: 创建时间
-          format: date-time
-          type: string
-        dataChangeLastModifiedBy:
-          description: 最后修改人
-          type: string
-        dataChangeLastModifiedTime:
-          description: 最后修改时间
-          format: date-time
-          type: string
       type: object
     OpenUserInfoDTO:
       example:
