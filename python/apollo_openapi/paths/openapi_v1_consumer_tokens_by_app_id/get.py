@@ -25,8 +25,6 @@ import frozendict  # noqa: F401
 
 from apollo_openapi import schemas  # noqa: F401
 
-from apollo_openapi.model.open_consumer_token_dto import OpenConsumerTokenDTO
-
 from . import path
 
 # Query params
@@ -59,7 +57,7 @@ request_query_app_id = api_client.QueryParameter(
 _auth = [
     'ApiKeyAuth',
 ]
-SchemaFor200ResponseBodyApplicationJson = OpenConsumerTokenDTO
+SchemaFor200ResponseBodyApplicationJson = schemas.DictSchema
 
 
 @dataclass

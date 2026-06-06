@@ -329,7 +329,7 @@ public class Example {
 
 <a id="createConsumer"></a>
 # **createConsumer**
-> OpenConsumerInfoDTO createConsumer(openConsumerCreateRequestDTO, expires)
+> Object createConsumer(body, expires)
 
 创建开放平台消费者(new added)
 
@@ -357,10 +357,10 @@ public class Example {
     //ApiKeyAuth.setApiKeyPrefix("Token");
 
     PortalManagementApi apiInstance = new PortalManagementApi(defaultClient);
-    OpenConsumerCreateRequestDTO openConsumerCreateRequestDTO = new OpenConsumerCreateRequestDTO(); // OpenConsumerCreateRequestDTO |
+    Object body = null; // Object |
     String expires = "expires_example"; // String |
     try {
-      OpenConsumerInfoDTO result = apiInstance.createConsumer(openConsumerCreateRequestDTO, expires);
+      Object result = apiInstance.createConsumer(body, expires);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling PortalManagementApi#createConsumer");
@@ -377,12 +377,12 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **openConsumerCreateRequestDTO** | [**OpenConsumerCreateRequestDTO**](OpenConsumerCreateRequestDTO.md)|  | |
+| **body** | **Object**|  | |
 | **expires** | **String**|  | [optional] |
 
 ### Return type
 
-[**OpenConsumerInfoDTO**](OpenConsumerInfoDTO.md)
+**Object**
 
 ### Authorization
 
@@ -1761,7 +1761,7 @@ This endpoint does not need any parameter.
 
 <a id="getConsumerList"></a>
 # **getConsumerList**
-> List&lt;OpenConsumerInfoDTO&gt; getConsumerList(page, size)
+> List&lt;Object&gt; getConsumerList(page, size)
 
 查询开放平台消费者列表(new added)
 
@@ -1792,7 +1792,7 @@ public class Example {
     Integer page = 0; // Integer |
     Integer size = 10; // Integer |
     try {
-      List<OpenConsumerInfoDTO> result = apiInstance.getConsumerList(page, size);
+      List<Object> result = apiInstance.getConsumerList(page, size);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling PortalManagementApi#getConsumerList");
@@ -1814,7 +1814,7 @@ public class Example {
 
 ### Return type
 
-[**List&lt;OpenConsumerInfoDTO&gt;**](OpenConsumerInfoDTO.md)
+**List&lt;Object&gt;**
 
 ### Authorization
 
@@ -1832,7 +1832,7 @@ public class Example {
 
 <a id="getConsumerTokenByAppId"></a>
 # **getConsumerTokenByAppId**
-> OpenConsumerTokenDTO getConsumerTokenByAppId(appId)
+> Object getConsumerTokenByAppId(appId)
 
 按应用ID查询消费者Token(new added)
 
@@ -1862,7 +1862,7 @@ public class Example {
     PortalManagementApi apiInstance = new PortalManagementApi(defaultClient);
     String appId = "appId_example"; // String |
     try {
-      OpenConsumerTokenDTO result = apiInstance.getConsumerTokenByAppId(appId);
+      Object result = apiInstance.getConsumerTokenByAppId(appId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling PortalManagementApi#getConsumerTokenByAppId");
@@ -1883,7 +1883,7 @@ public class Example {
 
 ### Return type
 
-[**OpenConsumerTokenDTO**](OpenConsumerTokenDTO.md)
+**Object**
 
 ### Authorization
 

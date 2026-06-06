@@ -1,8 +1,5 @@
 package com.apollo.openapi.server.api;
 
-import com.apollo.openapi.server.model.OpenConsumerCreateRequestDTO;
-import com.apollo.openapi.server.model.OpenConsumerInfoDTO;
-import com.apollo.openapi.server.model.OpenConsumerTokenDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -100,22 +97,13 @@ public interface PortalManagementApiDelegate {
      * POST /openapi/v1/consumers : 创建开放平台消费者(new added)
      * POST /openapi/v1/consumers
      *
-     * @param openConsumerCreateRequestDTO  (required)
+     * @param body  (required)
      * @param expires  (optional)
      * @return 成功创建消费者 (status code 200)
      * @see PortalManagementApi#createConsumer
      */
-    default ResponseEntity<OpenConsumerInfoDTO> createConsumer(OpenConsumerCreateRequestDTO openConsumerCreateRequestDTO,
+    default ResponseEntity<Object> createConsumer(Object body,
         String expires) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"orgName\" : \"orgName\", \"rateLimit\" : 0, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
@@ -517,12 +505,12 @@ public interface PortalManagementApiDelegate {
      * @return 成功获取消费者列表 (status code 200)
      * @see PortalManagementApi#getConsumerList
      */
-    default ResponseEntity<List<OpenConsumerInfoDTO>> getConsumerList(Integer page,
+    default ResponseEntity<List<Object>> getConsumerList(Integer page,
         Integer size) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "[ { \"orgName\" : \"orgName\", \"rateLimit\" : 0, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" }, { \"orgName\" : \"orgName\", \"rateLimit\" : 0, \"ownerName\" : \"ownerName\", \"consumerId\" : 0, \"appId\" : \"appId\", \"name\" : \"name\", \"allowCreateApplication\" : false, \"allowManageUsers\" : false, \"rateLimitEnabled\" : false, \"orgId\" : \"orgId\", \"ownerEmail\" : \"ownerEmail\", \"token\" : \"token\" } ]";
+                    String exampleString = "[ \"{}\", \"{}\" ]";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -540,16 +528,7 @@ public interface PortalManagementApiDelegate {
      * @return 成功获取消费者Token (status code 200)
      * @see PortalManagementApi#getConsumerTokenByAppId
      */
-    default ResponseEntity<OpenConsumerTokenDTO> getConsumerTokenByAppId(String appId) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"expires\" : \"2000-01-23T04:56:07.000+00:00\", \"rateLimit\" : 0, \"dataChangeCreatedTime\" : \"2000-01-23T04:56:07.000+00:00\", \"dataChangeLastModifiedBy\" : \"dataChangeLastModifiedBy\", \"consumerId\" : 0, \"dataChangeCreatedBy\" : \"dataChangeCreatedBy\", \"dataChangeLastModifiedTime\" : \"2000-01-23T04:56:07.000+00:00\", \"token\" : \"token\" }";
-                    ApiUtil.setExampleResponse(request, "application/json", exampleString);
-                    break;
-                }
-            }
-        });
+    default ResponseEntity<Object> getConsumerTokenByAppId(String appId) {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }

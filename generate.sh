@@ -42,14 +42,14 @@ echo "🚀 Generating Python SDK..."
   -o "$PYTHON_DIR" \
   -t "$PYTHON_TEMPLATE_DIR" \
   --package-name apollo_openapi \
-  --additional-properties=projectName=apollo-openapi,packageVersion=0.3.7
+  --additional-properties=projectName=apollo-openapi,packageVersion=0.3.8
 
 echo "🚀 Generating TypeScript SDK..."
 "${OPENAPI_GENERATOR[@]}" generate \
   -i "$SPEC_FILE" \
   -g typescript-fetch \
   -o "$TS_DIR" \
-  --additional-properties=npmName=apollo-openapi,npmVersion=0.3.7,typescriptThreePlus=true
+  --additional-properties=npmName=apollo-openapi,npmVersion=0.3.8,typescriptThreePlus=true
 
 echo "🚀 Generating Java Client SDK..."
 "${OPENAPI_GENERATOR[@]}" generate \
@@ -57,7 +57,152 @@ echo "🚀 Generating Java Client SDK..."
   -g java \
   -o "$JAVA_CLIENT_DIR" \
   --additional-properties hideGenerationTimestamp=true \
-  --additional-properties=groupId=com.apollo,artifactId=apollo-openapi-client,artifactVersion=0.3.7,packageName=com.apollo.openapi.client
+  --additional-properties=groupId=com.apollo,artifactId=apollo-openapi-client,artifactVersion=0.3.8,packageName=com.apollo.openapi.client
+
+echo "🔧 Preserving Java client operator overloads..."
+python3 - <<'PY'
+from pathlib import Path
+
+api_file = Path("java-client/src/main/java/org/openapitools/client/api/UserManagementApi.java")
+content = api_file.read_text(encoding="utf-8")
+
+
+def add_overload_before(marker, overload):
+    global content
+    if overload in content:
+        return
+    if marker not in content:
+        raise SystemExit(f"Could not find Java client overload marker:\n{marker}")
+    content = content.replace(marker, overload + marker, 1)
+
+
+def add_overload_after(marker, overload):
+    global content
+    if overload in content:
+        return
+    if marker not in content:
+        raise SystemExit(f"Could not find Java client overload marker:\n{marker}")
+    content = content.replace(marker, marker + overload, 1)
+
+
+add_overload_before(
+    """    @SuppressWarnings("rawtypes")
+    private okhttp3.Call changeUserEnabledValidateBeforeCall""",
+    """    /**
+     * Build call for changeUserEnabled.
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public okhttp3.Call changeUserEnabledCall(OpenUserDTO openUserDTO, final ApiCallback _callback) throws ApiException {
+        return changeUserEnabledCall(openUserDTO, null, _callback);
+    }
+
+""",
+)
+add_overload_after(
+    """    public void changeUserEnabled(OpenUserDTO openUserDTO, String operator) throws ApiException {
+        changeUserEnabledWithHttpInfo(openUserDTO, operator);
+    }
+
+""",
+    """    /**
+     * 修改用户启用状态(new added)
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public void changeUserEnabled(OpenUserDTO openUserDTO) throws ApiException {
+        changeUserEnabled(openUserDTO, null);
+    }
+
+""",
+)
+add_overload_before(
+    """    /**
+     * 修改用户启用状态(new added) (asynchronously)
+     * PUT /openapi/v1/users/enabled""",
+    """    /**
+     * 修改用户启用状态(new added)
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public ApiResponse<Void> changeUserEnabledWithHttpInfo(OpenUserDTO openUserDTO) throws ApiException {
+        return changeUserEnabledWithHttpInfo(openUserDTO, null);
+    }
+
+""",
+)
+add_overload_before(
+    """    /**
+     * Build call for createOrUpdateUser
+     * @param openUserDTO""",
+    """
+    /**
+     * 修改用户启用状态(new added) (asynchronously)
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public okhttp3.Call changeUserEnabledAsync(OpenUserDTO openUserDTO, final ApiCallback<Void> _callback) throws ApiException {
+        return changeUserEnabledAsync(openUserDTO, null, _callback);
+    }
+
+""",
+)
+add_overload_before(
+    """    @SuppressWarnings("rawtypes")
+    private okhttp3.Call createOrUpdateUserValidateBeforeCall""",
+    """    /**
+     * Build call for createOrUpdateUser.
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public okhttp3.Call createOrUpdateUserCall(OpenUserDTO openUserDTO, Boolean isCreate, final ApiCallback _callback) throws ApiException {
+        return createOrUpdateUserCall(openUserDTO, isCreate, null, _callback);
+    }
+
+""",
+)
+add_overload_after(
+    """    public void createOrUpdateUser(OpenUserDTO openUserDTO, Boolean isCreate, String operator) throws ApiException {
+        createOrUpdateUserWithHttpInfo(openUserDTO, isCreate, operator);
+    }
+
+""",
+    """    /**
+     * 创建或更新用户(new added)
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public void createOrUpdateUser(OpenUserDTO openUserDTO, Boolean isCreate) throws ApiException {
+        createOrUpdateUser(openUserDTO, isCreate, null);
+    }
+
+""",
+)
+add_overload_before(
+    """    /**
+     * 创建或更新用户(new added) (asynchronously)
+     * POST /openapi/v1/users""",
+    """    /**
+     * 创建或更新用户(new added)
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public ApiResponse<Void> createOrUpdateUserWithHttpInfo(OpenUserDTO openUserDTO, Boolean isCreate) throws ApiException {
+        return createOrUpdateUserWithHttpInfo(openUserDTO, isCreate, null);
+    }
+
+""",
+)
+add_overload_before(
+    """    /**
+     * Build call for getCurrentUser
+     * @param _callback""",
+    """
+    /**
+     * 创建或更新用户(new added) (asynchronously)
+     * This overload preserves the Java client API for callers that do not need the optional operator query parameter.
+     */
+    public okhttp3.Call createOrUpdateUserAsync(OpenUserDTO openUserDTO, Boolean isCreate, final ApiCallback<Void> _callback) throws ApiException {
+        return createOrUpdateUserAsync(openUserDTO, isCreate, null, _callback);
+    }
+""",
+)
+
+api_file.write_text(content, encoding="utf-8")
+PY
 
 echo "🚀 Generating Spring Boot 2 Server..."
 "${OPENAPI_GENERATOR[@]}" generate \
@@ -65,7 +210,7 @@ echo "🚀 Generating Spring Boot 2 Server..."
   -g spring \
   -o "$SPRING_BOOT2_DIR" \
   --additional-properties hideGenerationTimestamp=true \
-  --additional-properties=groupId=com.apollo,artifactId=apollo-openapi-server,artifactVersion=0.3.7,packageName=com.apollo.openapi.server,basePackage=com.apollo.openapi.server,configPackage=com.apollo.openapi.server.config,modelPackage=com.apollo.openapi.server.model,apiPackage=com.apollo.openapi.server.api,library=spring-boot,java8=true,interfaceOnly=false,delegatePattern=true,useTags=true
+  --additional-properties=groupId=com.apollo,artifactId=apollo-openapi-server,artifactVersion=0.3.8,packageName=com.apollo.openapi.server,basePackage=com.apollo.openapi.server,configPackage=com.apollo.openapi.server.config,modelPackage=com.apollo.openapi.server.model,apiPackage=com.apollo.openapi.server.api,library=spring-boot,java8=true,interfaceOnly=false,delegatePattern=true,useTags=true
 
 echo "📦 Adding Maven Wrapper to Spring Boot 2 project..."
 cd "$SPRING_BOOT2_DIR"
@@ -90,7 +235,7 @@ echo "🚀 Generating Rust SDK..."
   -g rust \
   -o "$RUST_DIR" \
   --global-property models,supportingFiles \
-  --additional-properties=packageName=apollo-openapi,packageVersion=0.3.7
+  --additional-properties=packageName=apollo-openapi,packageVersion=0.3.8
 
 echo "✅ SDK generation complete."
 

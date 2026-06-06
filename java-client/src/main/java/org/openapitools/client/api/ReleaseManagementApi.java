@@ -1004,14 +1004,6 @@ public class ReleaseManagementApi {
         return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
-    /**
-     * Build call for getReleaseById.
-     * This overload preserves the Java client API from versions before 0.3.2.
-     */
-    public okhttp3.Call getReleaseByIdCall(String env, Integer releaseId, final ApiCallback _callback) throws ApiException {
-        return getReleaseByIdCall(env, releaseId == null ? null : releaseId.longValue(), _callback);
-    }
-
     @SuppressWarnings("rawtypes")
     private okhttp3.Call getReleaseByIdValidateBeforeCall(String env, Long releaseId, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'env' is set
@@ -1048,14 +1040,6 @@ public class ReleaseManagementApi {
 
     /**
      * 获取发布详情 (new added)
-     * This overload preserves the Java client API from versions before 0.3.2.
-     */
-    public OpenReleaseDTO getReleaseById(String env, Integer releaseId) throws ApiException {
-        return getReleaseById(env, releaseId == null ? null : releaseId.longValue());
-    }
-
-    /**
-     * 获取发布详情 (new added)
      * GET /openapi/v1/envs/{env}/releases/{releaseId}
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
@@ -1071,14 +1055,6 @@ public class ReleaseManagementApi {
         okhttp3.Call localVarCall = getReleaseByIdValidateBeforeCall(env, releaseId, null);
         Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * 获取发布详情 (new added)
-     * This overload preserves the Java client API from versions before 0.3.2.
-     */
-    public ApiResponse<OpenReleaseDTO> getReleaseByIdWithHttpInfo(String env, Integer releaseId) throws ApiException {
-        return getReleaseByIdWithHttpInfo(env, releaseId == null ? null : releaseId.longValue());
     }
 
     /**
@@ -1101,14 +1077,6 @@ public class ReleaseManagementApi {
         Type localVarReturnType = new TypeToken<OpenReleaseDTO>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
-    }
-
-    /**
-     * 获取发布详情 (new added) (asynchronously)
-     * This overload preserves the Java client API from versions before 0.3.2.
-     */
-    public okhttp3.Call getReleaseByIdAsync(String env, Integer releaseId, final ApiCallback<OpenReleaseDTO> _callback) throws ApiException {
-        return getReleaseByIdAsync(env, releaseId == null ? null : releaseId.longValue(), _callback);
     }
     /**
      * Build call for loadLatestActiveRelease
@@ -1335,14 +1303,6 @@ public class ReleaseManagementApi {
         return localVarApiClient.buildCall(basePath, localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
-    /**
-     * Build call for rollback.
-     * This overload preserves the Java client API from versions before 0.3.1.
-     */
-    public okhttp3.Call rollbackCall(String env, Long releaseId, String operator, final ApiCallback _callback) throws ApiException {
-        return rollbackCall(env, releaseId, operator, null, _callback);
-    }
-
     @SuppressWarnings("rawtypes")
     private okhttp3.Call rollbackValidateBeforeCall(String env, Long releaseId, String operator, Long toReleaseId, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'env' is set
@@ -1379,14 +1339,6 @@ public class ReleaseManagementApi {
 
     /**
      * 回滚发布 (original openapi)
-     * This overload preserves the Java client API from versions before 0.3.1.
-     */
-    public void rollback(String env, Long releaseId, String operator) throws ApiException {
-        rollback(env, releaseId, operator, null);
-    }
-
-    /**
-     * 回滚发布 (original openapi)
      * 回滚到指定的发布版本
      * @param env 环境标识 (required)
      * @param releaseId 发布ID (required)
@@ -1403,14 +1355,6 @@ public class ReleaseManagementApi {
     public ApiResponse<Void> rollbackWithHttpInfo(String env, Long releaseId, String operator, Long toReleaseId) throws ApiException {
         okhttp3.Call localVarCall = rollbackValidateBeforeCall(env, releaseId, operator, toReleaseId, null);
         return localVarApiClient.execute(localVarCall);
-    }
-
-    /**
-     * 回滚发布 (original openapi)
-     * This overload preserves the Java client API from versions before 0.3.1.
-     */
-    public ApiResponse<Void> rollbackWithHttpInfo(String env, Long releaseId, String operator) throws ApiException {
-        return rollbackWithHttpInfo(env, releaseId, operator, null);
     }
 
     /**
@@ -1434,13 +1378,5 @@ public class ReleaseManagementApi {
         okhttp3.Call localVarCall = rollbackValidateBeforeCall(env, releaseId, operator, toReleaseId, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
-    }
-
-    /**
-     * 回滚发布 (original openapi) (asynchronously)
-     * This overload preserves the Java client API from versions before 0.3.1.
-     */
-    public okhttp3.Call rollbackAsync(String env, Long releaseId, String operator, final ApiCallback<Void> _callback) throws ApiException {
-        return rollbackAsync(env, releaseId, operator, null, _callback);
     }
 }

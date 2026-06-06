@@ -25,9 +25,6 @@ docs/OpenAppNamespaceDTO.md
 docs/OpenAppRoleUserDTO.md
 docs/OpenClusterDTO.md
 docs/OpenClusterNamespaceRoleUserDTO.md
-docs/OpenConsumerCreateRequestDTO.md
-docs/OpenConsumerInfoDTO.md
-docs/OpenConsumerTokenDTO.md
 docs/OpenCreateAppDTO.md
 docs/OpenCreateNamespaceDTO.md
 docs/OpenEnvClusterDTO.md
@@ -114,9 +111,6 @@ src/main/java/org/openapitools/client/model/OpenAppNamespaceDTO.java
 src/main/java/org/openapitools/client/model/OpenAppRoleUserDTO.java
 src/main/java/org/openapitools/client/model/OpenClusterDTO.java
 src/main/java/org/openapitools/client/model/OpenClusterNamespaceRoleUserDTO.java
-src/main/java/org/openapitools/client/model/OpenConsumerCreateRequestDTO.java
-src/main/java/org/openapitools/client/model/OpenConsumerInfoDTO.java
-src/main/java/org/openapitools/client/model/OpenConsumerTokenDTO.java
 src/main/java/org/openapitools/client/model/OpenCreateAppDTO.java
 src/main/java/org/openapitools/client/model/OpenCreateNamespaceDTO.java
 src/main/java/org/openapitools/client/model/OpenEnvClusterDTO.java
@@ -171,9 +165,6 @@ src/test/java/org/openapitools/client/model/OpenAppNamespaceDTOTest.java
 src/test/java/org/openapitools/client/model/OpenAppRoleUserDTOTest.java
 src/test/java/org/openapitools/client/model/OpenClusterDTOTest.java
 src/test/java/org/openapitools/client/model/OpenClusterNamespaceRoleUserDTOTest.java
-src/test/java/org/openapitools/client/model/OpenConsumerCreateRequestDTOTest.java
-src/test/java/org/openapitools/client/model/OpenConsumerInfoDTOTest.java
-src/test/java/org/openapitools/client/model/OpenConsumerTokenDTOTest.java
 src/test/java/org/openapitools/client/model/OpenCreateAppDTOTest.java
 src/test/java/org/openapitools/client/model/OpenCreateNamespaceDTOTest.java
 src/test/java/org/openapitools/client/model/OpenEnvClusterDTOTest.java

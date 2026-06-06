@@ -25,8 +25,6 @@ import frozendict  # noqa: F401
 
 from apollo_openapi import schemas  # noqa: F401
 
-from apollo_openapi.model.open_consumer_info_dto import OpenConsumerInfoDTO
-
 # Query params
 PageSchema = schemas.IntSchema
 SizeSchema = schemas.IntSchema
@@ -69,14 +67,11 @@ class SchemaFor200ResponseBodyApplicationJson(
 
 
     class MetaOapg:
-
-        @staticmethod
-        def items() -> typing.Type['OpenConsumerInfoDTO']:
-            return OpenConsumerInfoDTO
+        items = schemas.DictSchema
 
     def __new__(
         cls,
-        _arg: typing.Union[typing.Tuple['OpenConsumerInfoDTO'], typing.List['OpenConsumerInfoDTO']],
+        _arg: typing.Union[typing.Tuple[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]], typing.List[typing.Union[MetaOapg.items, dict, frozendict.frozendict, ]]],
         _configuration: typing.Optional[schemas.Configuration] = None,
     ) -> 'SchemaFor200ResponseBodyApplicationJson':
         return super().__new__(
@@ -85,7 +80,7 @@ class SchemaFor200ResponseBodyApplicationJson(
             _configuration=_configuration,
         )
 
-    def __getitem__(self, i: int) -> 'OpenConsumerInfoDTO':
+    def __getitem__(self, i: int) -> MetaOapg.items:
         return super().__getitem__(i)
 
 

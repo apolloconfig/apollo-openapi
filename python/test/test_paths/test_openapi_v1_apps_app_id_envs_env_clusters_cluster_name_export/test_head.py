@@ -27,7 +27,7 @@ class TestOpenapiV1AppsAppIdEnvsEnvClustersClusterNameExport(ApiTestMixin, unitt
 
     def setUp(self):
         used_api_client = api_client.ApiClient(configuration=self._configuration)
-        self.api = head.ApiForHead(api_client=used_api_client)  # noqa: E501
+        self.api = head.ApiForhead(api_client=used_api_client)  # noqa: E501
 
     def tearDown(self):
         pass

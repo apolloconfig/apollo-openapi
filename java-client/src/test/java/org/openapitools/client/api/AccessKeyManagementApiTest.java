@@ -75,7 +75,8 @@ public class AccessKeyManagementApiTest {
         String appId = null;
         String env = null;
         Long accessKeyId = null;
-        api.disableAccessKey(appId, env, accessKeyId);
+        String operator = null;
+        api.disableAccessKey(appId, env, accessKeyId, operator);
         // TODO: test validations
     }
 
@@ -92,7 +93,8 @@ public class AccessKeyManagementApiTest {
         String env = null;
         Long accessKeyId = null;
         Integer mode = null;
-        api.enableAccessKey(appId, env, accessKeyId, mode);
+        String operator = null;
+        api.enableAccessKey(appId, env, accessKeyId, mode, operator);
         // TODO: test validations
     }
 
