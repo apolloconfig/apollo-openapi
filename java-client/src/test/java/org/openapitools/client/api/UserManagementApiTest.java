@@ -42,9 +42,7 @@ public class UserManagementApiTest {
     @Test
     public void changeUserEnabledTest() throws ApiException {
         OpenUserDTO openUserDTO = null;
-        String operator = null;
         api.changeUserEnabled(openUserDTO);
-        api.changeUserEnabled(openUserDTO, operator);
         // TODO: test validations
     }
 
@@ -59,9 +57,7 @@ public class UserManagementApiTest {
     public void createOrUpdateUserTest() throws ApiException {
         OpenUserDTO openUserDTO = null;
         Boolean isCreate = null;
-        String operator = null;
         api.createOrUpdateUser(openUserDTO, isCreate);
-        api.createOrUpdateUser(openUserDTO, isCreate, operator);
         // TODO: test validations
     }
 

@@ -5775,6 +5775,12 @@ paths:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
           description: 请求参数错误或用户不存在
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+          description: 未登录或未认证
         "403":
           content:
             application/json:
@@ -6171,7 +6177,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/OpenConsumerInfoDTO'
+                  $ref: '#/components/schemas/OpenConsumerSummaryDTO'
                 type: array
           description: 成功获取消费者列表
       summary: 查询开放平台消费者列表(new added)
@@ -8427,12 +8433,13 @@ components:
         rateLimit:
           default: 0
           description: 限流QPS，0表示不限流
+          minimum: 0
           type: integer
       type: object
     OpenConsumerInfoDTO:
       example:
         orgName: orgName
-        rateLimit: 6
+        rateLimit: 0
         ownerName: ownerName
         consumerId: 0
         appId: appId
@@ -8480,6 +8487,61 @@ components:
         rateLimit:
           default: 0
           description: 限流QPS，0表示不限流
+          minimum: 0
+          type: integer
+        rateLimitEnabled:
+          default: false
+          description: 是否开启限流
+          type: boolean
+      type: object
+    OpenConsumerSummaryDTO:
+      example:
+        orgName: orgName
+        rateLimit: 0
+        ownerName: ownerName
+        consumerId: 0
+        appId: appId
+        name: name
+        allowCreateApplication: false
+        allowManageUsers: false
+        rateLimitEnabled: false
+        orgId: orgId
+        ownerEmail: ownerEmail
+      properties:
+        appId:
+          description: 第三方应用ID
+          type: string
+        name:
+          description: 第三方应用名称
+          type: string
+        orgId:
+          description: 部门ID
+          type: string
+        orgName:
+          description: 部门名称
+          type: string
+        ownerName:
+          description: 负责人用户名
+          type: string
+        ownerEmail:
+          description: 负责人邮箱
+          type: string
+        consumerId:
+          description: Consumer ID
+          format: int64
+          type: integer
+        allowCreateApplication:
+          default: false
+          description: 是否允许该Consumer Token创建应用
+          type: boolean
+        allowManageUsers:
+          default: false
+          description: 是否允许该Consumer Token管理用户
+          type: boolean
+        rateLimit:
+          default: 0
+          description: 限流QPS，0表示不限流
+          minimum: 0
           type: integer
         rateLimitEnabled:
           default: false

@@ -16,6 +16,7 @@ import org.openapitools.client.ApiException;
 import java.io.File;
 import org.openapitools.client.model.OpenConsumerCreateRequestDTO;
 import org.openapitools.client.model.OpenConsumerInfoDTO;
+import org.openapitools.client.model.OpenConsumerSummaryDTO;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -414,7 +415,7 @@ public class PortalManagementApiTest {
     public void getConsumerListTest() throws ApiException {
         Integer page = null;
         Integer size = null;
-        List<OpenConsumerInfoDTO> response = api.getConsumerList(page, size);
+        List<OpenConsumerSummaryDTO> response = api.getConsumerList(page, size);
         // TODO: test validations
     }
 

@@ -2975,7 +2975,7 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 
 # **get_consumer_list**
 <a id="get_consumer_list"></a>
-> [OpenConsumerInfoDTO] get_consumer_list()
+> [OpenConsumerSummaryDTO] get_consumer_list()
 
 查询开放平台消费者列表(new added)
 
@@ -2987,7 +2987,7 @@ GET /openapi/v1/consumers
 ```python
 import apollo_openapi
 from apollo_openapi.apis.tags import portal_management_api
-from apollo_openapi.model.open_consumer_info_dto import OpenConsumerInfoDTO
+from apollo_openapi.model.open_consumer_summary_dto import OpenConsumerSummaryDTO
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -3081,7 +3081,7 @@ list, tuple,  | tuple,  |  |
 ### Tuple Items
 Class Name | Input Type | Accessed Type | Description | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-[**OpenConsumerInfoDTO**]({{complexTypePrefix}}OpenConsumerInfoDTO.md) | [**OpenConsumerInfoDTO**]({{complexTypePrefix}}OpenConsumerInfoDTO.md) | [**OpenConsumerInfoDTO**]({{complexTypePrefix}}OpenConsumerInfoDTO.md) |  |
+[**OpenConsumerSummaryDTO**]({{complexTypePrefix}}OpenConsumerSummaryDTO.md) | [**OpenConsumerSummaryDTO**]({{complexTypePrefix}}OpenConsumerSummaryDTO.md) | [**OpenConsumerSummaryDTO**]({{complexTypePrefix}}OpenConsumerSummaryDTO.md) |  |
 
 ### Authorization
 

@@ -45,7 +45,15 @@ class OpenConsumerInfoDTO(
             token = schemas.StrSchema
             allowCreateApplication = schemas.BoolSchema
             allowManageUsers = schemas.BoolSchema
-            rateLimit = schemas.IntSchema
+
+
+            class rateLimit(
+                schemas.IntSchema
+            ):
+
+
+                class MetaOapg:
+                    inclusive_minimum = 0
             rateLimitEnabled = schemas.BoolSchema
             __annotations__ = {
                 "appId": appId,

@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add Consumer Token support notes to user management contracts, including `ManageUsers`-guarded user lookup and mutation operations.
-- Add typed consumer management request and response schemas with `allowManageUsers` and `rateLimitEnabled` flags.
+- Add typed consumer management request, detail, and summary schemas with `allowManageUsers` and `rateLimitEnabled` flags.
 
 ## [0.3.5] - 2026-05-31
 

@@ -43,7 +43,12 @@ class OpenConsumerCreateRequestDTO(
             orgName = schemas.StrSchema
             ownerName = schemas.StrSchema
             rateLimitEnabled = schemas.BoolSchema
-            rateLimit = schemas.IntSchema
+
+
+            class rateLimit(
+                schemas.IntSchema
+            ):
+                pass
             __annotations__ = {
                 "appId": appId,
                 "allowCreateApplication": allowCreateApplication,

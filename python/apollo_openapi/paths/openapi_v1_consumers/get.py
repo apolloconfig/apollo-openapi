@@ -25,7 +25,7 @@ import frozendict  # noqa: F401
 
 from apollo_openapi import schemas  # noqa: F401
 
-from apollo_openapi.model.open_consumer_info_dto import OpenConsumerInfoDTO
+from apollo_openapi.model.open_consumer_summary_dto import OpenConsumerSummaryDTO
 
 from . import path
 
@@ -76,12 +76,12 @@ class SchemaFor200ResponseBodyApplicationJson(
     class MetaOapg:
 
         @staticmethod
-        def items() -> typing.Type['OpenConsumerInfoDTO']:
-            return OpenConsumerInfoDTO
+        def items() -> typing.Type['OpenConsumerSummaryDTO']:
+            return OpenConsumerSummaryDTO
 
     def __new__(
         cls,
-        _arg: typing.Union[typing.Tuple['OpenConsumerInfoDTO'], typing.List['OpenConsumerInfoDTO']],
+        _arg: typing.Union[typing.Tuple['OpenConsumerSummaryDTO'], typing.List['OpenConsumerSummaryDTO']],
         _configuration: typing.Optional[schemas.Configuration] = None,
     ) -> 'SchemaFor200ResponseBodyApplicationJson':
         return super().__new__(
@@ -90,7 +90,7 @@ class SchemaFor200ResponseBodyApplicationJson(
             _configuration=_configuration,
         )
 
-    def __getitem__(self, i: int) -> 'OpenConsumerInfoDTO':
+    def __getitem__(self, i: int) -> 'OpenConsumerSummaryDTO':
         return super().__getitem__(i)
 
 

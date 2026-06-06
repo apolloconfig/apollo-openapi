@@ -11,6 +11,7 @@ export * from './OpenClusterDTO';
 export * from './OpenClusterNamespaceRoleUserDTO';
 export * from './OpenConsumerCreateRequestDTO';
 export * from './OpenConsumerInfoDTO';
+export * from './OpenConsumerSummaryDTO';
 export * from './OpenCreateAppDTO';
 export * from './OpenCreateNamespaceDTO';
 export * from './OpenEnvClusterDTO';

@@ -15,7 +15,7 @@ import java.util.Optional;
 import javax.annotation.Generated;
 
 /**
- * A delegate to be called by the {@link UserManagementApiController}}.
+ * A delegate to be called by the {@link UserManagementApiController}.
  * Implement this interface with a {@link org.springframework.stereotype.Service} annotated class.
  */
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
@@ -91,6 +91,7 @@ public interface UserManagementApiDelegate {
      * @param userId 用户ID (required)
      * @return 成功获取用户 (status code 200)
      *         or 请求参数错误或用户不存在 (status code 400)
+     *         or 未登录或未认证 (status code 401)
      *         or 权限不足 (status code 403)
      * @see UserManagementApi#getUserByUserId
      */

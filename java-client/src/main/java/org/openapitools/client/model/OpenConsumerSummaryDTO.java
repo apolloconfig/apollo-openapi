@@ -47,10 +47,10 @@ import java.util.Set;
 import org.openapitools.client.JSON;
 
 /**
- * OpenConsumerInfoDTO
+ * OpenConsumerSummaryDTO
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen")
-public class OpenConsumerInfoDTO {
+public class OpenConsumerSummaryDTO {
   public static final String SERIALIZED_NAME_APP_ID = "appId";
   @SerializedName(SERIALIZED_NAME_APP_ID)
   private String appId;
@@ -79,10 +79,6 @@ public class OpenConsumerInfoDTO {
   @SerializedName(SERIALIZED_NAME_CONSUMER_ID)
   private Long consumerId;
 
-  public static final String SERIALIZED_NAME_TOKEN = "token";
-  @SerializedName(SERIALIZED_NAME_TOKEN)
-  private String token;
-
   public static final String SERIALIZED_NAME_ALLOW_CREATE_APPLICATION = "allowCreateApplication";
   @SerializedName(SERIALIZED_NAME_ALLOW_CREATE_APPLICATION)
   private Boolean allowCreateApplication = false;
@@ -99,10 +95,10 @@ public class OpenConsumerInfoDTO {
   @SerializedName(SERIALIZED_NAME_RATE_LIMIT_ENABLED)
   private Boolean rateLimitEnabled = false;
 
-  public OpenConsumerInfoDTO() {
+  public OpenConsumerSummaryDTO() {
   }
 
-  public OpenConsumerInfoDTO appId(String appId) {
+  public OpenConsumerSummaryDTO appId(String appId) {
 
     this.appId = appId;
     return this;
@@ -123,7 +119,7 @@ public class OpenConsumerInfoDTO {
   }
 
 
-  public OpenConsumerInfoDTO name(String name) {
+  public OpenConsumerSummaryDTO name(String name) {
 
     this.name = name;
     return this;
@@ -144,7 +140,7 @@ public class OpenConsumerInfoDTO {
   }
 
 
-  public OpenConsumerInfoDTO orgId(String orgId) {
+  public OpenConsumerSummaryDTO orgId(String orgId) {
 
     this.orgId = orgId;
     return this;
@@ -165,7 +161,7 @@ public class OpenConsumerInfoDTO {
   }
 
 
-  public OpenConsumerInfoDTO orgName(String orgName) {
+  public OpenConsumerSummaryDTO orgName(String orgName) {
 
     this.orgName = orgName;
     return this;
@@ -186,7 +182,7 @@ public class OpenConsumerInfoDTO {
   }
 
 
-  public OpenConsumerInfoDTO ownerName(String ownerName) {
+  public OpenConsumerSummaryDTO ownerName(String ownerName) {
 
     this.ownerName = ownerName;
     return this;
@@ -207,7 +203,7 @@ public class OpenConsumerInfoDTO {
   }
 
 
-  public OpenConsumerInfoDTO ownerEmail(String ownerEmail) {
+  public OpenConsumerSummaryDTO ownerEmail(String ownerEmail) {
 
     this.ownerEmail = ownerEmail;
     return this;
@@ -228,7 +224,7 @@ public class OpenConsumerInfoDTO {
   }
 
 
-  public OpenConsumerInfoDTO consumerId(Long consumerId) {
+  public OpenConsumerSummaryDTO consumerId(Long consumerId) {
 
     this.consumerId = consumerId;
     return this;
@@ -249,28 +245,7 @@ public class OpenConsumerInfoDTO {
   }
 
 
-  public OpenConsumerInfoDTO token(String token) {
-
-    this.token = token;
-    return this;
-  }
-
-   /**
-   * Consumer Token，仅在创建或按应用查询详情时返回
-   * @return token
-  **/
-  @javax.annotation.Nullable
-  public String getToken() {
-    return token;
-  }
-
-
-  public void setToken(String token) {
-    this.token = token;
-  }
-
-
-  public OpenConsumerInfoDTO allowCreateApplication(Boolean allowCreateApplication) {
+  public OpenConsumerSummaryDTO allowCreateApplication(Boolean allowCreateApplication) {
 
     this.allowCreateApplication = allowCreateApplication;
     return this;
@@ -291,7 +266,7 @@ public class OpenConsumerInfoDTO {
   }
 
 
-  public OpenConsumerInfoDTO allowManageUsers(Boolean allowManageUsers) {
+  public OpenConsumerSummaryDTO allowManageUsers(Boolean allowManageUsers) {
 
     this.allowManageUsers = allowManageUsers;
     return this;
@@ -312,7 +287,7 @@ public class OpenConsumerInfoDTO {
   }
 
 
-  public OpenConsumerInfoDTO rateLimit(Integer rateLimit) {
+  public OpenConsumerSummaryDTO rateLimit(Integer rateLimit) {
 
     this.rateLimit = rateLimit;
     return this;
@@ -334,7 +309,7 @@ public class OpenConsumerInfoDTO {
   }
 
 
-  public OpenConsumerInfoDTO rateLimitEnabled(Boolean rateLimitEnabled) {
+  public OpenConsumerSummaryDTO rateLimitEnabled(Boolean rateLimitEnabled) {
 
     this.rateLimitEnabled = rateLimitEnabled;
     return this;
@@ -364,30 +339,29 @@ public class OpenConsumerInfoDTO {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OpenConsumerInfoDTO openConsumerInfoDTO = (OpenConsumerInfoDTO) o;
-    return Objects.equals(this.appId, openConsumerInfoDTO.appId) &&
-        Objects.equals(this.name, openConsumerInfoDTO.name) &&
-        Objects.equals(this.orgId, openConsumerInfoDTO.orgId) &&
-        Objects.equals(this.orgName, openConsumerInfoDTO.orgName) &&
-        Objects.equals(this.ownerName, openConsumerInfoDTO.ownerName) &&
-        Objects.equals(this.ownerEmail, openConsumerInfoDTO.ownerEmail) &&
-        Objects.equals(this.consumerId, openConsumerInfoDTO.consumerId) &&
-        Objects.equals(this.token, openConsumerInfoDTO.token) &&
-        Objects.equals(this.allowCreateApplication, openConsumerInfoDTO.allowCreateApplication) &&
-        Objects.equals(this.allowManageUsers, openConsumerInfoDTO.allowManageUsers) &&
-        Objects.equals(this.rateLimit, openConsumerInfoDTO.rateLimit) &&
-        Objects.equals(this.rateLimitEnabled, openConsumerInfoDTO.rateLimitEnabled);
+    OpenConsumerSummaryDTO openConsumerSummaryDTO = (OpenConsumerSummaryDTO) o;
+    return Objects.equals(this.appId, openConsumerSummaryDTO.appId) &&
+        Objects.equals(this.name, openConsumerSummaryDTO.name) &&
+        Objects.equals(this.orgId, openConsumerSummaryDTO.orgId) &&
+        Objects.equals(this.orgName, openConsumerSummaryDTO.orgName) &&
+        Objects.equals(this.ownerName, openConsumerSummaryDTO.ownerName) &&
+        Objects.equals(this.ownerEmail, openConsumerSummaryDTO.ownerEmail) &&
+        Objects.equals(this.consumerId, openConsumerSummaryDTO.consumerId) &&
+        Objects.equals(this.allowCreateApplication, openConsumerSummaryDTO.allowCreateApplication) &&
+        Objects.equals(this.allowManageUsers, openConsumerSummaryDTO.allowManageUsers) &&
+        Objects.equals(this.rateLimit, openConsumerSummaryDTO.rateLimit) &&
+        Objects.equals(this.rateLimitEnabled, openConsumerSummaryDTO.rateLimitEnabled);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(appId, name, orgId, orgName, ownerName, ownerEmail, consumerId, token, allowCreateApplication, allowManageUsers, rateLimit, rateLimitEnabled);
+    return Objects.hash(appId, name, orgId, orgName, ownerName, ownerEmail, consumerId, allowCreateApplication, allowManageUsers, rateLimit, rateLimitEnabled);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OpenConsumerInfoDTO {\n");
+    sb.append("class OpenConsumerSummaryDTO {\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    orgId: ").append(toIndentedString(orgId)).append("\n");
@@ -395,7 +369,6 @@ public class OpenConsumerInfoDTO {
     sb.append("    ownerName: ").append(toIndentedString(ownerName)).append("\n");
     sb.append("    ownerEmail: ").append(toIndentedString(ownerEmail)).append("\n");
     sb.append("    consumerId: ").append(toIndentedString(consumerId)).append("\n");
-    sb.append("    token: ").append(token == null ? "null" : "***redacted***").append("\n");
     sb.append("    allowCreateApplication: ").append(toIndentedString(allowCreateApplication)).append("\n");
     sb.append("    allowManageUsers: ").append(toIndentedString(allowManageUsers)).append("\n");
     sb.append("    rateLimit: ").append(toIndentedString(rateLimit)).append("\n");
@@ -429,7 +402,6 @@ public class OpenConsumerInfoDTO {
     openapiFields.add("ownerName");
     openapiFields.add("ownerEmail");
     openapiFields.add("consumerId");
-    openapiFields.add("token");
     openapiFields.add("allowCreateApplication");
     openapiFields.add("allowManageUsers");
     openapiFields.add("rateLimit");
@@ -443,12 +415,12 @@ public class OpenConsumerInfoDTO {
   * Validates the JSON Object and throws an exception if issues found
   *
   * @param jsonObj JSON Object
-  * @throws IOException if the JSON Object is invalid with respect to OpenConsumerInfoDTO
+  * @throws IOException if the JSON Object is invalid with respect to OpenConsumerSummaryDTO
   */
   public static void validateJsonObject(JsonObject jsonObj) throws IOException {
       if (jsonObj == null) {
-        if (!OpenConsumerInfoDTO.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in OpenConsumerInfoDTO is not found in the empty JSON string", OpenConsumerInfoDTO.openapiRequiredFields.toString()));
+        if (!OpenConsumerSummaryDTO.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
+          throw new IllegalArgumentException(String.format("The required field(s) %s in OpenConsumerSummaryDTO is not found in the empty JSON string", OpenConsumerSummaryDTO.openapiRequiredFields.toString()));
         }
         return;
       }
@@ -456,8 +428,8 @@ public class OpenConsumerInfoDTO {
       Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();
       // check to see if the JSON string contains additional fields
       for (Entry<String, JsonElement> entry : entries) {
-        if (!OpenConsumerInfoDTO.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `OpenConsumerInfoDTO` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
+        if (!OpenConsumerSummaryDTO.openapiFields.contains(entry.getKey())) {
+          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `OpenConsumerSummaryDTO` properties. JSON: %s", entry.getKey(), jsonObj.toString()));
         }
       }
       if ((jsonObj.get("appId") != null && !jsonObj.get("appId").isJsonNull()) && !jsonObj.get("appId").isJsonPrimitive()) {
@@ -478,31 +450,28 @@ public class OpenConsumerInfoDTO {
       if ((jsonObj.get("ownerEmail") != null && !jsonObj.get("ownerEmail").isJsonNull()) && !jsonObj.get("ownerEmail").isJsonPrimitive()) {
         throw new IllegalArgumentException(String.format("Expected the field `ownerEmail` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ownerEmail").toString()));
       }
-      if ((jsonObj.get("token") != null && !jsonObj.get("token").isJsonNull()) && !jsonObj.get("token").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `token` to be a primitive type in the JSON string but got `%s`", jsonObj.get("token").toString()));
-      }
   }
 
   public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
     @SuppressWarnings("unchecked")
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!OpenConsumerInfoDTO.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'OpenConsumerInfoDTO' and its subtypes
+       if (!OpenConsumerSummaryDTO.class.isAssignableFrom(type.getRawType())) {
+         return null; // this class only serializes 'OpenConsumerSummaryDTO' and its subtypes
        }
        final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<OpenConsumerInfoDTO> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(OpenConsumerInfoDTO.class));
+       final TypeAdapter<OpenConsumerSummaryDTO> thisAdapter
+                        = gson.getDelegateAdapter(this, TypeToken.get(OpenConsumerSummaryDTO.class));
 
-       return (TypeAdapter<T>) new TypeAdapter<OpenConsumerInfoDTO>() {
+       return (TypeAdapter<T>) new TypeAdapter<OpenConsumerSummaryDTO>() {
            @Override
-           public void write(JsonWriter out, OpenConsumerInfoDTO value) throws IOException {
+           public void write(JsonWriter out, OpenConsumerSummaryDTO value) throws IOException {
              JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
              elementAdapter.write(out, obj);
            }
 
            @Override
-           public OpenConsumerInfoDTO read(JsonReader in) throws IOException {
+           public OpenConsumerSummaryDTO read(JsonReader in) throws IOException {
              JsonObject jsonObj = elementAdapter.read(in).getAsJsonObject();
              validateJsonObject(jsonObj);
              return thisAdapter.fromJsonTree(jsonObj);
@@ -513,18 +482,18 @@ public class OpenConsumerInfoDTO {
   }
 
  /**
-  * Create an instance of OpenConsumerInfoDTO given an JSON string
+  * Create an instance of OpenConsumerSummaryDTO given an JSON string
   *
   * @param jsonString JSON string
-  * @return An instance of OpenConsumerInfoDTO
-  * @throws IOException if the JSON string is invalid with respect to OpenConsumerInfoDTO
+  * @return An instance of OpenConsumerSummaryDTO
+  * @throws IOException if the JSON string is invalid with respect to OpenConsumerSummaryDTO
   */
-  public static OpenConsumerInfoDTO fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, OpenConsumerInfoDTO.class);
+  public static OpenConsumerSummaryDTO fromJson(String jsonString) throws IOException {
+    return JSON.getGson().fromJson(jsonString, OpenConsumerSummaryDTO.class);
   }
 
  /**
-  * Convert an instance of OpenConsumerInfoDTO to an JSON string
+  * Convert an instance of OpenConsumerSummaryDTO to an JSON string
   *
   * @return JSON string
   */

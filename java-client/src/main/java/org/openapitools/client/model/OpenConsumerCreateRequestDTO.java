@@ -266,6 +266,7 @@ public class OpenConsumerCreateRequestDTO {
 
    /**
    * 限流QPS，0表示不限流
+   * minimum: 0
    * @return rateLimit
   **/
   @javax.annotation.Nullable
@@ -365,6 +366,7 @@ public class OpenConsumerCreateRequestDTO {
         if (!OpenConsumerCreateRequestDTO.openapiRequiredFields.isEmpty()) { // has required fields but JSON object is null
           throw new IllegalArgumentException(String.format("The required field(s) %s in OpenConsumerCreateRequestDTO is not found in the empty JSON string", OpenConsumerCreateRequestDTO.openapiRequiredFields.toString()));
         }
+        return;
       }
 
       Set<Entry<String, JsonElement>> entries = jsonObj.entrySet();

@@ -15,11 +15,11 @@ import java.util.*;
 import javax.annotation.Generated;
 
 /**
- * OpenConsumerInfoDTO
+ * OpenConsumerSummaryDTO
  */
 
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen")
-public class OpenConsumerInfoDTO {
+public class OpenConsumerSummaryDTO {
 
   private String appId;
 
@@ -35,8 +35,6 @@ public class OpenConsumerInfoDTO {
 
   private Long consumerId;
 
-  private String token;
-
   private Boolean allowCreateApplication = false;
 
   private Boolean allowManageUsers = false;
@@ -45,7 +43,7 @@ public class OpenConsumerInfoDTO {
 
   private Boolean rateLimitEnabled = false;
 
-  public OpenConsumerInfoDTO appId(String appId) {
+  public OpenConsumerSummaryDTO appId(String appId) {
     this.appId = appId;
     return this;
   }
@@ -65,7 +63,7 @@ public class OpenConsumerInfoDTO {
     this.appId = appId;
   }
 
-  public OpenConsumerInfoDTO name(String name) {
+  public OpenConsumerSummaryDTO name(String name) {
     this.name = name;
     return this;
   }
@@ -85,7 +83,7 @@ public class OpenConsumerInfoDTO {
     this.name = name;
   }
 
-  public OpenConsumerInfoDTO orgId(String orgId) {
+  public OpenConsumerSummaryDTO orgId(String orgId) {
     this.orgId = orgId;
     return this;
   }
@@ -105,7 +103,7 @@ public class OpenConsumerInfoDTO {
     this.orgId = orgId;
   }
 
-  public OpenConsumerInfoDTO orgName(String orgName) {
+  public OpenConsumerSummaryDTO orgName(String orgName) {
     this.orgName = orgName;
     return this;
   }
@@ -125,7 +123,7 @@ public class OpenConsumerInfoDTO {
     this.orgName = orgName;
   }
 
-  public OpenConsumerInfoDTO ownerName(String ownerName) {
+  public OpenConsumerSummaryDTO ownerName(String ownerName) {
     this.ownerName = ownerName;
     return this;
   }
@@ -145,7 +143,7 @@ public class OpenConsumerInfoDTO {
     this.ownerName = ownerName;
   }
 
-  public OpenConsumerInfoDTO ownerEmail(String ownerEmail) {
+  public OpenConsumerSummaryDTO ownerEmail(String ownerEmail) {
     this.ownerEmail = ownerEmail;
     return this;
   }
@@ -165,7 +163,7 @@ public class OpenConsumerInfoDTO {
     this.ownerEmail = ownerEmail;
   }
 
-  public OpenConsumerInfoDTO consumerId(Long consumerId) {
+  public OpenConsumerSummaryDTO consumerId(Long consumerId) {
     this.consumerId = consumerId;
     return this;
   }
@@ -185,27 +183,7 @@ public class OpenConsumerInfoDTO {
     this.consumerId = consumerId;
   }
 
-  public OpenConsumerInfoDTO token(String token) {
-    this.token = token;
-    return this;
-  }
-
-  /**
-   * Consumer Token，仅在创建或按应用查询详情时返回
-   * @return token
-  */
-
-  @Schema(name = "token", description = "Consumer Token，仅在创建或按应用查询详情时返回", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
-  @JsonProperty("token")
-  public String getToken() {
-    return token;
-  }
-
-  public void setToken(String token) {
-    this.token = token;
-  }
-
-  public OpenConsumerInfoDTO allowCreateApplication(Boolean allowCreateApplication) {
+  public OpenConsumerSummaryDTO allowCreateApplication(Boolean allowCreateApplication) {
     this.allowCreateApplication = allowCreateApplication;
     return this;
   }
@@ -225,7 +203,7 @@ public class OpenConsumerInfoDTO {
     this.allowCreateApplication = allowCreateApplication;
   }
 
-  public OpenConsumerInfoDTO allowManageUsers(Boolean allowManageUsers) {
+  public OpenConsumerSummaryDTO allowManageUsers(Boolean allowManageUsers) {
     this.allowManageUsers = allowManageUsers;
     return this;
   }
@@ -245,7 +223,7 @@ public class OpenConsumerInfoDTO {
     this.allowManageUsers = allowManageUsers;
   }
 
-  public OpenConsumerInfoDTO rateLimit(Integer rateLimit) {
+  public OpenConsumerSummaryDTO rateLimit(Integer rateLimit) {
     this.rateLimit = rateLimit;
     return this;
   }
@@ -266,7 +244,7 @@ public class OpenConsumerInfoDTO {
     this.rateLimit = rateLimit;
   }
 
-  public OpenConsumerInfoDTO rateLimitEnabled(Boolean rateLimitEnabled) {
+  public OpenConsumerSummaryDTO rateLimitEnabled(Boolean rateLimitEnabled) {
     this.rateLimitEnabled = rateLimitEnabled;
     return this;
   }
@@ -294,30 +272,29 @@ public class OpenConsumerInfoDTO {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OpenConsumerInfoDTO openConsumerInfoDTO = (OpenConsumerInfoDTO) o;
-    return Objects.equals(this.appId, openConsumerInfoDTO.appId) &&
-        Objects.equals(this.name, openConsumerInfoDTO.name) &&
-        Objects.equals(this.orgId, openConsumerInfoDTO.orgId) &&
-        Objects.equals(this.orgName, openConsumerInfoDTO.orgName) &&
-        Objects.equals(this.ownerName, openConsumerInfoDTO.ownerName) &&
-        Objects.equals(this.ownerEmail, openConsumerInfoDTO.ownerEmail) &&
-        Objects.equals(this.consumerId, openConsumerInfoDTO.consumerId) &&
-        Objects.equals(this.token, openConsumerInfoDTO.token) &&
-        Objects.equals(this.allowCreateApplication, openConsumerInfoDTO.allowCreateApplication) &&
-        Objects.equals(this.allowManageUsers, openConsumerInfoDTO.allowManageUsers) &&
-        Objects.equals(this.rateLimit, openConsumerInfoDTO.rateLimit) &&
-        Objects.equals(this.rateLimitEnabled, openConsumerInfoDTO.rateLimitEnabled);
+    OpenConsumerSummaryDTO openConsumerSummaryDTO = (OpenConsumerSummaryDTO) o;
+    return Objects.equals(this.appId, openConsumerSummaryDTO.appId) &&
+        Objects.equals(this.name, openConsumerSummaryDTO.name) &&
+        Objects.equals(this.orgId, openConsumerSummaryDTO.orgId) &&
+        Objects.equals(this.orgName, openConsumerSummaryDTO.orgName) &&
+        Objects.equals(this.ownerName, openConsumerSummaryDTO.ownerName) &&
+        Objects.equals(this.ownerEmail, openConsumerSummaryDTO.ownerEmail) &&
+        Objects.equals(this.consumerId, openConsumerSummaryDTO.consumerId) &&
+        Objects.equals(this.allowCreateApplication, openConsumerSummaryDTO.allowCreateApplication) &&
+        Objects.equals(this.allowManageUsers, openConsumerSummaryDTO.allowManageUsers) &&
+        Objects.equals(this.rateLimit, openConsumerSummaryDTO.rateLimit) &&
+        Objects.equals(this.rateLimitEnabled, openConsumerSummaryDTO.rateLimitEnabled);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(appId, name, orgId, orgName, ownerName, ownerEmail, consumerId, token, allowCreateApplication, allowManageUsers, rateLimit, rateLimitEnabled);
+    return Objects.hash(appId, name, orgId, orgName, ownerName, ownerEmail, consumerId, allowCreateApplication, allowManageUsers, rateLimit, rateLimitEnabled);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OpenConsumerInfoDTO {\n");
+    sb.append("class OpenConsumerSummaryDTO {\n");
     sb.append("    appId: ").append(toIndentedString(appId)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    orgId: ").append(toIndentedString(orgId)).append("\n");
@@ -325,7 +302,6 @@ public class OpenConsumerInfoDTO {
     sb.append("    ownerName: ").append(toIndentedString(ownerName)).append("\n");
     sb.append("    ownerEmail: ").append(toIndentedString(ownerEmail)).append("\n");
     sb.append("    consumerId: ").append(toIndentedString(consumerId)).append("\n");
-    sb.append("    token: ").append(token == null ? "null" : "***redacted***").append("\n");
     sb.append("    allowCreateApplication: ").append(toIndentedString(allowCreateApplication)).append("\n");
     sb.append("    allowManageUsers: ").append(toIndentedString(allowManageUsers)).append("\n");
     sb.append("    rateLimit: ").append(toIndentedString(rateLimit)).append("\n");

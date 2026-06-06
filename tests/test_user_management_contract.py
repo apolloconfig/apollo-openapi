@@ -1,3 +1,4 @@
+import re
 import unittest
 from pathlib import Path
 
@@ -79,7 +80,7 @@ class UserManagementContractTest(unittest.TestCase):
 
         list_consumers = spec["paths"]["/openapi/v1/consumers"]["get"]
         self.assertEqual(
-            "#/components/schemas/OpenConsumerInfoDTO",
+            "#/components/schemas/OpenConsumerSummaryDTO",
             list_consumers["responses"]["200"]["content"]["application/json"]["schema"]["items"]["$ref"],
         )
 
@@ -89,12 +90,16 @@ class UserManagementContractTest(unittest.TestCase):
             consumer_token["responses"]["200"]["content"]["application/json"]["schema"]["$ref"],
         )
 
-        for schema_name in ("OpenConsumerCreateRequestDTO", "OpenConsumerInfoDTO"):
+        for schema_name in (
+            "OpenConsumerCreateRequestDTO", "OpenConsumerInfoDTO", "OpenConsumerSummaryDTO"):
           properties = schemas[schema_name]["properties"]
           self.assertEqual("boolean", properties["allowCreateApplication"]["type"])
           self.assertEqual("boolean", properties["allowManageUsers"]["type"])
+          self.assertEqual(0, properties["rateLimit"]["minimum"])
         self.assertEqual("boolean",
             schemas["OpenConsumerInfoDTO"]["properties"]["rateLimitEnabled"]["type"])
+        self.assertNotIn("token", schemas["OpenConsumerSummaryDTO"]["properties"])
+        self.assertIn("token", schemas["OpenConsumerInfoDTO"]["properties"])
 
   def test_spring_server_api_uses_user_management_name(self):
     api_dir = self.repo_root / "spring-boot2/src/main/java/com/apollo/openapi/server/api"
@@ -111,6 +116,28 @@ class UserManagementContractTest(unittest.TestCase):
     self.assertIn(
         "createOrUpdateUser(OpenUserDTO openUserDTO, Boolean isCreate) throws ApiException",
         content)
+
+  def test_consumer_java_models_handle_null_json_and_redact_tokens(self):
+    model_dir = self.repo_root / "java-client/src/main/java/org/openapitools/client/model"
+    for model_name in (
+        "OpenConsumerCreateRequestDTO", "OpenConsumerInfoDTO", "OpenConsumerSummaryDTO"):
+      content = (model_dir / f"{model_name}.java").read_text(encoding="utf-8")
+
+      with self.subTest(model=model_name):
+        self.assertRegex(content, re.compile(
+            r"if \(jsonObj == null\) \{.*?return;.*?\}\s+"
+            r"Set<Entry<String, JsonElement>> entries = jsonObj\.entrySet\(\);",
+            re.DOTALL))
+
+    client_info = (model_dir / "OpenConsumerInfoDTO.java").read_text(encoding="utf-8")
+    self.assertIn('token == null ? "null" : "***redacted***"', client_info)
+    self.assertNotIn('token: ").append(toIndentedString(token))', client_info)
+
+    spring_info = (self.repo_root /
+        "spring-boot2/src/main/java/com/apollo/openapi/server/model/OpenConsumerInfoDTO.java"
+        ).read_text(encoding="utf-8")
+    self.assertIn('token == null ? "null" : "***redacted***"', spring_info)
+    self.assertNotIn('token: ").append(toIndentedString(token))', spring_info)
 
   def _find_parameter(self, operation, name):
     for parameter in operation.get("parameters", ()):

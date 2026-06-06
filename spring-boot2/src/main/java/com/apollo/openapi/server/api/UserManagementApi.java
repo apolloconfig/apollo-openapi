@@ -172,6 +172,7 @@ public interface UserManagementApi {
      * @param userId 用户ID (required)
      * @return 成功获取用户 (status code 200)
      *         or 请求参数错误或用户不存在 (status code 400)
+     *         or 未登录或未认证 (status code 401)
      *         or 权限不足 (status code 403)
      */
     @Operation(
@@ -184,6 +185,9 @@ public interface UserManagementApi {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = OpenUserInfoDTO.class))
             }),
             @ApiResponse(responseCode = "400", description = "请求参数错误或用户不存在", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
+            }),
+            @ApiResponse(responseCode = "401", description = "未登录或未认证", content = {
                 @Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))
             }),
             @ApiResponse(responseCode = "403", description = "权限不足", content = {

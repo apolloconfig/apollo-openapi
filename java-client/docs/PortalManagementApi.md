@@ -1761,7 +1761,7 @@ This endpoint does not need any parameter.
 
 <a id="getConsumerList"></a>
 # **getConsumerList**
-> List&lt;OpenConsumerInfoDTO&gt; getConsumerList(page, size)
+> List&lt;OpenConsumerSummaryDTO&gt; getConsumerList(page, size)
 
 查询开放平台消费者列表(new added)
 
@@ -1792,7 +1792,7 @@ public class Example {
     Integer page = 0; // Integer |
     Integer size = 10; // Integer |
     try {
-      List<OpenConsumerInfoDTO> result = apiInstance.getConsumerList(page, size);
+      List<OpenConsumerSummaryDTO> result = apiInstance.getConsumerList(page, size);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling PortalManagementApi#getConsumerList");
@@ -1814,7 +1814,7 @@ public class Example {
 
 ### Return type
 
-[**List&lt;OpenConsumerInfoDTO&gt;**](OpenConsumerInfoDTO.md)
+[**List&lt;OpenConsumerSummaryDTO&gt;**](OpenConsumerSummaryDTO.md)
 
 ### Authorization
 

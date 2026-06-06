@@ -206,9 +206,10 @@ public class OpenConsumerCreateRequestDTO {
 
   /**
    * 限流QPS，0表示不限流
+   * minimum: 0
    * @return rateLimit
   */
-
+  @Min(0)
   @Schema(name = "rateLimit", description = "限流QPS，0表示不限流", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
   @JsonProperty("rateLimit")
   public Integer getRateLimit() {

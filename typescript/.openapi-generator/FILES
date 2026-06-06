@@ -31,6 +31,7 @@ src/models/OpenClusterDTO.ts
 src/models/OpenClusterNamespaceRoleUserDTO.ts
 src/models/OpenConsumerCreateRequestDTO.ts
 src/models/OpenConsumerInfoDTO.ts
+src/models/OpenConsumerSummaryDTO.ts
 src/models/OpenCreateAppDTO.ts
 src/models/OpenCreateNamespaceDTO.ts
 src/models/OpenEnvClusterDTO.ts

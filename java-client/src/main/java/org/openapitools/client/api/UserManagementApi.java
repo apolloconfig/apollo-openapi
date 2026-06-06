@@ -549,6 +549,7 @@ public class UserManagementApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> 成功获取用户 </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> 请求参数错误或用户不存在 </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> 未登录或未认证 </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
@@ -619,6 +620,7 @@ public class UserManagementApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> 成功获取用户 </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> 请求参数错误或用户不存在 </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> 未登录或未认证 </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
@@ -638,6 +640,7 @@ public class UserManagementApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> 成功获取用户 </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> 请求参数错误或用户不存在 </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> 未登录或未认证 </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
@@ -659,6 +662,7 @@ public class UserManagementApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> 成功获取用户 </td><td>  -  </td></tr>
         <tr><td> 400 </td><td> 请求参数错误或用户不存在 </td><td>  -  </td></tr>
+        <tr><td> 401 </td><td> 未登录或未认证 </td><td>  -  </td></tr>
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */

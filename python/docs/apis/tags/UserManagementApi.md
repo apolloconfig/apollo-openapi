@@ -525,6 +525,7 @@ Code | Class | Description
 n/a | api_client.ApiResponseWithoutDeserialization | When skip_deserialization is True this response is returned
 200 | [ApiResponseFor200](#get_user_by_user_id.ApiResponseFor200) | 成功获取用户
 400 | [ApiResponseFor400](#get_user_by_user_id.ApiResponseFor400) | 请求参数错误或用户不存在
+401 | [ApiResponseFor401](#get_user_by_user_id.ApiResponseFor401) | 未登录或未认证
 403 | [ApiResponseFor403](#get_user_by_user_id.ApiResponseFor403) | 权限不足
 
 #### get_user_by_user_id.ApiResponseFor200
@@ -548,6 +549,19 @@ body | typing.Union[SchemaFor400ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor400ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**ExceptionResponse**](../../models/ExceptionResponse.md) |  |
+
+
+#### get_user_by_user_id.ApiResponseFor401
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+response | urllib3.HTTPResponse | Raw response |
+body | typing.Union[SchemaFor401ResponseBodyApplicationJson, ] |  |
+headers | Unset | headers were not defined |
+
+# SchemaFor401ResponseBodyApplicationJson
 Type | Description  | Notes
 ------------- | ------------- | -------------
 [**ExceptionResponse**](../../models/ExceptionResponse.md) |  |
