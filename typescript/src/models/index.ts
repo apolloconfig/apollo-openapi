@@ -9,6 +9,8 @@ export * from './OpenAppNamespaceDTO';
 export * from './OpenAppRoleUserDTO';
 export * from './OpenClusterDTO';
 export * from './OpenClusterNamespaceRoleUserDTO';
+export * from './OpenConsumerCreateRequestDTO';
+export * from './OpenConsumerInfoDTO';
 export * from './OpenCreateAppDTO';
 export * from './OpenCreateNamespaceDTO';
 export * from './OpenEnvClusterDTO';

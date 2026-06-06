@@ -25,6 +25,8 @@ docs/OpenAppNamespaceDTO.md
 docs/OpenAppRoleUserDTO.md
 docs/OpenClusterDTO.md
 docs/OpenClusterNamespaceRoleUserDTO.md
+docs/OpenConsumerCreateRequestDTO.md
+docs/OpenConsumerInfoDTO.md
 docs/OpenCreateAppDTO.md
 docs/OpenCreateNamespaceDTO.md
 docs/OpenEnvClusterDTO.md
@@ -58,8 +60,8 @@ docs/OpenUserInfoDTO.md
 docs/OrganizationManagementApi.md
 docs/PermissionManagementApi.md
 docs/PortalManagementApi.md
-docs/PortalUserManagementApi.md
 docs/ReleaseManagementApi.md
+docs/UserManagementApi.md
 git_push.sh
 gradle.properties
 gradle/wrapper/gradle-wrapper.jar
@@ -95,8 +97,8 @@ src/main/java/org/openapitools/client/api/NamespaceManagementApi.java
 src/main/java/org/openapitools/client/api/OrganizationManagementApi.java
 src/main/java/org/openapitools/client/api/PermissionManagementApi.java
 src/main/java/org/openapitools/client/api/PortalManagementApi.java
-src/main/java/org/openapitools/client/api/PortalUserManagementApi.java
 src/main/java/org/openapitools/client/api/ReleaseManagementApi.java
+src/main/java/org/openapitools/client/api/UserManagementApi.java
 src/main/java/org/openapitools/client/auth/ApiKeyAuth.java
 src/main/java/org/openapitools/client/auth/Authentication.java
 src/main/java/org/openapitools/client/auth/HttpBasicAuth.java
@@ -111,6 +113,8 @@ src/main/java/org/openapitools/client/model/OpenAppNamespaceDTO.java
 src/main/java/org/openapitools/client/model/OpenAppRoleUserDTO.java
 src/main/java/org/openapitools/client/model/OpenClusterDTO.java
 src/main/java/org/openapitools/client/model/OpenClusterNamespaceRoleUserDTO.java
+src/main/java/org/openapitools/client/model/OpenConsumerCreateRequestDTO.java
+src/main/java/org/openapitools/client/model/OpenConsumerInfoDTO.java
 src/main/java/org/openapitools/client/model/OpenCreateAppDTO.java
 src/main/java/org/openapitools/client/model/OpenCreateNamespaceDTO.java
 src/main/java/org/openapitools/client/model/OpenEnvClusterDTO.java
@@ -154,8 +158,8 @@ src/test/java/org/openapitools/client/api/NamespaceManagementApiTest.java
 src/test/java/org/openapitools/client/api/OrganizationManagementApiTest.java
 src/test/java/org/openapitools/client/api/PermissionManagementApiTest.java
 src/test/java/org/openapitools/client/api/PortalManagementApiTest.java
-src/test/java/org/openapitools/client/api/PortalUserManagementApiTest.java
 src/test/java/org/openapitools/client/api/ReleaseManagementApiTest.java
+src/test/java/org/openapitools/client/api/UserManagementApiTest.java
 src/test/java/org/openapitools/client/model/ExceptionResponseTest.java
 src/test/java/org/openapitools/client/model/NamespaceGrayDelReleaseDTOTest.java
 src/test/java/org/openapitools/client/model/NamespaceReleaseDTOTest.java
@@ -165,6 +169,8 @@ src/test/java/org/openapitools/client/model/OpenAppNamespaceDTOTest.java
 src/test/java/org/openapitools/client/model/OpenAppRoleUserDTOTest.java
 src/test/java/org/openapitools/client/model/OpenClusterDTOTest.java
 src/test/java/org/openapitools/client/model/OpenClusterNamespaceRoleUserDTOTest.java
+src/test/java/org/openapitools/client/model/OpenConsumerCreateRequestDTOTest.java
+src/test/java/org/openapitools/client/model/OpenConsumerInfoDTOTest.java
 src/test/java/org/openapitools/client/model/OpenCreateAppDTOTest.java
 src/test/java/org/openapitools/client/model/OpenCreateNamespaceDTOTest.java
 src/test/java/org/openapitools/client/model/OpenEnvClusterDTOTest.java

@@ -14,7 +14,7 @@ from apollo_openapi.apis.tags.organization_management_api import OrganizationMan
 from apollo_openapi.apis.tags.environment_management_api import EnvironmentManagementApi
 from apollo_openapi.apis.tags.access_key_management_api import AccessKeyManagementApi
 from apollo_openapi.apis.tags.permission_management_api import PermissionManagementApi
-from apollo_openapi.apis.tags.portal_user_management_api import PortalUserManagementApi
+from apollo_openapi.apis.tags.user_management_api import UserManagementApi
 from apollo_openapi.apis.tags.portal_management_api import PortalManagementApi
 
 TagToApi = typing_extensions.TypedDict(
@@ -33,7 +33,7 @@ TagToApi = typing_extensions.TypedDict(
         TagValues.ENVIRONMENT_MANAGEMENT: EnvironmentManagementApi,
         TagValues.ACCESS_KEY_MANAGEMENT: AccessKeyManagementApi,
         TagValues.PERMISSION_MANAGEMENT: PermissionManagementApi,
-        TagValues.PORTAL_USER_MANAGEMENT: PortalUserManagementApi,
+        TagValues.USER_MANAGEMENT: UserManagementApi,
         TagValues.PORTAL_MANAGEMENT: PortalManagementApi,
     }
 )
@@ -53,7 +53,7 @@ tag_to_api = TagToApi(
         TagValues.ENVIRONMENT_MANAGEMENT: EnvironmentManagementApi,
         TagValues.ACCESS_KEY_MANAGEMENT: AccessKeyManagementApi,
         TagValues.PERMISSION_MANAGEMENT: PermissionManagementApi,
-        TagValues.PORTAL_USER_MANAGEMENT: PortalUserManagementApi,
+        TagValues.USER_MANAGEMENT: UserManagementApi,
         TagValues.PORTAL_MANAGEMENT: PortalManagementApi,
     }
 )

@@ -5,6 +5,8 @@
  */
 package com.apollo.openapi.server.api;
 
+import com.apollo.openapi.server.model.OpenConsumerCreateRequestDTO;
+import com.apollo.openapi.server.model.OpenConsumerInfoDTO;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -181,7 +183,7 @@ public interface PortalManagementApi {
      * POST /openapi/v1/consumers : 创建开放平台消费者(new added)
      * POST /openapi/v1/consumers
      *
-     * @param body  (required)
+     * @param openConsumerCreateRequestDTO  (required)
      * @param expires  (optional)
      * @return 成功创建消费者 (status code 200)
      */
@@ -192,7 +194,7 @@ public interface PortalManagementApi {
         tags = { "Portal Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "成功创建消费者", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = Object.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = OpenConsumerInfoDTO.class))
             })
         },
         security = {
@@ -205,11 +207,11 @@ public interface PortalManagementApi {
         produces = { "application/json" },
         consumes = { "application/json" }
     )
-    default ResponseEntity<Object> createConsumer(
-        @Parameter(name = "body", description = "", required = true) @Valid @RequestBody Object body,
+    default ResponseEntity<OpenConsumerInfoDTO> createConsumer(
+        @Parameter(name = "OpenConsumerCreateRequestDTO", description = "", required = true) @Valid @RequestBody OpenConsumerCreateRequestDTO openConsumerCreateRequestDTO,
         @Parameter(name = "expires", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "expires", required = false) String expires
     ) {
-        return getDelegate().createConsumer(body, expires);
+        return getDelegate().createConsumer(openConsumerCreateRequestDTO, expires);
     }
 
 
@@ -905,7 +907,7 @@ public interface PortalManagementApi {
         tags = { "Portal Management" },
         responses = {
             @ApiResponse(responseCode = "200", description = "成功获取消费者列表", content = {
-                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Object.class)))
+                @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = OpenConsumerInfoDTO.class)))
             })
         },
         security = {
@@ -917,7 +919,7 @@ public interface PortalManagementApi {
         value = "/openapi/v1/consumers",
         produces = { "application/json" }
     )
-    default ResponseEntity<List<Object>> getConsumerList(
+    default ResponseEntity<List<OpenConsumerInfoDTO>> getConsumerList(
         @Parameter(name = "page", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
         @Parameter(name = "size", description = "", in = ParameterIn.QUERY) @Valid @RequestParam(value = "size", required = false, defaultValue = "10") Integer size
     ) {

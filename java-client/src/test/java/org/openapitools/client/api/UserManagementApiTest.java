@@ -25,31 +25,32 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * API tests for PortalUserManagementApi
+ * API tests for UserManagementApi
  */
 @Disabled
-public class PortalUserManagementApiTest {
+public class UserManagementApiTest {
 
-    private final PortalUserManagementApi api = new PortalUserManagementApi();
+    private final UserManagementApi api = new UserManagementApi();
 
     /**
-     * 修改Portal用户启用状态(new added)
+     * 修改用户启用状态(new added)
      *
-     * PUT /openapi/v1/users/enabled
+     * PUT /openapi/v1/users/enabled，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
      *
      * @throws ApiException if the Api call fails
      */
     @Test
     public void changeUserEnabledTest() throws ApiException {
         OpenUserDTO openUserDTO = null;
-        api.changeUserEnabled(openUserDTO);
+        String operator = null;
+        api.changeUserEnabled(openUserDTO, operator);
         // TODO: test validations
     }
 
     /**
-     * 创建或更新Portal用户(new added)
+     * 创建或更新用户(new added)
      *
-     * POST /openapi/v1/users
+     * POST /openapi/v1/users，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
      *
      * @throws ApiException if the Api call fails
      */
@@ -57,7 +58,8 @@ public class PortalUserManagementApiTest {
     public void createOrUpdateUserTest() throws ApiException {
         OpenUserDTO openUserDTO = null;
         Boolean isCreate = null;
-        api.createOrUpdateUser(openUserDTO, isCreate);
+        String operator = null;
+        api.createOrUpdateUser(openUserDTO, isCreate, operator);
         // TODO: test validations
     }
 
@@ -75,9 +77,23 @@ public class PortalUserManagementApiTest {
     }
 
     /**
-     * 搜索Portal用户(new added)
+     * 获取指定用户(new added)
      *
-     * GET /openapi/v1/users
+     * GET /openapi/v1/users/{userId}，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
+     *
+     * @throws ApiException if the Api call fails
+     */
+    @Test
+    public void getUserByUserIdTest() throws ApiException {
+        String userId = null;
+        OpenUserInfoDTO response = api.getUserByUserId(userId);
+        // TODO: test validations
+    }
+
+    /**
+     * 搜索用户(new added)
+     *
+     * GET /openapi/v1/users，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
      *
      * @throws ApiException if the Api call fails
      */

@@ -37,16 +37,16 @@ import java.util.List;
 import java.util.Map;
 import javax.ws.rs.core.GenericType;
 
-public class PortalUserManagementApi {
+public class UserManagementApi {
     private ApiClient localVarApiClient;
     private int localHostIndex;
     private String localCustomBaseUrl;
 
-    public PortalUserManagementApi() {
+    public UserManagementApi() {
         this(Configuration.getDefaultApiClient());
     }
 
-    public PortalUserManagementApi(ApiClient apiClient) {
+    public UserManagementApi(ApiClient apiClient) {
         this.localVarApiClient = apiClient;
     }
 
@@ -77,6 +77,7 @@ public class PortalUserManagementApi {
     /**
      * Build call for changeUserEnabled
      * @param openUserDTO  (required)
+     * @param operator 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -88,7 +89,7 @@ public class PortalUserManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call changeUserEnabledCall(OpenUserDTO openUserDTO, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call changeUserEnabledCall(OpenUserDTO openUserDTO, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -113,6 +114,10 @@ public class PortalUserManagementApi {
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+        if (operator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -134,20 +139,21 @@ public class PortalUserManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call changeUserEnabledValidateBeforeCall(OpenUserDTO openUserDTO, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call changeUserEnabledValidateBeforeCall(OpenUserDTO openUserDTO, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'openUserDTO' is set
         if (openUserDTO == null) {
             throw new ApiException("Missing the required parameter 'openUserDTO' when calling changeUserEnabled(Async)");
         }
 
-        return changeUserEnabledCall(openUserDTO, _callback);
+        return changeUserEnabledCall(openUserDTO, operator, _callback);
 
     }
 
     /**
-     * 修改Portal用户启用状态(new added)
-     * PUT /openapi/v1/users/enabled
+     * 修改用户启用状态(new added)
+     * PUT /openapi/v1/users/enabled，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
      * @param openUserDTO  (required)
+     * @param operator 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数 (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -157,14 +163,15 @@ public class PortalUserManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public void changeUserEnabled(OpenUserDTO openUserDTO) throws ApiException {
-        changeUserEnabledWithHttpInfo(openUserDTO);
+    public void changeUserEnabled(OpenUserDTO openUserDTO, String operator) throws ApiException {
+        changeUserEnabledWithHttpInfo(openUserDTO, operator);
     }
 
     /**
-     * 修改Portal用户启用状态(new added)
-     * PUT /openapi/v1/users/enabled
+     * 修改用户启用状态(new added)
+     * PUT /openapi/v1/users/enabled，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
      * @param openUserDTO  (required)
+     * @param operator 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数 (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -175,15 +182,16 @@ public class PortalUserManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> changeUserEnabledWithHttpInfo(OpenUserDTO openUserDTO) throws ApiException {
-        okhttp3.Call localVarCall = changeUserEnabledValidateBeforeCall(openUserDTO, null);
+    public ApiResponse<Void> changeUserEnabledWithHttpInfo(OpenUserDTO openUserDTO, String operator) throws ApiException {
+        okhttp3.Call localVarCall = changeUserEnabledValidateBeforeCall(openUserDTO, operator, null);
         return localVarApiClient.execute(localVarCall);
     }
 
     /**
-     * 修改Portal用户启用状态(new added) (asynchronously)
-     * PUT /openapi/v1/users/enabled
+     * 修改用户启用状态(new added) (asynchronously)
+     * PUT /openapi/v1/users/enabled，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
      * @param openUserDTO  (required)
+     * @param operator 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -195,9 +203,9 @@ public class PortalUserManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call changeUserEnabledAsync(OpenUserDTO openUserDTO, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call changeUserEnabledAsync(OpenUserDTO openUserDTO, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = changeUserEnabledValidateBeforeCall(openUserDTO, _callback);
+        okhttp3.Call localVarCall = changeUserEnabledValidateBeforeCall(openUserDTO, operator, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
@@ -205,6 +213,7 @@ public class PortalUserManagementApi {
      * Build call for createOrUpdateUser
      * @param openUserDTO  (required)
      * @param isCreate true 表示创建用户，false 表示更新用户 (optional, default to false)
+     * @param operator 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数 (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -216,7 +225,7 @@ public class PortalUserManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createOrUpdateUserCall(OpenUserDTO openUserDTO, Boolean isCreate, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call createOrUpdateUserCall(OpenUserDTO openUserDTO, Boolean isCreate, String operator, final ApiCallback _callback) throws ApiException {
         String basePath = null;
         // Operation Servers
         String[] localBasePaths = new String[] {  };
@@ -245,6 +254,10 @@ public class PortalUserManagementApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("isCreate", isCreate));
         }
 
+        if (operator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("operator", operator));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -266,21 +279,22 @@ public class PortalUserManagementApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call createOrUpdateUserValidateBeforeCall(OpenUserDTO openUserDTO, Boolean isCreate, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call createOrUpdateUserValidateBeforeCall(OpenUserDTO openUserDTO, Boolean isCreate, String operator, final ApiCallback _callback) throws ApiException {
         // verify the required parameter 'openUserDTO' is set
         if (openUserDTO == null) {
             throw new ApiException("Missing the required parameter 'openUserDTO' when calling createOrUpdateUser(Async)");
         }
 
-        return createOrUpdateUserCall(openUserDTO, isCreate, _callback);
+        return createOrUpdateUserCall(openUserDTO, isCreate, operator, _callback);
 
     }
 
     /**
-     * 创建或更新Portal用户(new added)
-     * POST /openapi/v1/users
+     * 创建或更新用户(new added)
+     * POST /openapi/v1/users，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
      * @param openUserDTO  (required)
      * @param isCreate true 表示创建用户，false 表示更新用户 (optional, default to false)
+     * @param operator 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数 (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -290,15 +304,16 @@ public class PortalUserManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public void createOrUpdateUser(OpenUserDTO openUserDTO, Boolean isCreate) throws ApiException {
-        createOrUpdateUserWithHttpInfo(openUserDTO, isCreate);
+    public void createOrUpdateUser(OpenUserDTO openUserDTO, Boolean isCreate, String operator) throws ApiException {
+        createOrUpdateUserWithHttpInfo(openUserDTO, isCreate, operator);
     }
 
     /**
-     * 创建或更新Portal用户(new added)
-     * POST /openapi/v1/users
+     * 创建或更新用户(new added)
+     * POST /openapi/v1/users，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
      * @param openUserDTO  (required)
      * @param isCreate true 表示创建用户，false 表示更新用户 (optional, default to false)
+     * @param operator 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数 (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -309,16 +324,17 @@ public class PortalUserManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Void> createOrUpdateUserWithHttpInfo(OpenUserDTO openUserDTO, Boolean isCreate) throws ApiException {
-        okhttp3.Call localVarCall = createOrUpdateUserValidateBeforeCall(openUserDTO, isCreate, null);
+    public ApiResponse<Void> createOrUpdateUserWithHttpInfo(OpenUserDTO openUserDTO, Boolean isCreate, String operator) throws ApiException {
+        okhttp3.Call localVarCall = createOrUpdateUserValidateBeforeCall(openUserDTO, isCreate, operator, null);
         return localVarApiClient.execute(localVarCall);
     }
 
     /**
-     * 创建或更新Portal用户(new added) (asynchronously)
-     * POST /openapi/v1/users
+     * 创建或更新用户(new added) (asynchronously)
+     * POST /openapi/v1/users，Portal用户登录态使用当前登录用户作为operator；Consumer Token访问时需要具备ManageUsers权限并传入有效operator
      * @param openUserDTO  (required)
      * @param isCreate true 表示创建用户，false 表示更新用户 (optional, default to false)
+     * @param operator 操作人用户名，Consumer Token访问时必填且必须是已存在用户；Portal用户登录态会忽略该参数 (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -330,9 +346,9 @@ public class PortalUserManagementApi {
         <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createOrUpdateUserAsync(OpenUserDTO openUserDTO, Boolean isCreate, final ApiCallback<Void> _callback) throws ApiException {
+    public okhttp3.Call createOrUpdateUserAsync(OpenUserDTO openUserDTO, Boolean isCreate, String operator, final ApiCallback<Void> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = createOrUpdateUserValidateBeforeCall(openUserDTO, isCreate, _callback);
+        okhttp3.Call localVarCall = createOrUpdateUserValidateBeforeCall(openUserDTO, isCreate, operator, _callback);
         localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
@@ -458,6 +474,137 @@ public class PortalUserManagementApi {
         return localVarCall;
     }
     /**
+     * Build call for getUserByUserId
+     * @param userId 用户ID (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 成功获取用户 </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> 请求参数错误或用户不存在 </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getUserByUserIdCall(String userId, final ApiCallback _callback) throws ApiException {
+        String basePath = null;
+        // Operation Servers
+        String[] localBasePaths = new String[] {  };
+
+        // Determine Base Path to Use
+        if (localCustomBaseUrl != null){
+            basePath = localCustomBaseUrl;
+        } else if ( localBasePaths.length > 0 ) {
+            basePath = localBasePaths[localHostIndex];
+        } else {
+            basePath = null;
+        }
+
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/openapi/v1/users/{userId}"
+            .replace("{" + "userId" + "}", localVarApiClient.escapeString(userId.toString()));
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        if (localVarContentType != null) {
+            localVarHeaderParams.put("Content-Type", localVarContentType);
+        }
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth" };
+        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getUserByUserIdValidateBeforeCall(String userId, final ApiCallback _callback) throws ApiException {
+        // verify the required parameter 'userId' is set
+        if (userId == null) {
+            throw new ApiException("Missing the required parameter 'userId' when calling getUserByUserId(Async)");
+        }
+
+        return getUserByUserIdCall(userId, _callback);
+
+    }
+
+    /**
+     * 获取指定用户(new added)
+     * GET /openapi/v1/users/{userId}，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
+     * @param userId 用户ID (required)
+     * @return OpenUserInfoDTO
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 成功获取用户 </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> 请求参数错误或用户不存在 </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
+     </table>
+     */
+    public OpenUserInfoDTO getUserByUserId(String userId) throws ApiException {
+        ApiResponse<OpenUserInfoDTO> localVarResp = getUserByUserIdWithHttpInfo(userId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * 获取指定用户(new added)
+     * GET /openapi/v1/users/{userId}，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
+     * @param userId 用户ID (required)
+     * @return ApiResponse&lt;OpenUserInfoDTO&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 成功获取用户 </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> 请求参数错误或用户不存在 </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<OpenUserInfoDTO> getUserByUserIdWithHttpInfo(String userId) throws ApiException {
+        okhttp3.Call localVarCall = getUserByUserIdValidateBeforeCall(userId, null);
+        Type localVarReturnType = new TypeToken<OpenUserInfoDTO>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * 获取指定用户(new added) (asynchronously)
+     * GET /openapi/v1/users/{userId}，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
+     * @param userId 用户ID (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> 成功获取用户 </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> 请求参数错误或用户不存在 </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getUserByUserIdAsync(String userId, final ApiCallback<OpenUserInfoDTO> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getUserByUserIdValidateBeforeCall(userId, _callback);
+        Type localVarReturnType = new TypeToken<OpenUserInfoDTO>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for searchUsers
      * @param keyword 用户名、显示名或邮箱关键字 (required)
      * @param includeInactiveUsers 是否包含禁用用户 (optional, default to false)
@@ -471,7 +618,7 @@ public class PortalUserManagementApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> 成功获取用户列表 </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> 未登录或未授权访问 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 仅支持Portal用户登录态访问 </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call searchUsersCall(String keyword, Boolean includeInactiveUsers, Integer offset, Integer limit, final ApiCallback _callback) throws ApiException {
@@ -546,8 +693,8 @@ public class PortalUserManagementApi {
     }
 
     /**
-     * 搜索Portal用户(new added)
-     * GET /openapi/v1/users
+     * 搜索用户(new added)
+     * GET /openapi/v1/users，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
      * @param keyword 用户名、显示名或邮箱关键字 (required)
      * @param includeInactiveUsers 是否包含禁用用户 (optional, default to false)
      * @param offset 偏移量 (optional, default to 0)
@@ -559,7 +706,7 @@ public class PortalUserManagementApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> 成功获取用户列表 </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> 未登录或未授权访问 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 仅支持Portal用户登录态访问 </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
     public List<OpenUserInfoDTO> searchUsers(String keyword, Boolean includeInactiveUsers, Integer offset, Integer limit) throws ApiException {
@@ -568,8 +715,8 @@ public class PortalUserManagementApi {
     }
 
     /**
-     * 搜索Portal用户(new added)
-     * GET /openapi/v1/users
+     * 搜索用户(new added)
+     * GET /openapi/v1/users，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
      * @param keyword 用户名、显示名或邮箱关键字 (required)
      * @param includeInactiveUsers 是否包含禁用用户 (optional, default to false)
      * @param offset 偏移量 (optional, default to 0)
@@ -581,7 +728,7 @@ public class PortalUserManagementApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> 成功获取用户列表 </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> 未登录或未授权访问 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 仅支持Portal用户登录态访问 </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<List<OpenUserInfoDTO>> searchUsersWithHttpInfo(String keyword, Boolean includeInactiveUsers, Integer offset, Integer limit) throws ApiException {
@@ -591,8 +738,8 @@ public class PortalUserManagementApi {
     }
 
     /**
-     * 搜索Portal用户(new added) (asynchronously)
-     * GET /openapi/v1/users
+     * 搜索用户(new added) (asynchronously)
+     * GET /openapi/v1/users，支持Portal用户登录态或具备ManageUsers权限的Consumer Token访问
      * @param keyword 用户名、显示名或邮箱关键字 (required)
      * @param includeInactiveUsers 是否包含禁用用户 (optional, default to false)
      * @param offset 偏移量 (optional, default to 0)
@@ -605,7 +752,7 @@ public class PortalUserManagementApi {
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> 成功获取用户列表 </td><td>  -  </td></tr>
         <tr><td> 401 </td><td> 未登录或未授权访问 </td><td>  -  </td></tr>
-        <tr><td> 403 </td><td> 仅支持Portal用户登录态访问 </td><td>  -  </td></tr>
+        <tr><td> 403 </td><td> 权限不足 </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call searchUsersAsync(String keyword, Boolean includeInactiveUsers, Integer offset, Integer limit, final ApiCallback<List<OpenUserInfoDTO>> _callback) throws ApiException {

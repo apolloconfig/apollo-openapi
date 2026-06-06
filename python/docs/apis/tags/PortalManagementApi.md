@@ -521,7 +521,7 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 
 # **create_consumer**
 <a id="create_consumer"></a>
-> {str: (bool, date, datetime, dict, float, int, list, str, none_type)} create_consumer(body)
+> OpenConsumerInfoDTO create_consumer(open_consumer_create_request_dto)
 
 创建开放平台消费者(new added)
 
@@ -533,6 +533,8 @@ POST /openapi/v1/consumers
 ```python
 import apollo_openapi
 from apollo_openapi.apis.tags import portal_management_api
+from apollo_openapi.model.open_consumer_create_request_dto import OpenConsumerCreateRequestDTO
+from apollo_openapi.model.open_consumer_info_dto import OpenConsumerInfoDTO
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -558,7 +560,17 @@ with apollo_openapi.ApiClient(configuration) as api_client:
     # example passing only required values which don't have defaults set
     query_params = {
     }
-    body = dict()
+    body = OpenConsumerCreateRequestDTO(
+        app_id="app_id_example",
+        allow_create_application=False,
+        allow_manage_users=False,
+        name="name_example",
+        org_id="org_id_example",
+        org_name="org_name_example",
+        owner_name="owner_name_example",
+        rate_limit_enabled=False,
+        rate_limit=0,
+    )
     try:
         # 创建开放平台消费者(new added)
         api_response = api_instance.create_consumer(
@@ -573,7 +585,17 @@ with apollo_openapi.ApiClient(configuration) as api_client:
     query_params = {
         'expires': "expires_example",
     }
-    body = dict()
+    body = OpenConsumerCreateRequestDTO(
+        app_id="app_id_example",
+        allow_create_application=False,
+        allow_manage_users=False,
+        name="name_example",
+        org_id="org_id_example",
+        org_name="org_name_example",
+        owner_name="owner_name_example",
+        rate_limit_enabled=False,
+        rate_limit=0,
+    )
     try:
         # 创建开放平台消费者(new added)
         api_response = api_instance.create_consumer(
@@ -599,11 +621,10 @@ skip_deserialization | bool | default is False | when True, headers and body wil
 ### body
 
 # SchemaForRequestBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**OpenConsumerCreateRequestDTO**](../../models/OpenConsumerCreateRequestDTO.md) |  |
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 
 ### query_params
 #### RequestQueryParams
@@ -637,11 +658,10 @@ body | typing.Union[SchemaFor200ResponseBodyApplicationJson, ] |  |
 headers | Unset | headers were not defined |
 
 # SchemaFor200ResponseBodyApplicationJson
+Type | Description  | Notes
+------------- | ------------- | -------------
+[**OpenConsumerInfoDTO**](../../models/OpenConsumerInfoDTO.md) |  |
 
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 
 ### Authorization
 
@@ -2955,7 +2975,7 @@ dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
 
 # **get_consumer_list**
 <a id="get_consumer_list"></a>
-> [{str: (bool, date, datetime, dict, float, int, list, str, none_type)}] get_consumer_list()
+> [OpenConsumerInfoDTO] get_consumer_list()
 
 查询开放平台消费者列表(new added)
 
@@ -2967,6 +2987,7 @@ GET /openapi/v1/consumers
 ```python
 import apollo_openapi
 from apollo_openapi.apis.tags import portal_management_api
+from apollo_openapi.model.open_consumer_info_dto import OpenConsumerInfoDTO
 from pprint import pprint
 # Defining the host is optional and defaults to http://localhost
 # See configuration.py for a list of all supported configuration parameters.
@@ -3060,14 +3081,7 @@ list, tuple,  | tuple,  |  |
 ### Tuple Items
 Class Name | Input Type | Accessed Type | Description | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-[items](#items) | dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
-
-# items
-
-## Model Type Info
-Input Type | Accessed Type | Description | Notes
------------- | ------------- | ------------- | -------------
-dict, frozendict.frozendict,  | frozendict.frozendict,  |  |
+[**OpenConsumerInfoDTO**]({{complexTypePrefix}}OpenConsumerInfoDTO.md) | [**OpenConsumerInfoDTO**]({{complexTypePrefix}}OpenConsumerInfoDTO.md) | [**OpenConsumerInfoDTO**]({{complexTypePrefix}}OpenConsumerInfoDTO.md) |  |
 
 ### Authorization
 
