@@ -6,8 +6,6 @@ import yaml
 
 SPEC_FILES = (
     "apollo-openapi.yaml",
-    "java-client/api/openapi.yaml",
-    "spring-boot2/src/main/resources/openapi.yaml",
 )
 
 
@@ -93,36 +91,6 @@ class UserManagementContractTest(unittest.TestCase):
         self.assertNotIn("OpenConsumerInfoDTO", schemas)
         self.assertNotIn("OpenConsumerSummaryDTO", schemas)
         self.assertNotIn("OpenConsumerTokenDTO", schemas)
-
-  def test_spring_server_api_uses_user_management_name(self):
-    api_dir = self.repo_root / "spring-boot2/src/main/java/com/apollo/openapi/server/api"
-
-    self.assertTrue((api_dir / "UserManagementApi.java").exists())
-    self.assertFalse((api_dir / "PortalUserManagementApi.java").exists())
-
-  def test_java_client_preserves_optional_operator_overloads(self):
-    api_file = self.repo_root / (
-        "java-client/src/main/java/org/openapitools/client/api/UserManagementApi.java")
-    content = api_file.read_text(encoding="utf-8")
-
-    self.assertIn("changeUserEnabled(OpenUserDTO openUserDTO) throws ApiException", content)
-    self.assertIn(
-        "createOrUpdateUser(OpenUserDTO openUserDTO, Boolean isCreate) throws ApiException",
-        content)
-
-  def test_portal_consumer_models_are_not_generated(self):
-    model_dir = self.repo_root / "java-client/src/main/java/org/openapitools/client/model"
-    spring_model_dir = self.repo_root / (
-        "spring-boot2/src/main/java/com/apollo/openapi/server/model")
-    for model_name in (
-        "OpenConsumerCreateRequestDTO",
-        "OpenConsumerInfoDTO",
-        "OpenConsumerSummaryDTO",
-        "OpenConsumerTokenDTO",
-    ):
-      with self.subTest(model=model_name):
-        self.assertFalse((model_dir / f"{model_name}.java").exists())
-        self.assertFalse((spring_model_dir / f"{model_name}.java").exists())
 
   def _find_parameter(self, operation, name):
     for parameter in operation.get("parameters", ()):

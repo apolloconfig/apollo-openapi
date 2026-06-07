@@ -6,3 +6,6 @@
 .vscode/**
 !.vscode/extensions.json
 **.iml
+
+# Temporary OpenAPI Generator output
+build/generated/
