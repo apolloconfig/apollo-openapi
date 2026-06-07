@@ -21,8 +21,6 @@ AUDIT_DISPLAY_NAME_FIELDS = (
 
 SPEC_FILES = (
     "apollo-openapi.yaml",
-    "java-client/api/openapi.yaml",
-    "spring-boot2/src/main/resources/openapi.yaml",
 )
 
 

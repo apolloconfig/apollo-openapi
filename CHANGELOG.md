@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Rename Portal user management contracts from `Portal User Management` to `User Management`.
+- Refocus the repository on the OpenAPI spec contract and stop tracking generated Java, Python, TypeScript, Rust, and Spring Boot source trees.
+- Change `generate.sh` to produce temporary Apollo Portal Spring interface smoke output under `build/generated/portal` for local and CI verification.
 
 ### Fixed
 
@@ -18,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add Consumer Token support notes to user management contracts, including `ManageUsers`-guarded user lookup and mutation operations.
+- Add a generation workflow test to ensure generated source trees remain untracked.
 
 ## [0.3.5] - 2026-05-31
 
