@@ -46,6 +46,29 @@ class UserTokenContractTest(unittest.TestCase):
       schemas = spec["components"]["schemas"]
 
       with self.subTest(spec=spec_file):
+        self.assertEqual(
+            [
+                "authType",
+                "userId",
+                "tokenId",
+                "tokenName",
+                "tokenPrefix",
+                "rateLimit",
+                "expires",
+                "dataChangeCreatedTime",
+                "denyAll",
+                "allOperations",
+                "operations",
+                "allApps",
+                "appIds",
+                "allEnvs",
+                "envs",
+                "allNamespaces",
+                "namespaces",
+                "actions",
+            ],
+            schemas["OpenUserTokenCurrentCapability"]["required"],
+        )
         capability = schemas["OpenUserTokenCurrentCapability"]["properties"]
         self.assertEqual("integer", capability["tokenId"]["type"])
         self.assertEqual("int64", capability["tokenId"]["format"])

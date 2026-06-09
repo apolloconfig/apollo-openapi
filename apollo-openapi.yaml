@@ -6931,6 +6931,25 @@ components:
     OpenUserTokenCurrentCapability:
       type: object
       description: 当前用户访问Token身份、权限范围和可调用OpenAPI能力
+      required:
+        - authType
+        - userId
+        - tokenId
+        - tokenName
+        - tokenPrefix
+        - rateLimit
+        - expires
+        - dataChangeCreatedTime
+        - denyAll
+        - allOperations
+        - operations
+        - allApps
+        - appIds
+        - allEnvs
+        - envs
+        - allNamespaces
+        - namespaces
+        - actions
       properties:
         authType:
           type: string
