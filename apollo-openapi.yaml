@@ -50,6 +50,8 @@ tags:
     description: 权限管理相关接口，包括权限查询等功能
   - name: User Management
     description: 用户管理相关接口，支持Portal用户登录态和具备用户管理权限的Consumer Token调用
+  - name: User Token Management
+    description: 用户访问Token相关接口，包括当前Token身份、权限范围和可调用OpenAPI能力查询
   - name: Portal Management
     description: Portal UI 登录态管理接口，主要供当前版本 Portal 前端调用
 paths:
@@ -4889,6 +4891,69 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/current:
+    get:
+      summary: 获取当前用户访问Token身份和权限范围(new added)
+      operationId: getCurrentUserToken
+      deprecated: false
+      description: GET /openapi/v1/user-tokens/current，仅支持用户访问Token调用，返回当前Token身份、权限范围和可调用OpenAPI能力
+      tags:
+        - User Token Management
+      responses:
+        '200':
+          description: 成功获取当前用户访问Token信息
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenUserTokenCurrentCapability'
+        '403':
+          description: 仅支持用户访问Token访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/current/capabilities:
+    get:
+      summary: 获取当前用户访问Token能力(new added)
+      operationId: getCurrentUserTokenCapabilities
+      deprecated: false
+      description: GET /openapi/v1/user-tokens/current/capabilities，仅支持用户访问Token调用，返回当前Token身份、权限范围和可调用OpenAPI能力
+      tags:
+        - User Token Management
+      responses:
+        '200':
+          description: 成功获取当前用户访问Token能力
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenUserTokenCurrentCapability'
+        '403':
+          description: 仅支持用户访问Token访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/whoami:
+    get:
+      summary: 获取当前用户访问Token身份别名(new added)
+      operationId: getCurrentUserTokenWhoami
+      deprecated: false
+      description: GET /openapi/v1/user-tokens/whoami，/current 的别名，仅支持用户访问Token调用
+      tags:
+        - User Token Management
+      responses:
+        '200':
+          description: 成功获取当前用户访问Token信息
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenUserTokenCurrentCapability'
+        '403':
+          description: 仅支持用户访问Token访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/users:
     get:
       summary: 搜索用户(new added)
@@ -6863,6 +6928,136 @@ components:
         enabled:
           type: integer
           description: 是否启用，1 表示启用，0 表示禁用
+    OpenUserTokenCurrentCapability:
+      type: object
+      description: 当前用户访问Token身份、权限范围和可调用OpenAPI能力
+      properties:
+        authType:
+          type: string
+          description: 当前认证类型，用户访问Token固定为 USER_TOKEN
+          example: USER_TOKEN
+        userId:
+          type: string
+          description: Token所属Portal用户ID
+        tokenId:
+          type: integer
+          format: int64
+          description: 用户访问Token ID
+        tokenName:
+          type: string
+          description: 用户访问Token名称
+        tokenPrefix:
+          type: string
+          description: 用户访问Token前缀，用于识别Token但不暴露完整密钥
+        rateLimit:
+          type: integer
+          description: 每秒限流阈值，0或空表示不限流
+        expires:
+          type: string
+          format: date-time
+          description: Token过期时间
+        lastUsedTime:
+          type: string
+          format: date-time
+          description: Token最近使用时间
+        dataChangeCreatedTime:
+          type: string
+          format: date-time
+          description: Token创建时间
+        denyAll:
+          type: boolean
+          description: 是否拒绝所有OpenAPI访问
+        allOperations:
+          type: boolean
+          description: 是否允许当前用户拥有的全部操作
+        operations:
+          type: array
+          uniqueItems: true
+          description: 显式授权的操作列表，空列表配合 allOperations 表示全部操作
+          items:
+            type: string
+        allApps:
+          type: boolean
+          description: 是否允许当前用户可访问的全部应用
+        appIds:
+          type: array
+          uniqueItems: true
+          description: 显式授权的应用ID列表，空列表配合 allApps 表示全部应用
+          items:
+            type: string
+        allEnvs:
+          type: boolean
+          description: 是否允许全部环境
+        envs:
+          type: array
+          uniqueItems: true
+          description: 显式授权的环境列表，空列表配合 allEnvs 表示全部环境
+          items:
+            type: string
+        allNamespaces:
+          type: boolean
+          description: 是否允许全部命名空间
+        namespaces:
+          type: array
+          description: 显式授权的命名空间范围列表，空列表配合 allNamespaces 表示全部命名空间
+          items:
+            $ref: '#/components/schemas/OpenUserTokenNamespaceScope'
+        actions:
+          type: array
+          description: 当前Token可调用的OpenAPI操作目录
+          items:
+            $ref: '#/components/schemas/OpenUserTokenOpenApiAction'
+    OpenUserTokenNamespaceScope:
+      type: object
+      description: 用户访问Token的命名空间授权范围
+      properties:
+        appId:
+          type: string
+          description: 应用ID，空值或星号表示不限应用
+        env:
+          type: string
+          description: 环境，空值或星号表示不限环境
+        clusterName:
+          type: string
+          description: 集群名称，空值或星号表示不限集群
+        namespaceName:
+          type: string
+          description: 命名空间名称，空值或星号表示不限命名空间
+    OpenUserTokenOpenApiAction:
+      type: object
+      description: 用户访问Token可调用的OpenAPI操作说明
+      properties:
+        id:
+          type: string
+          description: OpenAPI操作标识
+        method:
+          type: string
+          description: HTTP方法
+          example: GET
+        path:
+          type: string
+          description: OpenAPI路径
+        requiredOperations:
+          type: array
+          description: 调用该OpenAPI操作需要满足的用户Token操作权限列表
+          items:
+            type: string
+        grantedOperations:
+          type: array
+          description: 当前Token已满足的操作权限列表
+          items:
+            type: string
+        operationMatch:
+          type: string
+          description: requiredOperations 的匹配方式，ANY 表示满足任一操作即可，NONE 表示无需操作权限
+          example: ANY
+        resourceScope:
+          type: string
+          description: 该OpenAPI操作涉及的资源范围类型
+          example: namespace
+        description:
+          type: string
+          description: OpenAPI操作说明
     OpenEnvNamespaceRoleUserDTO:
       type: object
       properties:
