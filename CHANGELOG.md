@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.9] - 2026-06-10
+
+### Added
+
+- Add User Token OpenAPI contracts for current token capability lookup and scoped app/config operations.
+- Add Consumer Token support notes to user management contracts, including `ManageUsers`-guarded user lookup and mutation operations.
+- Add a generation workflow test to ensure generated source trees remain untracked.
+
 ### Changed
 
 - Rename Portal user management contracts from `Portal User Management` to `User Management`.
@@ -16,11 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Revert Portal Management consumer endpoint schemas to object-based Portal UI contracts.
-
-### Added
-
-- Add Consumer Token support notes to user management contracts, including `ManageUsers`-guarded user lookup and mutation operations.
-- Add a generation workflow test to ensure generated source trees remain untracked.
 
 ## [0.3.5] - 2026-05-31
 
