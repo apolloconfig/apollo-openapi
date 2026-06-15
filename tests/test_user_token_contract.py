@@ -40,6 +40,45 @@ class UserTokenContractTest(unittest.TestCase):
               operation["responses"]["200"]["content"]["application/json"]["schema"]["$ref"],
           )
 
+  def test_portal_user_token_management_paths_use_portal_management_contract(self):
+    for spec_file in SPEC_FILES:
+      spec = self._load_spec(spec_file)
+
+      with self.subTest(spec=spec_file):
+        expected_operations = {
+            "/openapi/v1/user-tokens": (("get", "listUserTokens"), ("post", "createUserToken")),
+            "/openapi/v1/user-tokens/{tokenId}": (("delete", "deleteUserToken"),),
+            "/openapi/v1/user-tokens/{tokenId}/revoke": (("post", "revokeUserToken"),),
+            "/openapi/v1/user-tokens/{tokenId}/rotate": (("post", "rotateUserToken"),),
+            "/openapi/v1/user-tokens/capabilities": (
+                ("get", "getUserTokenCapabilities"),),
+            "/openapi/v1/user-tokens/admin": (("get", "adminListUserTokens"),),
+            "/openapi/v1/user-tokens/admin/{tokenId}": (
+                ("delete", "adminDeleteUserToken"),),
+            "/openapi/v1/user-tokens/admin/{tokenId}/revoke": (
+                ("post", "adminRevokeUserToken"),),
+        }
+        for path, methods in expected_operations.items():
+          for method, operation_id in methods:
+            operation = spec["paths"][path][method]
+            self.assertEqual(operation_id, operation["operationId"])
+            self.assertEqual(["Portal Management"], operation["tags"])
+
+        list_tokens = spec["paths"]["/openapi/v1/user-tokens"]["get"]
+        self.assertEqual(
+            {"type": "object"},
+            list_tokens["responses"]["200"]["content"]["application/json"]["schema"]["items"],
+        )
+        create_token = spec["paths"]["/openapi/v1/user-tokens"]["post"]
+        self.assertEqual(
+            {"type": "object"},
+            create_token["requestBody"]["content"]["application/json"]["schema"],
+        )
+        self.assertEqual(
+            {"type": "object"},
+            create_token["responses"]["200"]["content"]["application/json"]["schema"],
+        )
+
   def test_user_token_current_capability_schema_matches_portal_response(self):
     for spec_file in SPEC_FILES:
       spec = self._load_spec(spec_file)

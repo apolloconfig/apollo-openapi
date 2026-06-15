@@ -4891,6 +4891,235 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens:
+    get:
+      summary: 查询当前Portal用户访问Token(new added)
+      operationId: listUserTokens
+      deprecated: false
+      description: GET /openapi/v1/user-tokens，仅支持Portal用户登录态访问
+      tags:
+        - Portal Management
+      responses:
+        '200':
+          description: 成功获取当前用户访问Token列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '403':
+          description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+    post:
+      summary: 创建当前Portal用户访问Token(new added)
+      operationId: createUserToken
+      deprecated: false
+      description: POST /openapi/v1/user-tokens，仅支持Portal用户登录态访问
+      tags:
+        - Portal Management
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+        required: true
+      responses:
+        '200':
+          description: 用户访问Token创建成功
+          content:
+            application/json:
+              schema:
+                type: object
+        '403':
+          description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/{tokenId}:
+    delete:
+      summary: 删除当前Portal用户访问Token(new added)
+      operationId: deleteUserToken
+      deprecated: false
+      description: DELETE /openapi/v1/user-tokens/{tokenId}，仅支持Portal用户登录态访问
+      tags:
+        - Portal Management
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 用户访问Token删除成功
+        '403':
+          description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/{tokenId}/revoke:
+    post:
+      summary: 撤销当前Portal用户访问Token(new added)
+      operationId: revokeUserToken
+      deprecated: false
+      description: POST /openapi/v1/user-tokens/{tokenId}/revoke，仅支持Portal用户登录态访问
+      tags:
+        - Portal Management
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 用户访问Token撤销成功
+        '403':
+          description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/{tokenId}/rotate:
+    post:
+      summary: 轮换当前Portal用户访问Token(new added)
+      operationId: rotateUserToken
+      deprecated: false
+      description: POST /openapi/v1/user-tokens/{tokenId}/rotate，仅支持Portal用户登录态访问
+      tags:
+        - Portal Management
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 用户访问Token轮换成功
+          content:
+            application/json:
+              schema:
+                type: object
+        '403':
+          description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/capabilities:
+    get:
+      summary: 获取Portal用户可创建Token能力(new added)
+      operationId: getUserTokenCapabilities
+      deprecated: false
+      description: GET /openapi/v1/user-tokens/capabilities，仅支持Portal用户登录态访问
+      tags:
+        - Portal Management
+      responses:
+        '200':
+          description: 成功获取Portal用户可创建Token能力
+          content:
+            application/json:
+              schema:
+                type: object
+        '403':
+          description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/admin:
+    get:
+      summary: 管理员查询用户访问Token(new added)
+      operationId: adminListUserTokens
+      deprecated: false
+      description: GET /openapi/v1/user-tokens/admin，仅支持具备超级管理员权限的Portal用户登录态访问
+      tags:
+        - Portal Management
+      parameters:
+        - name: userId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            default: all
+      responses:
+        '200':
+          description: 成功获取用户访问Token列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '403':
+          description: 权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/admin/{tokenId}:
+    delete:
+      summary: 管理员删除用户访问Token(new added)
+      operationId: adminDeleteUserToken
+      deprecated: false
+      description: DELETE /openapi/v1/user-tokens/admin/{tokenId}，仅支持具备超级管理员权限的Portal用户登录态访问
+      tags:
+        - Portal Management
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 用户访问Token删除成功
+        '403':
+          description: 权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/admin/{tokenId}/revoke:
+    post:
+      summary: 管理员撤销用户访问Token(new added)
+      operationId: adminRevokeUserToken
+      deprecated: false
+      description: POST /openapi/v1/user-tokens/admin/{tokenId}/revoke，仅支持具备超级管理员权限的Portal用户登录态访问
+      tags:
+        - Portal Management
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 用户访问Token撤销成功
+        '403':
+          description: 权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/user-tokens/current:
     get:
       summary: 获取当前用户访问Token身份和权限范围(new added)
