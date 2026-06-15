@@ -4891,6 +4891,360 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens:
+    get:
+      summary: 查询当前Portal用户访问Token(new added)
+      operationId: listUserTokens
+      deprecated: false
+      description: GET /openapi/v1/user-tokens，仅支持Portal用户登录态访问
+      tags:
+        - Portal Management
+      security:
+        - PortalSessionAuth: []
+      responses:
+        '200':
+          description: 成功获取当前用户访问Token列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OpenUserTokenSummary'
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+    post:
+      summary: 创建当前Portal用户访问Token(new added)
+      operationId: createUserToken
+      deprecated: false
+      description: POST /openapi/v1/user-tokens，仅支持Portal用户登录态访问
+      tags:
+        - Portal Management
+      security:
+        - PortalSessionAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpenCreateUserTokenRequest'
+        required: true
+      responses:
+        '200':
+          description: 用户访问Token创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenCreateUserTokenResponse'
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/{tokenId}:
+    delete:
+      summary: 删除当前Portal用户访问Token(new added)
+      operationId: deleteUserToken
+      deprecated: false
+      description: DELETE /openapi/v1/user-tokens/{tokenId}，仅支持Portal用户登录态访问
+      tags:
+        - Portal Management
+      security:
+        - PortalSessionAuth: []
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 用户访问Token删除成功
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: 用户访问Token不存在或不属于当前Portal用户
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/{tokenId}/revoke:
+    post:
+      summary: 撤销当前Portal用户访问Token(new added)
+      operationId: revokeUserToken
+      deprecated: false
+      description: POST /openapi/v1/user-tokens/{tokenId}/revoke，仅支持Portal用户登录态访问
+      tags:
+        - Portal Management
+      security:
+        - PortalSessionAuth: []
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 用户访问Token撤销成功
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: 用户访问Token不存在或不属于当前Portal用户
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/{tokenId}/rotate:
+    post:
+      summary: 轮换当前Portal用户访问Token(new added)
+      operationId: rotateUserToken
+      deprecated: false
+      description: POST /openapi/v1/user-tokens/{tokenId}/rotate，仅支持Portal用户登录态访问
+      tags:
+        - Portal Management
+      security:
+        - PortalSessionAuth: []
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 用户访问Token轮换成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenRotateUserTokenResponse'
+        '400':
+          description: 用户访问Token不可轮换
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: 用户访问Token不存在或不属于当前Portal用户
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/capabilities:
+    get:
+      summary: 获取Portal用户可创建Token能力(new added)
+      operationId: getUserTokenCapabilities
+      deprecated: false
+      description: GET /openapi/v1/user-tokens/capabilities，仅支持Portal用户登录态访问
+      tags:
+        - Portal Management
+      security:
+        - PortalSessionAuth: []
+      responses:
+        '200':
+          description: 成功获取Portal用户可创建Token能力
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenUserTokenCapability'
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/admin:
+    get:
+      summary: 管理员查询用户访问Token(new added)
+      operationId: adminListUserTokens
+      deprecated: false
+      description: GET /openapi/v1/user-tokens/admin，仅支持具备超级管理员权限的Portal用户登录态访问
+      tags:
+        - Portal Management
+      security:
+        - PortalSessionAuth: []
+      parameters:
+        - name: userId
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - all
+              - active
+              - expired
+              - revoked
+            default: all
+      responses:
+        '200':
+          description: 成功获取用户访问Token列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OpenUserTokenSummary'
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/admin/{tokenId}:
+    delete:
+      summary: 管理员删除用户访问Token(new added)
+      operationId: adminDeleteUserToken
+      deprecated: false
+      description: DELETE /openapi/v1/user-tokens/admin/{tokenId}，仅支持具备超级管理员权限的Portal用户登录态访问
+      tags:
+        - Portal Management
+      security:
+        - PortalSessionAuth: []
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 用户访问Token删除成功
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: 用户访问Token不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/user-tokens/admin/{tokenId}/revoke:
+    post:
+      summary: 管理员撤销用户访问Token(new added)
+      operationId: adminRevokeUserToken
+      deprecated: false
+      description: POST /openapi/v1/user-tokens/admin/{tokenId}/revoke，仅支持具备超级管理员权限的Portal用户登录态访问
+      tags:
+        - Portal Management
+      security:
+        - PortalSessionAuth: []
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: 用户访问Token撤销成功
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: 用户访问Token不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/user-tokens/current:
     get:
       summary: 获取当前用户访问Token身份和权限范围(new added)
@@ -6188,6 +6542,13 @@ components:
         - Token具有对应应用的读写权限
         - 不同Token可能有不同的环境和命名空间权限
         - 建议为不同用途创建不同的Token
+    PortalSessionAuth:
+      type: apiKey
+      in: cookie
+      name: SESSION
+      description: |
+        Apollo Portal登录会话Cookie
+        仅用于需要Portal用户登录态的Portal Management接口，不使用OpenAPI Consumer Token。
   schemas:
     OpenAppDTO:
       type: object
@@ -6928,6 +7289,175 @@ components:
         enabled:
           type: integer
           description: 是否启用，1 表示启用，0 表示禁用
+    OpenCreateUserTokenRequest:
+      type: object
+      description: 创建Portal用户访问Token的请求
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: 用户访问Token名称
+        operations:
+          type: array
+          uniqueItems: true
+          description: 授权的用户Token操作列表，空列表表示全部可用操作
+          items:
+            type: string
+        appIds:
+          type: array
+          uniqueItems: true
+          description: 授权的应用ID列表，空列表表示全部可访问应用
+          items:
+            type: string
+        envs:
+          type: array
+          uniqueItems: true
+          description: 授权的环境列表，空列表表示全部环境
+          items:
+            type: string
+        namespaces:
+          type: array
+          description: 授权的命名空间范围列表，空列表表示全部命名空间
+          items:
+            $ref: '#/components/schemas/OpenUserTokenNamespaceScope'
+        rateLimit:
+          type: integer
+          minimum: 0
+          description: 每秒限流阈值，0或空表示不限流
+        expires:
+          type: string
+          format: date-time
+          description: Token过期时间
+    OpenUserTokenSummary:
+      type: object
+      description: Portal用户访问Token摘要
+      required:
+        - id
+        - userId
+        - name
+        - tokenPrefix
+        - status
+        - operations
+        - appIds
+        - envs
+        - namespaces
+        - rateLimit
+        - expires
+        - dataChangeCreatedTime
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 用户访问Token ID
+        userId:
+          type: string
+          description: Token所属Portal用户ID
+        name:
+          type: string
+          description: 用户访问Token名称
+        tokenPrefix:
+          type: string
+          description: 用户访问Token前缀，用于识别Token但不暴露完整密钥
+        status:
+          type: string
+          description: Token状态
+          enum:
+            - active
+            - expired
+            - revoked
+        operations:
+          type: array
+          uniqueItems: true
+          description: 授权的用户Token操作列表，空列表表示全部可用操作
+          items:
+            type: string
+        appIds:
+          type: array
+          uniqueItems: true
+          description: 授权的应用ID列表，空列表表示全部可访问应用
+          items:
+            type: string
+        envs:
+          type: array
+          uniqueItems: true
+          description: 授权的环境列表，空列表表示全部环境
+          items:
+            type: string
+        namespaces:
+          type: array
+          description: 授权的命名空间范围列表，空列表表示全部命名空间
+          items:
+            $ref: '#/components/schemas/OpenUserTokenNamespaceScope'
+        rateLimit:
+          type: integer
+          minimum: 0
+          description: 每秒限流阈值，0或空表示不限流
+        expires:
+          type: string
+          format: date-time
+          description: Token过期时间
+        lastUsedTime:
+          type: string
+          format: date-time
+          description: Token最近使用时间
+        lastUsedIp:
+          type: string
+          description: Token最近使用IP
+        lastUsedUserAgent:
+          type: string
+          description: Token最近使用User-Agent
+        revokedAt:
+          type: string
+          format: date-time
+          description: Token撤销时间
+        revokedBy:
+          type: string
+          description: Token撤销人
+        dataChangeCreatedTime:
+          type: string
+          format: date-time
+          description: Token创建时间
+    OpenCreateUserTokenResponse:
+      allOf:
+        - $ref: '#/components/schemas/OpenUserTokenSummary'
+        - type: object
+          required:
+            - tokenValue
+          properties:
+            tokenValue:
+              type: string
+              description: 新创建的完整用户访问Token，仅在创建或轮换响应中返回一次
+    OpenRotateUserTokenResponse:
+      allOf:
+        - $ref: '#/components/schemas/OpenUserTokenSummary'
+        - type: object
+          required:
+            - tokenValue
+          properties:
+            tokenValue:
+              type: string
+              description: 轮换后的完整用户访问Token，仅在创建或轮换响应中返回一次
+    OpenUserTokenCapability:
+      type: object
+      description: 当前Portal用户可创建Token的能力
+      required:
+        - operations
+        - defaultExpireDays
+        - maxExpireDays
+      properties:
+        operations:
+          type: array
+          uniqueItems: true
+          description: 当前Portal用户可授予的用户Token操作列表
+          items:
+            type: string
+        defaultExpireDays:
+          type: integer
+          description: 默认过期天数
+        maxExpireDays:
+          type: integer
+          description: 最大过期天数
     OpenUserTokenCurrentCapability:
       type: object
       description: 当前用户访问Token身份、权限范围和可调用OpenAPI能力
