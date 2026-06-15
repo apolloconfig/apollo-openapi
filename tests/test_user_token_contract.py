@@ -45,6 +45,11 @@ class UserTokenContractTest(unittest.TestCase):
       spec = self._load_spec(spec_file)
 
       with self.subTest(spec=spec_file):
+        portal_session_auth = spec["components"]["securitySchemes"]["PortalSessionAuth"]
+        self.assertEqual("apiKey", portal_session_auth["type"])
+        self.assertEqual("cookie", portal_session_auth["in"])
+        self.assertEqual("SESSION", portal_session_auth["name"])
+
         expected_operations = {
             "/openapi/v1/user-tokens": (("get", "listUserTokens"), ("post", "createUserToken")),
             "/openapi/v1/user-tokens/{tokenId}": (("delete", "deleteUserToken"),),
@@ -63,20 +68,73 @@ class UserTokenContractTest(unittest.TestCase):
             operation = spec["paths"][path][method]
             self.assertEqual(operation_id, operation["operationId"])
             self.assertEqual(["Portal Management"], operation["tags"])
+            self.assertEqual([{"PortalSessionAuth": []}], operation["security"])
+            self.assertEqual(
+                "#/components/schemas/ExceptionResponse",
+                operation["responses"]["403"]["content"]["application/json"]["schema"]["$ref"],
+            )
 
         list_tokens = spec["paths"]["/openapi/v1/user-tokens"]["get"]
+        list_tokens_schema = (
+            list_tokens["responses"]["200"]["content"]["application/json"]["schema"])
+        self.assertEqual("array", list_tokens_schema["type"])
         self.assertEqual(
-            {"type": "object"},
-            list_tokens["responses"]["200"]["content"]["application/json"]["schema"]["items"],
+            "#/components/schemas/OpenUserTokenSummary",
+            list_tokens_schema["items"]["$ref"],
         )
         create_token = spec["paths"]["/openapi/v1/user-tokens"]["post"]
         self.assertEqual(
-            {"type": "object"},
-            create_token["requestBody"]["content"]["application/json"]["schema"],
+            "#/components/schemas/OpenCreateUserTokenRequest",
+            create_token["requestBody"]["content"]["application/json"]["schema"]["$ref"],
         )
         self.assertEqual(
-            {"type": "object"},
-            create_token["responses"]["200"]["content"]["application/json"]["schema"],
+            "#/components/schemas/OpenCreateUserTokenResponse",
+            create_token["responses"]["200"]["content"]["application/json"]["schema"]["$ref"],
+        )
+        rotate_token = spec["paths"]["/openapi/v1/user-tokens/{tokenId}/rotate"]["post"]
+        self.assertEqual(
+            "#/components/schemas/OpenRotateUserTokenResponse",
+            rotate_token["responses"]["200"]["content"]["application/json"]["schema"]["$ref"],
+        )
+        capabilities = spec["paths"]["/openapi/v1/user-tokens/capabilities"]["get"]
+        self.assertEqual(
+            "#/components/schemas/OpenUserTokenCapability",
+            capabilities["responses"]["200"]["content"]["application/json"]["schema"]["$ref"],
+        )
+        admin_list_tokens = spec["paths"]["/openapi/v1/user-tokens/admin"]["get"]
+        admin_list_tokens_schema = (
+            admin_list_tokens["responses"]["200"]["content"]["application/json"]["schema"])
+        self.assertEqual("array", admin_list_tokens_schema["type"])
+        self.assertEqual(
+            "#/components/schemas/OpenUserTokenSummary",
+            admin_list_tokens_schema["items"]["$ref"],
+        )
+
+        schemas = spec["components"]["schemas"]
+        summary = schemas["OpenUserTokenSummary"]
+        self.assertIn("tokenPrefix", summary["required"])
+        self.assertEqual("int64", summary["properties"]["id"]["format"])
+        self.assertTrue(summary["properties"]["operations"]["uniqueItems"])
+        self.assertEqual(
+            "#/components/schemas/OpenUserTokenNamespaceScope",
+            summary["properties"]["namespaces"]["items"]["$ref"],
+        )
+        create_request = schemas["OpenCreateUserTokenRequest"]
+        self.assertEqual(["name"], create_request["required"])
+        self.assertTrue(create_request["properties"]["appIds"]["uniqueItems"])
+        create_response = schemas["OpenCreateUserTokenResponse"]
+        self.assertEqual(
+            "#/components/schemas/OpenUserTokenSummary",
+            create_response["allOf"][0]["$ref"],
+        )
+        self.assertEqual(
+            "string",
+            create_response["allOf"][1]["properties"]["tokenValue"]["type"],
+        )
+        capability = schemas["OpenUserTokenCapability"]
+        self.assertEqual(
+            ["operations", "defaultExpireDays", "maxExpireDays"],
+            capability["required"],
         )
 
   def test_user_token_current_capability_schema_matches_portal_response(self):
