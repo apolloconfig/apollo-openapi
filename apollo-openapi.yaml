@@ -4944,6 +4944,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OpenCreateUserTokenResponse'
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '401':
           description: 未登录或登录态已过期
           content:
@@ -4988,6 +4994,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: 用户访问Token不存在或不属于当前Portal用户
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/user-tokens/{tokenId}/revoke:
     post:
       summary: 撤销当前Portal用户访问Token(new added)
@@ -5020,6 +5032,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: 用户访问Token不存在或不属于当前Portal用户
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/user-tokens/{tokenId}/rotate:
     post:
       summary: 轮换当前Portal用户访问Token(new added)
@@ -5044,6 +5062,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OpenRotateUserTokenResponse'
+        '400':
+          description: 用户访问Token不可轮换
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '401':
           description: 未登录或登录态已过期
           content:
@@ -5052,6 +5076,12 @@ paths:
                 $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 仅支持Portal用户登录态访问
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: 用户访问Token不存在或不属于当前Portal用户
           content:
             application/json:
               schema:
@@ -5121,6 +5151,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/OpenUserTokenSummary'
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '401':
           description: 未登录或登录态已过期
           content:
@@ -5165,6 +5201,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: 用户访问Token不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/user-tokens/admin/{tokenId}/revoke:
     post:
       summary: 管理员撤销用户访问Token(new added)
@@ -5193,6 +5235,12 @@ paths:
                 $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: 用户访问Token不存在
           content:
             application/json:
               schema:
@@ -7343,6 +7391,7 @@ components:
             $ref: '#/components/schemas/OpenUserTokenNamespaceScope'
         rateLimit:
           type: integer
+          minimum: 0
           description: 每秒限流阈值，0或空表示不限流
         expires:
           type: string

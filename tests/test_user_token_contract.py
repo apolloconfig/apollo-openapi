@@ -63,13 +63,26 @@ class UserTokenContractTest(unittest.TestCase):
             "/openapi/v1/user-tokens/admin/{tokenId}/revoke": (
                 ("post", "adminRevokeUserToken"),),
         }
+        expected_error_responses = {
+            ("/openapi/v1/user-tokens", "get"): ("401", "403"),
+            ("/openapi/v1/user-tokens", "post"): ("400", "401", "403"),
+            ("/openapi/v1/user-tokens/{tokenId}", "delete"): ("401", "403", "404"),
+            ("/openapi/v1/user-tokens/{tokenId}/revoke", "post"): ("401", "403", "404"),
+            ("/openapi/v1/user-tokens/{tokenId}/rotate", "post"): (
+                "400", "401", "403", "404"),
+            ("/openapi/v1/user-tokens/capabilities", "get"): ("401", "403"),
+            ("/openapi/v1/user-tokens/admin", "get"): ("400", "401", "403"),
+            ("/openapi/v1/user-tokens/admin/{tokenId}", "delete"): ("401", "403", "404"),
+            ("/openapi/v1/user-tokens/admin/{tokenId}/revoke", "post"): (
+                "401", "403", "404"),
+        }
         for path, methods in expected_operations.items():
           for method, operation_id in methods:
             operation = spec["paths"][path][method]
             self.assertEqual(operation_id, operation["operationId"])
             self.assertEqual(["Portal Management"], operation["tags"])
             self.assertEqual([{"PortalSessionAuth": []}], operation["security"])
-            for status_code in ("401", "403"):
+            for status_code in expected_error_responses[(path, method)]:
               self.assertEqual(
                   "#/components/schemas/ExceptionResponse",
                   operation["responses"][status_code]["content"]["application/json"]["schema"][
@@ -125,6 +138,7 @@ class UserTokenContractTest(unittest.TestCase):
         self.assertIn("tokenPrefix", summary["required"])
         self.assertEqual("int64", summary["properties"]["id"]["format"])
         self.assertTrue(summary["properties"]["operations"]["uniqueItems"])
+        self.assertEqual(0, summary["properties"]["rateLimit"]["minimum"])
         self.assertEqual(
             "#/components/schemas/OpenUserTokenNamespaceScope",
             summary["properties"]["namespaces"]["items"]["$ref"],
