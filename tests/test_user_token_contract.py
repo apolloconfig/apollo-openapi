@@ -69,10 +69,12 @@ class UserTokenContractTest(unittest.TestCase):
             self.assertEqual(operation_id, operation["operationId"])
             self.assertEqual(["Portal Management"], operation["tags"])
             self.assertEqual([{"PortalSessionAuth": []}], operation["security"])
-            self.assertEqual(
-                "#/components/schemas/ExceptionResponse",
-                operation["responses"]["403"]["content"]["application/json"]["schema"]["$ref"],
-            )
+            for status_code in ("401", "403"):
+              self.assertEqual(
+                  "#/components/schemas/ExceptionResponse",
+                  operation["responses"][status_code]["content"]["application/json"]["schema"][
+                      "$ref"],
+              )
 
         list_tokens = spec["paths"]["/openapi/v1/user-tokens"]["get"]
         list_tokens_schema = (
@@ -102,6 +104,14 @@ class UserTokenContractTest(unittest.TestCase):
             capabilities["responses"]["200"]["content"]["application/json"]["schema"]["$ref"],
         )
         admin_list_tokens = spec["paths"]["/openapi/v1/user-tokens/admin"]["get"]
+        admin_status_parameter = next(
+            parameter for parameter in admin_list_tokens["parameters"]
+            if parameter["name"] == "status")
+        self.assertEqual(
+            ["all", "active", "expired", "revoked"],
+            admin_status_parameter["schema"]["enum"],
+        )
+        self.assertEqual("all", admin_status_parameter["schema"]["default"])
         admin_list_tokens_schema = (
             admin_list_tokens["responses"]["200"]["content"]["application/json"]["schema"])
         self.assertEqual("array", admin_list_tokens_schema["type"])
@@ -136,6 +146,7 @@ class UserTokenContractTest(unittest.TestCase):
             ["operations", "defaultExpireDays", "maxExpireDays"],
             capability["required"],
         )
+        self.assertTrue(capability["properties"]["operations"]["uniqueItems"])
 
   def test_user_token_current_capability_schema_matches_portal_response(self):
     for spec_file in SPEC_FILES:

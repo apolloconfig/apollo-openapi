@@ -4910,6 +4910,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/OpenUserTokenSummary'
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 仅支持Portal用户登录态访问
           content:
@@ -4938,6 +4944,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OpenCreateUserTokenResponse'
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 仅支持Portal用户登录态访问
           content:
@@ -4964,6 +4976,12 @@ paths:
       responses:
         '200':
           description: 用户访问Token删除成功
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 仅支持Portal用户登录态访问
           content:
@@ -4990,6 +5008,12 @@ paths:
       responses:
         '200':
           description: 用户访问Token撤销成功
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 仅支持Portal用户登录态访问
           content:
@@ -5020,6 +5044,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OpenRotateUserTokenResponse'
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 仅支持Portal用户登录态访问
           content:
@@ -5043,6 +5073,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OpenUserTokenCapability'
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 仅支持Portal用户登录态访问
           content:
@@ -5070,6 +5106,11 @@ paths:
           required: false
           schema:
             type: string
+            enum:
+              - all
+              - active
+              - expired
+              - revoked
             default: all
       responses:
         '200':
@@ -5080,6 +5121,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/OpenUserTokenSummary'
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 权限不足
           content:
@@ -5106,6 +5153,12 @@ paths:
       responses:
         '200':
           description: 用户访问Token删除成功
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 权限不足
           content:
@@ -5132,6 +5185,12 @@ paths:
       responses:
         '200':
           description: 用户访问Token撤销成功
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 权限不足
           content:
@@ -7340,6 +7399,7 @@ components:
       properties:
         operations:
           type: array
+          uniqueItems: true
           description: 当前Portal用户可授予的用户Token操作列表
           items:
             type: string
