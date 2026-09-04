@@ -66,6 +66,7 @@ class ItemBatchContractTest(unittest.TestCase):
           operation = spec["paths"][path][method]
           request_schema = operation["requestBody"]["content"]["application/json"]["schema"]
           self.assertEqual("array", request_schema["type"])
+          self.assertEqual(1, request_schema["minItems"])
           self.assertEqual(
               "#/components/schemas/OpenItemDTO",
               request_schema["items"]["$ref"],
@@ -86,7 +87,13 @@ class ItemBatchContractTest(unittest.TestCase):
         operation = spec["paths"][f"{BASE_PATH}/batch-delete"]["post"]
         request_schema = operation["requestBody"]["content"]["application/json"]["schema"]
         self.assertEqual("array", request_schema["type"])
+        self.assertEqual(1, request_schema["minItems"])
         self.assertEqual("string", request_schema["items"]["type"])
+        self.assertEqual(1, request_schema["items"]["minLength"])
+        self.assertEqual(
+            "#/components/schemas/ExceptionResponse",
+            operation["responses"]["400"]["content"]["application/json"]["schema"]["$ref"],
+        )
         self.assertEqual(
             "#/components/schemas/ExceptionResponse",
             operation["responses"]["404"]["content"]["application/json"]["schema"]["$ref"],

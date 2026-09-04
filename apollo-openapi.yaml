@@ -991,6 +991,7 @@ paths:
           application/json:
             schema:
               type: array
+              minItems: 1
               items:
                 $ref: '#/components/schemas/OpenItemDTO'
         required: true
@@ -1055,6 +1056,7 @@ paths:
           application/json:
             schema:
               type: array
+              minItems: 1
               items:
                 $ref: '#/components/schemas/OpenItemDTO'
         required: true
@@ -1125,13 +1127,21 @@ paths:
           application/json:
             schema:
               type: array
+              minItems: 1
               items:
                 type: string
+                minLength: 1
               description: 待删除的配置项 key 列表
         required: true
       responses:
         '200':
           description: '批量删除配置项成功'
+        '400':
+          description: '请求参数错误'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: '权限不足'
           content:
