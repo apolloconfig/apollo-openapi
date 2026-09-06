@@ -18,7 +18,7 @@ info:
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
 
-  version: 0.3.9
+  version: 0.3.11
 security:
   - ApiKeyAuth: []
 tags:
@@ -945,6 +945,215 @@ paths:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
           headers: {}
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batch-create:
+    post:
+      summary: 批量创建配置项 (new added)
+      operationId: batchCreateItems
+      deprecated: false
+      description: >-
+        POST
+        /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batch-create
+      tags:
+        - Item Management
+      parameters:
+        - name: appId
+          in: path
+          description: '应用ID'
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: '环境标识'
+          required: true
+          schema:
+            type: string
+        - name: clusterName
+          in: path
+          description: '集群名称'
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: '命名空间名称'
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/OpenItemDTO'
+        required: true
+      responses:
+        '200':
+          description: '批量创建配置项成功'
+        '400':
+          description: '请求参数错误'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: '权限不足'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batch-update:
+    put:
+      summary: 批量修改配置项 (new added)
+      operationId: batchUpdateItems
+      deprecated: false
+      description: >-
+        PUT
+        /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batch-update
+      tags:
+        - Item Management
+      parameters:
+        - name: appId
+          in: path
+          description: '应用ID'
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: '环境标识'
+          required: true
+          schema:
+            type: string
+        - name: clusterName
+          in: path
+          description: '集群名称'
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: '命名空间名称'
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              minItems: 1
+              items:
+                $ref: '#/components/schemas/OpenItemDTO'
+        required: true
+      responses:
+        '200':
+          description: '批量修改配置项成功'
+        '400':
+          description: '请求参数错误'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: '权限不足'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: '配置项不存在'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+  /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batch-delete:
+    post:
+      summary: 批量删除配置项 (new added)
+      operationId: batchDeleteItems
+      deprecated: false
+      description: >-
+        POST
+        /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/batch-delete
+      tags:
+        - Item Management
+      parameters:
+        - name: appId
+          in: path
+          description: '应用ID'
+          required: true
+          schema:
+            type: string
+        - name: env
+          in: path
+          description: '环境标识'
+          required: true
+          schema:
+            type: string
+        - name: clusterName
+          in: path
+          description: '集群名称'
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: '命名空间名称'
+          required: true
+          schema:
+            type: string
+        - name: operator
+          in: query
+          description: '操作人用户名'
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              minItems: 1
+              items:
+                type: string
+                minLength: 1
+              description: 待删除的配置项 key 列表
+        required: true
+      responses:
+        '200':
+          description: '批量删除配置项成功'
+        '400':
+          description: '请求参数错误'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: '权限不足'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '404':
+          description: '配置项不存在'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}:
     get:
       summary: 通过查询参数获取配置项（支持编码的key） (original openapi)

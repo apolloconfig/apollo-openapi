@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.11] - 2026-08-28
+
+### Added
+
+- Add `batchCreateItems` (`POST .../items/batch-create`), `batchUpdateItems` (`PUT .../items/batch-update`), and `batchDeleteItems` (`POST .../items/batch-delete`) APIs for submitting a list of namespace items to create, update, or delete in one call.
+
 ## [0.3.9] - 2026-06-10
 
 ### Added
