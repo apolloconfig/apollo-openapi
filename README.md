@@ -1,7 +1,7 @@
 # apollo-openapi
 
 ![OpenAPI](https://img.shields.io/badge/spec-OpenAPI%203.0.1-blue)
-[![Docs](https://img.shields.io/badge/docs-API%20reference-blue)](https://shalk.github.io/apollo-openapi/)
+[![Docs](https://img.shields.io/badge/docs-API%20reference-blue)](https://apolloconfig.github.io/apollo-openapi/)
 
 This repository maintains the Apollo OpenAPI contract. The source of truth is
 [`apollo-openapi.yaml`](apollo-openapi.yaml).
@@ -11,9 +11,9 @@ This repository maintains the Apollo OpenAPI contract. The source of truth is
 Browse the rendered API reference for every released version (plus `next`
 for the unreleased `main` HEAD):
 
-**https://shalk.github.io/apollo-openapi/**
+**https://apolloconfig.github.io/apollo-openapi/**
 
-See [all versions](https://shalk.github.io/apollo-openapi/versions.html).
+See [all versions](https://apolloconfig.github.io/apollo-openapi/versions.html).
 
 Generated code is treated as a temporary verification artifact, not as
 maintained source code or an official Apollo SDK. Apollo Portal pins a released

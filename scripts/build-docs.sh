@@ -79,8 +79,8 @@ for tag in "${TAGS[@]}"; do
   if build_one "$WORK_DIR/$tag.yaml" "$tag" "$tag"; then
     BUILT_TAGS+=("$tag")
   else
-    echo "WARN: build-docs failed for $tag, skipping" >&2
-    rm -rf "${SITE_DIR:?}/$tag"
+    echo "WARN: build-docs failed for $tag, exit" >&2
+    exit 1
   fi
 done
 

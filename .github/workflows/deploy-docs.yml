@@ -25,8 +25,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Always build from main, never from the triggering ref: on a v* tag push
+      # github.ref is the tag, and site/next would then be built from the tag's
+      # spec instead of the current main HEAD. Released versions are read out of
+      # git history (git show <tag>:spec), so they are unaffected by this.
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
           fetch-tags: true
       - uses: actions/setup-node@v4
