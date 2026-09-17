@@ -1,0 +1,54 @@
+name: Deploy API Docs
+on:
+  push:
+    branches: [main]
+    paths:
+      - apollo-openapi.yaml
+      - redocly.yaml
+      - scripts/build-docs.sh
+      - package.json
+      - package-lock.json
+      - .github/workflows/deploy-docs.yml
+    tags: ['v*']
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Always build from main, never from the triggering ref: on a v* tag push
+      # github.ref is the tag, and site/next would then be built from the tag's
+      # spec instead of the current main HEAD. Released versions are read out of
+      # git history (git show <tag>:spec), so they are unaffected by this.
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          fetch-tags: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+      - run: ./scripts/build-docs.sh
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

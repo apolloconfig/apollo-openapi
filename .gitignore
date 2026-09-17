@@ -9,3 +9,9 @@
 
 # Temporary OpenAPI Generator output
 build/generated/
+
+# Node dependencies
+node_modules/
+
+# Generated docs site output
+site/

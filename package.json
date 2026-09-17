@@ -1,0 +1,11 @@
+{
+  "name": "apollo-openapi-docs",
+  "private": true,
+  "description": "Build tooling for the Apollo OpenAPI reference documentation site",
+  "scripts": {
+    "docs:build": "./scripts/build-docs.sh"
+  },
+  "devDependencies": {
+    "@redocly/cli": "2.51.2"
+  }
+}
