@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.12] - 2026-09-20
+
+### Fixed
+
+- Make `operator` optional for encoded-key item deletion so user tokens can use the token owner, matching ordinary-key deletion. Consumer tokens still require an explicit operator.
+
 ## [0.3.11] - 2026-08-28
 
 ### Added

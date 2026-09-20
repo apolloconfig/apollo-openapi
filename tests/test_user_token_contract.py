@@ -17,6 +17,20 @@ class UserTokenContractTest(unittest.TestCase):
   def _load_spec(self, spec_file):
     return yaml.safe_load((self.repo_root / spec_file).read_text(encoding="utf-8"))
 
+  def test_plain_and_encoded_item_delete_allow_token_owner_as_operator(self):
+    for spec_file in SPEC_FILES:
+      spec = self._load_spec(spec_file)
+      for resource in ("items", "encodedItems"):
+        path = ("/openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}"
+                "/namespaces/{namespaceName}/" + resource + "/{key}")
+        with self.subTest(spec=spec_file, resource=resource):
+          operation = spec["paths"][path]["delete"]
+          operator = next(parameter for parameter in operation["parameters"]
+                          if parameter["name"] == "operator")
+          self.assertEqual("query", operator["in"])
+          self.assertFalse(operator.get("required", False))
+          self.assertEqual("string", operator["schema"]["type"])
+
   def test_user_token_management_paths_use_generated_contract(self):
     for spec_file in SPEC_FILES:
       spec = self._load_spec(spec_file)
