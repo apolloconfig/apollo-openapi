@@ -9,7 +9,6 @@ on:
       - package.json
       - package-lock.json
       - .github/workflows/deploy-docs.yml
-    tags: ['v*']
   workflow_dispatch: {}
 
 permissions:
@@ -23,12 +22,10 @@ concurrency:
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
-      # Always build from main, never from the triggering ref: on a v* tag push
-      # github.ref is the tag, and site/next would then be built from the tag's
-      # spec instead of the current main HEAD. Released versions are read out of
-      # git history (git show <tag>:spec), so they are unaffected by this.
+      # Build next from main and released versions from their tags.
       - uses: actions/checkout@v4
         with:
           ref: main
@@ -48,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: https://openapi.apolloconfig.com
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
