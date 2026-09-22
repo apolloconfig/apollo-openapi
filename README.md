@@ -18,8 +18,8 @@ See [all versions](https://openapi.apolloconfig.com/versions.html).
 Documentation changes on `main` deploy automatically. A `v*` tag push starts
 the deployment workflow on `main` using `workflow_dispatch`, avoiding the
 [Pages tag deployment issue](https://github.com/actions/deploy-pages/issues/383).
-The deployment verifies the published version index, homepage, latest version,
-and the triggering release version against the generated files. To retry a
+The deployment verifies the published version index, homepage, `next`, latest
+version, and the triggering release version against the generated files. To retry a
 release deployment, run **Deploy API Docs** on `main` with `expected_tag` set
 to the release tag.
 

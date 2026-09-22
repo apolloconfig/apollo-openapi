@@ -1,4 +1,5 @@
 import contextlib
+import gzip
 import hashlib
 import http.server
 import importlib.util
@@ -22,8 +23,11 @@ class DocsDeploymentTest(unittest.TestCase):
   def server(self, response):
     class Handler(http.server.BaseHTTPRequestHandler):
       def do_GET(self):
-        status, body = response(urlsplit(self.path).path)
+        result = response(urlsplit(self.path).path)
+        status, body = result[:2]
         self.send_response(status)
+        for key, value in (result[2] if len(result) > 2 else {}).items():
+          self.send_header(key, value)
         self.end_headers()
         self.wfile.write(body)
 
@@ -56,6 +60,22 @@ class DocsDeploymentTest(unittest.TestCase):
       with self.assertRaisesRegex(RuntimeError, "did not match"):
         self.check(url, {"versions.html": b"v0.3.12"})
 
+  def test_compressed_content_is_checked_after_decompression(self):
+    with self.server(lambda path: (200, gzip.compress(b"v0.3.12"),
+                                   {"Content-Encoding": "gzip"})) as url:
+      self.check(url, {"versions.html": b"v0.3.12"})
+
+  def test_stale_next_fails_when_release_content_is_current(self):
+    files = {"versions.html": b"versions", "index.html": b"release",
+             "next/index.html": b"new next"}
+
+    def response(path):
+      return 200, b"old next" if path == "/next/index.html" else files[path.lstrip("/")]
+
+    with self.server(response) as url:
+      with self.assertRaises(RuntimeError):
+        self.check(url, files)
+
   def test_missing_release_page_fails(self):
     def response(path):
       if path == "/versions.html":
@@ -77,10 +97,24 @@ class DocsDeploymentTest(unittest.TestCase):
       self.check(url, {"versions.html": b"new"})
     self.assertGreaterEqual(len(requests), 2)
 
+  def test_retries_truncated_http_response(self):
+    requests = []
+
+    def response(path):
+      requests.append(path)
+      if len(requests) == 1:
+        return 200, b"partial", {"Content-Length": "100"}
+      return 200, b"complete"
+
+    with self.server(response) as url:
+      self.check(url, {"index.html": b"complete"})
+    self.assertGreaterEqual(len(requests), 2)
+
   def test_manifest_checks_latest_and_older_release_separately(self):
     with tempfile.TemporaryDirectory() as directory:
       site = Path(directory)
       files = {"versions.html": b"versions", "index.html": b"latest",
+               "next/index.html": b"unreleased",
                "v0.4.0/index.html": b"latest", "v0.3.12/index.html": b"older"}
       for path, content in files.items():
         target = site / path

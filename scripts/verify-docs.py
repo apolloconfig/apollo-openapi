@@ -2,7 +2,9 @@
 """Compare the published documentation with the files built for deployment."""
 
 import argparse
+import gzip
 import hashlib
+import http.client
 import json
 import sys
 import time
@@ -13,7 +15,7 @@ from pathlib import Path
 
 
 def manifest(site, versions):
-  paths = ["versions.html", "index.html"]
+  paths = ["versions.html", "index.html", "next/index.html"]
   for version in versions:
     if not version:
       continue
@@ -41,22 +43,26 @@ def verify(url, checks, timeout=300, retry_delay=10):
             f"?verify={time.time_ns()}"
         )
         request = urllib.request.Request(target, headers={
+            "Accept-Encoding": "gzip",
             "Cache-Control": "no-cache",
             "User-Agent": "Apollo-OpenAPI-deployment-verification",
         })
         with urllib.request.urlopen(request, timeout=min(20, remaining)) as response:
-          actual = hashlib.sha256(response.read()).hexdigest()
+          content = response.read()
+          if response.headers.get("Content-Encoding", "").lower() == "gzip":
+            content = gzip.decompress(content)
+          actual = hashlib.sha256(content).hexdigest()
         if actual != expected:
           raise ValueError(f"{path}: expected SHA-256 {expected}, got {actual}")
       print(f"Verified {len(checks)} published files at {url}", flush=True)
       return
-    except (OSError, ValueError) as error:
+    except (OSError, ValueError, http.client.HTTPException, EOFError) as error:
       if isinstance(error, urllib.error.HTTPError):
         error.close()
       remaining = deadline - time.monotonic()
       if remaining <= 0:
-        raise RuntimeError(f"Published documentation did not match: {error}") from error
-      print(f"Waiting for published content: {error}", flush=True)
+        raise RuntimeError(f"Published documentation did not match ({path}): {error}") from error
+      print(f"Waiting for published content ({path}): {error}", flush=True)
       time.sleep(min(retry_delay, remaining))
 
 
