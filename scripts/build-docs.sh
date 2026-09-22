@@ -111,4 +111,8 @@ echo "Generating versions.html..."
   echo '</ul></body></html>'
 } > "$SITE_DIR/versions.html"
 
+if [ -n "${GITHUB_OUTPUT:-}" ]; then
+  echo "latest_tag=$LATEST_TAG" >> "$GITHUB_OUTPUT"
+fi
+
 echo "Done. Built $((${#BUILT_TAGS[@]} + 1)) versions (${#BUILT_TAGS[@]} tags + next)."

@@ -6,16 +6,22 @@ on:
       - apollo-openapi.yaml
       - redocly.yaml
       - scripts/build-docs.sh
+      - scripts/verify-docs.py
       - package.json
       - package-lock.json
       - .github/workflows/deploy-docs.yml
-    tags: ['v*']
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      expected_tag:
+        description: Release tag that must be present in the published site
+        required: false
+        type: string
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
+
+env:
+  DOCS_URL: https://openapi.apolloconfig.com
 
 concurrency:
   group: pages
@@ -23,12 +29,13 @@ concurrency:
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    outputs:
+      source_sha: ${{ steps.expected.outputs.source_sha }}
+      checks: ${{ steps.expected.outputs.checks }}
     steps:
-      # Always build from main, never from the triggering ref: on a v* tag push
-      # github.ref is the tag, and site/next would then be built from the tag's
-      # spec instead of the current main HEAD. Released versions are read out of
-      # git history (git show <tag>:spec), so they are unaffected by this.
+      # Build next from main and released versions from their tags.
       - uses: actions/checkout@v4
         with:
           ref: main
@@ -38,7 +45,17 @@ jobs:
         with:
           node-version: "20"
       - run: npm ci
-      - run: ./scripts/build-docs.sh
+      - id: docs
+        run: ./scripts/build-docs.sh
+      - name: Record expected published content
+        id: expected
+        env:
+          LATEST_TAG: ${{ steps.docs.outputs.latest_tag }}
+          EXPECTED_TAG: ${{ inputs.expected_tag }}
+        run: |
+          echo "source_sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          python3 scripts/verify-docs.py manifest site \
+            --version "$LATEST_TAG" --version "$EXPECTED_TAG" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
@@ -46,9 +63,24 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: https://openapi.apolloconfig.com
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.build.outputs.source_sha }}
+          persist-credentials: false
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify published content
+        env:
+          EXPECTED_CHECKS: ${{ needs.build.outputs.checks }}
+        run: |
+          python3 scripts/verify-docs.py verify \
+            --url "$DOCS_URL" --checks "$EXPECTED_CHECKS"

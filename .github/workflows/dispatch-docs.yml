@@ -1,0 +1,23 @@
+name: Dispatch API Docs Deployment
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  actions: write
+
+jobs:
+  dispatch:
+    if: github.event.deleted == false
+    runs-on: ubuntu-latest
+    steps:
+      # Tag deployments can report success while Pages keeps serving old content.
+      # https://github.com/actions/deploy-pages/issues/383
+      - name: Start a deployment from main
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          gh workflow run deploy-docs.yml \
+            --repo "$GITHUB_REPOSITORY" --ref main \
+            --raw-field "expected_tag=$RELEASE_TAG"
