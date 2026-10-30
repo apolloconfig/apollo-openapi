@@ -6014,6 +6014,51 @@ paths:
                 type: array
                 items:
                   type: object
+  /openapi/v1/consumers/{consumerId}/roles:
+    get:
+      operationId: getConsumerRoles
+      tags: [Portal Management]
+      parameters:
+        - name: consumerId
+          in: path
+          required: true
+          schema: { type: integer, format: int64 }
+      responses:
+        '200':
+          description: 成功获取消费者授权列表
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/OpenConsumerRoleDTO' }
+    delete:
+        operationId: revokeConsumerRoles
+        tags: [Portal Management]
+        parameters:
+          - name: consumerId
+            in: path
+            required: true
+            schema: { type: integer, format: int64 }
+          - name: type
+            in: query
+            required: true
+            schema: { type: string, enum: [AppRole, NamespaceRole] }
+          - name: appId
+            in: query
+            required: true
+            schema: { type: string }
+          - name: namespaceName
+            in: query
+            required: false
+            schema: { type: string }
+          - name: env
+            in: query
+            required: false
+            schema: { type: string }
+        responses:
+          '200':
+            description: 成功撤销授权
+
   /openapi/v1/consumer-tokens/by-appId:
     get:
       summary: 按应用ID查询消费者Token(new added)
@@ -6803,6 +6848,21 @@ components:
         ownerDisplayName:
           type: string
       description: Apollo应用信息数据传输对象，包含应用的基本信息和元数据
+    OpenConsumerRoleDTO:
+      type: object
+      properties:
+        type:
+          type: string
+          description: 授权类型，AppRole 或 NamespaceRole
+          enum: [AppRole, NamespaceRole]
+        appId:
+          type: string
+        namespaceName:
+          type: string
+          nullable: true     # AppRole 时为 null
+        env:
+          type: string
+          nullable: true     # 未指定 env（即所有环境）时为 null
     OpenCreateAppDTO:
       type: object
       properties:
