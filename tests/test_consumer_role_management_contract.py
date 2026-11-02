@@ -14,13 +14,20 @@ class ConsumerRoleManagementContractTest(unittest.TestCase):
     cls.operations = cls.spec["paths"]["/openapi/v1/consumers/{consumerId}/roles"]
 
   def test_operations_require_portal_session_and_document_admin_boundary(self):
-    for method in ("get", "delete"):
+    expected_error_statuses = {
+        "get": ("400", "401", "403", "404"),
+        "delete": ("400", "401", "403", "404"),
+    }
+    for method, statuses in expected_error_statuses.items():
       with self.subTest(method=method):
         operation = self.operations[method]
         self.assertEqual(["Portal Management"], operation["tags"])
         self.assertEqual([{"PortalSessionAuth": []}], operation["security"])
-        self.assertIn("403", operation["responses"])
-        self.assertIn("404", operation["responses"])
+        for status in statuses:
+          self.assertEqual(
+              "#/components/schemas/ExceptionResponse",
+              operation["responses"][status]["content"]["application/json"]["schema"]["$ref"],
+          )
         self.assertIn("超级管理员", operation["description"])
         self.assertIn("Token", operation["description"])
         consumer_id = next(p for p in operation["parameters"] if p["name"] == "consumerId")

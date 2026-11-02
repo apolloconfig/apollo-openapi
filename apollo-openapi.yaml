@@ -6023,14 +6023,18 @@ paths:
         同一 App、Namespace 和环境的修改与发布角色聚合为一条 NamespaceRole；env 为 null 表示所有环境。
       operationId: getConsumerRoles
       deprecated: false
-      tags: [Portal Management]
+      tags:
+        - Portal Management
       security:
         - PortalSessionAuth: []
       parameters:
         - name: consumerId
           in: path
           required: true
-          schema: { type: integer, format: int64, minimum: 1 }
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
       responses:
         '200':
           description: 成功获取消费者授权列表
@@ -6038,11 +6042,32 @@ paths:
             application/json:
               schema:
                 type: array
-                items: { $ref: '#/components/schemas/OpenConsumerRoleDTO' }
+                items:
+                  $ref: '#/components/schemas/OpenConsumerRoleDTO'
+        '400':
+          description: consumerId 非法
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 非超级管理员的 Portal 登录态，或使用 Token 调用
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '404':
           description: 消费者不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
     delete:
       summary: 撤销消费者的资源授权
       description: |
@@ -6053,40 +6078,71 @@ paths:
         撤销一条授权后，消费者仍可能因其他 App、Namespace 或 Cluster 角色而拥有相同的有效权限。
       operationId: revokeConsumerRoles
       deprecated: false
-      tags: [Portal Management]
+      tags:
+        - Portal Management
       security:
         - PortalSessionAuth: []
       parameters:
         - name: consumerId
           in: path
           required: true
-          schema: { type: integer, format: int64, minimum: 1 }
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
         - name: type
           in: query
           required: true
-          schema: { type: string, enum: [AppRole, NamespaceRole] }
+          schema:
+            type: string
+            enum:
+              - AppRole
+              - NamespaceRole
         - name: appId
           in: query
           required: true
-          schema: { type: string, minLength: 1 }
+          schema:
+            type: string
+            minLength: 1
         - name: namespaceName
           in: query
           required: false
-          schema: { type: string, minLength: 1 }
+          schema:
+            type: string
+            minLength: 1
         - name: env
           in: query
           required: false
-          schema: { type: string, minLength: 1 }
+          schema:
+            type: string
+            minLength: 1
       responses:
         '200':
           description: 成功撤销授权；已撤销的绑定不重复删除
         '400':
           description: 授权类型、资源参数或角色无效
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '401':
+          description: 未登录或登录态已过期
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '403':
           description: 非超级管理员的 Portal 登录态，或使用 Token 调用
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
         '404':
           description: 消费者不存在
-
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/consumer-tokens/by-appId:
     get:
       summary: 按应用ID查询消费者Token(new added)
@@ -6887,10 +6943,12 @@ components:
           type: string
         namespaceName:
           type: string
-          nullable: true     # AppRole 时为 null
+          nullable: true
+          description: NamespaceRole 的命名空间名称；AppRole 时为 null
         env:
           type: string
-          nullable: true     # 未指定 env（即所有环境）时为 null
+          nullable: true
+          description: NamespaceRole 的环境；未指定环境（即所有环境）时为 null
     OpenCreateAppDTO:
       type: object
       properties:
