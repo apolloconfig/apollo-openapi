@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.13] - 2026-11-07
+
 ### Added
 
 - Add `checkAppNamespaceDeletion` (`GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}/deletion-check`), which reports whether the app namespace exists in the Portal and its status in every environment (`REMAINING`, `ABSENT`, `UNREACHABLE`, or `SKIPPED` when the health check marks the environment down) without changing anything.
