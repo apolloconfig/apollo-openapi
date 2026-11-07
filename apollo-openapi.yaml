@@ -2742,6 +2742,41 @@ paths:
                 items:
                   $ref: '#/components/schemas/OpenNamespaceUsageDTO'
           headers: {}
+  /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}/deletion-check:
+    get:
+      summary: 检查AppNamespace在各环境的残留(new added)
+      operationId: checkAppNamespaceDeletion
+      deprecated: false
+      description: GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}/deletion-check
+      tags:
+        - AppNamespace Management
+      parameters:
+        - name: appId
+          in: path
+          description: '应用ID'
+          required: true
+          schema:
+            type: string
+        - name: namespaceName
+          in: path
+          description: '命名空间名称'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: '检查完成，返回Portal中是否存在该AppNamespace以及各环境的状态，不修改任何数据'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OpenAppNamespaceDeletionCheckDTO'
+          headers: {}
+        '403':
+          description: '权限不足'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/apps/{appId}/appnamespaces:
     post:
       summary: 创建AppNamespace (original openapi)
@@ -3199,10 +3234,29 @@ paths:
           required: false
           schema:
             type: string
+        - name: recovery
+          in: query
+          description: '为true时只清理Portal中已不存在的AppNamespace在各环境的残留。若Portal中存在该AppNamespace（例如已重新创建同名AppNamespace），请求被拒绝，不删除任何环境中的数据'
+          required: false
+          schema:
+            type: boolean
+            default: false
       responses:
         '200':
           description: 'AppNamespace删除成功'
           headers: {}
+        '400':
+          description: '普通删除时Portal中不存在该AppNamespace。recovery为true时Portal中仍存在该AppNamespace，或所有环境都已成功检查且都不存在该AppNamespace'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '500':
+          description: '删除或清理未在所有环境完成，部分变更可能已经生效。错误信息列出已删除、删除失败和因健康检查被跳过的环境，这些环境恢复后可先检查再清理'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/apps/{appId}/namespaces/releases/status:
     get:
       summary: 获取应用下所有Namespace的发布状态 (new added)
@@ -7072,6 +7126,40 @@ components:
           type: string
           description: 命名空间备注说明，描述命名空间的用途和包含的配置类型
       description: Apollo应用命名空间数据传输对象，表示应用级别的命名空间配置信息
+    OpenAppNamespaceDeletionCheckDTO:
+      type: object
+      properties:
+        appId:
+          type: string
+          description: 所属应用的唯一标识符
+        namespaceName:
+          type: string
+          description: 命名空间名称
+        existsInPortal:
+          type: boolean
+          description: Portal中是否存在该AppNamespace，存在时应使用普通删除，不能作为残留清理
+        environments:
+          type: array
+          description: 各环境的检查结果
+          items:
+            $ref: '#/components/schemas/OpenAppNamespaceEnvDeletionStatusDTO'
+    OpenAppNamespaceEnvDeletionStatusDTO:
+      type: object
+      properties:
+        env:
+          type: string
+          description: 环境名称
+        status:
+          type: string
+          description: REMAINING表示该环境仍存在该AppNamespace，ABSENT表示已不存在，UNREACHABLE表示检查失败，SKIPPED表示健康检查将该环境标记为不可用而未检查
+          enum:
+            - REMAINING
+            - ABSENT
+            - UNREACHABLE
+            - SKIPPED
+        message:
+          type: string
+          description: 检查失败时的错误信息
     OpenNamespaceUsageDTO:
       type: object
       properties:

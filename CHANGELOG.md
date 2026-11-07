@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `checkAppNamespaceDeletion` (`GET /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}/deletion-check`), which reports whether the app namespace exists in the Portal and its status in every environment (`REMAINING`, `ABSENT`, `UNREACHABLE`, or `SKIPPED` when the health check marks the environment down) without changing anything.
+- Add the `recovery` query parameter of `deleteAppNamespace`. With `recovery=true` the request only cleans up what remains in the environments of an app namespace that is no longer in the Portal, and it is rejected when the Portal has the app namespace, for example after it was recreated under the same name.
+
+### Changed
+
+- Document the `400` and `500` responses of `deleteAppNamespace` (`DELETE /openapi/v1/apps/{appId}/appnamespaces/{namespaceName}`). A `500` reports a deletion or cleanup that did not complete in every environment, after which some changes may already have taken effect, and names the environments where it was deleted, failed or skipped.
+
 ## [0.3.12] - 2026-09-20
 
 ### Fixed
