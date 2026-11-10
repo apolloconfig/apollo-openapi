@@ -36,6 +36,22 @@ class ConsumerRoleManagementContractTest(unittest.TestCase):
         self.assertEqual("int64", consumer_id["schema"]["format"])
         self.assertEqual(1, consumer_id["schema"]["minimum"])
 
+  def test_operations_document_expired_session_responses_per_auth_mode(self):
+    for method in ("get", "delete"):
+      with self.subTest(method=method):
+        operation = self.operations[method]
+        self.assertIn("OIDC", operation["description"])
+        responses = operation["responses"]
+        self.assertIn("OIDC", responses["401"]["description"])
+        redirect = responses["302"]
+        self.assertIn("auth", redirect["description"])
+        self.assertIn("LDAP", redirect["description"])
+        self.assertIn("/signin", redirect["description"])
+        self.assertNotIn("content", redirect)
+        location = redirect["headers"]["Location"]
+        self.assertEqual("string", location["schema"]["type"])
+        self.assertIn("/signin", location["description"])
+
   def test_get_roles_returns_explicit_resource_grants(self):
     operation = self.operations["get"]
     self.assertEqual("getConsumerRoles", operation["operationId"])
