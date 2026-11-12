@@ -15,3 +15,7 @@ node_modules/
 
 # Generated docs site output
 site/
+
+# Python
+__pycache__/
+*.py[cod]

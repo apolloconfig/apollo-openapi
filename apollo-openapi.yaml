@@ -6059,11 +6059,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
         '401':
-          description: 未登录，或 OIDC 认证模式下登录态已过期（后者由 Portal 直接 sendError 返回，body 为容器错误响应而非 ExceptionResponse）
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ExceptionResponse'
+          description: |
+            未登录，或 OIDC 认证模式下登录态已过期。两种情况的响应 body 不同：
+            未登录时返回 JSON 错误体（ExceptionResponse）；OIDC 模式下登录态过期的 401 由 Portal 过滤器直接
+            sendError 返回，body 由容器错误处理（转发到 /error）生成而不保证是 ExceptionResponse。
+            因此本响应只固定状态码，不约束 body 结构。
         '403':
           description: 非超级管理员的 Portal 登录态，或使用 Token 调用
           content:
@@ -6084,6 +6084,7 @@ paths:
         AppRole 撤销目标 App 的 Master 绑定；NamespaceRole 在一个事务中撤销修改与发布角色的绑定。
         NamespaceRole 的 namespaceName 必填；env 省略时仅匹配不带环境后缀的全环境授权，不匹配各环境的独立授权。
         撤销一条授权后，消费者仍可能因其他 App、Namespace 或 Cluster 角色而拥有相同的有效权限。
+        撤销不是幂等的：目标绑定必须存在，若消费者名下没有匹配的绑定（例如已被撤销过），返回 400 而不是成功的空操作。
         登录态过期时的响应取决于 Portal 认证模式：OIDC 模式返回 401，auth 和 LDAP 模式返回 302 重定向到 /signin。
       operationId: revokeConsumerRoles
       deprecated: false
@@ -6127,7 +6128,7 @@ paths:
             minLength: 1
       responses:
         '200':
-          description: 成功撤销授权；已撤销的绑定不重复删除
+          description: 成功撤销至少一条匹配的绑定。撤销不可重复执行，目标绑定已不存在时返回 400。
         '302':
           description: auth 或 LDAP 认证模式下登录态已过期，重定向到登录页 /signin
           headers:
@@ -6136,17 +6137,19 @@ paths:
               schema:
                 type: string
         '400':
-          description: 授权类型、资源参数或角色无效
+          description: |
+            授权类型、资源参数或角色无效，或消费者名下没有与请求匹配的绑定（含重复撤销已移除的绑定）。
+            请求参数无法解析时同样返回 400。
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
         '401':
-          description: 未登录，或 OIDC 认证模式下登录态已过期（后者由 Portal 直接 sendError 返回，body 为容器错误响应而非 ExceptionResponse）
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ExceptionResponse'
+          description: |
+            未登录，或 OIDC 认证模式下登录态已过期。两种情况的响应 body 不同：
+            未登录时返回 JSON 错误体（ExceptionResponse）；OIDC 模式下登录态过期的 401 由 Portal 过滤器直接
+            sendError 返回，body 由容器错误处理（转发到 /error）生成而不保证是 ExceptionResponse。
+            因此本响应只固定状态码，不约束 body 结构。
         '403':
           description: 非超级管理员的 Portal 登录态，或使用 Token 调用
           content:

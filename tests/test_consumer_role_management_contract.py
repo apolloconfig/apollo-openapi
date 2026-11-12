@@ -15,8 +15,8 @@ class ConsumerRoleManagementContractTest(unittest.TestCase):
 
   def test_operations_require_portal_session_and_document_admin_boundary(self):
     expected_error_statuses = {
-        "get": ("400", "401", "403", "404"),
-        "delete": ("400", "401", "403", "404"),
+        "get": ("400", "403", "404"),
+        "delete": ("400", "403", "404"),
     }
     for method, statuses in expected_error_statuses.items():
       with self.subTest(method=method):
@@ -52,6 +52,17 @@ class ConsumerRoleManagementContractTest(unittest.TestCase):
         self.assertEqual("string", location["schema"]["type"])
         self.assertIn("/signin", location["description"])
 
+  def test_unauthorized_response_leaves_body_unconstrained(self):
+    # 401 有两种来源：未登录时是 ExceptionResponse，OIDC 模式下登录态过期的 401 由
+    # sendError 交给容器错误处理，body 不保证是 ExceptionResponse，因此不声明 schema。
+    for method in ("get", "delete"):
+      with self.subTest(method=method):
+        response = self.operations[method]["responses"]["401"]
+        self.assertIn("ExceptionResponse", response["description"])
+        self.assertIn("sendError", response["description"])
+        content = response.get("content", {})
+        self.assertNotIn("schema", content.get("application/json", {}))
+
   def test_get_roles_returns_explicit_resource_grants(self):
     operation = self.operations["get"]
     self.assertEqual("getConsumerRoles", operation["operationId"])
@@ -83,6 +94,18 @@ class ConsumerRoleManagementContractTest(unittest.TestCase):
     self.assertFalse(parameters["env"]["required"])
     self.assertIn("一个事务", operation["description"])
     self.assertIn("不匹配各环境的独立授权", operation["description"])
+
+  def test_revoke_is_not_idempotent_and_reports_400_when_binding_is_gone(self):
+    operation = self.operations["delete"]
+    self.assertIn("不是幂等", operation["description"])
+    self.assertIn("400", operation["description"])
+    ok = operation["responses"]["200"]["description"]
+    self.assertIn("400", ok)
+    self.assertNotIn("不重复删除", ok)
+    bad_request = operation["responses"]["400"]["description"]
+    self.assertIn("重复撤销", bad_request)
+    self.assertIn("ExceptionResponse",
+                  operation["responses"]["400"]["content"]["application/json"]["schema"]["$ref"])
 
 
 if __name__ == "__main__":
