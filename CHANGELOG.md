@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.14] - 2026-11-16
+
+### Added
+
+- Add `getConsumerRoles` and `revokeConsumerRoles` for Portal super administrators to view and revoke a consumer's App and Namespace role bindings by consumer ID. Revocation affects only the selected consumer's binding and matches the requested namespace and environment. ([#42](https://github.com/apolloconfig/apollo-openapi/pull/42))
+
 ## [0.3.13] - 2026-11-07
 
 ### Added
