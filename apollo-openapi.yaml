@@ -14,6 +14,13 @@ info:
       <li><b>Token 权限</b>：按应用/环境/命名空间授予，建议不同用途分别创建。</li>
     </ol>
 
+    <h3>Consumer Token 配置查看权限</h3>
+    <p>配置内容读取遵循 Portal 的 <code>configView.memberOnly.envs</code>。在指定环境中，私有 Namespace
+    仅对拥有目标应用管理员权限或目标 Namespace 修改/发布权限的 Consumer 可读；公共 Namespace 和未指定环境
+    不增加此项限制。此行为不提供独立兼容开关，升级后可能需要为已有 Consumer 补充授权。</p>
+    <p>单资源读取或配置 diff 无权限时返回 HTTP 403；Namespace 列表过滤不可读的条目。
+    Release 和实例查询继续要求原有的 Consumer 发布权限。用户访问 Token 继续同时受用户权限与 Token scope 限制。</p>
+
     <h3>使用示例</h3>
     <pre><code class="language-bash">curl -X GET "http://localhost:8070/openapi/v1/apps" \
     -H "Authorization: your_token_here"</code></pre>
@@ -540,7 +547,9 @@ paths:
       summary: 获取单个配置项 (original openapi)
       operationId: getItem
       deprecated: false
-      description: GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}
+      description: |
+        GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/{key}
+        Consumer Token 在 configView.memberOnly.envs 指定环境读取私有 Namespace 时，需要目标应用管理员权限或目标 Namespace 的修改/发布权限，否则返回 HTTP 403。
       tags:
         - Item Management
       parameters:
@@ -593,6 +602,12 @@ paths:
           headers: {}
         '404':
           description: '配置项不存在'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 配置查看权限不足
           content:
             application/json:
               schema:
@@ -729,7 +744,9 @@ paths:
       summary: 获取命名空间下的配置项列表 (original openapi)
       operationId: findItemsByNamespace
       deprecated: false
-      description: 获取指定命名空间的配置项列表，支持分页
+      description: |
+        获取指定命名空间的配置项列表，支持分页
+        Consumer Token 在 configView.memberOnly.envs 指定环境读取私有 Namespace 时，需要目标应用管理员权限或目标 Namespace 的修改/发布权限，否则返回 HTTP 403。
       tags:
         - Item Management
       parameters:
@@ -812,6 +829,12 @@ paths:
           headers: {}
         '404':
           description: '命名空间不存在'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 配置查看权限不足
           content:
             application/json:
               schema:
@@ -1159,7 +1182,9 @@ paths:
       summary: 通过查询参数获取配置项（支持编码的key） (original openapi)
       operationId: getItemByEncodedKey
       deprecated: false
-      description: GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}
+      description: |
+        GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/encodedItems/{key}
+        Consumer Token 在 configView.memberOnly.envs 指定环境读取私有 Namespace 时，需要目标应用管理员权限或目标 Namespace 的修改/发布权限，否则返回 HTTP 403。
       tags:
         - Item Management
       parameters:
@@ -1212,6 +1237,12 @@ paths:
           headers: {}
         '404':
           description: '配置项不存在'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 配置查看权限不足
           content:
             application/json:
               schema:
@@ -1349,9 +1380,10 @@ paths:
       summary: 获取分支下的配置项 (new added)
       operationId: findBranchItems
       deprecated: false
-      description: >-
+      description: |
         GET
         /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/items:
+        Consumer Token 在 configView.memberOnly.envs 指定环境读取私有 Namespace 时，需要目标应用管理员权限或目标 Namespace 的修改/发布权限，否则返回 HTTP 403。
       tags:
         - Item Management
       parameters:
@@ -1418,14 +1450,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 配置查看权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/diff:
     post:
       summary: 对比命名空间配置差异 (new added)
       operationId: compareItems
       deprecated: false
-      description: >-
+      description: |
         POST
         /apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/diff
+        Consumer Token 在 configView.memberOnly.envs 指定环境读取私有 Namespace 时，需要目标应用管理员权限或目标 Namespace 的修改/发布权限，否则返回 HTTP 403。
+        对源 Namespace 和所有比较目标 Namespace 均执行查看权限校验。
       tags:
         - Item Management
       parameters:
@@ -1525,6 +1565,12 @@ paths:
                         lineNum: 0
                   extInfo: ''
           headers: {}
+        '403':
+          description: 配置查看权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/items/synchronize:
     post:
       summary: 同步配置项到多个命名空间 (new added)
@@ -2875,7 +2921,9 @@ paths:
       summary: 获取指定集群下的所有Namespace (original openapi)
       operationId: findNamespaces
       deprecated: false
-      description: GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces
+      description: |
+        GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces
+        Consumer Token 的结果列表过滤 configView.memberOnly.envs 指定环境中无权限读取的私有 Namespace；公共 Namespace 和未指定环境不增加此项限制。
       tags:
         - Namespace Management
       parameters:
@@ -2947,7 +2995,9 @@ paths:
       summary: 获取指定的Namespace (original openapi)
       operationId: findNamespace
       deprecated: false
-      description: GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
+      description: |
+        GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}
+        Consumer Token 在 configView.memberOnly.envs 指定环境读取私有 Namespace 时，需要目标应用管理员权限或目标 Namespace 的修改/发布权限，否则返回 HTTP 403。
       tags:
         - Namespace Management
       parameters:
@@ -3018,14 +3068,21 @@ paths:
                     value: ''
                     comment: ''
           headers: {}
+        '403':
+          description: 配置查看权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace:
     get:
       summary: 查询关联Namespace对应的公共Namespace详情 (new added)
       operationId: findPublicNamespaceForAssociatedNamespace
       deprecated: false
-      description: >-
+      description: |
         GET
         /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/associated-public-namespace
+        Consumer Token 在 configView.memberOnly.envs 指定环境读取私有 Namespace 时，需要目标应用管理员权限或目标 Namespace 的修改/发布权限，否则返回 HTTP 403。
       tags:
         - Namespace Management
       parameters:
@@ -3087,12 +3144,20 @@ paths:
                   - key: 'k2'
                     value: 'v2'
           headers: {}
+        '403':
+          description: 配置查看权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock:
     get:
       summary: 获取Namespace的锁状态 (original openapi)
       operationId: getNamespaceLock
       deprecated: false
-      description: GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock
+      description: |
+        GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/lock
+        Consumer Token 在 configView.memberOnly.envs 指定环境读取私有 Namespace 时，需要目标应用管理员权限或目标 Namespace 的修改/发布权限，否则返回 HTTP 403。
       tags:
         - Namespace Lock Management
       parameters:
@@ -3132,6 +3197,12 @@ paths:
                 isLocked: false
                 lockedBy: ''
           headers: {}
+        '403':
+          description: 配置查看权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/appnamespaces:
     get:
       summary: 获取所有公共AppNamespace (new added)
@@ -3285,7 +3356,9 @@ paths:
       summary: 获取公共AppNamespace的所有实例 (new added)
       operationId: getPublicAppNamespaceInstances
       deprecated: false
-      description: GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
+      description: |
+        GET /openapi/v1/envs/{env}/appnamespaces/{publicNamespaceName}/instances
+        Consumer Token 的结果列表过滤 configView.memberOnly.envs 指定环境中无权限读取的私有 Namespace；公共 Namespace 和未指定环境不增加此项限制。
       tags:
         - AppNamespace Management
       parameters:
@@ -3350,9 +3423,10 @@ paths:
       summary: 查询namespace使用情况(new added)
       operationId: findNamespaceUsage
       deprecated: false
-      description: >-
+      description: |
         GET
         /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/namespaces/{namespaceName}/usage
+        Consumer Token 在 configView.memberOnly.envs 指定环境读取私有 Namespace 时，需要目标应用管理员权限或目标 Namespace 的修改/发布权限，否则返回 HTTP 403。
       tags:
         - Namespace Management
       parameters:
@@ -3390,6 +3464,12 @@ paths:
                 items:
                   $ref: '#/components/schemas/OpenNamespaceUsageDTO'
           headers: {}
+        '403':
+          description: 配置查看权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
   /openapi/v1/apps/{appId}/envs/{env}/clusters/{clusterName}/missing-namespaces:
     get:
       summary: 查找缺失的Namespace (new added)
@@ -3549,7 +3629,9 @@ paths:
       summary: 获取命名空间分支信息 (original openapi)
       operationId: findBranch
       deprecated: false
-      description: GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches
+      description: |
+        GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches
+        Consumer Token 在 configView.memberOnly.envs 指定环境读取私有 Namespace 时，需要目标应用管理员权限或目标 Namespace 的修改/发布权限，否则返回 HTTP 403。
       tags:
         - Namespace Branch Management
       parameters:
@@ -3622,6 +3704,12 @@ paths:
           headers: {}
         '404':
           description: '分支不存在'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
+        '403':
+          description: 配置查看权限不足
           content:
             application/json:
               schema:
@@ -3824,7 +3912,9 @@ paths:
       summary: 获取分支灰度发布规则 (original openapi)
       operationId: getBranchGrayRules
       deprecated: false
-      description: GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules
+      description: |
+        GET /openapi/v1/envs/{env}/apps/{appId}/clusters/{clusterName}/namespaces/{namespaceName}/branches/{branchName}/rules
+        Consumer Token 在 configView.memberOnly.envs 指定环境读取私有 Namespace 时，需要目标应用管理员权限或目标 Namespace 的修改/发布权限，否则返回 HTTP 403。
       tags:
         - Namespace Branch Management
       parameters:
@@ -3881,6 +3971,12 @@ paths:
                     clientLabelList:
                       - ''
           headers: {}
+        '403':
+          description: 配置查看权限不足
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExceptionResponse'
     put:
       summary: 更新分支灰度发布规则 (original openapi)
       operationId: updateBranchRules

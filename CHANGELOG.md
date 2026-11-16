@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- [Document Consumer configuration reads following `configView.memberOnly.envs`, denied-read HTTP 403 responses, Namespace list filtering, and migration without a compatibility switch](https://github.com/apolloconfig/apollo-openapi/pull/44).
+
 ## [0.3.13] - 2026-11-07
 
 ### Added
