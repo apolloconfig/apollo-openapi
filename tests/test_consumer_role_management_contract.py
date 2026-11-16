@@ -46,19 +46,26 @@ class ConsumerRoleManagementContractTest(unittest.TestCase):
         redirect = responses["302"]
         self.assertIn("auth", redirect["description"])
         self.assertIn("LDAP", redirect["description"])
-        self.assertIn("/signin", redirect["description"])
         self.assertNotIn("content", redirect)
         location = redirect["headers"]["Location"]
         self.assertEqual("string", location["schema"]["type"])
         self.assertIn("/signin", location["description"])
+        for description in (operation["description"], redirect["description"],
+                            location["description"]):
+          self.assertIn("Portal", description)
+          self.assertIn("context path", description)
+          self.assertNotIn("固定为 /signin", description)
+        self.assertIn("/apollo/signin", location["description"])
 
   def test_unauthorized_response_leaves_body_unconstrained(self):
-    # 401 有两种来源：未登录时是 ExceptionResponse，OIDC 模式下登录态过期的 401 由
+    # 401 有两种来源：未认证时是含 message 字段的 JSON，OIDC 模式下登录态过期的 401 由
     # sendError 交给容器错误处理，body 不保证是 ExceptionResponse，因此不声明 schema。
     for method in ("get", "delete"):
       with self.subTest(method=method):
         response = self.operations[method]["responses"]["401"]
-        self.assertIn("ExceptionResponse", response["description"])
+        self.assertIn("message 字段", response["description"])
+        self.assertIn('{"message":"Unauthorized"}', response["description"])
+        self.assertNotIn("未登录时返回 JSON 错误体（ExceptionResponse）", response["description"])
         self.assertIn("sendError", response["description"])
         content = response.get("content", {})
         self.assertNotIn("schema", content.get("application/json", {}))

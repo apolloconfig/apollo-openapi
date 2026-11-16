@@ -6021,7 +6021,8 @@ paths:
         仅允许超级管理员通过 Portal 登录态调用；Consumer Token 和用户 Token 不能调用。
         返回已绑定的 AppRole 和 NamespaceRole，不包含系统角色，也不展开全部有效权限。
         同一 App、Namespace 和环境的修改与发布角色聚合为一条 NamespaceRole；env 为 null 表示所有环境。
-        登录态过期时的响应取决于 Portal 认证模式：OIDC 模式返回 401，auth 和 LDAP 模式返回 302 重定向到 /signin。
+        登录态过期时的响应取决于 Portal 认证模式：OIDC 模式返回 401，auth 和 LDAP 模式返回 302 重定向到 Portal 登录页。
+        登录页 URL 包含配置的 context path；未配置时为 /signin，配置为 /apollo 时为 /apollo/signin。
       operationId: getConsumerRoles
       deprecated: false
       tags:
@@ -6046,10 +6047,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/OpenConsumerRoleDTO'
         '302':
-          description: auth 或 LDAP 认证模式下登录态已过期，重定向到登录页 /signin
+          description: auth 或 LDAP 认证模式下登录态已过期，重定向到 Portal 登录页，URL 包含配置的 context path
           headers:
             Location:
-              description: 登录页地址，固定为 /signin
+              description: Portal 登录页 URL，包含配置的 context path；未配置时为 /signin，配置为 /apollo 时为 /apollo/signin
               schema:
                 type: string
         '400':
@@ -6061,7 +6062,8 @@ paths:
         '401':
           description: |
             未登录，或 OIDC 认证模式下登录态已过期。两种情况的响应 body 不同：
-            未登录时返回 JSON 错误体（ExceptionResponse）；OIDC 模式下登录态过期的 401 由 Portal 过滤器直接
+            未认证请求由过滤器返回含 message 字段的 JSON 错误体，例如 {"message":"Unauthorized"}。
+            OIDC 模式下登录态过期的 401 由 Portal 过滤器直接
             sendError 返回，body 由容器错误处理（转发到 /error）生成而不保证是 ExceptionResponse。
             因此本响应只固定状态码，不约束 body 结构。
         '403':
@@ -6085,7 +6087,8 @@ paths:
         NamespaceRole 的 namespaceName 必填；env 省略时仅匹配不带环境后缀的全环境授权，不匹配各环境的独立授权。
         撤销一条授权后，消费者仍可能因其他 App、Namespace 或 Cluster 角色而拥有相同的有效权限。
         撤销不是幂等的：目标绑定必须存在，若消费者名下没有匹配的绑定（例如已被撤销过），返回 400 而不是成功的空操作。
-        登录态过期时的响应取决于 Portal 认证模式：OIDC 模式返回 401，auth 和 LDAP 模式返回 302 重定向到 /signin。
+        登录态过期时的响应取决于 Portal 认证模式：OIDC 模式返回 401，auth 和 LDAP 模式返回 302 重定向到 Portal 登录页。
+        登录页 URL 包含配置的 context path；未配置时为 /signin，配置为 /apollo 时为 /apollo/signin。
       operationId: revokeConsumerRoles
       deprecated: false
       tags:
@@ -6130,10 +6133,10 @@ paths:
         '200':
           description: 成功撤销至少一条匹配的绑定。撤销不可重复执行，目标绑定已不存在时返回 400。
         '302':
-          description: auth 或 LDAP 认证模式下登录态已过期，重定向到登录页 /signin
+          description: auth 或 LDAP 认证模式下登录态已过期，重定向到 Portal 登录页，URL 包含配置的 context path
           headers:
             Location:
-              description: 登录页地址，固定为 /signin
+              description: Portal 登录页 URL，包含配置的 context path；未配置时为 /signin，配置为 /apollo 时为 /apollo/signin
               schema:
                 type: string
         '400':
@@ -6147,7 +6150,8 @@ paths:
         '401':
           description: |
             未登录，或 OIDC 认证模式下登录态已过期。两种情况的响应 body 不同：
-            未登录时返回 JSON 错误体（ExceptionResponse）；OIDC 模式下登录态过期的 401 由 Portal 过滤器直接
+            未认证请求由过滤器返回含 message 字段的 JSON 错误体，例如 {"message":"Unauthorized"}。
+            OIDC 模式下登录态过期的 401 由 Portal 过滤器直接
             sendError 返回，body 由容器错误处理（转发到 /error）生成而不保证是 ExceptionResponse。
             因此本响应只固定状态码，不约束 body 结构。
         '403':
